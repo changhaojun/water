@@ -1,0 +1,184 @@
+/* BEGIN PUBLIC */
+body{
+	background: #31333d;
+}
+body *{
+	box-sizing: border-box;
+	color: #fff;
+}
+.iconSelect{
+	display: inline-block;
+	vertical-align: top;
+	width: 18px;
+	height: 18px;
+	background: url(../img/select_btn.png) no-repeat;
+	
+}
+.rectGreenEmpty{
+	background-position: -24px 0;
+}
+.rectGreenOK{
+	background-position: -48px 0;
+}
+/* END PUBLIC */
+
+/* BEGIN .wrap */
+.wrap{
+	width: 1006px;
+	height: 100%;
+	position: relative;
+}
+
+	/* BEGIN .main */
+	.main{
+		margin-top: 150px;
+		width: 100%;
+	}
+	
+		/* BEGIN .left */
+		.left{
+			margin-top: 39px;
+			width: 415px;
+			height: 424px;
+			background: url(../img/login/login_left_circle.png) no-repeat;
+			position: relative;
+		}
+		.left>.circleWrap{
+			width: 268px;
+			height: 268px;
+			position: absolute;
+			left: 65px;
+			top: 101px;
+			border-radius: 50%;
+			overflow: hidden;
+		}
+		.left>.circleWrap>.imgBox{
+			width: 268px;
+			height: 268px;
+			position: relative;
+		}
+		.left .imgBox>img{
+			width: 268px;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		.left>.normalWrap{
+			width: 397px;
+			height: 16px;
+			position: absolute;
+			left: 0;
+			bottom: 0;
+		}
+		.left>.normalWrap>.textBox{
+			width: 397px;
+			height: 16px;
+			position: relative;
+		}
+		.left .textBox>h3{
+			width: 397px;
+			height: 16px;
+			font-size: 16px;
+			text-align: center;
+			position: absolute;
+			left: 0;
+			bottom: 0;
+		}
+		/* ENG .left */
+		
+		/* BEGIN .middle */
+		.middle{
+			margin: 53px 78px 0 94px;
+			width: 2px;
+		}
+		.middle>div{
+			width: 1px;
+			height: 402px;
+		}
+		.middle>div:nth-of-type(1){
+			background: #45464f;
+		}
+		.middle>div:nth-of-type(2){
+			background: #242631;
+		}
+		/* ENG .middle */
+		
+		/* BEGIN .right */
+		.right{
+			width: 417px;
+		}
+		.right>h1{
+			margin: 0 auto;
+			width: 239px;
+		}
+		.right>h1>img{
+			width: 239px;
+		}
+		.right>form{
+			margin-top: 78px;
+			width: 100%;
+		}
+		.right>form>p{
+			margin-bottom: 29px;
+			font-size: 16px;
+		}
+		.right input{
+			display: block;
+			width: 100%;
+			height: 35px;
+			border-bottom: 1px solid #1ab394;
+			font-size: 15px;
+			line-height: 34px;
+		}
+		.right input:nth-of-type(1){
+			margin-bottom: 37px;
+		}
+		.right input:nth-of-type(2){
+			margin-bottom: 30px;
+		}
+		.right>form>ul{
+			height: 18px;
+			line-height: 18px;
+			font-size: 15px;
+		}
+		.right>form>ul label,
+		.right>form>ul a{
+			display: inline-block;
+			vertical-align: top;
+			font-weight: normal;
+		}
+		.right a:hover{
+			color: #1ab394;
+		}
+		.right>form>button{
+			margin: 78px auto 0;
+			display: block;
+			width: 253px;
+			height: 45px;
+			background: #1ab394;
+			font-size: 15px;
+			text-align: center;
+			line-height: 45px;
+			text-indent: 14px;
+			letter-spacing: 14px;
+			border-radius: 22.5px;
+		}
+		.right>form>button:hover{
+			background: #24c5a4;
+		}
+		/* ENG .right */
+		
+	/* ENG .main */
+	
+	/* BEGIN .footer */
+	.bottom{
+		width: 100%;
+		text-align: center;
+		position: absolute;
+		bottom: 10px;
+		font-size: 15px;
+		font-weight: normal;
+	}
+	/* END .footer */
+	
+/* END .wrap */
