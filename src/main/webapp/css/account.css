@@ -1,0 +1,293 @@
+.accountBox{	
+	width:100%;	
+	background:#f3f3f4;
+	float:left;
+	position: relative;	
+}
+/*账户top区域*/
+.accountBox .accountTop{
+	width:100%;
+	height:65px;
+
+	
+}
+.accountBox .accountTop span{
+	font-size:22px;
+	padding-top:25px;
+	display: inline-block;
+}
+.accountBox .accountTop span:nth-child(1){	
+	margin-left:20px;
+	color:#5d5d5d;	
+}
+.accountBox .accountTop span:nth-child(2){
+	margin-left:5px;
+	margin-right:5px;
+}
+.accountBox .accountTop span:nth-child(3){
+	color:#1ab394;
+		
+}
+/*账户按钮*/
+.accountBox .accountTop .btn-primary{
+	width:128px;
+	height:35px;
+	background:#1AB394;
+	margin-left:32.8%;
+	border-radius: 5px 5px;
+	color:#fff;
+	font-size:14px;
+	cursor: pointer;
+	border:0;
+}
+.accountBox .accountTop .btn-primary:hover{
+	background:#1ab380;
+}
+/*账户搜索*/
+.accountBox .accountTop .search{
+	border:1px solid #c1c1c1;
+	background:#fff;
+	margin-left:15px;
+	border-radius: 5px 5px;
+	width:360px;
+	padding:0;
+	height:36px;
+	font-size:14px;
+}
+.accountBox .accountTop .search input:nth-child(1){
+	color:#1AB394;
+	width:321px;
+	padding-left:12px;
+	height:36px;
+	border-radius: 5px 5px;
+}
+.accountBox .accountTop .search i:nth-child(2){
+	color:#1AB394;
+	line-height:36px;
+	font-size:14px;
+	cursor: pointer;
+}
+.accountBox hr{
+	width:100%;
+	height:4px;
+	background:#e0e0e0;
+	border:0;
+	margin-left:20px;
+	display: inline-block;
+}
+/*账户内容区域*/
+.accountContent{
+	float:left;
+	background:#F3F3F4;
+	margin-top:0;
+	
+}
+.accountList{
+	width:347px;
+	height:187px;
+	background:#fff;
+	margin-top:20px;
+	margin-left:20px;
+	float:left;
+}
+.accountList .listTop{
+	width:347px;
+	height:40px;
+	border-left:3px solid #1AB394;
+	line-height:40px;
+	color:#1AB394;
+}
+.accountList .listTop span:nth-child(1){
+	margin-left:14px;
+	font-size:16px;
+}
+.accountList .listTop i:nth-child(2){
+	margin-left:12px;
+	font-size:16px;
+	cursor: pointer;	
+}
+
+.accountList .listTop .accountClose{	
+	width:40px;
+	height:40px;	
+	float:right;
+	text-align:center;
+	line-height:40px;
+	font-size:28px;
+	font-weight: 100;
+	cursor: pointer;
+}
+.accountList .listTop .accountClose:hover{
+	background:rgba(216,242,237,0.5);
+}
+.accountList .listName{
+	color:#9c9c9c;
+	width:324px;
+	margin:0 auto;
+	border-bottom:2px solid #bdbdbd;
+	height:27px;
+	font-size:16px;
+	padding-left:9px;
+}
+.accountList .positionList{
+	width:100%;
+	height:117px;
+}
+.accountList .positionList li{
+	width:105px;
+	height:27px;
+	background:#1AB394;
+	margin-left:8px;
+	margin-top:9px;
+	float:left;
+	text-align:center;
+	line-height:27px;
+	color:#fff;
+}
+/*账号底部*/
+.accountFooter{
+	color:#676a6c;
+	width:100%;
+	padding-left:20px;
+	height:50px;
+	background:#f3f3f4;
+	float:left;
+	line-height:50px;
+}
+.accountFooter>nav{
+	float:right;
+	height:29px;
+	margin-right:75px;
+	margin-top:12px;	
+}
+.accountFooter>nav>.pagination{
+	margin:0;
+	padding:0;
+}
+.accountFooter>nav>.pagination a{
+	color:#676a6c;
+}
+.accountFooter>nav>.pagination a:hover{
+	color:#1AB394;
+}
+/*账户添加*/
+.accountMask{
+	width:100%;
+	height:100%;
+	background:rgba(153,153,153,.4);
+	position: absolute;
+	display: none;
+}
+.accountMask .addAccount{
+	width:503px;
+	height:432px;
+	background:#fff;
+	position: absolute;
+	margin:auto;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+}
+.accountMask .addAccount .addAccountTop{
+	width:503px;
+	height:40px;
+	background:#1AB394;
+	color:#fff;
+	font-size:16px;
+	line-height:40px;
+	padding-left:25px;
+}
+ .addAccount .addAccountTop span:nth-child(2){
+	display: inline-block;
+	width:40px;
+	height:40px;
+	font-size:32px;
+	float:right;
+	text-align:center;
+	cursor: pointer;
+}
+.addAccount .addAccountContent{
+	width:100%;
+	height:122px;	
+}
+.addAccount .addAccountContent .accountNum{
+	color:#9e9e9e;
+	padding-left:57px;
+	margin-top:20px;
+}
+.addAccount .addAccountContent .accountNum>input{
+	height:40px;
+	width:354px;
+	border:1px solid #cccccc;
+	padding-left:11px;
+	font-size:14px;
+}
+.addAccount .selectRole{
+	width:442px;
+	height:35px;
+	border-bottom:1px solid #a4a4a4;
+	margin-left:30px;
+
+	font-size:14px;
+	line-height:34px;
+}
+.addAccount .selectRole span:nth-child(1){
+	color:#1AB394;
+}
+.addAccount .selectRole span:nth-child(2){
+	color:#c4c4c4;
+	margin-left:240px;
+}
+.addAccount .accountRole>ul{
+	margin-left:30px;
+	width:442px;
+	height:133px;
+	border-bottom:1px solid #A4A4A4;
+}
+.addAccount .accountRole>ul li{
+	width:100px;
+	height:26px;
+	
+	float:left;
+	margin-left:10px;
+	margin-top:15px;
+	text-align:center;
+	line-height:26px;
+	color:#fff;
+}
+.addAccount .accountRole>ul .disabled{
+	background:#adadad;
+}
+.addAccount .accountRole>ul .cheacked{
+	background:#1AB394;
+}
+.addAccount #sureBtn{
+	width:255px;
+	height:45px;
+	background: #1AB394;
+	text-align:center;
+	line-height:45px;
+	color:#fff;
+	margin-left:125px;
+	border-radius: 50px 50px;
+	font-size: 16px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

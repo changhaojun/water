@@ -1,0 +1,9 @@
+$(".btn-primary").on("click",function(){
+	$(".accountMask").show();
+})
+$(".closeAdd").on("click",function(){
+	$(".accountMask").hide();
+})
+$(".fa-wrench").on("click",function(){
+	$(".accountMask").show();
+})
