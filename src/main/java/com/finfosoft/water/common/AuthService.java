@@ -1,4 +1,4 @@
-package common;
+package com.finfosoft.water.common;
 
 import java.util.HashMap;
 import java.util.Map;

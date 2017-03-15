@@ -1,4 +1,4 @@
-package common;
+package com.finfosoft.water.common;
 
 public class Constants {
 	public static final String SESSION_ACCESSTOKEN="access_token";

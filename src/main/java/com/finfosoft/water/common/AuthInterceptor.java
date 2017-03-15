@@ -1,4 +1,4 @@
-package common;
+package com.finfosoft.water.common;
 
 import java.util.List;
 
@@ -23,13 +23,28 @@ public class AuthInterceptor implements Interceptor{
 
 		log.info("获取登录session");
 		String token = controller.getSessionAttr(Constants.SESSION_ACCESSTOKEN);
+		
+		log.info("获取登录session");
+		Record user = controller.getSessionAttr(Constants.SESSION_USER);
 
-		log.info("验证用户登录");
+		log.info("验证用户令牌");
 		if (token==null) {
 			controller.redirect("/");
 			return;
 		}
  
+		log.info("验证用户登陆");
+		if (!checkLogin(user)) {
+			controller.redirect("/");
+			return;
+		}
+		
+		log.info("验证页面权限");
+		if (!checkPrivilege(user, uri)) {
+			controller.redirect("/");
+			return;
+		}
+		
 		invoc.invoke();
 		
 	}
@@ -60,7 +75,7 @@ public class AuthInterceptor implements Interceptor{
 			return true;
 		}
 		// 检测用户是否有此url的访问权限
-		List<Record> urls = (List<Record>) user.get("urls");
+		List<Record> urls = (List<Record>) user.get("resources");
 		if (urls.contains(url)) {
 			log.debug("url auth passed");
 			return true;

@@ -1,11 +1,11 @@
-package frame;
+package com.finfosoft.water.frame;
 
 import org.apache.log4j.Logger;
+
+import com.finfosoft.water.common.Constants;
 import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Record;
-
-import common.Constants;
 
 public class FrameController extends Controller{
 	private static Logger log=Logger.getLogger(FrameController.class);
@@ -15,7 +15,7 @@ public class FrameController extends Controller{
 	 * 框架首页
 	 */
 	public void index(){
-		render("lyframe.html");
+		render("");
 	}
 	
 	/**

@@ -1,6 +1,7 @@
-package common;
+package com.finfosoft.water.common;
 
 import com.finfosoft.db.mongo.MongodbPlugin;
+import com.finfosoft.water.login.LoginController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -11,13 +12,11 @@ import com.jfinal.core.JFinal;
 import com.jfinal.kit.PropKit;
 import com.jfinal.render.ViewType;
 
-import login.LoginController;
-
 public class WaterConfig extends JFinalConfig{
 	@Override
 	public void configConstant(Constants me) {
-		PropKit.use("lanyue_config.txt");
-		me.setDevMode(PropKit.getBoolean("devMode", false));
+		//PropKit.use("lanyue_config.txt");
+		me.setDevMode(true);
 		me.setViewType(ViewType.FREE_MARKER);
 		me.setBaseViewPath("/page");
 	}
@@ -33,13 +32,13 @@ public class WaterConfig extends JFinalConfig{
 	public void configPlugin(Plugins me) {
 		// TODO Auto-generated method stub
 		//mongodb插件
-		MongodbPlugin mongodbPlugin;
-		if(PropKit.getBoolean("db_auth", false)){
-			mongodbPlugin = new MongodbPlugin(PropKit.get("db_host"), PropKit.getInt("db_port"), PropKit.get("db_name"),PropKit.get("db_user"),PropKit.get("db_pass"));
-		}else{
-			mongodbPlugin = new MongodbPlugin(PropKit.get("db_host"), PropKit.getInt("db_port"), PropKit.get("db_name"));
-		}
-		me.add(mongodbPlugin);
+//		MongodbPlugin mongodbPlugin;
+//		if(PropKit.getBoolean("db_auth", false)){
+//			mongodbPlugin = new MongodbPlugin(PropKit.get("db_host"), PropKit.getInt("db_port"), PropKit.get("db_name"),PropKit.get("db_user"),PropKit.get("db_pass"));
+//		}else{
+//			mongodbPlugin = new MongodbPlugin(PropKit.get("db_host"), PropKit.getInt("db_port"), PropKit.get("db_name"));
+//		}
+//		me.add(mongodbPlugin);
 		
 	}
 
@@ -57,6 +56,6 @@ public class WaterConfig extends JFinalConfig{
 		
 	}
 	public static void main(String[] args) {
-		JFinal.start("src/main/webapp", 8080, "/", 5);
+		JFinal.start("src/main/webapp", 8080, "/lanyue-water", 5);
 	}
 }

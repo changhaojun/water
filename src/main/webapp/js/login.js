@@ -127,6 +127,18 @@ $.fn.extend({
 					},
 					success: function (data){
 						console.log(data);
+						if(data.code==200){
+							console.info("123")
+							$.ajax({
+								url:'/lanyue-water/login',
+								type:'POST',
+								dataType:'JSON',
+								data:{'data':JSON.stringify(data)},
+								success:function(){
+									
+								}
+							})
+						} 
 					}
 				});
 			}
