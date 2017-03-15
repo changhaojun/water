@@ -1,0 +1,194 @@
+body {
+	width: 100%;
+}
+
+@media screen and (max-width: 1366px) {
+	body {
+		width: 1366px;
+		overflow: auto;
+	}
+}
+
+#wrapper {
+	background: #fff;
+	
+}
+
+#wrapper .fixedTop {
+	background: #31333d;
+}
+#wrapper .sidebar-collapse ul li {
+	border-bottom: 2px solid #293745;
+}
+
+#wrapper .sidebar-collapse ul li:nth-of-type(1) a .onOff {
+	text-align: right;
+	color: #1ab394;
+	font-size: 18px;
+}
+.showHide {
+	display: none;
+}
+#wrapper .sidebar-collapse ul li:nth-of-type(1) a.spicalShow{
+	text-align: right;
+}
+#wrapper .companyName {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+}
+
+#wrapper .companyName p {
+	color: #fff;
+	font-size: 13px;
+}
+
+#wrapper #page-wrapper {
+	padding: 0;
+	position: relative;
+}
+body.fixed-sidebar .navbar-static-side{
+	position: absolute;
+    width: 220px;
+    z-index: 2001;
+    height: 100%;
+    display: block;
+}
+#wrapper .indexHeader {
+	width: 100%;
+	/*width:calc(100% - 220px); */
+	height: 50px;
+	background: #31333d;
+	position:absolute;
+	top: 0;
+	z-index: 100;
+}
+
+#wrapper  .indexHeader .homeName {
+	float: left;
+}
+#wrapper  .indexHeader .msgList{
+	float: right;
+	width: calc(100%-231px);
+}
+#wrapper  .indexHeader ul {
+	
+	width: 100%;
+}
+
+#wrapper  .indexHeader ul li {
+	float: left;
+	font-size: 14px;
+	color: #fff;
+}
+
+#wrapper  .indexHeader ul li dt {
+	padding: 0 20px;
+	font-weight: 100;
+	border-left: 2px solid #45464f;
+	line-height: 50px;
+	cursor: pointer;
+}
+
+#wrapper  .indexHeader ul li dt .indexDownload i {
+	display: inline-block;
+	width: 31px;
+	height: 31px;
+	margin-left: 14px;
+	background: url("../img/home_page/qr_code.jpg") no-repeat center;
+	vertical-align: middle;
+}
+
+#wrapper  .indexHeader ul li .qrCode {
+	width: 264px;
+	display: none;
+}
+
+#wrapper  .indexHeader ul li .qrCode img {
+	width: 180px;
+	margin: 20px auto;
+}
+
+#wrapper  .indexHeader ul li .headPortrait {
+	display: inline-block;
+	width: 45px;
+	height: 44px;
+	background: url("../img/home_page/head_portrait.jpg") no-repeat center;
+	vertical-align: middle;
+}
+
+#wrapper  .indexHeader ul li .personMsg {
+	display: none;
+	
+}
+
+#wrapper  .indexHeader ul li .personMsg a {
+	display: block;
+	color: #fff;
+	font-size: 14px;
+	background: #31333d;
+	margin-left: 2px;
+	padding-left: 20px;
+	height: 38px;
+	line-height: 38px;
+	border-bottom: 1px solid #1a1a1a;
+}
+
+#wrapper .indexHeader ul li .personMsg a:hover {
+	background: #293745;
+}
+
+#wrapper .indexHeader ul li dt {
+	position: relative;
+}
+
+#wrapper .indexHeader ul li dt strong {
+	display: inline-block;
+	width: 18px;
+	height: 13px;
+	background: url("../img/home_page/envelope.jpg") no-repeat center;
+	vertical-align: middle;
+}
+
+#wrapper .indexHeader ul li dt .msgNum {
+	color: #fff;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #bb0000;
+	position: absolute;
+	font-size: 12px;
+	top: 10px;
+	right: 10px;
+	line-height: 16px;
+	text-align: center;
+}
+
+#wrapper .bgColor {
+	background: #f3f3f4;
+}
+
+#wrapper #content-main {
+	height:calc(100% - 50px);
+}
+#wrapper .indexMain{
+	position: relative;
+	top: 50px;
+}
+.msgPrompt {
+	display: none;
+}
+
+.tooltip-inner {
+	background: #1ab394;
+	white-space:nowrap;
+}
+.tooltip.right .tooltip-arrow{
+	border-right-color:#1ab394;
+}
+.nav-second-box{
+	height:100%;
+	display: none;
+	overflow: hidden;
+}
+
