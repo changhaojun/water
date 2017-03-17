@@ -106,3 +106,60 @@
 
 2017-03-16 16:41:38
 [DEBUG]-[Thread: qtp14681992-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\git\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-17 10:35:26
+[DEBUG]-[Thread: qtp173188906-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-17 10:35:26
+[DEBUG]-[Thread: qtp173188906-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\Program Files (x86)\\workspace\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-17 10:35:38
+[INFO]-[Thread: qtp173188906-15]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-17 10:35:38
+[INFO]-[Thread: qtp173188906-15]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-17 10:35:38
+[INFO]-[Thread: qtp173188906-15]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-17 10:35:38
+[INFO]-[Thread: qtp173188906-15]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-17 10:35:38
+[DEBUG]-[Thread: qtp173188906-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\Program Files (x86)\workspace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-17 10:35:48
+[INFO]-[Thread: qtp173188906-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-17 10:35:48
+[INFO]-[Thread: qtp173188906-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-17 10:35:48
+[INFO]-[Thread: qtp173188906-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-17 10:35:48
+[INFO]-[Thread: qtp173188906-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-17 10:35:48
+[DEBUG]-[Thread: qtp173188906-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\Program Files (x86)\workspace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-17 10:37:05
+[INFO]-[Thread: qtp173188906-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-17 10:37:05
+[INFO]-[Thread: qtp173188906-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-17 10:37:05
+[INFO]-[Thread: qtp173188906-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-17 10:37:05
+[INFO]-[Thread: qtp173188906-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-17 10:37:05
+[INFO]-[Thread: qtp173188906-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 令牌错误
+
+2017-03-17 10:37:05
+[DEBUG]-[Thread: qtp173188906-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-17 10:37:05
+[DEBUG]-[Thread: qtp173188906-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\Program Files (x86)\\workspace\\finfosoft-water\\src\\main\\webapp\\page\\login.html"

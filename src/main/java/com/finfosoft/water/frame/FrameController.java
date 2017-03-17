@@ -15,7 +15,7 @@ public class FrameController extends Controller{
 	 * 框架首页
 	 */
 	public void index(){
-		render("");
+		render("index.html");
 	}
 	
 	/**
