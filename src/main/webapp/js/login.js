@@ -148,20 +148,19 @@ $.fn.extend({
 					$.ajax({
 						type:"post",
 						dataType:"JSON",
-						url:"http://192.168.1.104:80/authorize/authorize",
+						url:"http://121.42.253.149:18801/authorize/authorize",
 						async:true,
 						data:{
 							'username': iUsername,
 							'password': iPassword,
 							'client_id': 'admin',
-							'client_secret': 'admin',
-							'code': '',
-							'address': iAddress
+							'client_secret': 'admin'
+//							'code': '',
+//							'address': iAddress
 						},
 						success: function (data){
 							console.log(data);
 							if(data.code==200){
-								console.info("123")
 								$.ajax({
 									url:'/lanyue-water/login',
 									type:'POST',
