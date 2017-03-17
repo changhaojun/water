@@ -190,12 +190,12 @@
 	width:100%;
 	height:100%;
 	background:rgba(157,157,157,.5);
-	position: absolute;
+	position: fixed;
 	display: none;
 }
 .accountMask .addAccount{
 	width:503px;
-	height:492px;
+	height:532px;
 	background:#fff;
 	position: absolute;
 	margin:auto;
@@ -223,7 +223,7 @@
 }
 .addAccount .addAccountContent{
 	width:100%;
-	height:182px;	
+	height:232px;	
 }
 .addAccount .addAccountContent .accountNum{
 	color:#9e9e9e;
@@ -279,7 +279,7 @@
 .addAccount .accountRole>ul .cheacked{
 	background:#1AB394;
 }
-.addAccount #sureBtn{
+.addAccount .sureBtn{
 	width:255px;
 	height:45px;
 	background: #1AB394;
