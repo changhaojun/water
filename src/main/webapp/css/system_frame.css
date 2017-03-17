@@ -191,4 +191,99 @@ body.fixed-sidebar .navbar-static-side{
 	display: none;
 	overflow: hidden;
 }
+/*span.rotateDeg{
+	transition: All 0.4s ease-in-out;
+    -webkit-transition: All 0.4s ease-in-out;
+    -moz-transition: All 0.4s ease-in-out;
+    -o-transition: All 0.4s ease-in-out;
+    -ms-transition: All 0.4s ease-in-out;
+}*/
+ 
+.pop-mask{
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: 0.2;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 3000;
+}
+.pop{
+	width: 500px;
+	height:410px ;
+	position: absolute;
+	left:50%;
+	top: 50%;
+	margin-left: -250px;
+	margin-top: -205px;
+	background: #fff;
+	z-index: 3010;
+}
+.pop-title{
+	height: 40px;
+	line-height: 40px;
+	background: #1ab394;
+}
+.pop-title>p{
+	margin-left: 23px;
+	font-size: 15px;
+	color: #fff;
+}
+.pop-close{
+	width: 40px;
+	height: 100%;
+	background: url(../img/login/login_layer_close.png) no-repeat 10px 10px;
+}
+.pop-close:hover{
+	background-color: #24c5a4;
+}
+.pop-main{
+	width: 450px;
+	margin:30px auto 20px;
+}
+.pop-main span{
+	width: 100px;
+	display: inline-block;
+	font-size: 14px;
+	text-align: right;
+	margin-right: 20px;
+}
+.pop-main label{
+	font-size: 15px;
+	color:#D43F3A;
+	margin-left: 120px;
+	margin-top: -15px;
+    display: block;
+}
+.step2 .pop-main p{
+	margin-bottom: 14px;
+}
+
+.pop-username{
+	margin-bottom: 30px;
+	width: 260px;
+	height: 38px;
+	border: 1px solid #ccc;
+	color: #1ab394;
+	font-size: 15px;
+	padding-left: 10px;
+}
+.pop-submit{
+	display: block;
+	margin:35px auto 0;
+	width: 254px;
+	height: 44px;
+	background: #1ab394;
+	font-size: 15px;
+	line-height: 44px;
+	color: #fff;
+	letter-spacing: 14px;
+	text-indent: 14px;
+	text-align: center;
+	border-radius: 22px;
+}
+.pop-cancel{
+	background: #111;
+}
 

@@ -16,7 +16,7 @@
 			<!--右侧导航开始-->
 			<nav class="navbar-default navbar-static-side fixedTop" id="fixedTop" role="navigation">
 				<div class="sidebar-collapse ">
-					<p >
+					<p>
 						<img class="logoHide" src="../img/home_page/frame_logo.jpg" />
 						<img class="  showHide" src="../img/home_page/frame_logo_small.jpg"/>
 					</p>
@@ -32,13 +32,15 @@
 	                            <i class="fa fa-home"></i>
 	                            <span class="nav-label">首页</span>
 	                        </a>
-	                        
+	                        <!--<div class="nav-second-box">
+	                        	<ul class="nav nav-second-level"></ul>
+	                        </div>-->
 	                    </li>
-	                    <li class="changeLi spic" data-toggle="tooltip" data-placement="right" title="数据标签配置">
-	                        <a class="J_menuItem" href="javascript:;" >
+	                    <li class="changeLi " data-toggle="tooltip" data-placement="right" title="数据标签配置">
+	                        <a class="J_menuItem slideToggle" href="javascript:;" >
 	                        	<i class="fa fa-edit"></i> 
 	                        	<span class="nav-label">数据标签配置</span>
-	                        	<span class="fa arrow"></span>
+	                        	<span class="fa arrow rotateDeg"></span>
 	                        </a>
 	                        <div class="nav-second-box">
 	                        	<ul class="nav nav-second-level">
@@ -59,13 +61,13 @@
                         	
 	                    </li>
 	                    <li class="changeLi" data-toggle="tooltip" data-placement="right" title="账号管理">
-	                        <a class="J_menuItem" href="javascript:;">
+	                        <a class="J_menuItem " href="javascript:;">
 	                        	<i class="fa fa-user-circle"></i> 
 	                        	<span class="nav-label">账号管理</span>
 	                        </a>
 	                    </li>
-	                    <li class="changeLi spic" data-toggle="tooltip" data-placement="right" title="组态">
-	                        <a class="J_menuItem" href="javascript:;">
+	                    <li class="changeLi " data-toggle="tooltip" data-placement="right" title="组态">
+	                        <a class="J_menuItem slideToggle" href="javascript:;">
 	                        	<i class="fa fa-sitemap"></i> 
 	                        	<span class="nav-label">组态</span>
 	                        	<span class="fa arrow"></span>
@@ -80,7 +82,7 @@
                         	
 	                    </li>
 	                    <li class="changeLi spic" data-toggle="tooltip" data-placement="right" title="实体">
-	                        <a class="J_menuItem" href="javascript:;">
+	                        <a class="J_menuItem slideToggle" href="javascript:;">
 	                        	<i class="fa fa-microchip"></i> 
 	                        	<span class="nav-label">实体</span>
 	                        	<span class="fa arrow"></span>
@@ -139,7 +141,7 @@
 										</span>
 									</dt>
 									<dd class="personMsg">
-										<a  href="javascript:;">修改密码</a>
+										<a class="popup" href="javascript:;">修改密码</a>
 										<a  href="javascript:;">退出</a>
 									</dd>
 								</dl>
@@ -162,17 +164,36 @@
 				<!--右侧部分顶部结束-->
 				<!--右侧主要内容开始-->
 				<div class="indexMain" id="content-main">
-					
+					<iframe src="box_info.html" width="100%" height="100%"></iframe>
 				</div>
 			</div>
 			<!--右侧部分结束-->
+			<!--修改密码开始-->
+			
+			<div class="hidden pop step1">
+				<div class="clearfix pop-title">
+					<p class="pull-left">修改密码</p>
+					<a href="#" class="pull-right pop-close"></a>
+				</div>
+				<div class="pop-main">
+					<span>原密码</span><input type="password" placeholder="原密码" class="pop-username"/>
+					<span>新密码</span><input type="password" placeholder="新密码" class="pop-username"/>
+					<span>确认新密码</span><input type="password" placeholder="确认新密码" class="pop-username"/>
+					<label>错误信息的提示</label>
+					<button class="pop-submit">确定</button>
+				</div>
+				<!--<div class="pop-footer">
+					<p>找回密码时，请确保您的账号已绑定过邮箱。</p>
+				</div>-->
+			</div>
+			<div class="hidden pop-mask"></div>
+			<!--修改密码结束-->
 			<script type="text/javascript" src="../plugins/jQuery/jquery-1.11.3.min.js"></script>
 			<script type="text/javascript" src="../plugins/bootstarp/js/bootstrap.min.js"></script>
 			<script src="../js/jquery.metisMenu.js"></script>
 			<script src="../js/jquery.slimscroll.min.js"></script>
-			<!--<script src="../js/hplus.js"></script>-->
 		
 			<script src="../js/system_frame.js"></script>
-	
+			<script type="text/javascript" src="../js/login.js" ></script>
 	</body>
 </html>
