@@ -25,7 +25,6 @@ $.ajax({
 					}
 					
 				}			
-//				console.log($(""));
 				 str= '<div class="accountList">' +
 					'<div class="listTop">' +
 						'<span>' + data.rows[i].fullname + '</span>' +
@@ -109,13 +108,11 @@ $.ajax({
 			var that=$(this);
 			//删除账户
 				$(".sureDel").on("click",function(){
-//					$(".accountList").remove(that.parents(".accountList"));
 					$.ajax({
 						  type: 'delete',
 						  url: "http://192.168.1.114/v1/users/"+delId.rows[that.parents(".accountList").index()]._id+"?access_token=58c9ef06ba94b322105d56b1",
 						  success: function(data){
 						  	console.log(data);
-//						  	console.log(that.parents(".accountList"))
 						  	$(".accountList").remove(that.parents(".accountList"));
 						  }		  
 						})
