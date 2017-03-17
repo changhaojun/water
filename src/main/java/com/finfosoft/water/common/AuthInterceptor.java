@@ -29,21 +29,18 @@ public class AuthInterceptor implements Interceptor{
 
 		log.info("验证用户令牌");
 		if (token==null) {
-			log.info("令牌错误");
 			controller.redirect("/");
 			return;
 		}
  
 		log.info("验证用户登陆");
 		if (!checkLogin(user)) {
-			log.info("获取用户信息错误");
 			controller.redirect("/");
 			return;
 		}
 		
 		log.info("验证页面权限");
 		if (!checkPrivilege(user, uri)) {
-			log.info("权限验证错误");
 			controller.redirect("/");
 			return;
 		}

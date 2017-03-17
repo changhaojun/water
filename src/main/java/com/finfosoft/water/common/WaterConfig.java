@@ -1,7 +1,6 @@
 package com.finfosoft.water.common;
 
 import com.finfosoft.db.mongo.MongodbPlugin;
-import com.finfosoft.water.frame.FrameController;
 import com.finfosoft.water.login.LoginController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -26,7 +25,6 @@ public class WaterConfig extends JFinalConfig{
 	public void configRoute(Routes me) {
 		// TODO Auto-generated method stub
 		me.add("/", LoginController.class);                        //登录页面
-		me.add("/frame", FrameController.class);                        //登录页面
 		
 	}
 
@@ -58,6 +56,6 @@ public class WaterConfig extends JFinalConfig{
 		
 	}
 	public static void main(String[] args) {
-		JFinal.start("src/main/webapp", 8080, "/finfosoft-water", 5);
+		JFinal.start("src/main/webapp", 8080, "/lanyue-water", 5);
 	}
 }
