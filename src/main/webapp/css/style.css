@@ -7788,7 +7788,9 @@ body.skin-3 {
 }
 
 .J_menuTab {
+	-ms-transition:all .3s ease-out 0s; 
     -webkit-transition: all .3s ease-out 0s;
+    -moz-animation: all .3s ease-out 0s ;
     transition: all .3s ease-out 0s;
 }
 
