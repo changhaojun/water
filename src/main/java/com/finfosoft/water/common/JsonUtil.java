@@ -1,4 +1,4 @@
-package common;
+package com.finfosoft.water.common;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

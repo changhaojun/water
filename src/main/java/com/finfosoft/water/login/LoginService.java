@@ -1,4 +1,4 @@
-package login;
+package com.finfosoft.water.login;
 
 import com.jfinal.plugin.activerecord.Record;
 

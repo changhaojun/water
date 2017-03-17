@@ -1,4 +1,4 @@
-package login;
+package com.finfosoft.water.login;
 
 import org.apache.log4j.Logger;
 
