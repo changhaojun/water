@@ -5,7 +5,6 @@
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="../finfosoft-water/css/account.css"/>
 		<link rel="stylesheet" type="text/css" href="../finfosoft-water/css/reset.css"/>
-		<link rel="stylesheet" type="text/css" href="../finfosoft-water/css/style.css"/>
 		<link rel="stylesheet" type="text/css" href="../finfosoft-water/plugins/font-awesome/css/font-awesome.css"/>
 		<link rel="stylesheet" type="text/css" href="../finfosoft-water/plugins/bootstarp/css/bootstrap.min.css"/>
 	</head>
@@ -40,23 +39,32 @@
 				</div>
 				<div class="addAccountContent">
 					<div class="accountNum">
+						
 						<label for="addText">账号：</label>
 						<input type="text" value="请输入邮箱" id="addText"/>
+						<span class=" error addaccountError"></span>
 					</div>
 					
 					<div class="accountNum">
+						
 						<label for="addUsername">姓名：</label>
 						<input type="text" value="请输入姓名" id="addUsername"/>
+						<span class=" error adduserError"></span>
 					</div>
 					<div class="accountNum">
-						<label for="passWord">密码：</label>
+						
+						<label for="addPassword">密码：</label>
 						<input type="text" value="请输入密码(由6到16位字母数字下划线组成)" id="addPassword"/>
+						<span class=" error addpassError"></span>
 					</div>
 					<div class="accountNum">
+						
 						<label for="addPhone">手机号：</label>
 						<input type="text" value="请输入手机号" id="addPhone"/>
+						<span class=" error addphoneError"></span>
 					</div>
 					<div class="accountNum accountState addState">
+						
 						<label>状态：</label>
 						<input type="button" value="有效" id="addValid" class="stats"/>
 						<input type="button" value="无效" id="addInvalid" />
@@ -76,6 +84,20 @@
 				</button>
 			</div>
 		</div>
+		<!--添加成功-->
+		<div class="accountMask successMsg">
+			<div class="addAccount">
+				<div class="addAccountTop">
+					<span>添加账号信息</span>
+				</div>
+				<div class="addback">
+					<span class="backImg"></span>
+					<span class="addText"></span>
+				</div>		
+				<button type="button" class="addSuccess">确定</button>
+			</div>
+		</div>
+
 		<!--修改账户-->
 		<div class="accountMask modifyAccountMask">
 			<div class="addAccount modifyAccount">
@@ -85,24 +107,32 @@
 				</div>
 				<div class="addAccountContent modifyAccountContent">
 					<div class="accountNum">
+						
 						<label for="modifyText">账号：</label>
 						<input type="text" value="请输入邮箱" id="modifyText"/>
+						<span class=" error modifyaccountError"></span>
 					</div>
 					<div class="accountNum">
+						
 						<label for="modifyUsername">姓名：</label>
 						<input type="text" value="请输入姓名" id="modifyUsername"/>
+						<span class=" error modifyuserError"></span>
 					</div>
 					<div class="accountNum">
-						<label for="passWord">密码：</label>
+						
+						<label for="passWord ">密码：</label>
 						<input type="text" value="请输入密码(由6到16位字母数字下划线组成)" id="modifyPassword"/>
+						<span class=" error modifypassError"></span>
 					</div>
 					<div class="accountNum">
-						<label for="modifyPhone">手机号：</label>
+						
+						<label for="modifyPhone ">手机号：</label>
 						<input type="text" value="请输入手机号" id="modifyPhone"/>
+						<span class=" error modifyphoneError"></span>
 					</div>
 					<div class="accountNum modifyState">
 						<label>状态：</label>
-						<input type="button" value="有效" id="modifyValid" class="stats"/>
+						<input type="button" value="有效" id="modifyValid"/>
 						<input type="button" value="无效" id="modifyInvalid" />
 				</div> 
 				</div>
@@ -110,7 +140,7 @@
 					<span>选择角色</span>
 					<span>请选择需要添加的角色</span>
 				</div>
-				<div class="accountRole">
+				<div class="accountRole modifyRole">
 					<ul>
 						
 					</ul>
@@ -118,6 +148,19 @@
 				<button type="submit"class="sureBtn modifyBtn">
 					确定
 				</button>
+			</div>
+		</div>
+		<!--修改成功-->
+		<div class="accountMask modifyMsg">
+			<div class="addAccount">
+				<div class="addAccountTop">
+					<span>修改账号信息</span>
+				</div>
+				<div class="modifyback">
+					<span class="backImg"></span>
+					<span class="modifyText"></span>
+				</div>		
+				<button type="button" class="modifySuccess">确定</button>
 			</div>
 		</div>
 		<!--删除账户-->	
@@ -134,11 +177,9 @@
 				<button type="button" class="sureDel">确定</button>
 			</div>
 		</div>
+
 	</body>
 	<script src="../finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../finfosoft-water/plugins/bootstarp/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../finfosoft-water/plugins/vue/dist/vue.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../finfosoft-water/plugins/vue/dist/vue-resource.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../finfosoft-water/js/account.js"></script>
-	<script src="../finfosoft-water/js/accountVue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../finfosoft-water/js/account.js?1.03"></script>
 </html>
