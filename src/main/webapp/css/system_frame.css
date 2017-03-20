@@ -18,9 +18,30 @@ body {
 	background: #31333d;
 }
 #wrapper .sidebar-collapse ul li {
-	border-bottom: 2px solid #293745;
+	border-bottom: 1px solid #242631;
+	border-bottom: 1px solid #45464f;
+	
 }
-
+#wrapper .sidebar-collapse  p{
+	width: 220px;
+	height: 50px;
+	background: #1ab394;
+}
+#wrapper .sidebar-collapse  p img:nth-of-type(1){
+	width: 100%;
+}
+#wrapper .sidebar-collapse ul li a{
+	color: #fff;
+}
+#wrapper .sidebar-collapse ul li .nav-second-box a{
+	color: #b1b1b1;
+}
+#wrapper .sidebar-collapse ul li a:hover{
+	background: #2c2e37;
+}
+.navbar-default .nav>li.active{
+	background: #2c2e37;
+} 
 #wrapper .sidebar-collapse ul li:nth-of-type(1) a .onOff {
 	text-align: right;
 	color: #1ab394;
@@ -42,7 +63,10 @@ body {
 	color: #fff;
 	font-size: 13px;
 }
-
+.nav .activeFocus{
+	border-left: 4px solid #19aa8d;;
+	background: #2c2e37;
+}
 #wrapper #page-wrapper {
 	padding: 0;
 	position: relative;
@@ -66,13 +90,12 @@ body.fixed-sidebar .navbar-static-side{
 
 #wrapper  .indexHeader .homeName {
 	float: left;
+	margin-left: 20px;
 }
 #wrapper  .indexHeader .msgList{
 	float: right;
-	width: calc(100%-231px);
 }
 #wrapper  .indexHeader ul {
-	
 	width: 100%;
 }
 
@@ -92,10 +115,10 @@ body.fixed-sidebar .navbar-static-side{
 
 #wrapper  .indexHeader ul li dt .indexDownload i {
 	display: inline-block;
-	width: 31px;
-	height: 31px;
+	width: 29px;
+	height: 29px;
 	margin-left: 14px;
-	background: url("../img/home_page/qr_code.jpg") no-repeat center;
+	background: url("../img/qr_code_thumbnail.png") no-repeat center;
 	vertical-align: middle;
 }
 
@@ -163,7 +186,6 @@ body.fixed-sidebar .navbar-static-side{
 	line-height: 16px;
 	text-align: center;
 }
-
 #wrapper .bgColor {
 	background: #f3f3f4;
 }
@@ -191,14 +213,6 @@ body.fixed-sidebar .navbar-static-side{
 	display: none;
 	overflow: hidden;
 }
-/*span.rotateDeg{
-	transition: All 0.4s ease-in-out;
-    -webkit-transition: All 0.4s ease-in-out;
-    -moz-transition: All 0.4s ease-in-out;
-    -o-transition: All 0.4s ease-in-out;
-    -ms-transition: All 0.4s ease-in-out;
-}*/
- 
 .pop-mask{
 	width: 100%;
 	height: 100%;
@@ -219,6 +233,11 @@ body.fixed-sidebar .navbar-static-side{
 	margin-top: -205px;
 	background: #fff;
 	z-index: 3010;
+	box-shadow:7px 7px  7px rgba(0,0,0,0.4);
+	-webkit-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
+	-moz-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
+	-ms-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
+	-o-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
 }
 .pop-title{
 	height: 40px;
@@ -240,28 +259,21 @@ body.fixed-sidebar .navbar-static-side{
 }
 .pop-main{
 	width: 450px;
-	margin:30px auto 20px;
+	margin:40px auto 20px;
 }
-.pop-main span{
+
+.pop-main label{
 	width: 100px;
 	display: inline-block;
 	font-size: 14px;
 	text-align: right;
 	margin-right: 20px;
-}
-.pop-main label{
-	font-size: 15px;
-	color:#D43F3A;
-	margin-left: 120px;
-	margin-top: -15px;
-    display: block;
-}
-.step2 .pop-main p{
-	margin-bottom: 14px;
+	color: #7e7e7e;
 }
 
+
 .pop-username{
-	margin-bottom: 30px;
+	margin-bottom: 40px;
 	width: 260px;
 	height: 38px;
 	border: 1px solid #ccc;
@@ -271,7 +283,7 @@ body.fixed-sidebar .navbar-static-side{
 }
 .pop-submit{
 	display: block;
-	margin:35px auto 0;
+	margin:0 auto ;
 	width: 254px;
 	height: 44px;
 	background: #1ab394;
@@ -286,4 +298,85 @@ body.fixed-sidebar .navbar-static-side{
 .pop-cancel{
 	background: #111;
 }
-
+.pop-shadow{
+	width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.38;
+    position: absolute;
+    right: -7px;
+    bottom: -7px;
+    z-index: -1;
+}
+.pop-main div{
+	position: relative;
+}
+.pop-main span {
+	position: absolute;
+	padding: 3px 6px;
+	background: #ff787b;
+	margin-top: -32px;
+	color: #fff;
+	border-radius: 3px;
+	right:12%;
+	display: none;
+}
+.pop-main span:before{
+	content: "";
+	position: absolute;
+	top:100%;
+	border: 6px solid transparent;
+	left:10%;
+	border-top-color:#ff787b;
+}
+/*修改密码*/
+.popMsg{
+	width: 330px;
+	height: 216px;
+	background: #fff;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -155px;
+	margin-top:-108px ;
+	box-shadow:7px 7px  7px rgba(0,0,0,0.4);
+	-webkit-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
+	-moz-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
+	-ms-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
+	-o-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
+	z-index: 3050px;
+	display: none;
+}
+.popMsg_content{
+	padding-top: 40px;
+	padding-left: 50px;
+}
+.errorMsg{
+	height: 42px;
+	line-height: 42px;
+}
+.errorMsg i{
+	display: inline-block;
+	width: 32px;
+	height: 33px;
+	background: url(../img/icon_btn.png) no-repeat -32px 0;
+	float: left;
+}
+.errorMsg span{
+	display: inline-block;
+	color:#f55659;
+	font: 14px/42px "微软雅黑" ;
+	padding-left: 15px;
+	float: left;
+	margin-top: -3px;
+}
+.popMsg_content button{
+	font-size: 16px;
+	color: #fff;
+	letter-spacing: 25px;
+	background:#1ab394;
+	border-radius: 3px;
+	padding: 10px 0 10px 25px;
+	margin-left: 25%;
+	margin-top: 25px;
+}

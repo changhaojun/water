@@ -17,7 +17,7 @@
 			<nav class="navbar-default navbar-static-side fixedTop" id="fixedTop" role="navigation">
 				<div class="sidebar-collapse ">
 					<p>
-						<img class="logoHide" src="../img/home_page/frame_logo.jpg" />
+						<img class="logoHide" src="../img/frame_logo.png" />
 						<img class="  showHide" src="../img/home_page/frame_logo_small.jpg"/>
 					</p>
 					<ul class="nav" id="side-menu"> 
@@ -27,7 +27,7 @@
 								<span class="fa fa-bars nav-label onOff"></span>	
 							</a>
 						</li>
-						<li class="active changeLi" data-toggle="tooltip" data-placement="right" title="首页">
+						<li class="activeFocus changeLi" data-toggle="tooltip" data-placement="right" title="首页">
 	                        <a href="javascript:;" >
 	                            <i class="fa fa-home"></i>
 	                            <span class="nav-label">首页</span>
@@ -117,7 +117,7 @@
 				<!--右侧部分顶部-->
 				<header class="indexHeader">
 					<p class="homeName">
-						<img src="../img/home_page/name_logo.jpg" />
+						<img src="../img/name_logo.png" />
 					</p>
 					<div class="msgList">
 						<ul>
@@ -127,7 +127,7 @@
 										<span  class="indexDownload">扫描下载APP 随时随地智慧物联<i class="qrCode_icon"></i></span>
 									</dt>
 									<dd class="qrCode">
-										<img src="../img/home_page/qr_code.png" />
+										<img src="../img/qr_code.png" />
 									</dd>
 								</dl>
 							</li>
@@ -173,27 +173,45 @@
 			<div class="hidden pop step1">
 				<div class="clearfix pop-title">
 					<p class="pull-left">修改密码</p>
-					<a href="#" class="pull-right pop-close"></a>
+					<a href="###" class="pull-right pop-close maskClose"></a>
 				</div>
 				<div class="pop-main">
-					<span>原密码</span><input type="password" placeholder="原密码" class="pop-username"/>
-					<span>新密码</span><input type="password" placeholder="新密码" class="pop-username"/>
-					<span>确认新密码</span><input type="password" placeholder="确认新密码" class="pop-username"/>
-					<label>错误信息的提示</label>
+					<div class="oldPassword">
+						<label>原密码</label>
+						<input type="password" placeholder="原密码" class="pop-username passwordOld"/>
+						<span>111</span>
+					</div>
+					<div class="newPassword">
+						<label>新密码</label>
+						<input type="password" placeholder="新密码" class="pop-username passwordNew"/>
+						<span>222</span>
+					</div>
+					<div class="confirmPassword">
+						<label>确认新密码</label>
+						<input type="password" placeholder="确认新密码" class="pop-username passwordConfirm"/>
+						<span>333</span>
+					</div>
 					<button class="pop-submit">确定</button>
 				</div>
-				<!--<div class="pop-footer">
-					<p>找回密码时，请确保您的账号已绑定过邮箱。</p>
-				</div>-->
+				<div class="popMsg">
+					<div class="clearfix pop-title">
+						<p class="pull-left">修改密码提示框</p>
+						<a href="#" class="pull-right pop-close "></a>
+					</div>
+					<div class="popMsg_content">
+						<p class="errorMsg">
+							<i ></i>
+							<span></span>
+						</p>
+						<button class="clearfix">确定</button>
+					</div>
+				</div>
+				<!--<div class="pop-shadow"></div>-->
 			</div>
 			<div class="hidden pop-mask"></div>
 			<!--修改密码结束-->
 			<script type="text/javascript" src="../plugins/jQuery/jquery-1.11.3.min.js"></script>
 			<script type="text/javascript" src="../plugins/bootstarp/js/bootstrap.min.js"></script>
-			<script src="../js/jquery.metisMenu.js"></script>
-			<script src="../js/jquery.slimscroll.min.js"></script>
-		
 			<script src="../js/system_frame.js"></script>
-			<script type="text/javascript" src="../js/login.js" ></script>
 	</body>
 </html>
