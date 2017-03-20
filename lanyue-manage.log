@@ -106,3 +106,860 @@
 
 2017-03-16 16:41:38
 [DEBUG]-[Thread: qtp14681992-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\git\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-17 11:41:56
+[DEBUG]-[Thread: qtp23251462-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-17 11:41:56
+[DEBUG]-[Thread: qtp23251462-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-17 11:45:15
+[DEBUG]-[Thread: qtp23251462-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-17 11:45:20
+[DEBUG]-[Thread: qtp23251462-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-17 11:46:22
+[DEBUG]-[Thread: qtp23251462-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-17 11:46:22
+[DEBUG]-[Thread: qtp23251462-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-17 11:46:24
+[DEBUG]-[Thread: qtp23251462-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-17 11:46:50
+[DEBUG]-[Thread: qtp23251462-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-17 11:46:50
+[DEBUG]-[Thread: qtp23251462-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-17 11:46:52
+[DEBUG]-[Thread: qtp23251462-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-17 11:49:03
+[DEBUG]-[Thread: qtp23251462-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-17 11:49:03
+[DEBUG]-[Thread: qtp23251462-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-17 11:49:24
+[WARN]-[Thread: qtp23251462-16]-[com.jfinal.core.ActionHandler.handle()]: 404 Action Not Found: /frame/
+
+2017-03-17 11:50:54
+[DEBUG]-[Thread: qtp23286828-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/frame/index.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-17 11:50:54
+[ERROR]-[Thread: qtp23286828-14]-[com.jfinal.core.ActionHandler.handle()]: /frame
+com.jfinal.render.RenderException: java.io.FileNotFoundException: Template "/page/frame/index.html" not found.
+	at com.jfinal.render.FreeMarkerRender.render(FreeMarkerRender.java:130)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:93)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:72)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:453)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:560)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1072)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:382)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1006)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:365)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:485)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:926)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:988)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:635)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.io.FileNotFoundException: Template "/page/frame/index.html" not found.
+	at freemarker.template.Configuration.getTemplate(Configuration.java:742)
+	at freemarker.template.Configuration.getTemplate(Configuration.java:665)
+	at com.jfinal.render.FreeMarkerRender.render(FreeMarkerRender.java:126)
+	... 25 more
+
+2017-03-17 11:52:38
+[DEBUG]-[Thread: qtp23286828-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/index.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-17 11:52:38
+[DEBUG]-[Thread: qtp23286828-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/index.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\index.html"
+
+2017-03-17 11:58:32
+[INFO]-[Thread: qtp23286828-12]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-17 11:58:32
+[INFO]-[Thread: qtp23286828-12]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-17 11:58:32
+[INFO]-[Thread: qtp23286828-12]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-17 11:58:32
+[INFO]-[Thread: qtp23286828-12]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-17 11:58:32
+[DEBUG]-[Thread: qtp23286828-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-17 11:58:32
+[DEBUG]-[Thread: qtp23286828-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-17 11:58:53
+[DEBUG]-[Thread: qtp23286828-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/account.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-17 11:58:53
+[DEBUG]-[Thread: qtp23286828-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 11:59:08
+[DEBUG]-[Thread: qtp23286828-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 11:59:20
+[DEBUG]-[Thread: qtp23286828-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 11:59:32
+[INFO]-[Thread: qtp32025711-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-17 11:59:32
+[INFO]-[Thread: qtp32025711-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-17 11:59:32
+[INFO]-[Thread: qtp32025711-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-17 11:59:32
+[INFO]-[Thread: qtp32025711-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-17 11:59:32
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-17 11:59:32
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-17 12:00:08
+[DEBUG]-[Thread: qtp32025711-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/account.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-17 12:00:08
+[DEBUG]-[Thread: qtp32025711-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 12:00:30
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 12:04:37
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 12:04:45
+[DEBUG]-[Thread: qtp32025711-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 12:06:49
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 12:08:14
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 12:08:39
+[DEBUG]-[Thread: qtp32025711-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:11:46
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:14:54
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:18:34
+[DEBUG]-[Thread: qtp32025711-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:23:07
+[DEBUG]-[Thread: qtp32025711-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:23:13
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:23:17
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:25:28
+[DEBUG]-[Thread: qtp32025711-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:28:42
+[DEBUG]-[Thread: qtp32025711-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489721349312 != file lastModified=1489728386973
+
+2017-03-17 13:28:42
+[DEBUG]-[Thread: qtp32025711-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 13:28:53
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:28:55
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:29:36
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:29:55
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:32:30
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:32:57
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:33:24
+[DEBUG]-[Thread: qtp32025711-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:33:42
+[DEBUG]-[Thread: qtp32025711-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:34:07
+[DEBUG]-[Thread: qtp32025711-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:34:21
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:34:47
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:35:45
+[DEBUG]-[Thread: qtp32025711-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:36:06
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489728386973 != file lastModified=1489728965031
+
+2017-03-17 13:36:06
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 13:36:36
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:39:18
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:39:23
+[DEBUG]-[Thread: qtp32025711-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:39:31
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:39:44
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:40:17
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:40:20
+[DEBUG]-[Thread: qtp32025711-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:40:48
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:40:49
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:40:50
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:40:50
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:40:50
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:40:51
+[DEBUG]-[Thread: qtp32025711-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:40:51
+[DEBUG]-[Thread: qtp32025711-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:40:51
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:40:52
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:40:52
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:40:52
+[DEBUG]-[Thread: qtp32025711-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:40:52
+[DEBUG]-[Thread: qtp32025711-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:40:53
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:40:53
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:41:44
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/account.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-17 13:41:44
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 13:43:37
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489728965031 != file lastModified=1489729407221
+
+2017-03-17 13:43:37
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 13:48:07
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:48:44
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:49:20
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:50:27
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:50:51
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:51:01
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:51:36
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:52:34
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:52:44
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:53:51
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:53:55
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:54:24
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 13:57:12
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:06:04
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489729407221 != file lastModified=1489730734858
+
+2017-03-17 14:06:04
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 14:06:11
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:06:13
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:06:57
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:09:19
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:16:22
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489730734858 != file lastModified=1489731303053
+
+2017-03-17 14:16:22
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 14:16:24
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:16:27
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:17:37
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:18:08
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:22:52
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:22:54
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:27:18
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:27:21
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:28:27
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:32:20
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489731303053 != file lastModified=1489732312526
+
+2017-03-17 14:32:20
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 14:33:44
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:37:15
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489732312526 != file lastModified=1489732632999
+
+2017-03-17 14:37:15
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 14:37:23
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:40:08
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489732632999 != file lastModified=1489732806644
+
+2017-03-17 14:40:08
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 14:41:59
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489732806644 != file lastModified=1489732916038
+
+2017-03-17 14:41:59
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 14:44:21
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:44:31
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:48:20
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489732916038 != file lastModified=1489733278035
+
+2017-03-17 14:48:20
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 14:48:38
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:51:52
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:51:56
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:52:07
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:52:33
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489733278035 != file lastModified=1489733551383
+
+2017-03-17 14:52:33
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 14:52:38
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:52:56
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:57:58
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:58:02
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:58:06
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:58:13
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 14:59:23
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:00:09
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:00:16
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:00:27
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:00:33
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:00:59
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:01:01
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:01:03
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:02:31
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489733551383 != file lastModified=1489734122462
+
+2017-03-17 15:02:31
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 15:03:20
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:03:49
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:04:03
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:04:53
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:05:10
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:15:36
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489734122462 != file lastModified=1489734888252
+
+2017-03-17 15:15:36
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 15:15:39
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:15:41
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:15:45
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:15:50
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:15:52
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:15:55
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:18:28
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:23:19
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:37:31
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:37:33
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:54:38
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:54:41
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:55:28
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489734888252 != file lastModified=1489737324939
+
+2017-03-17 15:55:28
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 15:55:39
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489737324939 != file lastModified=1489737336896
+
+2017-03-17 15:55:39
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 15:56:05
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:56:53
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 15:58:15
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:02:06
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:02:25
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:02:28
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:03:03
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:03:14
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:03:58
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:05:39
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:06:20
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:07:25
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:08:22
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:09:44
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:14:09
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:15:52
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:21:36
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:21:38
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:22:06
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:27:45
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:27:48
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:28:47
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:29:28
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:29:58
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:33:47
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:33:53
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:33:57
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:35:07
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:35:30
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:36:33
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:38:42
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:39:53
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:40:02
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:40:39
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:40:54
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:41:24
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:42:11
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:42:15
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:42:37
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:51:24
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:51:26
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:51:28
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:55:38
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489737336896 != file lastModified=1489740695851
+
+2017-03-17 16:55:38
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 16:55:45
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 16:57:05
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:00:45
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:02:42
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:15:47
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489740695851 != file lastModified=1489741390480
+
+2017-03-17 17:15:47
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 17:15:49
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:16:12
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:18:54
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:22:46
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:23:43
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:23:52
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:24:36
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:26:59
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:31:08
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:31:58
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:33:40
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:34:05
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:35:10
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:45:33
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:47:03
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:47:08
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:47:09
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:47:12
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 17:47:54
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:01:07
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:01:28
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:02:34
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1489741390480 != file lastModified=1489744933837
+
+2017-03-17 18:02:34
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/account.html"["zh_CN",UTF-8,parsed]  from "E:\\finfosoft-water\\src\\main\\webapp\\page\\account.html"
+
+2017-03-17 18:07:41
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:09:23
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:18:03
+[DEBUG]-[Thread: qtp32025711-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:18:52
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:18:56
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:19:01
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:19:06
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:19:15
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:19:19
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:20:27
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:23:37
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:24:33
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:24:36
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:24:39
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:28:56
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:28:58
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:29:00
+[DEBUG]-[Thread: qtp32025711-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:29:38
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:29:40
+[DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:29:41
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:29:42
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:29:43
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:29:44
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-17 18:29:44
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.

@@ -14,8 +14,10 @@ public class FrameController extends Controller{
 	/**
 	 * 框架首页
 	 */
+	@Clear()
 	public void index(){
-		render("");
+		System.err.println("111");
+		render("index.html");
 	}
 	
 	/**

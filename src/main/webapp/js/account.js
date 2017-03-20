@@ -1,9 +1,9 @@
 $.ajax({
 	type: "get",
-	url: "http://192.168.1.114/v1/users",
+	url: "http://121.42.253.149:18801/v1/users",
 	dataType: "JSON",
 	data: {
-		access_token: "58c9ef06ba94b322105d56b1"
+		access_token: "58cbba8ad19b1425d08b04eb"
 	},
 	success: function(data) {
 		console.log(data);
@@ -11,6 +11,41 @@ $.ajax({
 			$(".noneData").css("display", "block");
 		} else {
 			$(".noneData").css("display", "none");
+			
+//角色公共函数
+
+  
+    	       
+
+                	
+//点击显示添加页面
+			$(".btn-primary").on("click", function() {				
+				$(".addAccountMask").fadeIn(200);
+				 var oRole="";
+				for(var i in data.rolesName){
+					oRole+="<li class='disabled' rolename_id="+data.rolesName[i]._id+">"+data.rolesName[i].role_name+"</li>";
+				}
+				$(".accountRole ul").html(oRole);			
+				//点击添加角色
+				$(".addRole ul li").on("click", function() {
+					var flag = 1;
+					$(this).each(function(index, ele) {
+						if (flag) {
+							$(this).removeClass("disabled").addClass("cheacked");
+							flag = 0;
+						} else {
+							$(this).removeClass("cheacked").addClass("disabled");
+							flag = 1;
+						}	
+					 })
+					$(".addRole ul .cheacked").each(function(index,ele){
+						console.log(ele)
+					})
+					
+				})
+		    })
+			
+			
 			var str = '';			
 			for (var i = 0; i < data.rows.length; i++) {
 				var str2 = '';			
@@ -41,7 +76,7 @@ $.ajax({
 			console.log($(".accountList").index());
 		}
 		
-		
+		//修改账户
 		$(".set").on("click", function() {
 			var that = $(this);
 			$(".modifyAccountMask").fadeIn(200);
@@ -49,7 +84,7 @@ $.ajax({
 				type: 'get',
 				url: "http://192.168.1.114/v1/users",
 				data: {
-					access_token: "58c9ef06ba94b322105d56b1"
+					access_token: "58cb60ba19ee5f287ca5520b"
 				},
 				success: function(data) {
 					$("#modifyUsername").val(data.rows[that.parents(".accountList").index()].fullname);
@@ -88,7 +123,7 @@ $.ajax({
 							dataType: "JSON",
 							data: {
 								data: modifydata,
-								access_token: "58c9ef06ba94b322105d56b1"
+								access_token: "58cb60ba19ee5f287ca5520b"
 							},
 							success: function(data) {
 								console.log(data);
@@ -101,6 +136,7 @@ $.ajax({
 		});
 		$(".closeModify").on("click", function() {
 			$(".modifyAccountMask").fadeOut(200);
+//			roles($(".modifyAccount .accountRole ul"),$(".modifyAccount .accountRole ul li"));
 		})
 		var delId=data;
 		$(".accountClose").on("click", function() {
@@ -110,10 +146,11 @@ $.ajax({
 				$(".sureDel").on("click",function(){
 					$.ajax({
 						  type: 'delete',
-						  url: "http://192.168.1.114/v1/users/"+delId.rows[that.parents(".accountList").index()]._id+"?access_token=58c9ef06ba94b322105d56b1",
+						  url: "http://192.168.1.114/v1/users/"+delId.rows[that.parents(".accountList").index()]._id+"?access_token=58cb600f19ee5f23e0873653",
 						  success: function(data){
 						  	console.log(data);
-						  	$(".accountList").remove(that.parents(".accountList"));
+						  	location.reload("account.html") ;
+						  	console.log(that.parents(".accountList"));
 						  }		  
 						})
 					$(".delAccountMask").fadeOut(200);
@@ -141,7 +178,7 @@ function blank(obj, str1, str2) {
 		}
 	})
 }
-blank($("#searchId"), "", "输入关键字来查找您的账号");
+blank($("#searchId"), "", "请输入姓名查找");
 blank($("#addUsername"), "", "请输入姓名");
 $('[data-toggle="tooltip"]').tooltip();
 var re = /^[a-zA-Z0-9]+@\w+(.[a-zA-Z]+){1,2}$/; //验证邮箱
@@ -170,19 +207,24 @@ validate($("#addPassword"), pass, "请输入正确密码", "请输入密码(由6
 validate($("#modifyText"), re, "请输入正确的邮箱格式", "请输入邮箱");
 validate($("#modifyPhone"), tage, "请输入正确的手机号", "请输入手机号");
 validate($("#modifyPassword"), pass, "请输入正确密码", "请输入密码(由6到16位字母数字下划线组成)");
-//点击显示添加页面
-$(".btn-primary").on("click", function() {
-	$(".addAccountMask").fadeIn(200);
+$(".btn-primary").on("click", function() {				
+			$(".addAccountMask").fadeIn(200);
+})
 
+$(".addState").find("input").on("click",function(){
+	$(".addState").find("input").removeClass(".stats");
+	$(this).addClass(".stats");
 })
 $(".closeAdd").on("click", function() {
 		$(".addAccountMask").fadeOut(200);
-	})
+		
+})
+
 //点击添加账户
 
 $(".addBtn").on("click", function() {
+	
 		if ($("#addText").val() == "请输入邮箱") {
-
 			$("#addText").val("邮箱不能为空");
 			$("#addText").css("color", "red");
 		} else if ($("#addUsername").val() == "请输入姓名") {
@@ -201,7 +243,7 @@ $(".addBtn").on("click", function() {
 			$("#addPassword").val("请输入正确密码");
 			$("#addPassword").css("color", "red");
 		} else {
-
+			
 			var data = "{'fullname':'" + $("#addUsername").val() + "','username':'" + $("#addText").val() + "','password':'" + $("#addPassword").val() + "','mobile':'" + $("#addPhone").val() + "','status':" + 1 + "}";
 			$.ajax({
 				type: 'POST',
@@ -209,39 +251,72 @@ $(".addBtn").on("click", function() {
 				dataType: "JSON",
 				data: {
 					data: data,
-					access_token: "58c9ef06ba94b322105d56b1"
+					access_token: "58cb600f19ee5f23e0873653"
 				},
 				success: function(data) {
 					console.log(data);
-					alert(data.success);
+					alert(data.success);				
 					$("#addText").val("请输入邮箱");
 					$("#addUsername").val("请输入姓名");
 					$("#addPhone").val("请输入手机号");
 					$("#addPassword").val("请输入密码(由6到16位字母数字下划线组成)");
+					location.reload("account.html") ;
 				}
 			})
 		}
 	})
-	//	data="{'collectorModel':'"+editDtuModel.collectorModel+"','description':'"+editModelInfo.modelInfo+"','status':"+modelStatus+",'portInfo':'"+editModelPortsInfo.portsInfo+"','collectorPorts':'"+JSON.stringify(dtuPortsData)+"'}"
-	//		$.ajax({
-	//			url:saveurl,
-	//			type:sendType,
-	//			dataType:'JSON',
-	//			data:{
-	//				access_token:window.accesstoken,
-	//				recordId:dtuModelKey,
-	//				data:data
-	//			},
-$(".accountRole ul li").each(function(index, ele) {
-		var flag = 1;
-		$(this).on("click", function() {
-			if (flag) {
-				$(this).removeClass("disabled").addClass("cheacked");
-				flag = 0;
-			} else {
-				$(this).removeClass("cheacked").addClass("disabled");
-				flag = 1;
-			}
-
+//按回车键进行查找
+$("#searchId").on("keyup",function(event){	
+	if(event.keyCode==13){	
+		ajaxRequest();
+	}
+})
+function ajaxRequest(){
+	var search="";
+	var okey='{"fullname":"'+$("#searchId").val()+'"}';
+	$(".accountContent").html("");
+	$.ajax({
+				type: 'get',
+				url: "http://192.168.1.114/v1/users",
+				dataType: "JSON",
+				data: {
+					like: okey,
+					access_token: "58cb600f19ee5f23e0873653"
+				},
+				success: function(data) {
+					for(var i=0;i<data.rows.length;i++){
+						search= '<div class="accountList">' +
+						'<div class="listTop">' +
+							'<span>' + data.rows[i].fullname + '</span>' +
+							'<i class="fa fa-wrench set" data-toggle="tooltip" data-placement="top" title="修改"></i>' +
+							'<strong class="accountClose" data-toggle="tooltip" data-placement="top" title="删除">&times;</strong>' +
+						'</div>' +
+						'<div class="listName">' + data.rows[i].username + '</div>' +
+						'<ul class="positionList" >'+
+						'</ul>' +'</div>';							
+						$(".accountContent").append(search);
+					}
+				}
 		})
-	})
+}
+//按搜索图标进行查找
+$(".fa-search").on("click",function(){
+	ajaxRequest();
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
