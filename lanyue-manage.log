@@ -3858,3 +3858,24 @@ Caused by: java.io.FileNotFoundException: Template "/page/1" not found.
 
 2017-03-21 10:51:34
 [DEBUG]-[Thread: qtp320174-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/index.html"["zh_CN",UTF-8,parsed]  from "E:\\HBuilderSpace\\finfosoft-water\\src\\main\\webapp\\page\\index.html"
+
+2017-03-21 11:05:25
+[INFO]-[Thread: qtp2830883-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 11:05:25
+[INFO]-[Thread: qtp2830883-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 11:05:25
+[INFO]-[Thread: qtp2830883-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 11:05:25
+[INFO]-[Thread: qtp2830883-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-21 11:05:25
+[INFO]-[Thread: qtp2830883-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 令牌错误
+
+2017-03-21 11:05:25
+[DEBUG]-[Thread: qtp2830883-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-21 11:05:25
+[DEBUG]-[Thread: qtp2830883-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "D:\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
