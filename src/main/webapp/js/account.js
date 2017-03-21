@@ -1,15 +1,15 @@
-var serviceUrl="http://192.168.1.104/v1/users";
+var serviceUrl="http://121.42.253.149:18801/v1/users";
 //获取账户列表
 $.ajax({
 	type: "get",
 	url: serviceUrl,
 	dataType: "JSON",
 	async:false,
+	crossDomain: true == !(document.all),
 	data: {
 		access_token: "58cf4c9619ee5f1068248ded"
 	},
 	success: function(data) {
-		console.log(data);
 		if (data == null) {
 			$(".noneData").css("display", "block");
 		} else {
@@ -22,9 +22,9 @@ $.ajax({
 					for(var j = 0; j<data.rows[i].roles.length; j++){					
 						str2 += '<li>'+data.rows[i].roles[j]+'</li>';															
 					}						
-					}		
+				}		
 				 str= '<div class="accountList">' +
-					'<div class="listTop">' +
+						'<div class="listTop">' +
 						'<span>' + data.rows[i].fullname + '</span>' +
 						'<i class="fa fa-wrench set" data-toggle="tooltip" data-placement="top" title="修改"></i>' +
 						'<strong class="accountClose" data-toggle="tooltip" data-placement="top" title="删除">&times;</strong>' +
@@ -32,27 +32,25 @@ $.ajax({
 					'<div class="listName">' + data.rows[i].username + '</div>' +
 					'<ul class="positionList" >'+str2+
 					'</ul>' +'</div>';	
-					$(".accountContent").append(str);
+				$(".accountContent").append(str);
 			
-//判断列表的状态
-			if(data.rows[i].status==0){
-				$(".accountList").eq(i).addClass("invalidList");
-				$(".accountList .positionList").eq(i).find("li").addClass("disabled");
-			}else{
-				$(".accountList .positionList").eq(i).find("li").addClass("cheacked");
+	//判断列表的状态
+				if(data.rows[i].status==0){
+					$(".accountList").eq(i).addClass("invalidList");
+					$(".accountList .positionList").eq(i).find("li").addClass("disabled");
+				}else{
+					$(".accountList .positionList").eq(i).find("li").addClass("cheacked");
+				}
 			}
-		}
-		}
+	}
 	//获取角色列表
 		var oRole="";
 		for(var i in data.rolesName){
 			oRole+="<li class='disabled' rolename_id="+data.rolesName[i]._id+">"+data.rolesName[i].role_name+"</li>";
 		}
-		$(".accountRole ul").html(oRole);
-		
+		$(".accountRole ul").html(oRole);		
 	//点击添加角色
-		function setRole(obj){
-			
+		function setRole(obj){			
 			obj.each(function(index, ele) {
 				   $(this).on("click", function() {
 					if ($(this).attr("class")=="disabled") {
@@ -68,9 +66,8 @@ $.ajax({
 		$(".btn-primary").on("click", function() {				
 				$(".addAccountMask").fadeIn(200);
 				setRole($(".addRole ul li"));
-			})
-	//点击添加账户
-	
+		})
+	//点击添加账户	
   		$(".addBtn").on("click", function() {
   			if($(".addState .stats").val()=="有效"){
 				flag=1;
@@ -102,20 +99,19 @@ $.ajax({
 					$(".addphoneError").css("display","block");
 					$(".addphoneError").html("请输入正确的手机号");
 					$(".addphoneError").css("color", "#fff");
-				}else {
-					
+				}else {				
 					//添加角色
 		  			var addoRole=[];
 		  			$(".addRole ul .cheacked").each(function(index,ele){
 						addoRole.push($(".addRole ul .cheacked").eq(index).attr("rolename_id"));
-					})
-		  			
+					})	  			
 		  			addoRole+="";
 					var data = "{'fullname':'" + $("#addUsername").val() + "','username':'" + $("#addText").val() + "','password':'" + $("#addPassword").val() + "','mobile':'" + $("#addPhone").val() + "','status':" + flag+ "}";
 					$.ajax({
 						type: 'POST',
 						url: serviceUrl,
 						dataType: "JSON",
+						crossDomain: true == !(document.all),
 						data: {
 							'roles':addoRole,
 							data: data,
@@ -155,6 +151,7 @@ $.ajax({
 			$.ajax({
 				type: 'get',
 				url: serviceUrl,
+				crossDomain: true == !(document.all),
 				data: {
 					access_token: "58cf4c9619ee5f1068248ded"
 				},
@@ -216,9 +213,10 @@ $.ajax({
 										addoRole.push($(".modifyRole ul .cheacked").eq(index).attr("rolename_id"));
 									})						  			
 						  			addoRole+="";
-								var modifydata = "{'fullname':'"+ $("#modifyUsername").val()+ "','username':'"+ $("#modifyText").val() + "','password':'" + $("#modifyPassword").val() + "','mobile':'"+ $("#modifyPhone").val() + "','status':" + setVar + "}";
+									var modifydata = "{'fullname':'"+ $("#modifyUsername").val()+ "','username':'"+ $("#modifyText").val() + "','password':'" + $("#modifyPassword").val() + "','mobile':'"+ $("#modifyPhone").val() + "','status':" + setVar + "}";
 								$.ajax({
 									type: 'put',
+									crossDomain: true == !(document.all),
 									url: serviceUrl+"/"+dataId.rows[that.parents(".accountList").index()]._id,
 									dataType: "JSON",
 									data: {
@@ -227,7 +225,6 @@ $.ajax({
 										access_token: "58cf4c9619ee5f1068248ded"
 									},
 									success: function(data) {
-										console.log(data);
 										$(".modifyMsg").css("display","block");	
 										if(data.code==200){
 											$(".modifyMsg .modifyback  .backImg").css("background-position","0px 0px");
@@ -249,6 +246,7 @@ $.ajax({
 						}
 					});
 				});
+		//点击修改关闭按钮;
 		$(".closeModify").on("click", function() {
 			$(".modifyAccountMask").fadeOut(200);
 		})
@@ -259,7 +257,8 @@ $.ajax({
 			//删除账户
 			$(".sureDel").on("click",function(){
 					$.ajax({
-						  type: 'delete',
+						  type: 'delete',					  
+						  crossDomain: true == !(document.all),
 						  url: serviceUrl+"/"+delId.rows[that.parents(".accountList").index()]._id+"?access_token=58cf4c9619ee5f1068248ded",
 						  success: function(data){
 						  	console.log(data);
@@ -269,10 +268,11 @@ $.ajax({
 						})
 				})
 		})
-		
+		//点击删除关闭按钮;
 		$(".closeDel").on("click", function() {
 			$(".delAccountMask").fadeOut(200);				
 		})
+		//点击删除取消按钮;
 		$(".cancelDel").on("click", function() {
 			$(".delAccountMask").fadeOut(200);
 		})
@@ -330,7 +330,6 @@ blank($("#modifyPassword"),$(".modifypassError"), "请输入密码(由6到16位�
 blank($("#modifyPhone"),$(".modifyphoneError"), "请输入手机号", "请输入正确的手机号", phone);
 //初始化提示框
 $('[data-toggle="tooltip"]').tooltip();
-
 //选择状态
 setStatus($(".addState input"));
 setStatus($(".modifyState input"));
@@ -340,12 +339,12 @@ function setStatus(obj){
 		$(this).addClass("stats");
 	})
 }
-
+//点击添加的关闭按钮;
 $(".closeAdd").on("click", function() {
 		$(".addAccountMask").fadeOut(200);
 		
 })
-//按回车键进行查找
+//按回车键进行查找;
 $("#searchId").on("keyup",function(event){	
 	if(event.keyCode==13){	
 		ajaxRequest();
@@ -358,6 +357,7 @@ function ajaxRequest(){
 	$.ajax({
 				type: 'get',
 				url: serviceUrl,
+				crossDomain: true == !(document.all),
 				dataType: "JSON",
 				data: {
 					like: okey,
