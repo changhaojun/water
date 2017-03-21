@@ -32,25 +32,27 @@
 					case "操作日志":iIcon = 'fa-file-text-o';break;
 					default :break;
 				}
-				var childStr="";
+				
 				if(data[i].is_navigation>0){
-					if(data[i].children_resource.length){
-						if(data[i].children_resource.is_navigation>0){
-							for(var j=0;j<data[i].children_resource.length;j++){
-								var childData=data[i].children_resource[j];
-								childStr+='<li><a class="J_menuItem" href="/finfosoft-water'+childData.resource_url+'" target="iframe0" data-index="0">'+childData.resource_name+'</a></li>';	
-							}	
-						}
-					}
 					var navURL="javascript:;"
 					if(data[i].is_navigation==1){
 						navURL=data[i].resource_url;
 					}
 					strNav=$('<li class="changeLi" data-type="" data-toggle="tooltip" data-placement="right"'+
-					' title="'+data[i].resource_name+'"><a class="J_menuItem slideToggle" href="/finfosoft-water'+navURL+'" target="iframe0">'+
+					' title="'+data[i].resource_name+'"><a class="J_menuItem slideToggle" href="'+navURL+'">'+
 					'<i class="fa '+iIcon+'"></i><span class="nav-label">'+data[i].resource_name+'</span>'+
-					'<span class="fa arrow"></span></a><div class="nav-second-box"><ul class="nav nav-second-level nav_list">'+childStr+'</ul></div></li>');
+					'<span class="fa arrow"></span></a><div class="nav-second-box"><ul class="nav nav-second-level nav_list"></ul></div></li>');
 					$('#side-menu ').append(strNav);
+					if(data[i].children_resource.length){
+						var childStr="";
+						for(var j=0;j<data[i].children_resource.length;j++){
+							//console.log(i+"pp")
+							//console.log(j)
+							var childData=data[i].children_resource[j];
+							childStr+='<li><a class="J_menuItem" href="'+childData.resource_url+'" data-index="0">'+childData.resource_name+'</a></li>';
+						}
+						$(".changeLi .nav_list").eq(i).append(childStr);
+					}	
 				}
 				
 			}
