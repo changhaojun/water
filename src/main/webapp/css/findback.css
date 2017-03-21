@@ -1,0 +1,206 @@
+body{
+	background: #f6f6f6;
+}
+body *{
+	font-family: "微软雅黑";
+	box-sizing: border-box;
+}
+
+/* BEGIN .header */
+.header{
+	width: 100%;
+	height: 50px;
+}
+.header-left{
+	width: 220px;
+	background: #1ab394;
+}
+.header-left>img{
+	width: 220px;
+}
+.header-right{
+	width: calc(100% - 220px);
+	height: 50px;
+	background: #31333d;
+}
+.header-right>h2{
+	width: calc(100% - 306px);
+	margin-left: 22px;
+	border-right: 1px solid #242631;
+}
+.header-right>.qr{
+	width: 284px;
+	border-left: 1px solid #45464f;
+	line-height: 50px;
+	position: relative;
+}
+.header-right>.qr>span{
+	display: block;
+	margin: 0 13px 0 19px;
+	color: #fff;
+	font-size: 15px;
+	font-weight: 500;
+}
+.header-right>.qr>img{
+	display: block;
+	margin-top: 10.5px;
+}
+.header-right>.qr>.qr-img{
+	margin-top: 0;
+	width: 284px;
+	position: absolute;
+	left: 0;
+	top: 20px;
+	opacity: 0;
+	transition: 1s;
+}
+.header-right>.qr:hover .qr-img{
+	opacity: 1;
+	top: 50px;
+}
+/* END .header */
+
+/* BEGIN .main */
+.main{
+	width: 100%;
+	position: relative;
+}
+.main>.wrap{
+	width: 500px;
+	background: #fff;
+	position: absolute;
+}
+.main .center{
+	margin: 0 auto;
+	width: 456px;
+}
+.main-title{
+	line-height: 40px;
+	background: #1ab394;
+	color: #fff;
+	font-size: 14px;
+}
+.main-form{
+	padding: 30px 0;
+	position: relative;
+}
+.main-form .newPassword{
+	margin-bottom: 12px;
+	position: relative;
+}
+.main-form .againPassword{
+	margin-bottom: 30px;
+	position: relative;
+}
+.main-form label{
+	display: block;
+	line-height: 38px;
+	padding-right: 14px;
+	width: 70px;
+	height: 38px;
+	text-align: right;
+	color: #7e7e7e;
+	font-size: 14px;
+	font-weight: normal;
+}
+.main-form input{
+	display: block;
+	width: 353px;
+	height: 38px;
+	border: 1px solid #1ab394;
+	font-size: 14px;
+}
+.tip{
+	padding: 0 5px;
+	line-height: 20px;
+	background: #ff787b;
+	color: #fff;
+	border-radius: 2px;
+	position: absolute;
+	right: 0;
+	top: -26px;
+}
+/*.newPassword .tip{
+	top: -26px;
+}*/
+.tip>span{
+	width: 0;
+    height: 0;
+    border-left: 3.5px solid transparent;
+    border-right: 3.5px solid transparent;
+    border-top: 6px solid #ff787b;
+	position: absolute;
+	left: 30px;
+	bottom: -6px;
+}
+/*.newPassword .tip>span{
+	width: 0;
+    height: 0;
+    border-left: 3.5px solid transparent;
+    border-right: 3.5px solid transparent;
+    border-top: 6px solid #ff787b;
+	position: absolute;
+	left: 30px;
+	bottom: -6px;
+}
+.againPassword .tip{
+	bottom: -26px;
+}
+.againPassword .tip>span{
+	width: 0;
+    height: 0;
+    border-left: 3.5px solid transparent;
+    border-right: 3.5px solid transparent;
+    border-bottom: 6px solid #ff787b;
+	position: absolute;
+	left: 30px;
+	top: -6px;
+}*/
+/*.wrong{
+	padding: 5px 0;
+	width: 20px;
+	line-height: 14px;
+	background: #ff787b;
+	text-align: center;
+	color: #fff;
+	border-radius: 2px;
+	position: absolute;
+	right: 29px;
+	top: 6px;
+}
+.wrong>span{
+	width: 0;
+    height: 0;
+    border-top: 3.5px solid transparent;
+    border-bottom: 3.5px solid transparent;
+    border-right: 6px solid #ff787b;
+	position: absolute;
+	left: -6px;
+}
+.wrong>.top{
+	top: 40px;
+}
+.wrong>.btm{
+	bottom: 40px;
+}*/
+.main-form .divider{
+	margin-bottom: 30px;
+	height: 1px;
+	background: #a4a4a4;
+}
+.main-form button{
+	display: block;
+	margin: 0 auto;
+	width: 254px;
+	height: 45px;
+	line-height: 45px;
+	color: #fff;
+	letter-spacing: 20px;
+	text-indent: 20px;
+	background: #1ab394;
+	border-radius: 22.5px;
+}
+.main-form button:hover{
+	background: #24c5a4;
+}
+/* ENG .main */

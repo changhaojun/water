@@ -3,7 +3,76 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
+		<link rel="stylesheet" type="text/css" href="../plugins/bootstarp/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/findback.css"/>
 	</head>
 	<body>
+		<div class="clearfix header">
+			<h1 class="pull-left header-left">
+				<img src="../img/frame_logo.png" alt="lanyue" />
+			</h1>
+			<div class="clearfix pull-left header-right">
+				<h2 class="pull-left">
+					<img src="../img/name_logo.png" alt="water" />
+				</h2>
+				<div class="clearfix pull-right qr">
+					<span class="pull-left">扫描下载APP 随时随地智慧物联</span>
+					<img class="pull-left" src="../img/qr_code_thumbnail.png" alt="" />
+					<img class="qr-img" src="../img/qr_code.png" alt="" />
+				</div>
+			</div>
+		</div>
+		<div class="main">
+			<div class="wrap step1">
+				<div class="main-title">
+					<p class="center">修改密码</p>
+				</div>
+				<div class="main-form">
+					<div class="clearfix center newPassword">
+						<label class="pull-left" for="new">新密码</label>
+						<input class="pull-left" type="password" id="new"/>
+						<div class="hidden tip">
+							请输入6~16位密码
+							<span></span>
+						</div>
+					</div>
+					<div class="clearfix center againPassword">
+						<label class="pull-left" for="again">确认密码</label>
+						<input class="pull-left" type="password" id="again"/>
+						<div class="hidden tip">
+							两次密码输入不一致
+							<span></span>
+						</div>
+					</div>
+					<div class="center divider"></div>
+					<button class="submit-btn">重置</button>
+					<!--<div class="hidden wrong">
+						两次密码输入不一致
+						<span class="top"></span>
+						<span class="btm"></span>
+					</div>-->
+				</div>
+			</div>
+			<div class="hidden wrap step2">
+				<div class="main-title">
+					<p class="center">修改123密码</p>
+				</div>
+				<div class="main-form">
+					<div class="clearfix center newPassword">
+						<label class="pull-left" for="new">新密码</label>
+						<input class="pull-left" type="password" id="new"/>
+					</div>
+					<div class="clearfix center againPassword">
+						<label class="pull-left" for="again">确认密码</label>
+						<input class="pull-left" type="password" id="again"/>
+					</div>
+					<div class="center divider"></div>
+					<!--<button>重置</button>-->
+				</div>
+			</div>
+		</div>
+		<script src="../plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/findback.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 </html>

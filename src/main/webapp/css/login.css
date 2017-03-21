@@ -165,7 +165,7 @@ body *{
 			width: 239px;
 		}
 		.right>form{
-			margin-top: 50px;
+			margin-top: 88px;
 			width: 100%;
 			position: relative;
 		}
@@ -176,7 +176,7 @@ body *{
 		.right>form>.login-title{
 			height: 25px;
 			font-size: 16px;
-			margin-bottom: 52px;
+			margin-bottom: 14px;
 		}
 		.right>form>.login-title>.tip{
 			height: 25px;
