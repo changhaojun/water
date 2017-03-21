@@ -3042,3 +3042,819 @@ Caused by: java.io.FileNotFoundException: Template "/page/frame/index.html" not 
 
 2017-03-20 18:51:02
 [DEBUG]-[Thread: qtp32025711-25]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-21 10:02:31
+[DEBUG]-[Thread: qtp320174-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-21 10:02:31
+[DEBUG]-[Thread: qtp320174-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\HBuilderSpace\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-21 10:08:07
+[DEBUG]-[Thread: qtp320174-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:08:47
+[DEBUG]-[Thread: qtp320174-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:10:05
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:10:05
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:10:05
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:10:05
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-21 10:10:05
+[DEBUG]-[Thread: qtp320174-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:17:00
+[DEBUG]-[Thread: qtp320174-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:17:26
+[INFO]-[Thread: qtp320174-10]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:17:26
+[INFO]-[Thread: qtp320174-10]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:26
+[INFO]-[Thread: qtp320174-10]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:26
+[ERROR]-[Thread: qtp320174-10]-[com.jfinal.core.ActionHandler.handle()]: /frame
+java.lang.ClassCastException: com.alibaba.fastjson.JSONObject cannot be cast to com.jfinal.plugin.activerecord.Record
+	at com.finfosoft.water.common.AuthInterceptor.intercept(AuthInterceptor.java:28)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:65)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:74)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:72)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:453)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:560)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1072)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:382)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1006)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:365)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:485)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:926)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:988)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:635)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Unknown Source)
+
+2017-03-21 10:17:26
+[INFO]-[Thread: qtp320174-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:17:26
+[INFO]-[Thread: qtp320174-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:26
+[INFO]-[Thread: qtp320174-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:26
+[ERROR]-[Thread: qtp320174-16]-[com.jfinal.core.ActionHandler.handle()]: /frame
+java.lang.ClassCastException: com.alibaba.fastjson.JSONObject cannot be cast to com.jfinal.plugin.activerecord.Record
+	at com.finfosoft.water.common.AuthInterceptor.intercept(AuthInterceptor.java:28)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:65)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:74)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:72)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:453)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:560)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1072)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:382)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1006)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:365)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:485)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:926)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:988)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:635)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Unknown Source)
+
+2017-03-21 10:17:27
+[INFO]-[Thread: qtp320174-12]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:17:27
+[INFO]-[Thread: qtp320174-12]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:27
+[INFO]-[Thread: qtp320174-12]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:27
+[ERROR]-[Thread: qtp320174-12]-[com.jfinal.core.ActionHandler.handle()]: /frame
+java.lang.ClassCastException: com.alibaba.fastjson.JSONObject cannot be cast to com.jfinal.plugin.activerecord.Record
+	at com.finfosoft.water.common.AuthInterceptor.intercept(AuthInterceptor.java:28)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:65)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:74)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:72)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:453)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:560)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1072)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:382)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1006)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:365)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:485)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:926)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:988)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:635)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Unknown Source)
+
+2017-03-21 10:17:27
+[INFO]-[Thread: qtp320174-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:17:27
+[INFO]-[Thread: qtp320174-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:27
+[INFO]-[Thread: qtp320174-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:27
+[ERROR]-[Thread: qtp320174-16]-[com.jfinal.core.ActionHandler.handle()]: /frame
+java.lang.ClassCastException: com.alibaba.fastjson.JSONObject cannot be cast to com.jfinal.plugin.activerecord.Record
+	at com.finfosoft.water.common.AuthInterceptor.intercept(AuthInterceptor.java:28)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:65)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:74)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:72)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:453)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:560)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1072)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:382)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1006)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:365)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:485)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:926)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:988)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:635)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Unknown Source)
+
+2017-03-21 10:17:27
+[INFO]-[Thread: qtp320174-15]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:17:27
+[INFO]-[Thread: qtp320174-15]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:27
+[INFO]-[Thread: qtp320174-15]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:27
+[ERROR]-[Thread: qtp320174-15]-[com.jfinal.core.ActionHandler.handle()]: /frame
+java.lang.ClassCastException: com.alibaba.fastjson.JSONObject cannot be cast to com.jfinal.plugin.activerecord.Record
+	at com.finfosoft.water.common.AuthInterceptor.intercept(AuthInterceptor.java:28)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:65)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:74)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:72)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:453)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:560)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1072)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:382)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1006)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:365)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:485)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:926)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:988)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:635)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Unknown Source)
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-10]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-10]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-10]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:28
+[ERROR]-[Thread: qtp320174-10]-[com.jfinal.core.ActionHandler.handle()]: /frame
+java.lang.ClassCastException: com.alibaba.fastjson.JSONObject cannot be cast to com.jfinal.plugin.activerecord.Record
+	at com.finfosoft.water.common.AuthInterceptor.intercept(AuthInterceptor.java:28)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:65)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:74)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:72)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:453)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:560)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1072)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:382)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1006)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:365)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:485)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:926)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:988)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:635)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Unknown Source)
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:28
+[ERROR]-[Thread: qtp320174-17]-[com.jfinal.core.ActionHandler.handle()]: /frame
+java.lang.ClassCastException: com.alibaba.fastjson.JSONObject cannot be cast to com.jfinal.plugin.activerecord.Record
+	at com.finfosoft.water.common.AuthInterceptor.intercept(AuthInterceptor.java:28)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:65)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:74)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:72)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:453)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:560)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1072)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:382)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1006)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:365)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:485)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:926)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:988)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:635)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Unknown Source)
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-12]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-12]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-12]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:28
+[ERROR]-[Thread: qtp320174-12]-[com.jfinal.core.ActionHandler.handle()]: /frame
+java.lang.ClassCastException: com.alibaba.fastjson.JSONObject cannot be cast to com.jfinal.plugin.activerecord.Record
+	at com.finfosoft.water.common.AuthInterceptor.intercept(AuthInterceptor.java:28)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:65)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:74)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:72)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:453)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:560)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1072)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:382)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1006)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:365)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:485)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:926)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:988)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:635)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Unknown Source)
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:28
+[ERROR]-[Thread: qtp320174-16]-[com.jfinal.core.ActionHandler.handle()]: /frame
+java.lang.ClassCastException: com.alibaba.fastjson.JSONObject cannot be cast to com.jfinal.plugin.activerecord.Record
+	at com.finfosoft.water.common.AuthInterceptor.intercept(AuthInterceptor.java:28)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:65)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:74)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:72)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:453)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:560)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1072)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:382)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1006)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:365)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:485)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:926)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:988)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:635)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Unknown Source)
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-15]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-15]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-15]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:28
+[ERROR]-[Thread: qtp320174-15]-[com.jfinal.core.ActionHandler.handle()]: /frame
+java.lang.ClassCastException: com.alibaba.fastjson.JSONObject cannot be cast to com.jfinal.plugin.activerecord.Record
+	at com.finfosoft.water.common.AuthInterceptor.intercept(AuthInterceptor.java:28)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:65)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:74)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:72)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:453)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:560)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1072)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:382)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1006)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:365)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:485)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:926)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:988)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:635)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Unknown Source)
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:28
+[INFO]-[Thread: qtp320174-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:17:28
+[ERROR]-[Thread: qtp320174-14]-[com.jfinal.core.ActionHandler.handle()]: /frame
+java.lang.ClassCastException: com.alibaba.fastjson.JSONObject cannot be cast to com.jfinal.plugin.activerecord.Record
+	at com.finfosoft.water.common.AuthInterceptor.intercept(AuthInterceptor.java:28)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:65)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:74)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:72)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:453)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:560)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1072)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:382)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1006)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:365)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:485)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:926)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:988)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:635)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Unknown Source)
+
+2017-03-21 10:20:12
+[DEBUG]-[Thread: qtp320174-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-21 10:20:12
+[DEBUG]-[Thread: qtp320174-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\HBuilderSpace\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-21 10:20:29
+[INFO]-[Thread: qtp320174-12]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:20:29
+[INFO]-[Thread: qtp320174-12]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:20:29
+[INFO]-[Thread: qtp320174-12]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:20:29
+[INFO]-[Thread: qtp320174-12]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-21 10:20:29
+[INFO]-[Thread: qtp320174-12]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-21 10:20:29
+[INFO]-[Thread: qtp320174-12]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-21 10:20:29
+[ERROR]-[Thread: qtp320174-12]-[com.jfinal.core.ActionHandler.handle()]: /frame
+java.lang.NullPointerException
+	at com.finfosoft.db.mongo.MongoKit.getCollection(MongoKit.java:333)
+	at com.finfosoft.db.mongo.MongoKit.queryCount(MongoKit.java:236)
+	at com.finfosoft.water.common.AuthService.isAuthUrl(AuthService.java:13)
+	at com.finfosoft.water.common.AuthInterceptor.checkPrivilege(AuthInterceptor.java:73)
+	at com.finfosoft.water.common.AuthInterceptor.intercept(AuthInterceptor.java:43)
+	at com.jfinal.aop.Invocation.invoke(Invocation.java:65)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:74)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:72)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:453)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:560)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1072)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:382)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1006)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:365)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:485)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:926)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:988)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:635)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Unknown Source)
+
+2017-03-21 10:22:16
+[DEBUG]-[Thread: qtp320174-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-21 10:22:16
+[DEBUG]-[Thread: qtp320174-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\HBuilderSpace\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-21 10:22:24
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:22:24
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:22:24
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:22:24
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-21 10:22:24
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-21 10:22:24
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-21 10:22:24
+[DEBUG]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth failed
+
+2017-03-21 10:22:24
+[DEBUG]-[Thread: qtp320174-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:26:15
+[DEBUG]-[Thread: qtp320174-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-21 10:26:15
+[DEBUG]-[Thread: qtp320174-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\HBuilderSpace\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-21 10:26:16
+[DEBUG]-[Thread: qtp320174-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:26:16
+[DEBUG]-[Thread: qtp320174-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:26:16
+[DEBUG]-[Thread: qtp320174-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:26:16
+[DEBUG]-[Thread: qtp320174-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:26:17
+[DEBUG]-[Thread: qtp320174-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:26:17
+[DEBUG]-[Thread: qtp320174-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:27:21
+[DEBUG]-[Thread: qtp320174-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-21 10:27:21
+[DEBUG]-[Thread: qtp320174-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\HBuilderSpace\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-21 10:28:02
+[DEBUG]-[Thread: qtp320174-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:34:54
+[DEBUG]-[Thread: qtp320174-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:35:00
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:35:00
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:35:00
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:35:00
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-21 10:35:00
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-21 10:35:00
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-21 10:35:00
+[DEBUG]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-21 10:35:00
+[DEBUG]-[Thread: qtp320174-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/index.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-21 10:35:00
+[DEBUG]-[Thread: qtp320174-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/index.html"["zh_CN",UTF-8,parsed]  from "E:\\HBuilderSpace\\finfosoft-water\\src\\main\\webapp\\page\\index.html"
+
+2017-03-21 10:38:31
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:38:31
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:38:31
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:38:31
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-21 10:38:31
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-21 10:38:31
+[INFO]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-21 10:38:31
+[DEBUG]-[Thread: qtp320174-17]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-21 10:38:31
+[DEBUG]-[Thread: qtp320174-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/index.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\index.html didn't change.
+
+2017-03-21 10:38:40
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:38:40
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:38:40
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:38:40
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-21 10:38:40
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-21 10:38:40
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-21 10:38:40
+[DEBUG]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-21 10:38:40
+[DEBUG]-[Thread: qtp320174-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/index.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\index.html didn't change.
+
+2017-03-21 10:40:29
+[DEBUG]-[Thread: qtp320174-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-21 10:40:29
+[DEBUG]-[Thread: qtp320174-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\HBuilderSpace\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-21 10:40:38
+[DEBUG]-[Thread: qtp320174-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/1"["zh_CN",UTF-8,parsed] ]
+
+2017-03-21 10:40:38
+[ERROR]-[Thread: qtp320174-17]-[com.jfinal.core.ActionHandler.handle()]: /login
+com.jfinal.render.RenderException: java.io.FileNotFoundException: Template "/page/1" not found.
+	at com.jfinal.render.FreeMarkerRender.render(FreeMarkerRender.java:130)
+	at com.jfinal.core.ActionHandler.handle(ActionHandler.java:93)
+	at com.jfinal.core.JFinalFilter.doFilter(JFinalFilter.java:72)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1307)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:453)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:560)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1072)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:382)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1006)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:365)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:485)
+	at org.eclipse.jetty.server.AbstractHttpConnection.content(AbstractHttpConnection.java:937)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.content(AbstractHttpConnection.java:998)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:856)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:240)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.io.FileNotFoundException: Template "/page/1" not found.
+	at freemarker.template.Configuration.getTemplate(Configuration.java:742)
+	at freemarker.template.Configuration.getTemplate(Configuration.java:665)
+	at com.jfinal.render.FreeMarkerRender.render(FreeMarkerRender.java:126)
+	... 25 more
+
+2017-03-21 10:42:35
+[DEBUG]-[Thread: qtp320174-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-21 10:42:35
+[DEBUG]-[Thread: qtp320174-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\HBuilderSpace\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-21 10:45:38
+[DEBUG]-[Thread: qtp320174-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:45:55
+[DEBUG]-[Thread: qtp320174-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:46:02
+[DEBUG]-[Thread: qtp320174-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:47:36
+[DEBUG]-[Thread: qtp320174-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:47:46
+[WARN]-[Thread: qtp320174-22]-[com.jfinal.core.ActionHandler.handle()]: 404 Action Not Found: /fame/
+
+2017-03-21 10:48:37
+[WARN]-[Thread: qtp320174-17]-[com.jfinal.core.ActionHandler.handle()]: 404 Action Not Found: /fame/
+
+2017-03-21 10:48:40
+[DEBUG]-[Thread: qtp320174-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-21 10:48:40
+[DEBUG]-[Thread: qtp320174-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\HBuilderSpace\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-21 10:48:50
+[DEBUG]-[Thread: qtp320174-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:48:55
+[DEBUG]-[Thread: qtp320174-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:49:15
+[DEBUG]-[Thread: qtp320174-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:50:16
+[DEBUG]-[Thread: qtp320174-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:50:16
+[DEBUG]-[Thread: qtp320174-18]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:50:16
+[DEBUG]-[Thread: qtp320174-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\HBuilderSpace\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 10:50:22
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:50:22
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:50:22
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:50:22
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-21 10:50:22
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-21 10:50:22
+[INFO]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-21 10:50:22
+[DEBUG]-[Thread: qtp320174-13]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-21 10:50:22
+[DEBUG]-[Thread: qtp320174-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/index.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-21 10:50:22
+[DEBUG]-[Thread: qtp320174-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/index.html"["zh_CN",UTF-8,parsed]  from "E:\\HBuilderSpace\\finfosoft-water\\src\\main\\webapp\\page\\index.html"
+
+2017-03-21 10:51:34
+[INFO]-[Thread: qtp320174-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-21 10:51:34
+[INFO]-[Thread: qtp320174-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:51:34
+[INFO]-[Thread: qtp320174-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-21 10:51:34
+[INFO]-[Thread: qtp320174-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-21 10:51:34
+[INFO]-[Thread: qtp320174-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-21 10:51:34
+[INFO]-[Thread: qtp320174-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-21 10:51:34
+[DEBUG]-[Thread: qtp320174-16]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-21 10:51:34
+[DEBUG]-[Thread: qtp320174-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Updating source, info for cause: lastModifiedNotChanged=false, cache lastModified=1490061303914 != file lastModified=1490064692722
+
+2017-03-21 10:51:34
+[DEBUG]-[Thread: qtp320174-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/index.html"["zh_CN",UTF-8,parsed]  from "E:\\HBuilderSpace\\finfosoft-water\\src\\main\\webapp\\page\\index.html"

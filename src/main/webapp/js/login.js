@@ -178,7 +178,6 @@ $.fn.extend({
 			}
 			$.getJSON('http://chaxun.1616.net/s.php?type=ip&output=json&callback=?&_='+Math.random(), function(data){
 				var iAddress = data.Isp.split(' ')[0].toString();
-				console.log(iAddress);
 				$.ajax({
 					type:"post",
 					dataType:"JSON",
@@ -193,18 +192,18 @@ $.fn.extend({
 						'address': iAddress
 					},
 					success: function (data){
+						console.info(data)
 						if(data.code==200){
-							alert(1);
 							$('.login-title .tip').addClass('hidden');
-//							$.ajax({
-//								url:'/lanyue-water/login',
-//								type:'POST',
-//								dataType:'JSON',
-//								data:{'data':JSON.stringify(data)},
-//								success:function(){
-//									
-//								}
-//							})
+							$.ajax({
+								url:'/finfosoft-water/login',
+								type:'POST',
+								dataType:'JSON',
+								data:{'data':JSON.stringify(data)},
+								success:function(data){
+										self.location.href="/finfosoft-water/frame"
+								}
+							})
 						} else {
 							if (data.code==400009) {
 								$('.code').removeClass('hidden');

@@ -7,12 +7,14 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSON;
+import com.finfosoft.db.mongo.MongoKit;
 import com.finfosoft.water.common.AuthInterceptor;
 import com.finfosoft.water.common.Constants;
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Record;
+import com.mongodb.DBObject;
 
 public class LoginController extends Controller{
 	private static Logger log=Logger.getLogger(LoginController.class);
@@ -29,13 +31,17 @@ public class LoginController extends Controller{
 	public void login(){
 		//登录用户信息保存到session中
 		Map<String, Object> userMap=(Map<String,Object>)JSON.parse(getPara("data"));
+		DBObject userDB=MongoKit.toDBObject(userMap);
+		Record userRecord=MongoKit.toRecord(userDB);
 		String access_token=userMap.get("access_token").toString();
 		String refresh_token=userMap.get("refresh_token").toString();
 		setSessionAttr(Constants.SESSION_ACCESSTOKEN,access_token);
 		setSessionAttr(Constants.SESSION_REFRESHTOKEN,refresh_token);
-		setSessionAttr(Constants.SESSION_USER,userMap);
+		setSessionAttr(Constants.SESSION_USER,userRecord);
 		//定向到系统首页
-		redirect("/frame");
+		Record result=new Record();
+		result.set("code", 200);
+		renderJson(result);
 	}
 	
 	private Map<String, Object> getParaMap(String string) {
