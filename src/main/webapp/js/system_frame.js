@@ -36,20 +36,20 @@
 				if(data[i].is_navigation>0){
 					var navURL="javascript:;"
 					if(data[i].is_navigation==1){
-						navURL=data[i].resource_url;
+						navURL="/finfosoft-water"+data[i].resource_url;
 					}
 					strNav=$('<li class="changeLi" data-type="" data-toggle="tooltip" data-placement="right"'+
-					' title="'+data[i].resource_name+'"><a class="J_menuItem slideToggle" href="'+navURL+'">'+
+					' title="'+data[i].resource_name+'"><a class="J_menuItem slideToggle" href="'+navURL+'" target="iframe0">'+
 					'<i class="fa '+iIcon+'"></i><span class="nav-label">'+data[i].resource_name+'</span>'+
 					'<span class="fa arrow"></span></a><div class="nav-second-box"><ul class="nav nav-second-level nav_list"></ul></div></li>');
 					$('#side-menu ').append(strNav);
 					if(data[i].children_resource.length){
 						var childStr="";
 						for(var j=0;j<data[i].children_resource.length;j++){
-							//console.log(i+"pp")
-							//console.log(j)
-							var childData=data[i].children_resource[j];
-							childStr+='<li><a class="J_menuItem" href="'+childData.resource_url+'" data-index="0">'+childData.resource_name+'</a></li>';
+							if(data[i].children_resource[j].is_navigation>0){
+								var childData=data[i].children_resource[j];
+								childStr+='<li><a class="J_menuItem" href="/finfosoft-water'+childData.resource_url+'" data-index="0" target="iframe0">'+childData.resource_name+'</a></li>';
+							}
 						}
 						$(".changeLi .nav_list").eq(i).append(childStr);
 					}	
@@ -166,9 +166,6 @@
 	});
 	//点击确定事件
 	$(".pop-submit").click(function(){
-		//console.log($(".oldPassword .pop-username").val());
-		//console.log($(".newPassword .pop-username").val());
-		//console.log($(".confirmPassword .pop-username").val());
 		$.ajax({
 			type:"put",
 			url:"http://192.168.1.104/v1/users",
