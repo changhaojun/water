@@ -67,13 +67,13 @@
 									<dt>
 										<span class="personInfo">
 											<i class="headPortrait"></i>
-											<em>欢迎你，张先生</em>
+											<em class="userName"></em>
 											<i class="fa fa-caret-down"></i>
 										</span>
 									</dt>
 									<dd class="personMsg">
 										<a class="popup" href="javascript:;">修改密码</a>
-										<a  href="javascript:;">退出</a>
+										<a  href="/finfosoft-water/logout">退出</a>
 									</dd>
 								</dl>
 							</li>
@@ -143,6 +143,10 @@
 			<!--修改密码结束-->
 			<script type="text/javascript" src="../finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js"></script>
 			<script type="text/javascript" src="../finfosoft-water/plugins/bootstarp/js/bootstrap.min.js"></script>
+			<script type="text/javascript">
+			 var user=${user.columns};
+			</script>
+			<script src="../finfosoft-water/js/public_resources.js"></script>
 			<script src="../finfosoft-water/js/system_frame.js"></script>
 	</body>
 </html>

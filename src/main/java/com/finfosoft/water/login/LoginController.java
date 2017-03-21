@@ -1,5 +1,6 @@
 package com.finfosoft.water.login;
 
+import java.io.Console;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -53,6 +54,7 @@ public class LoginController extends Controller{
 		HttpSession session=getSession();
 		if(session!=null){
 			session.removeAttribute(Constants.SESSION_USER);
+			Record user=getSessionAttr(Constants.SESSION_USER);
 			session.removeAttribute(Constants.SESSION_COMPANY);
 			session.removeAttribute(Constants.SESSION_ACCESSTOKEN);
 			session.removeAttribute(Constants.SESSION_REFRESHTOKEN);

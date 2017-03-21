@@ -181,7 +181,7 @@ $.fn.extend({
 				$.ajax({
 					type:"post",
 					dataType:"JSON",
-					url:"http://192.168.1.104:80/authorize/authorize",
+					url:"http://192.168.1.114/authorize/authorize",
 					async:true,
 					data:{
 						'client_id': 'admin',
@@ -218,7 +218,7 @@ $.fn.extend({
 								$.ajax({
 									type:"post",
 									dataType:"JSON",
-									url:"http://192.168.1.104:80/authorize/authorize",
+									url:"http://192.168.1.114/authorize/authorize",
 									async:false,
 									data:{
 										'client_id': 'admin',

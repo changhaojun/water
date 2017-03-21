@@ -2,6 +2,7 @@ package com.finfosoft.water.frame;
 
 import org.apache.log4j.Logger;
 
+import com.alibaba.fastjson.JSON;
 import com.finfosoft.water.common.Constants;
 import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
@@ -15,6 +16,8 @@ public class FrameController extends Controller{
 	 * 框架首页
 	 */
 	public void index(){
+		Record user=getSessionAttr(Constants.SESSION_USER);
+		setAttr("user",JSON.toJSON(user));
 		render("index.html");
 	}
 	
@@ -32,9 +35,7 @@ public class FrameController extends Controller{
 	 * @exception  (说明在某情况下，将发生什么异常)
 	 */
 	public void getUser(){
-		//Record result=new Record();
 		Record user=getSessionAttr(Constants.SESSION_USER);
-		//result.set("user", user);
 		renderJson(user);
 	}
 	/**
@@ -52,12 +53,9 @@ public class FrameController extends Controller{
 	 */
 	@Clear
 	public void saveToken(){
-		String accessToken=getPara("accessToken").toString();
-		String refreshToken=getPara("refreshToken").toString();
-		String username=getPara("username").toString();
-		Record user=frameService.getUser(username);
+		String accessToken=getPara("access_token").toString();
+		String refreshToken=getPara("refresh_token").toString();
 		setSessionAttr(Constants.SESSION_ACCESSTOKEN, accessToken);
-		setSessionAttr(Constants.SESSION_USER, user);
 		setSessionAttr(Constants.SESSION_REFRESHTOKEN, refreshToken);
 		Record result=new Record();
 		result.set("result", 1);

@@ -1,12 +1,11 @@
-var serviceUrl="http://192.168.1.104/v1/users";
 //获取账户列表
 $.ajax({
 	type: "get",
-	url: serviceUrl,
+	url: globalurl+"/v1/users",
 	dataType: "JSON",
 	async:false,
 	data: {
-		access_token: "58cf4c9619ee5f1068248ded"
+		access_token:accesstoken
 	},
 	success: function(data) {
 		console.log(data);
@@ -114,12 +113,12 @@ $.ajax({
 					var data = "{'fullname':'" + $("#addUsername").val() + "','username':'" + $("#addText").val() + "','password':'" + $("#addPassword").val() + "','mobile':'" + $("#addPhone").val() + "','status':" + flag+ "}";
 					$.ajax({
 						type: 'POST',
-						url: serviceUrl,
+						url: globalurl,
 						dataType: "JSON",
 						data: {
 							'roles':addoRole,
 							data: data,
-							access_token: "58cf4c9619ee5f1068248ded"
+							access_token: accesstoken
 						},
 						success: function(data) {
 							console.log(data);
@@ -154,12 +153,11 @@ $.ajax({
 			$(".modifyState input").removeClass();
 			$.ajax({
 				type: 'get',
-				url: serviceUrl,
+				url: globalurl+"/v1/users",
 				data: {
-					access_token: "58cf4c9619ee5f1068248ded"
+					access_token: accesstoken
 				},
 				success: function(data) {
-					console.log(data)
 					if(data.rows[that.parents(".accountList").index()].status){
 						$(".modifyState #modifyValid").addClass("stats")
 					}else{
@@ -219,12 +217,12 @@ $.ajax({
 								var modifydata = "{'fullname':'"+ $("#modifyUsername").val()+ "','username':'"+ $("#modifyText").val() + "','password':'" + $("#modifyPassword").val() + "','mobile':'"+ $("#modifyPhone").val() + "','status':" + setVar + "}";
 								$.ajax({
 									type: 'put',
-									url: serviceUrl+"/"+dataId.rows[that.parents(".accountList").index()]._id,
+									url: globalurl+"/v1/users/"+dataId.rows[that.parents(".accountList").index()]._id,
 									dataType: "JSON",
 									data: {
 										roles:addoRole,
 										data: modifydata,
-										access_token: "58cf4c9619ee5f1068248ded"
+										access_token: accesstoken
 									},
 									success: function(data) {
 										console.log(data);
@@ -260,7 +258,7 @@ $.ajax({
 			$(".sureDel").on("click",function(){
 					$.ajax({
 						  type: 'delete',
-						  url: serviceUrl+"/"+delId.rows[that.parents(".accountList").index()]._id+"?access_token=58cf4c9619ee5f1068248ded",
+						  url: globalurl+"/v1/users/"+delId.rows[that.parents(".accountList").index()]._id+"?access_token="+accesstoken,
 						  success: function(data){
 						  	console.log(data);
 						  	location.reload("account.html");
@@ -357,11 +355,11 @@ function ajaxRequest(){
 	$(".accountContent").html("");
 	$.ajax({
 				type: 'get',
-				url: serviceUrl,
+				url: globalurl+"/v1/users",
 				dataType: "JSON",
 				data: {
 					like: okey,
-					access_token: "58cf4c9619ee5f1068248ded"
+					access_token: accesstoken
 				},
 				success: function(data) {
 					var str = '';

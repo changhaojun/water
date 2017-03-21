@@ -35,14 +35,6 @@ public class WaterConfig extends JFinalConfig{
 	@Override
 	public void configPlugin(Plugins me) {
 		// TODO Auto-generated method stub
-		//mongodb插件
-//		MongodbPlugin mongodbPlugin;
-//		if(PropKit.getBoolean("db_auth", false)){
-//			mongodbPlugin = new MongodbPlugin(PropKit.get("db_host"), PropKit.getInt("db_port"), PropKit.get("db_name"),PropKit.get("db_user"),PropKit.get("db_pass"));
-//		}else{
-//			mongodbPlugin = new MongodbPlugin(PropKit.get("db_host"), PropKit.getInt("db_port"), PropKit.get("db_name"));
-//		}
-//		me.add(mongodbPlugin);
 		
 	}
 
