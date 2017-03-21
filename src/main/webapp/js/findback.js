@@ -18,43 +18,74 @@ $.fn.extend({
 		}
 	},
 	//密码长度验证
-	'testPassword': function (){
-		$(this).val('');
+	'testLength': function (){
 		$(this).keyup(function (){
 			if ($(this).val().length<6||$(this).val().length>16) {
 				$(this).css('borderColor','#ff787b');
 				$(this).siblings('.tip').removeClass('hidden');
-				$('.submit-btn').attr($(this).attr('id'),'false');
 			} else {
 				$(this).css('borderColor','#1ab394');
 				$(this).siblings('.tip').addClass('hidden');
-				$('.submit-btn').attr($(this).attr('id'),'true');
+			}
+		});
+		$(this).focus(function (){
+			$('#again').css('borderColor','#1ab394');
+			$('#again').siblings('.tip').addClass('hidden');
+			$('.submit-btn').attr('isright','true');
+		});
+		$(this).blur(function (){
+			if ($(this).val()!==$('#again').val()) {
+				$('.submit-btn').attr('isright','false');
+				if ($('#again').val()!=='') {
+					$('#again').css('borderColor','#ff787b');
+					$('#again').siblings('.tip').removeClass('hidden');
+					$('.submit-btn').attr('isright','false');
+				}
+			}
+		});
+	},
+	'testEqual': function (){
+		$(this).blur(function (){
+			if ($(this).val()!==$('#new').val()) {
+				$(this).css('borderColor','#ff787b');
+				$(this).siblings('.tip').removeClass('hidden');
+				$('.submit-btn').attr('isright','false');
+			} else {
+				$(this).css('borderColor','#1ab394');
+				$(this).siblings('.tip').addClass('hidden');
+				$('.submit-btn').attr('isright','true');
 			}
 		});
 	},
 	'submitPassword': function (){
+		$(this).attr('isright','false');
 		$(this).click(function (){
 			if ($('#new').val()=='') {
 				$('#new').css('borderColor','#ff787b');
 				$('#new').siblings('.tip').removeClass('hidden');
+				$(this).attr('isright','false');
 				return;
 			} else if ($('#again').val()=='') {
 				$('#again').css('borderColor','#ff787b');
 				$('#again').siblings('.tip').removeClass('hidden');
+				$(this).attr('isright','false');
 				return;
 			}
-//			if ($(this).attr('new')==='true'||$(this).attr('again')==='true') {
-//				
-//			} else {
-//				
-//			}
+			if ($(this).attr('isright')==='true') {
+				$(this).html('正在重置密码，请稍后...').css({
+					'letterSpacing': 0,
+					'textIndent': 0,
+					'textAlign': 'center'
+				});
+				//$.ajax();
+			}
 		});
 	}
 });
 
 $('.step1').stayCenter();
 $('.step2').stayCenter();
-$('#new').testPassword();
-$('#again').testPassword();
+$('#new').testLength();
+$('#again').testEqual();
 $('.submit-btn').submitPassword();
 

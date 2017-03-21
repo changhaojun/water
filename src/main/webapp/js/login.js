@@ -72,6 +72,7 @@ $.fn.extend({
 			});
 		}
 	},
+	//邮箱验证
 	'testEmal': function (){
 		var re = /^[a-zA-Z0-9]+@\w+(\.[a-zA-Z]+){1,2}$/;
 		$(this).attr({
@@ -114,7 +115,6 @@ $.fn.extend({
 				$.ajax({
 					type:"get",
 					dataType:"json",
-					//need:提交时需要从服务器查询是否存在该用户名
 					url:"http://192.168.1.109:80/v1/mails",
 					async:true,
 					data:{
@@ -144,7 +144,10 @@ $.fn.extend({
 			if ($(this).val()==='请输入邮箱'||$(this).val()==='请输入密码'||$(this).val()==='请输入正确的邮箱地址'||$(this).val()==='请输入验证码') {
 				$(this).attr('originval',$(this).val()).val('');
 			}
-			$(this).css('borderColor','#1ab394');
+			$(this).css({
+				'color': '#fff',
+				'borderColor':'#1ab394'
+			});
 		});
 		$(this).blur(function (){
 			if ($(this).val()===''){
@@ -167,18 +170,38 @@ $.fn.extend({
 	},
 	//登录交互
 	'login': function (){
+		var This = this;
 		$(this).click(function (){
 			var iUsername = $('input').filter('[name=username]').val();
 			var iPassword = $('input').filter('[name=password]').val();
 			var iCode = $('input').filter('[name=verificationCode]').val()==='请输入验证码' ? '' : $('input').filter('[name=verificationCode]').val();
 			var iClientId = 'admin';
 			var iClientSecret = 'admin';
-			if ($('input').filter('[name=username]').attr('ismail')==='false'||iUsername==='请输入邮箱'||iPassword==='请输入密码'||iCode==='请输入验证码') {
+			if (iUsername==='请输入邮箱') {
+				$('input').filter('[name=username]').css({
+					'color': '#ff787b',
+					'borderColor': '#ff787b'
+				});
+				return;
+			} else if (iPassword==='请输入密码') {
+				$('input').filter('[name=password]').css({
+					'color': '#ff787b',
+					'borderColor': '#ff787b'
+				});
+				return;
+			} else if (iCode==='请输入验证码') {
+				$('input').filter('[name=verificationCode]').css({
+					'color': '#ff787b',
+					'borderColor': '#ff787b'
+				});
 				return;
 			}
+			$(this).html('正在登录中，请稍后...').css({
+				'letterSpacing': 0,
+				'textIndent': 0
+			});
 			$.getJSON('http://chaxun.1616.net/s.php?type=ip&output=json&callback=?&_='+Math.random(), function(data){
 				var iAddress = data.Isp.split(' ')[0].toString();
-				console.log(iAddress);
 				$.ajax({
 					type:"post",
 					dataType:"JSON",
@@ -206,6 +229,10 @@ $.fn.extend({
 //								}
 //							})
 						} else {
+							$(this).html('登录').css({
+								'letterSpacing': 14,
+								'textIndent': 14
+							});
 							if (data.code==400009) {
 								$('.code').removeClass('hidden');
 							} else if (data.code==400010) {
