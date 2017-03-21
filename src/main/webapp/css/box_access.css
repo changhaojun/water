@@ -1,0 +1,32 @@
+.boxAccess{
+	width: 100%;
+	height: 100%;
+	background: #F3C17A;
+	padding: 25px 20px 0;
+}
+.boxAccess .boxHeader{
+	border-bottom:3px solid #e0e0e0;
+	padding-bottom: 15px;
+	width: 100%;
+	float: left;
+}
+.boxAccess .boxHeader h3{
+	font: 20px/20px "微软雅黑";
+	font-weight: 100;
+	color:#5d5d5d ;
+	float: left;
+}
+.boxAccess .boxHeader h4{
+	float: right;
+	font: 14px/20px "微软雅黑";
+	font-size: 14px;
+	font-weight: 100;
+}
+.boxAccess .boxHeader span{
+	color: #1ab394;
+}
+/*header END*/
+.boxInfo{
+	padding-left:10px ;
+	background: #00625A;
+}

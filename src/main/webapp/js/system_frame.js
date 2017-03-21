@@ -92,36 +92,46 @@
 	//旧密码
 	$(".passwordOld").focus(function(){
 		$(".oldPassword span").hide();
+		$(this).css("border-color","#ccc");
 	});
 	$(".passwordOld").blur(function(){
-		console.log($(this));
-		if($(".oldPassword .pop-username").val()==""){
+		if($(".passwordOld").val()==""){
 			$(this).next().show().html("原密码不能为空!");
+			$(this).css("border-color","#e11818");
+		}else{
+			$(this).css("border-color","#1ab394");
 		}
 	});
 	//新密码
 	var passText="";
 	$(".passwordNew ").blur(function(){
-		console.log($(this));
-		var passReg = /^\w{6,16}$/;
+		var passReg = /[a-zA-Z\d+]{6,16}/;
 		passText=$(this).val();
 		if(passReg.test(passText)==false){
 			$(this).next().show().html("密码为6-16位!");
+			$(this).css("border-color","#e11818");
+		}else{
+			$(this).css("border-color","#1ab394");	
 		}
 	});
 	$(".passwordNew").focus(function(){
 		$(".newPassword span").hide();
+		$(this).css("border-color","#ccc");
 	});
 	//确认新密码
 	$(".passwordConfirm").blur(function(){
-		console.log($(this));
-		if($(".confirmPassword .pop-username").val()==$(".newPassword .pop-username").val()){
-		console.log(passText)
+		if($(".passwordConfirm").val()!=passText){
+		//console.log(passText)
 			$(this).next().show().html("两次密码不一致");
+			$(this).css("border-color","#e11818");
+		}else{
+			$(".confirmPassword span").hide();
+			$(this).css("border-color","#1ab394");
 		}
 	});
-	$(".confirmPassword ").focus(function(){
+	$(".passwordConfirm ").focus(function(){
 		$(".confirmPassword span").hide();
+		$(this).css("border-color","#ccc");
 	});
 	//点击确定事件
 	$(".pop-submit").click(function(){

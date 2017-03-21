@@ -87,7 +87,9 @@ body.fixed-sidebar .navbar-static-side{
 	top: 0;
 	z-index: 100;
 }
-
+.mini-navbar #wrapper .sidebar-collapse p {
+	width:70px;
+}
 #wrapper  .indexHeader .homeName {
 	float: left;
 	margin-left: 20px;
@@ -315,10 +317,11 @@ body.fixed-sidebar .navbar-static-side{
 	position: absolute;
 	padding: 3px 6px;
 	background: #ff787b;
-	margin-top: -32px;
+	top: -38%;
 	color: #fff;
 	border-radius: 3px;
 	right:12%;
+	float: left;
 	display: none;
 }
 .pop-main span:before{
