@@ -124,8 +124,10 @@
 		//console.log(passText)
 			$(this).next().show().html("两次密码不一致");
 			$(this).css("border-color","#e11818");
-		}else{
+		}else if($(".passwordConfirm").val()==""){
 			$(".confirmPassword span").hide();
+			$(this).css("border-color","#ccc");
+		}else{
 			$(this).css("border-color","#1ab394");
 		}
 	});
