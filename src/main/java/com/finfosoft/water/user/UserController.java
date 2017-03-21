@@ -9,7 +9,6 @@ public class UserController extends Controller{
 	private static Logger log=Logger.getLogger(UserController.class);
 	private static UserService userService=new UserService(); 
 	
-	@Clear()
 	public void index(){
 		render("account.html");
 	}
