@@ -104,8 +104,8 @@ $.ajax({
 					//添加角色
 		  			var addoRole=[];
 		  			$(".addRole ul .cheacked").each(function(index,ele){
-						addoRole.push($(".addRole ul .cheacked").eq(index).attr("rolename_id"));
-					})	  			
+					 addoRole.push($(".addRole ul .cheacked").eq(index).attr("rolename_id"));
+		  			})
 		  			addoRole+="";
 					var data = "{'fullname':'" + $("#addUsername").val() + "','username':'" + $("#addText").val() + "','password':'" + $("#addPassword").val() + "','mobile':'" + $("#addPhone").val() + "','status':" + flag+ "}";
 					$.ajax({
