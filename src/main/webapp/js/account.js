@@ -1,4 +1,6 @@
-var editId;
+var editId; 	//当点击编辑时所取到的目标数据ID
+var companyCode=$("#companyCode").val();	//公司编号，获取用户列表时使用
+var companyId=$("#companyId").val();		//公司ID
 //获取账户列表
 $(function(){
 	getToken();
@@ -6,6 +8,7 @@ $(function(){
 	showTips();
 })
 function allList(){
+	var searchFilter='{"company_code":"'+companyCode+'"}';
 	$.ajax({
 		type: "get",
 		url: globalurl + "/v1/users",
@@ -13,24 +16,29 @@ function allList(){
 		async: false,
 		crossDomain: true == !(document.all),
 		data: {
-			access_token: accesstoken
+			access_token: accesstoken,
+			filter:searchFilter
 		},
 		success: function(data) {
-			$(".accountContent").html("");
-			if (data == null) {
-				$(".noneData").css("display", "block");
-			} else {
-				$(".noneData").css("display", "none");
-				var str = '';
-				//获取列表页
-				for (var i = 0; i < data.rows.length; i++) {
-					var str2 = '';
-					if (data.rows[i].roles) {
-						for (var j = 0; j < data.rows[i].roles.length; j++) {
-							str2 += '<li>' + data.rows[i].roles[j] + '</li>';
+			if(data.code==400005){
+				getNewToken();
+				allList();
+			}else if(data.rows.length>0){
+				$(".accountContent").html("");
+				if (data == null) {
+					$(".noneData").css("display", "block");
+				} else {
+					$(".noneData").css("display", "none");
+					var str = '';
+					//获取列表页
+					for (var i = 0; i < data.rows.length; i++) {
+						var str2 = '';
+						if (data.rows[i].roles) {
+							for (var j = 0; j < data.rows[i].roles.length; j++) {
+								str2 += '<li>' + data.rows[i].roles[j] + '</li>';
+							}
 						}
-					}
-					str = '<div class="accountList" dataId="' + data.rows[i]._id + '">' +
+						str = '<div class="accountList" dataId="' + data.rows[i]._id + '">' +
 						'<div class="listTop">' +
 						'<span>' + data.rows[i].fullname + '</span>' +
 						'<i class="fa fa-wrench set" data-toggle="tooltip" data-placement="top" title="修改" onclick="modify(&apos;' + data.rows[i]._id + '&apos;)"></i>' +
@@ -39,23 +47,26 @@ function allList(){
 						'<div class="listName">' + data.rows[i].username + '</div>' +
 						'<ul class="positionList" >' + str2 +
 						'</ul>' + '</div>';
-					$(".accountContent").append(str);
-	
-					//判断列表的状态
-					if (data.rows[i].status == 0) {
-						$(".accountList").eq(i).addClass("invalidList");
-						$(".accountList .positionList").eq(i).find("li").addClass("disabled");
-					} else {
-						$(".accountList .positionList").eq(i).find("li").addClass("cheacked");
+						$(".accountContent").append(str);
+						
+						//判断列表的状态
+						if (data.rows[i].status == 0) {
+							$(".accountList").eq(i).addClass("invalidList");
+							$(".accountList .positionList").eq(i).find("li").addClass("disabled");
+						} else {
+							$(".accountList .positionList").eq(i).find("li").addClass("cheacked");
+						}
 					}
 				}
+				//获取角色列表
+				var oRole = "";
+				for (var i in data.rolesName) {
+					oRole += "<li class='disabled' rolename_id=" + data.rolesName[i]._id + ">" + data.rolesName[i].role_name + "</li>";
+				}
+				$(".accountRole ul").html(oRole);	
+			}else{
+				
 			}
-			//获取角色列表
-			var oRole = "";
-			for (var i in data.rolesName) {
-				oRole += "<li class='disabled' rolename_id=" + data.rolesName[i]._id + ">" + data.rolesName[i].role_name + "</li>";
-			}
-			$(".accountRole ul").html(oRole);	
 		}
 	})
 };

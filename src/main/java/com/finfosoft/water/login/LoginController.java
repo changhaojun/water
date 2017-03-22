@@ -36,9 +36,15 @@ public class LoginController extends Controller{
 		Record userRecord=MongoKit.toRecord(userDB);
 		String access_token=userMap.get("access_token").toString();
 		String refresh_token=userMap.get("refresh_token").toString();
+		String companyCode=userMap.get("company_code").toString();
+		String companyId=userMap.get("company_id").toString();
+		Record company=new Record();
+		company.set("companyCode", companyCode);
+		company.set("companyId", companyId);
 		setSessionAttr(Constants.SESSION_ACCESSTOKEN,access_token);
 		setSessionAttr(Constants.SESSION_REFRESHTOKEN,refresh_token);
 		setSessionAttr(Constants.SESSION_USER,userRecord);
+		setSessionAttr(Constants.SESSION_COMPANY, company);
 		//定向到系统首页
 		Record result=new Record();
 		result.set("code", 200);

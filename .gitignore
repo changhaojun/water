@@ -1,3 +1,4 @@
-/target/
 /lanyue-manage.log
 /._lanyue-manage.log*.tmp
+/lanyue-water.log
+/target
