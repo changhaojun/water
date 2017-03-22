@@ -95,9 +95,9 @@ function addUser(){
 		$(".addpassError").css("display", "block");
 		$(".addpassError").html("密码不能为空");
 		$(".addpassError").css("color", "#fff");
-	} else if ($(".addpassError").html() == "请输入正确密码") {
+	} else if ($(".addpassError").html() == "请输入正确密码(6到16位字母数字或下划线)") {
 		$(".addpassError").css("display", "block");
-		$(".addpassError").html("请输入正确密码");
+		$(".addpassError").html("请输入正确密码(6到16位字母数字或下划线)");
 		$(".addpassError").css("color", "#fff");
 	} else if ($("#addPhone").val() == "请输入手机号") {
 		$(".addphoneError").css("display", "block");
@@ -208,9 +208,9 @@ function sureModify() {
 		$(".modifypassError").css("display", "block");
 		$(".modifypassError").html("密码不能为空");
 		$(".modifypassError").css("color", "#fff");
-	} else if ($(".modifypassError").html() == "请输入正确密码") {
+	} else if ($(".modifypassError").html() == "请输入正确密码(6到16位字母数字或下划线)") {
 		$(".modifypassError").css("display", "block");
-		$(".modifypassError").html("请输入正确密码");
+		$(".modifypassError").html("请输入正确密码(6到16位字母数字或下划线)");
 		$(".modifypassError").css("color", "#fff");
 	} else {
 		//修改状态
@@ -330,10 +330,10 @@ function blank(obj1, obj2, str1, str2, Var) {
 	})
 }
 blank($("#addText"), $(".addaccountError"), "请输入邮箱", "请输入正确的邮箱格式", re);
-blank($("#addPassword"), $(".addpassError"), "请输入密码(由6到16位字母数字下划线组成)", "请输入正确的密码", pass);
+blank($("#addPassword"), $(".addpassError"), "请输入密码(由6到16位字母数字下划线组成)", "请输入正确密码(6到16位字母数字或下划线)", pass);
 blank($("#addPhone"), $(".addphoneError"), "请输入手机号", "请输入正确的手机号", phone);
 blank($("#modifyText"), $(".modifyaccountError"), "请输入邮箱", "请输入正确的邮箱格式", re);
-blank($("#modifyPassword"), $(".modifypassError"), "请输入密码(由6到16位字母数字下划线组成)", "请输入正确密码", pass);
+blank($("#modifyPassword"), $(".modifypassError"), "请输入密码(由6到16位字母数字下划线组成)", "请输入正确密码(6到16位字母数字或下划线)", pass);
 blank($("#modifyPhone"), $(".modifyphoneError"), "请输入手机号", "请输入正确的手机号", phone);
 //初始化提示框
 $('[data-toggle="tooltip"]').tooltip();
