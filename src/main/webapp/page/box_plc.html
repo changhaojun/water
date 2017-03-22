@@ -147,14 +147,14 @@
 				<div class="boxContent clearfix">
 					<div class="equipment">
 						<i class="fa fa-wrench"></i>&nbsp;数据配置
-						<a class="btnYellow" data-toggle="tooltip" data-placement="right">
+						<a class="btnYellow addPort">
 							<i class="fa fa-plus"></i>
 							<div class="tip">
 								添加端口
 								<em class="tip-arrow"></em>
 							</div>
 						</a>
-						<a class="btnYellow" data-toggle="tooltip" data-placement="right">
+						<a class="btnYellow copyPort">
 							<i class="fa fa-copy"></i>
 							<div class="tip">
 								复制端口
@@ -166,28 +166,28 @@
 						<table>
 							<thead>
 								<tr>
-									<th>数据名称</th>
-									<th>读写状态</th>
-									<th>数据单位</th>
-									<th>数据类型</th>
-									<th>数据精度</th>
-									<th>数据地址</th>
-									<th>实际量程低</th>
-									<th>实际量程高</th>
+									<th port-name="dataName">数据名称</th>
+									<th port-name="operType">读写状态</th>
+									<th port-name="dataUnit">数据单位</th>
+									<th port-name="dataType">数据类型</th>
+									<th port-name="dataPrecision">数据精度</th>
+									<th port-name="dataAddr">数据地址</th>
+									<th port-name="realRangeLow">实际量程低</th>
+									<th port-name="realRangeHigh">实际量程高</th>
 									<th>编辑</th>
 									<th>删除</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td>温度</td>
-									<td>写入</td>
-									<td>℃</td>
-									<td>整形</td>
-									<td>0</td>
-									<td>0</td>
-									<td>-20</td>
-									<td>120</td>
+									<td port-type="text" port-name="dataName">温度</td>
+									<td port-type="select" port-name="operType">写入</td>
+									<td port-type="text" port-name="dataUnit">℃</td>
+									<td port-type="select" port-name="dataType">整型</td>
+									<td port-type="text" port-name="dataPrecision">0</td>
+									<td port-type="text" port-name="dataAddr">0</td>
+									<td port-type="text" port-name="realRangeLow">-20</td>
+									<td port-type="text" port-name="realRangeHigh">120</td>
 									<td>
 										<i class="fa fa-edit"></i>
 									</td>
@@ -196,14 +196,14 @@
 									</td>
 								</tr>
 								<tr>
-									<td>压力</td>
-									<td>读取</td>
-									<td>MPa</td>
-									<td>浮点型</td>
-									<td>2</td>
-									<td>0</td>
-									<td>0</td>
-									<td>10</td>
+									<td port-type="text" port-name="dataName">压力</td>
+									<td port-type="select" port-name="operType">读取</td>
+									<td port-type="text" port-name="dataUnit">MPa</td>
+									<td port-type="select" port-name="dataType">浮点型</td>
+									<td port-type="text" port-name="dataPrecision">2</td>
+									<td port-type="text" port-name="dataAddr">0</td>
+									<td port-type="text" port-name="realRangeLow">0</td>
+									<td port-type="text" port-name="realRangeHigh">10</td>
 									<td>
 										<i class="fa fa-edit"></i>
 									</td>
@@ -226,9 +226,51 @@
 				<p class="pull-left">编辑数据标签</p>
 				<a href="javascript:;" class="pull-right pop-close maskClose"></a>
 			</div>
-			<ul class="pop-main">
-				<li></li>
-			</ul>
+			<dl class="pop-main">
+				<dd class="clearfix dataEdit">
+					<label>数据名称</label>
+					<input type="text" port-name="dataName"/>
+				</dd>
+				<dd class="clearfix dataEdit">
+					<label>读写状态</label>
+					<select port-name="operType" autocomplete="off">
+						<option selected="selected">写入</option>
+						<option>读取</option>
+					</select>
+				</dd>
+				<dd class="clearfix dataEdit">
+					<label>数据单位</label>
+					<input type="text"port-name="dataUnit"/>
+				</dd>
+				<dd class="clearfix dataEdit">
+					<label>数据类型</label>
+					<select port-name="dataType" autocomplete="off">
+						<option selected="selected">长整型</option>
+						<option>浮点型</option>
+						<option>整型</option>
+					</select>
+				</dd>
+				<dd class="clearfix dataEdit">
+					<label>数据精度</label>
+					<input type="text" port-name="dataPrecision"/>
+				</dd>
+				<dd class="clearfix dataEdit">
+					<label>数据地址</label>
+					<input type="text" port-name="dataAddr"/>
+				</dd>
+				<dd class="clearfix dataEdit">
+					<label>实际量程低</label>
+					<input type="text" port-name="realRangeLow"/>
+				</dd>
+				<dd class="clearfix dataEdit">
+					<label>实际量程高</label>
+					<input type="text" port-name="realRangeHigh"/>
+				</dd>
+				<dt>
+					<button>保存</button>
+				</dt>
+			</dl>
+			<div class="pop-shadow"></div>
 		</div>
 		<script type="text/javascript" src="../plugins/jQuery/jquery-1.11.3.min.js"></script>
 		<script src="../js/box_plc.js" type="text/javascript" charset="utf-8"></script>

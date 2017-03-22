@@ -65,10 +65,11 @@ td>.fa{
 	float: left;
 	padding-top: 25px;
 }
-.boxContent .dataCircle label{
+.boxContent .dataCircle label,
+.dataEdit label{
 	float: left;
 	color: #9f9f9f;
-	width: 76px;
+	width: 90px;
 	height: 35px;
 	text-align: right;
 	line-height: 35px;
@@ -76,7 +77,10 @@ td>.fa{
 	padding: 0 10px 0 8px ;
 	font-weight: 500;
 }
-.boxContent .dataCircle input,.boxContent .dataCircle select{
+.boxContent .dataCircle input,
+.boxContent .dataCircle select,
+.dataEdit input,
+.dataEdit select{
 	display: block;
 	float: left;
     border: 1px solid #e5e6e7;
@@ -87,10 +91,12 @@ td>.fa{
     font-size: 14px;
     color: #a7a7a7;
 }
-.boxContent .dataCircle input{
+.boxContent .dataCircle input,
+.dataEdit input{
     text-indent: 12px;
 }
-.boxContent .dataCircle select{
+.boxContent .dataCircle select,
+.dataEdit select{
 	padding-left: 12px;
 	background: url(../img/select_arrow.png) no-repeat scroll right center transparent; 
 }
@@ -213,24 +219,11 @@ td>.fa{
 	position: fixed;
 	left: 0;
 	top: 0;
-	z-index: 3000;
 }
 .pop{
 	width: 500px;
-	position: absolute;
-	height: 475px;
-	left: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	margin: auto;
-	background: #fff;
-	z-index: 3010;
-	box-shadow:7px 7px  7px rgba(0,0,0,0.4);
-	-webkit-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
-	-moz-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
-	-ms-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
-	-o-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
+	position: fixed;
+	z-index: 1;
 }
 .pop-title{
 	height: 40px;
@@ -238,7 +231,7 @@ td>.fa{
 	background: #1ab394;
 }
 .pop-title>p{
-	margin-left: 23px;
+	margin-left: 25px;
 	font-size: 15px;
 	color: #fff;
 }
@@ -251,6 +244,40 @@ td>.fa{
 	background-color: #24c5a4;
 }
 .pop-main{
-	width: 450px;
-	margin:15px auto 20px;
+	padding: 0 32px;
+	width: 100%;
+	background: #fff;
+}
+.dataEdit{
+	padding-top: 15px;
+}
+.pop-main dt{
+	padding: 15px 0;
+}
+.pop-main button{
+	display: block;
+	margin: 0 auto;
+	width: 254px;
+	height: 30px;
+	background: #1ab394;
+	font-size: 15px;
+	line-height: 30px;
+	color: #fff;
+	letter-spacing: 14px;
+	text-indent: 14px;
+	text-align: center;
+	border-radius: 3px;
+}
+.pop-main button:hover{
+	background-color: #24c5a4;
+}
+.pop-shadow{
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: 0.38;
+	position: absolute;
+	right: -7px;
+	bottom: -7px;
+	z-index: -1;
 }
