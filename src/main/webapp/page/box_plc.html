@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../plugins/bootstarp/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="../css/box_plc.css" />
+	</head>
+
+	<body>
+		<div class="boxAccess">
+			<div class="boxHeader">
+				<h3>
+					<span>新增PLC</span>
+					<span>/</span>
+					<span>ADD PLC</span>
+				</h3>
+				<h4>
+					<span>当前位置：</span>
+					<span>接入PLC</span>
+					<span>></span>
+					<span>新增PLC</span>
+				</h4>
+			</div>
+			<!--主要内容部分-->
+			<div class="dataInfo">
+				<div class="boxContent clearfix">
+					<div class="equipment">
+						<i class="fa fa-book"></i>&nbsp;设备信息
+					</div>
+					<div class="dataCircle">
+						<label>设备编号</label>
+						<input type="text" class="textInput" value="请输入设备编号" />
+					</div>
+					<div class="dataCircle">
+						<label>设备名称</label>
+						<input type="text" class="textInput" value="请输入设备名称" />
+					</div>
+					<div class="dataCircle">
+						<label>掉线提醒</label>
+						<p class="controlBtn">
+							<span class="activeBtn">开启</span>
+							<span>关闭</span>
+						</p>
+						<em>注 : 开启提醒后即可进行相关设置。</em>
+					</div>
+					<div class="dataCircle">
+						<label>联系电话</label>
+						<input type="text" class="textInput" value="此号码用于接收掉线提醒，如有多个号码请用逗号分隔" />
+					</div>
+					<div class="dataCircle">
+						<label>提醒间隔</label>
+						<input type="text" class="textInput" value="掉线提醒的间隔时间，单位分钟" />
+					</div>
+					<div class="dataCircle">
+						<label>延长时间</label>
+						<input type="text" class="textInput" value="掉线后提醒的延迟时间，单位分钟" />
+					</div>
+				</div>
+				<div class="boxContent clearfix">
+					<div class="equipment">
+						<i class="fa fa-cogs"></i>&nbsp;通讯参数
+					</div>
+					<div class="dataCircle">
+						<label>采集周期</label>
+						<select>
+							<option selected="selected" value="120">120</option>
+							<option>130</option>
+							<option>140</option>
+						</select>
+					</div>
+					<div class="dataCircle">
+						<label>采集器ID</label>
+						<select>
+							<option>130</option>
+							<option>140</option>
+						</select>
+					</div>
+					<div class="dataCircle">
+						<label>通讯地址</label>
+						<input type="text" class="textInput" value="1" />
+					</div>
+					<div class="dataCircle">
+						<label>CRC校验</label>
+						<select>
+							<option selected="selected">高位在前</option>
+							<option>低位在前</option>
+						</select>
+					</div>
+					<div class="dataCircle">
+						<label>波特率</label>
+						<select>
+							<option selected="selected">1200</option>
+							<option>2400</option>
+							<option>4800</option>
+							<option>9600</option>
+							<option>19200</option>
+							<option>38400</option>
+							<option>57600</option>
+							<option>115200</option>
+						</select>
+					</div>
+					<div class="dataCircle">
+						<label>起始位置</label>
+						<input type="text" class="textInput" value="0" />
+					</div>
+					<div class="dataCircle">
+						<label>校验位</label>
+						<select>
+							<option selected="selected">无校验</option>
+							<option>奇校验</option>
+							<option>偶校验</option>
+						</select>
+					</div>
+					<div class="dataCircle">
+						<label>数据长度</label>
+						<input type="text" class="textInput" value="100" />
+					</div>
+					<div class="dataCircle">
+						<label>停止位</label>
+						<select>
+							<option selected="selected">1位</option>
+							<option>2位</option>
+						</select>
+					</div>
+					<div class="dataCircle">
+						<label>字节序</label>
+						<select>
+							<option selected="selected">4字节高位在前</option>
+							<option>4字节低位在前</option>
+							<option>2字节高位在前</option>
+							<option>2字节低位在前</option>
+						</select>
+					</div>
+					<div class="dataCircle">
+						<label>设备状态</label>
+						<p class="controlBtn">
+							<span>开启</span>
+							<span class="activeBtn">未启用</span>
+						</p>
+						<em>注 : 开启提醒后即可进行相关设置。</em>
+					</div>
+				</div>
+				<div class="boxContent clearfix">
+					<div class="equipment">
+						<i class="fa fa-wrench"></i>&nbsp;数据配置
+						<a class="btnYellow" data-toggle="tooltip" data-placement="right">
+							<i class="fa fa-plus"></i>
+							<div class="tip">
+								添加端口
+								<em class="tip-arrow"></em>
+							</div>
+						</a>
+						<a class="btnYellow" data-toggle="tooltip" data-placement="right">
+							<i class="fa fa-copy"></i>
+							<div class="tip">
+								复制端口
+								<em class="tip-arrow"></em>
+							</div>
+						</a>
+					</div>
+					<div class="detialData">
+						<table>
+							<thead>
+								<tr>
+									<th>数据名称</th>
+									<th>读写状态</th>
+									<th>数据单位</th>
+									<th>数据类型</th>
+									<th>数据精度</th>
+									<th>数据地址</th>
+									<th>实际量程低</th>
+									<th>实际量程高</th>
+									<th>编辑</th>
+									<th>删除</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>温度</td>
+									<td>写入</td>
+									<td>℃</td>
+									<td>整形</td>
+									<td>0</td>
+									<td>0</td>
+									<td>-20</td>
+									<td>120</td>
+									<td>
+										<i class="fa fa-edit"></i>
+									</td>
+									<td>
+										<i class="fa fa-trash"></i>
+									</td>
+								</tr>
+								<tr>
+									<td>压力</td>
+									<td>读取</td>
+									<td>MPa</td>
+									<td>浮点型</td>
+									<td>2</td>
+									<td>0</td>
+									<td>0</td>
+									<td>10</td>
+									<td>
+										<i class="fa fa-edit"></i>
+									</td>
+									<td>
+										<i class="fa fa-trash"></i>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="saveSettings">
+					<button>保存设置</button>
+				</div>
+			</div>
+		</div>
+		<div class="hidden pop-mask"></div>
+		<div class="hidden pop">
+			<div class="clearfix pop-title">
+				<p class="pull-left">编辑数据标签</p>
+				<a href="javascript:;" class="pull-right pop-close maskClose"></a>
+			</div>
+			<ul class="pop-main">
+				<li></li>
+			</ul>
+		</div>
+		<script type="text/javascript" src="../plugins/jQuery/jquery-1.11.3.min.js"></script>
+		<script src="../js/box_plc.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

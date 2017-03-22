@@ -1,0 +1,256 @@
+body{
+	width: 100%;
+	height: 100%;
+	font-family: "Open Sans","Microsoft YaHei","Hiragino Sans GB","Hiragino Sans GB W3","微软雅黑","Helvetica Neue",Arial,sans-serif;
+}
+body *{
+	box-sizing: border-box;
+}
+select::-ms-expand{
+	display: none;
+}
+td>.fa{
+	margin-left: 8px;
+	cursor: pointer;
+}
+
+.boxAccess{
+	width: 100%;
+	height: 100% ;
+	background: #F3F3F4;
+	padding: 20px 20px;
+	overflow: hidden;
+}
+.boxAccess .boxHeader{
+	border-bottom:3px solid #e0e0e0;
+	padding-bottom: 15px;
+	padding-top: 5px;
+	width: 100%;
+	float: left;
+	overflow: hidden;
+}
+.boxAccess .boxHeader h3{
+	font: 20px/20px "微软雅黑";
+	font-weight: 500;
+	color:#5d5d5d;
+	float: left;
+}
+.boxAccess .boxHeader h4{
+	float: right;
+	font: 14px/20px "微软雅黑";
+	font-size: 14px;
+	font-weight: 500;
+}
+.boxAccess .boxHeader span:nth-last-child(1){
+	color: #1ab394;
+}
+/*================主要内容部分=================*/
+.dataInfo{
+	width: 100%;
+	overflow: hidden;
+	background: #fff;
+}
+.boxContent{
+	padding:10px 10px;
+}
+.boxContent .equipment{
+	position: relative;
+	height: 44px;
+	line-height: 44px;
+	color:#39bda2 ;
+	border-bottom: 1px solid #1ab394;
+}
+.boxContent .dataCircle{
+	width: 50%;
+	float: left;
+	padding-top: 25px;
+}
+.boxContent .dataCircle label{
+	float: left;
+	color: #9f9f9f;
+	width: 76px;
+	height: 35px;
+	text-align: right;
+	line-height: 35px;
+	font-size: 14px;
+	padding: 0 10px 0 8px ;
+	font-weight: 500;
+}
+.boxContent .dataCircle input,.boxContent .dataCircle select{
+	display: block;
+	float: left;
+    border: 1px solid #e5e6e7;
+    border-radius: 1px;
+    width: 70%;
+    height: 34px;
+    line-height: 32px;
+    font-size: 14px;
+    color: #a7a7a7;
+}
+.boxContent .dataCircle input{
+    text-indent: 12px;
+}
+.boxContent .dataCircle select{
+	padding-left: 12px;
+	background: url(../img/select_arrow.png) no-repeat scroll right center transparent; 
+}
+
+.controlBtn{
+	float: left;
+	height: 33px;
+	line-height: 33px;
+	border: 1px solid #1ab394;
+	color: #1ab394;
+	border-radius: 3px;
+	text-align: center;
+}
+.controlBtn span{
+	padding: 0 15px;
+	display: inline-block;
+	height: 100%;
+	float: left;
+	cursor: pointer;
+}
+.activeBtn{
+	background: #1ab394;
+	color: #fff;
+}
+.dataCircle em{
+	float: left;
+	height: 35px;
+	line-height: 35px;
+	color: #fc0;
+	font-size: 14px;
+	padding-left: 15px;
+}
+.equipment span,.equipment .btnYellow{
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background: #ffb400;
+	text-align: center;
+	line-height: 20px;
+	border-radius: 50%;
+	color: #fff;
+	cursor: pointer;
+	position: relative;
+}
+.tip{
+	width: 64px;
+	background: #ffc333;
+	text-align: center;
+	border-radius: 2px;
+	display: none;
+	position: absolute;
+	left: -22px;
+	top: -26px;
+}
+.tip-arrow{
+	width: 0;
+    height: 0;
+    border-left: 3.5px solid transparent;
+    border-right: 3.5px solid transparent;
+    border-top: 6px solid #ffc333;
+	position: absolute;
+	left: 28.5px;
+	bottom: -6px;
+}
+.btnYellow:hover .tip{
+	display: block;
+}
+.detialData{
+	padding: 25px 0;
+	border-bottom: 1px solid #1ab394;
+} 
+.detialData>table{
+	width: 100%;
+} 
+.detialData table tr{
+	height: 38px;
+	border-bottom: 1px solid #ccc;
+}
+.detialData table th,.detialData table td{
+	padding: 0 10px;
+}
+.detialData table th{
+	font-family: simsun;
+	font-weight: bold;
+}
+.detialData tbody tr{
+	color: #8b91a0;
+	font-size: 12px;
+}
+.detialData tbody tr:nth-of-type(2n+1){
+	background: #fff;
+}
+.detialData tbody tr:nth-of-type(2n+2){
+	background: #f9f9f9;
+}
+.detialData tbody tr:hover{
+	background: #ccc;
+}
+.saveSettings{
+	margin: 10px auto;
+	height: 34px;
+	line-height: 34px;
+	color: #fff;
+	text-align: center;
+	font-size: 14px;
+	margin-bottom:45px ;
+	cursor: pointer;
+}
+.saveSettings button{
+	width: 300px;
+	background: #1ab394;
+	border-radius: 3px;
+}
+
+.pop-mask{
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: 0.3;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 3000;
+}
+.pop{
+	width: 500px;
+	position: absolute;
+	height: 475px;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	background: #fff;
+	z-index: 3010;
+	box-shadow:7px 7px  7px rgba(0,0,0,0.4);
+	-webkit-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
+	-moz-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
+	-ms-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
+	-o-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
+}
+.pop-title{
+	height: 40px;
+	line-height: 40px;
+	background: #1ab394;
+}
+.pop-title>p{
+	margin-left: 23px;
+	font-size: 15px;
+	color: #fff;
+}
+.pop-close{
+	width: 40px;
+	height: 100%;
+	background: url(../img/login/login_layer_close.png) no-repeat 10px 10px;
+}
+.pop-close:hover{
+	background-color: #24c5a4;
+}
+.pop-main{
+	width: 450px;
+	margin:15px auto 20px;
+}

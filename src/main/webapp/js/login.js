@@ -75,24 +75,20 @@ $.fn.extend({
 	//邮箱验证
 	'testEmal': function (){
 		var re = /^[a-zA-Z0-9]+@\w+(\.[a-zA-Z]+){1,2}$/;
-		$(this).attr({
-			'msg': '',
-			'ismail': false
-		});
+		$(this).attr('isright','false');
 		$(this).keyup(function (){
-			$(this).attr('msg',$(this).val());
-			if (re.test($(this).attr('msg'))) {
+			if (re.test($(this).val())) {
 				$(this).css({
 					'borderColor': '#1ab394'
 				});
-				$(this).attr('ismail',true);
 				$(this).siblings('.tip').addClass('hidden');
+				$(this).attr('isright','true');
 			} else {
-				$(this).attr('ismail',false);
 				$(this).siblings('.tip').removeClass('hidden');
 				$(this).css({
 					'borderColor': '#ff787b'
 				});
+				$(this).attr('isright','false');
 			}
 		});
 	},
@@ -141,11 +137,12 @@ $.fn.extend({
 	//文本框响应
 	'smartInput': function (){
 		$(this).focus(function (){
+			console.log($(this).attr('class'));
 			if ($(this).val()==='请输入邮箱'||$(this).val()==='请输入密码'||$(this).val()==='请输入正确的邮箱地址'||$(this).val()==='请输入验证码') {
 				$(this).attr('originval',$(this).val()).val('');
 			}
 			$(this).css({
-				'color': '#fff',
+				'color': $(this).attr('class')==='pop-username' ? '#000' : '#fff',
 				'borderColor':'#1ab394'
 			});
 		});
@@ -159,12 +156,15 @@ $.fn.extend({
 	},
 	//密码框响应
 	'passwordInput': function (){
+		$(this).attr('isright','false');
 		$(this).focus(function (){
 			$(this).attr('type','password');
 		});
 		$(this).blur(function (){
 			if ($(this).val()==='') {
 				$(this).attr('type','text');
+			} else {
+				$(this).attr('isright','true');
 			}
 		});
 	},
@@ -194,6 +194,9 @@ $.fn.extend({
 					'color': '#ff787b',
 					'borderColor': '#ff787b'
 				});
+				return;
+			}
+			if ($('input').filter('[name=username]').attr('isright')==='false'||$('input').filter('[name=password]').attr('isright')==='false') {
 				return;
 			}
 			$(this).html('正在登录中，请稍后...').css({

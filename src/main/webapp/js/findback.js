@@ -44,6 +44,7 @@ $.fn.extend({
 			}
 		});
 	},
+	//验证两次密码输入
 	'testEqual': function (){
 		$(this).blur(function (){
 			if ($(this).val()!==$('#new').val()) {
@@ -77,14 +78,28 @@ $.fn.extend({
 					'textIndent': 0,
 					'textAlign': 'center'
 				});
-				//$.ajax();
+				$.ajax({
+					type:"put",
+					dataType:"json",
+					url:"http://192.168.1.107:80/v1/users",
+					async:true,
+					data:{
+						'username': '543943341@qq.com',
+						'new_password': $('#new').val(),
+						'confirm_password': $('#again').val()
+					},
+					success: function (data){
+						console.log(data);
+						$('.step1').addClass('hidden');
+						$('.step2').removeClass('hidden');
+					}
+				});
 			}
 		});
 	}
 });
 
-$('.step1').stayCenter();
-$('.step2').stayCenter();
+$('.wrap').stayCenter();
 $('#new').testLength();
 $('#again').testEqual();
 $('.submit-btn').submitPassword();

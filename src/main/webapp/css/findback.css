@@ -204,4 +204,32 @@ body *{
 .main-form button:hover{
 	background: #24c5a4;
 }
+
+.main-form>.success{
+	margin: 40px 0 45px 0;
+	height: 32px;
+	line-height: 32px;
+	text-align: center;
+}
+.main-form>.success>.icon{
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 10px;
+	width: 32px;
+	height: 32px;
+	background: url(../img/icon_btn.png) no-repeat;
+}
+.main-form>.success>strong{
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 19px;
+	color: #7e7e7e;
+	font-weight: 500;
+}
+.main-form>.info{
+	margin-bottom: 57px;
+	text-align: center;
+	color: #7e7e7e;
+	font-size: 14px;
+}
 /* ENG .main */
