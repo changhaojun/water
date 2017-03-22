@@ -21875,3 +21875,537 @@ java.lang.NullPointerException
 
 2017-03-22 14:06:54
 [DEBUG]-[Thread: qtp32025711-10]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-22 14:09:54
+[INFO]-[Thread: qtp32025711-15]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:09:54
+[INFO]-[Thread: qtp32025711-15]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:09:54
+[INFO]-[Thread: qtp32025711-15]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:09:54
+[INFO]-[Thread: qtp32025711-15]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:09:54
+[INFO]-[Thread: qtp32025711-15]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 令牌错误
+
+2017-03-22 14:09:54
+[DEBUG]-[Thread: qtp32025711-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-22 14:10:22
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-22 14:11:57
+[INFO]-[Thread: qtp32025711-19]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:11:57
+[INFO]-[Thread: qtp32025711-19]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:11:57
+[INFO]-[Thread: qtp32025711-19]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:11:57
+[INFO]-[Thread: qtp32025711-19]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:11:57
+[INFO]-[Thread: qtp32025711-19]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:11:57
+[INFO]-[Thread: qtp32025711-19]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:11:57
+[DEBUG]-[Thread: qtp32025711-19]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:11:57
+[DEBUG]-[Thread: qtp32025711-19]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/index.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\index.html didn't change.
+
+2017-03-22 14:12:07
+[INFO]-[Thread: qtp32025711-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:12:07
+[INFO]-[Thread: qtp32025711-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:12:07
+[INFO]-[Thread: qtp32025711-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:12:07
+[INFO]-[Thread: qtp32025711-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:12:07
+[INFO]-[Thread: qtp32025711-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:12:07
+[INFO]-[Thread: qtp32025711-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:12:07
+[DEBUG]-[Thread: qtp32025711-16]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:12:07
+[DEBUG]-[Thread: qtp32025711-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/index.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\index.html didn't change.
+
+2017-03-22 14:12:21
+[INFO]-[Thread: qtp32025711-21]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:12:21
+[INFO]-[Thread: qtp32025711-21]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:12:21
+[INFO]-[Thread: qtp32025711-21]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:12:21
+[INFO]-[Thread: qtp32025711-21]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:12:21
+[INFO]-[Thread: qtp32025711-21]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:12:21
+[INFO]-[Thread: qtp32025711-21]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:12:21
+[DEBUG]-[Thread: qtp32025711-21]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:12:21
+[DEBUG]-[Thread: qtp32025711-21]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/index.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\index.html didn't change.
+
+2017-03-22 14:12:29
+[INFO]-[Thread: qtp32025711-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:12:29
+[INFO]-[Thread: qtp32025711-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:12:29
+[INFO]-[Thread: qtp32025711-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:12:29
+[INFO]-[Thread: qtp32025711-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:12:29
+[INFO]-[Thread: qtp32025711-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:12:29
+[INFO]-[Thread: qtp32025711-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:12:29
+[DEBUG]-[Thread: qtp32025711-13]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:12:29
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/index.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\index.html didn't change.
+
+2017-03-22 14:12:31
+[INFO]-[Thread: qtp32025711-21]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:12:31
+[INFO]-[Thread: qtp32025711-21]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:12:31
+[INFO]-[Thread: qtp32025711-21]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:12:31
+[INFO]-[Thread: qtp32025711-21]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:12:31
+[INFO]-[Thread: qtp32025711-21]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:12:31
+[INFO]-[Thread: qtp32025711-21]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:12:31
+[DEBUG]-[Thread: qtp32025711-21]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:12:31
+[DEBUG]-[Thread: qtp32025711-21]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/index.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\index.html didn't change.
+
+2017-03-22 14:12:35
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:12:35
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:12:35
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:12:35
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:12:35
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:12:35
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:12:35
+[DEBUG]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:12:35
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-22 14:14:16
+[INFO]-[Thread: qtp32025711-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:14:16
+[INFO]-[Thread: qtp32025711-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:14:16
+[INFO]-[Thread: qtp32025711-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:14:16
+[INFO]-[Thread: qtp32025711-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:14:16
+[INFO]-[Thread: qtp32025711-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:14:16
+[INFO]-[Thread: qtp32025711-16]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:14:16
+[DEBUG]-[Thread: qtp32025711-16]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:14:16
+[DEBUG]-[Thread: qtp32025711-16]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/index.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\index.html didn't change.
+
+2017-03-22 14:17:05
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:17:05
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:17:05
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:17:05
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:17:05
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:17:05
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:17:05
+[DEBUG]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:17:05
+[DEBUG]-[Thread: qtp32025711-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/index.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\index.html didn't change.
+
+2017-03-22 14:17:11
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:17:11
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:17:11
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:17:11
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:17:11
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:17:11
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:17:11
+[DEBUG]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth failed
+
+2017-03-22 14:17:11
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 权限不足
+
+2017-03-22 14:17:11
+[DEBUG]-[Thread: qtp32025711-21]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-22 14:17:11
+[DEBUG]-[Thread: qtp32025711-21]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\first\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-22 14:17:58
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:17:58
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:17:58
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:17:58
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:17:58
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:17:58
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:17:58
+[DEBUG]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:17:58
+[DEBUG]-[Thread: qtp32025711-20]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/index.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\index.html didn't change.
+
+2017-03-22 14:18:03
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:18:03
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:18:03
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:18:03
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:18:03
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:18:03
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:18:03
+[DEBUG]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:18:03
+[DEBUG]-[Thread: qtp32025711-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-22 14:19:52
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:19:52
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:19:52
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:19:52
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:19:52
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:19:52
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:19:52
+[DEBUG]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:19:52
+[DEBUG]-[Thread: qtp32025711-20]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/index.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\index.html didn't change.
+
+2017-03-22 14:19:58
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:19:58
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:19:58
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:19:58
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:19:58
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:19:58
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:19:58
+[DEBUG]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:19:58
+[DEBUG]-[Thread: qtp32025711-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-22 14:21:05
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:21:05
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:21:05
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:21:05
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:21:05
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:21:05
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:21:05
+[DEBUG]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:21:05
+[DEBUG]-[Thread: qtp32025711-20]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/index.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\index.html didn't change.
+
+2017-03-22 14:21:09
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:21:09
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:21:09
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:21:09
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:21:09
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:21:09
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:21:09
+[DEBUG]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth failed
+
+2017-03-22 14:21:09
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 权限不足
+
+2017-03-22 14:21:09
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-22 14:21:44
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:21:44
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:21:44
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:21:44
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:21:44
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:21:44
+[INFO]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:21:44
+[DEBUG]-[Thread: qtp32025711-11]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:21:44
+[DEBUG]-[Thread: qtp32025711-11]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/index.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\index.html didn't change.
+
+2017-03-22 14:21:50
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:21:50
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:21:50
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:21:50
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:21:50
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:21:50
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:21:50
+[DEBUG]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:21:50
+[DEBUG]-[Thread: qtp32025711-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-22 14:23:06
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:23:06
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:23:06
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:23:06
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:23:06
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:23:06
+[INFO]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:23:06
+[DEBUG]-[Thread: qtp32025711-17]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:23:06
+[DEBUG]-[Thread: qtp32025711-17]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/index.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\index.html didn't change.
+
+2017-03-22 14:23:09
+[INFO]-[Thread: qtp32025711-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:23:09
+[INFO]-[Thread: qtp32025711-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:23:09
+[INFO]-[Thread: qtp32025711-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:23:09
+[INFO]-[Thread: qtp32025711-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:23:09
+[INFO]-[Thread: qtp32025711-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:23:09
+[INFO]-[Thread: qtp32025711-13]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:23:09
+[DEBUG]-[Thread: qtp32025711-13]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:23:09
+[DEBUG]-[Thread: qtp32025711-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\account.html didn't change.
+
+2017-03-22 14:25:24
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:25:24
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:25:24
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:25:24
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:25:24
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:25:24
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:25:24
+[DEBUG]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:25:24
+[DEBUG]-[Thread: qtp32025711-20]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/index.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\index.html didn't change.
+
+2017-03-22 14:25:30
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-22 14:25:30
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:25:30
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-22 14:25:30
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-22 14:25:30
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-22 14:25:30
+[INFO]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-22 14:25:30
+[DEBUG]-[Thread: qtp32025711-20]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-22 14:25:30
+[DEBUG]-[Thread: qtp32025711-20]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\account.html didn't change.
