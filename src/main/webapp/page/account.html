@@ -9,6 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="../finfosoft-water/plugins/bootstarp/css/bootstrap.min.css"/>
 	</head>
 	<body>
+		<input type="text" hidden="hidden" value="$()" />
 		<!--账户主页-->
 		<div class="accountBox">
 			<!--账户top-->
@@ -79,7 +80,7 @@
 						
 					</ul>
 				</div>
-				<button type="submit" class="sureBtn addBtn">
+				<button type="submit" class="sureBtn addBtn" onclick="addUser()">
 					确定
 				</button>
 			</div>
@@ -134,7 +135,7 @@
 						<label>状态：</label>
 						<input type="button" value="有效" id="modifyValid"/>
 						<input type="button" value="无效" id="modifyInvalid" />
-				</div> 
+					</div> 
 				</div>
 				<div class="selectRole">
 					<span>选择角色</span>
@@ -145,7 +146,7 @@
 						
 					</ul>
 				</div>
-				<button type="submit"class="sureBtn modifyBtn" onclick="sureModify(editId)">
+				<button type="submit"class="sureBtn modifyBtn" onclick="sureModify()">
 					确定
 				</button>
 			</div>
@@ -174,7 +175,7 @@
 					确定删除？
 				</div>
 				<button type="button" class="cancelDel">取消</button>
-				<button type="button" class="sureDel" onclick="sureDel(editId)">确定</button>
+				<button type="button" class="sureDel" onclick="sureDel()">确定</button>
 			</div>
 		</div>
 
@@ -182,5 +183,5 @@
 	<script src="../finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../finfosoft-water/plugins/bootstarp/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../finfosoft-water/js/public_resources.js"></script>
-	<script src="../finfosoft-water/js/account.js?1.03"></script>
+	<script src="../finfosoft-water/js/account.js?1.05"></script>
 </html>

@@ -11,7 +11,7 @@ var getToken=function(){
 		type : 'GET',
 		async:false,
 		success : function(data) {
-			console.info(data)
+//			console.info(data)
 			 accesstoken=data.accesstoken;
 			 refreshToken=data.refreshToken;
 		}

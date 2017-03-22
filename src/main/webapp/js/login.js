@@ -115,7 +115,7 @@ $.fn.extend({
 					type:"get",
 					dataType:"json",
 					//need:提交时需要从服务器查询是否存在该用户名
-					url:"http://192.168.1.109:80/v1/mails",
+					url:globalurl+"/v1/mails",
 					async:true,
 					data:{
 						'email': msg
@@ -181,7 +181,7 @@ $.fn.extend({
 				$.ajax({
 					type:"post",
 					dataType:"JSON",
-					url:"http://192.168.1.114/authorize/authorize",
+					url:globalurl+"/authorize/authorize",
 					async:true,
 					data:{
 						'client_id': 'admin',
@@ -218,7 +218,7 @@ $.fn.extend({
 								$.ajax({
 									type:"post",
 									dataType:"JSON",
-									url:"http://192.168.1.114/authorize/authorize",
+									url:globalurl+"/authorize/authorize",
 									async:false,
 									data:{
 										'client_id': 'admin',

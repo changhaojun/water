@@ -1,57 +1,63 @@
 var editId;
 //获取账户列表
-getToken();
-$.ajax({
-	type: "get",
-	url: globalurl + "/v1/users",
-	dataType: "JSON",
-	async: false,
-	data: {
-		access_token: accesstoken
-	},
-	success: function(data) {
-		console.log(data);
-		if (data == null) {
-			$(".noneData").css("display", "block");
-		} else {
-			$(".noneData").css("display", "none");
-			var str = '';
-			//获取列表页
-			for (var i = 0; i < data.rows.length; i++) {
-				var str2 = '';
-				if (data.rows[i].roles) {
-					for (var j = 0; j < data.rows[i].roles.length; j++) {
-						str2 += '<li>' + data.rows[i].roles[j] + '</li>';
+$(function(){
+	getToken();
+	allList();
+})
+function allList(){
+	$.ajax({
+		type: "get",
+		url: globalurl + "/v1/users",
+		dataType: "JSON",
+		async: false,
+		crossDomain: true == !(document.all),
+		data: {
+			access_token: accesstoken
+		},
+		success: function(data) {
+			$(".accountContent").html("");
+			if (data == null) {
+				$(".noneData").css("display", "block");
+			} else {
+				$(".noneData").css("display", "none");
+				var str = '';
+				//获取列表页
+				for (var i = 0; i < data.rows.length; i++) {
+					var str2 = '';
+					if (data.rows[i].roles) {
+						for (var j = 0; j < data.rows[i].roles.length; j++) {
+							str2 += '<li>' + data.rows[i].roles[j] + '</li>';
+						}
+					}
+					str = '<div class="accountList" dataId="' + data.rows[i]._id + '">' +
+						'<div class="listTop">' +
+						'<span>' + data.rows[i].fullname + '</span>' +
+						'<i class="fa fa-wrench set" data-toggle="tooltip" data-placement="top" title="修改" onclick="modify(&apos;' + data.rows[i]._id + '&apos;)"></i>' +
+						'<strong class="accountClose" data-toggle="tooltip" data-placement="top" title="删除" onclick="deleteUser(&apos;' + data.rows[i]._id + '&apos;)">&times;</strong>' +
+						'</div>' +
+						'<div class="listName">' + data.rows[i].username + '</div>' +
+						'<ul class="positionList" >' + str2 +
+						'</ul>' + '</div>';
+					$(".accountContent").append(str);
+	
+					//判断列表的状态
+					if (data.rows[i].status == 0) {
+						$(".accountList").eq(i).addClass("invalidList");
+						$(".accountList .positionList").eq(i).find("li").addClass("disabled");
+					} else {
+						$(".accountList .positionList").eq(i).find("li").addClass("cheacked");
 					}
 				}
-				str = '<div class="accountList" dataId="' + data.rows[i]._id + '">' +
-					'<div class="listTop">' +
-					'<span>' + data.rows[i].fullname + '</span>' +
-					'<i class="fa fa-wrench set" data-toggle="tooltip" data-placement="top" title="修改" onclick="modify(' + data.rows[i]._id + ')"></i>' +
-					'<strong class="accountClose" data-toggle="tooltip" data-placement="top" title="删除" onclick="delete(' + data.rows[i]._id + ')">&times;</strong>' +
-					'</div>' +
-					'<div class="listName">' + data.rows[i].username + '</div>' +
-					'<ul class="positionList" >' + str2 +
-					'</ul>' + '</div>';
-				$(".accountContent").append(str);
-
-				//判断列表的状态
-				if (data.rows[i].status == 0) {
-					$(".accountList").eq(i).addClass("invalidList");
-					$(".accountList .positionList").eq(i).find("li").addClass("disabled");
-				} else {
-					$(".accountList .positionList").eq(i).find("li").addClass("cheacked");
-				}
 			}
+			//获取角色列表
+			var oRole = "";
+			for (var i in data.rolesName) {
+				oRole += "<li class='disabled' rolename_id=" + data.rolesName[i]._id + ">" + data.rolesName[i].role_name + "</li>";
+			}
+			$(".accountRole ul").html(oRole);	
 		}
-		//获取角色列表
-		var oRole = "";
-		for (var i in data.rolesName) {
-			oRole += "<li class='disabled' rolename_id=" + data.rolesName[i]._id + ">" + data.rolesName[i].role_name + "</li>";
-		}
-		$(".accountRole ul").html(oRole);	
-	}
-});
+	})
+};
 //点击添加角色
 function setRole(obj) {
 	obj.each(function(index, ele) {
@@ -63,14 +69,14 @@ function setRole(obj) {
 			}
 		})
 	})
-}
+};
 //点击显示添加页面
 $(".btn-primary").on("click", function() {
 		$(".addAccountMask").fadeIn(200);
 		setRole($(".addRole ul li"));
-	})
-//点击添加账户
-$(".addBtn").on("click", function() {
+})
+//点击添加账户的保存
+function addUser(){	
 	if ($(".addState .stats").val() == "有效") {
 		flag = 1;
 	} else {
@@ -102,6 +108,7 @@ $(".addBtn").on("click", function() {
 		$(".addphoneError").html("请输入正确的手机号");
 		$(".addphoneError").css("color", "#fff");
 	} else {
+		
 		//添加角色
 		var addoRole = [];
 		$(".addRole ul .cheacked").each(function(index, ele) {
@@ -110,10 +117,12 @@ $(".addBtn").on("click", function() {
 
 		addoRole += "";
 		var data = "{'fullname':'" + $("#addUsername").val() + "','username':'" + $("#addText").val() + "','password':'" + $("#addPassword").val() + "','mobile':'" + $("#addPhone").val() + "','status':" + flag + "}";
+		console.info(globalurl)
 		$.ajax({
 			type: 'POST',
-			url: globalurl,
+			url: globalurl + "/v1/users",
 			dataType: "JSON",
+			crossDomain: true == !(document.all),
 			data: {
 				'roles': addoRole,
 				data: data,
@@ -138,41 +147,47 @@ $(".addBtn").on("click", function() {
 			}
 		})
 	}
-})
+};
 //修改账户
-function mofidy(_id) {
+function modify(_id){
 	editId = _id;
+	sureModify(editId);
+	var that=$(this).parents(".accountList");
+	console.log($(this).parents(".accountList"));
 	setRole($(".modifyRole ul li"));
 	$(".modifyRole ul li").removeClass("cheacked").addClass("disabled");
 	$(".modifyAccountMask").fadeIn(200);
 	$(".modifyState input").removeClass();
 	$.ajax({
 		type: 'get',
-		url: globalurl + "/v1/users",
+		crossDomain: true == !(document.all),
+		url: globalurl + "/v1/users/"+_id,
 		data: {
 			access_token: accesstoken
 		},
 		success: function(data) {
-			if (data.rows[$(this).index()].status) {
+			console.log(data);
+			if (data.status) {
 				$(".modifyState #modifyValid").addClass("stats")
 			} else {
 				$(".modifyState #modifyInvalid").addClass("stats")
 			}
-			$(data.rows[$(this).index()].roles).each(function(index, ele) {
+			$(data.roles).each(function(index, ele) {
 				if (ele == $(".modifyRole ul li").eq(index).html()) {
 
 					$(".modifyRole ul li").eq(index).removeClass("disabled").addClass("cheacked")
 				}
 			})
-			$("#modifyUsername").val(data.rows[$(this).index()].fullname);
-			$("#modifyText").val(data.rows[$(this).index()].username);
-			$("#modifyPhone").val(data.rows[$(this).index()].mobile);
-			$("#modifyPassword").val(data.rows[$(this).index()].password);
+			$("#modifyUsername").val(data.fullname);
+			$("#modifyText").val(data.username);
+			$("#modifyPhone").val(data.mobile);
+			$("#modifyPassword").val(data.password);
 		}
 	});
-});
+}
+
 //确定修改
-function sureModify(editId) {
+function sureModify() {
 	if ($("#modifyText").val() == "请输入邮箱") {
 		$(".modifyaccountError").css("display", "block");
 		$(".modifyaccountError").html("邮箱不能为空");
@@ -214,15 +229,15 @@ function sureModify(editId) {
 		var modifydata = "{'fullname':'" + $("#modifyUsername").val() + "','username':'" + $("#modifyText").val() + "','password':'" + $("#modifyPassword").val() + "','mobile':'" + $("#modifyPhone").val() + "','status':" + setVar + "}";
 		$.ajax({
 			type: 'put',
-			url: globalurl + "/v1/users/" + editId,
+			url: globalurl + "/v1/users/" +editId,
 			dataType: "JSON",
+			crossDomain: true == !(document.all),
 			data: {
 				roles: addoRole,
 				data: modifydata,
 				access_token: accesstoken
 			},
 			success: function(data) {
-				console.log(data);
 				$(".modifyMsg").css("display", "block");
 				if (data.code == 200) {
 					$(".modifyMsg .modifyback  .backImg").css("background-position", "0px 0px");
@@ -244,15 +259,17 @@ function sureModify(editId) {
 //关闭修改
 $(".closeModify").on("click", function() {
 		$(".modifyAccountMask").fadeOut(200);
-	})
+})
 //删除账户;
-function delete() {
+function deleteUser(_id){
+	editId=_id;
 	$(".delAccountMask").fadeIn(200);
 }
 //删除账户
-function sureDel(editId) {
+function sureDel() {
 	$.ajax({
 		type: 'delete',
+		crossDomain: true == !(document.all),
 		url: globalurl + "/v1/users/" + editId + "?access_token=" + accesstoken,
 		success: function(data) {
 			location.reload("account.html");
@@ -340,6 +357,8 @@ $(".closeAdd").on("click", function() {
 $("#searchId").on("keyup", function(event) {
 	if (event.keyCode == 13) {
 		ajaxRequest();
+	}else{
+		allList();
 	}
 })
 
@@ -351,6 +370,7 @@ function ajaxRequest() {
 		type: 'get',
 		url: globalurl + "/v1/users",
 		dataType: "JSON",
+		crossDomain: true == !(document.all),
 		data: {
 			like: okey,
 			access_token: accesstoken
