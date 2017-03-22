@@ -357,55 +357,57 @@ $(".closeAdd").on("click", function() {
 $("#searchId").on("keyup", function(event) {
 	if (event.keyCode == 13) {
 		ajaxRequest();
-	}else{
-		allList();
 	}
 })
 
 function ajaxRequest() {
 	var search = "";
-	var okey = '{"fullname":"' + $("#searchId").val() + '"}';
-	$(".accountContent").html("");
-	$.ajax({
-		type: 'get',
-		url: globalurl + "/v1/users",
-		dataType: "JSON",
-		crossDomain: true == !(document.all),
-		data: {
-			like: okey,
-			access_token: accesstoken
-		},
-		success: function(data) {
-			var str = '';
-			//获取列表页
-			for (var i = 0; i < data.rows.length; i++) {
-				var str2 = '';
-				if (data.rows[i].roles) {
-					for (var j = 0; j < data.rows[i].roles.length; j++) {
-						str2 += '<li>' + data.rows[i].roles[j] + '</li>';
+	if($("#searchId").val()==""){
+		allList();
+	}else{
+		var okey = '{"fullname":"' + $("#searchId").val() + '"}';
+		$(".accountContent").html("");
+		$.ajax({
+			type: 'get',
+			url: globalurl + "/v1/users",
+			dataType: "JSON",
+			crossDomain: true == !(document.all),
+			data: {
+				like: okey,
+				access_token: accesstoken
+			},
+			success: function(data) {
+				var str = '';
+				//获取列表页
+				for (var i = 0; i < data.rows.length; i++) {
+					var str2 = '';
+					if (data.rows[i].roles) {
+						for (var j = 0; j < data.rows[i].roles.length; j++) {
+							str2 += '<li>' + data.rows[i].roles[j] + '</li>';
+						}
+					}
+					str = '<div class="accountList">' +
+						'<div class="listTop">' +
+						'<span>' + data.rows[i].fullname + '</span>' +
+						'<i class="fa fa-wrench set" data-toggle="tooltip" data-placement="top" title="修改"></i>' +
+						'<strong class="accountClose" data-toggle="tooltip" data-placement="top" title="删除">&times;</strong>' +
+						'</div>' +
+						'<div class="listName">' + data.rows[i].username + '</div>' +
+						'<ul class="positionList" >' + str2 +
+						'</ul>' +
+						'</div>';
+					$(".accountContent").append(str);
+					//判断列表的状态
+					if (data.rows[i].status == 0) {
+						$(".accountList").eq(i).addClass("invalidList");
+						$(".accountList .positionList").eq(i).find("li").addClass("disabled");
+					} else {
+						$(".accountList .positionList").eq(i).find("li").addClass("cheacked");
 					}
 				}
-				str = '<div class="accountList">' +
-					'<div class="listTop">' +
-					'<span>' + data.rows[i].fullname + '</span>' +
-					'<i class="fa fa-wrench set" data-toggle="tooltip" data-placement="top" title="修改"></i>' +
-					'<strong class="accountClose" data-toggle="tooltip" data-placement="top" title="删除">&times;</strong>' +
-					'</div>' +
-					'<div class="listName">' + data.rows[i].username + '</div>' +
-					'<ul class="positionList" >' + str2 +
-					'</ul>' +
-					'</div>';
-				$(".accountContent").append(str);
-				//判断列表的状态
-				if (data.rows[i].status == 0) {
-					$(".accountList").eq(i).addClass("invalidList");
-					$(".accountList .positionList").eq(i).find("li").addClass("disabled");
-				} else {
-					$(".accountList .positionList").eq(i).find("li").addClass("cheacked");
-				}
 			}
-		}
-	})
+		})
+	}	
 }
 //按搜索图标进行查找
 $(".fa-search").on("click", function() {
