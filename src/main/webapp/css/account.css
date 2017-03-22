@@ -4,6 +4,8 @@
 	float:left;
 	position: relative;	
 	min-width:1366px;
+	height:100%;
+	overflow-x: hidden;
 }
 /*账户top区域*/
 .accountBox .accountTop{

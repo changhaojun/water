@@ -20,6 +20,7 @@ function allList(){
 			filter:searchFilter
 		},
 		success: function(data) {
+			console.info(data.rows.length>0)
 			if(data.code==400005){
 				getNewToken();
 				allList();
@@ -64,8 +65,6 @@ function allList(){
 					oRole += "<li class='disabled' rolename_id=" + data.rolesName[i]._id + ">" + data.rolesName[i].role_name + "</li>";
 				}
 				$(".accountRole ul").html(oRole);	
-			}else{
-				
 			}
 		}
 	})
@@ -126,10 +125,8 @@ function addUser(){
 		$(".addRole ul .cheacked").each(function(index, ele) {
 			addoRole.push($(".addRole ul .cheacked").eq(index).attr("rolename_id"));
 		})
-
 		addoRole += "";
-		var data = "{'fullname':'" + $("#addUsername").val() + "','username':'" + $("#addText").val() + "','password':'" + $("#addPassword").val() + "','mobile':'" + $("#addPhone").val() + "','status':" + flag + "}";
-		console.info(globalurl)
+		var data = "{'fullname':'" + $("#addUsername").val() + "','username':'" + $("#addText").val() + "','password':'" + $("#addPassword").val() + "','mobile':'" + $("#addPhone").val() + "','status':" + flag + ",'company_id':'" + companyId + "','company_code':'" +companyCode+ "'}";
 		$.ajax({
 			type: 'POST',
 			url: globalurl + "/v1/users",
@@ -163,9 +160,6 @@ function addUser(){
 //修改账户
 function modify(_id){
 	editId = _id;
-	sureModify(editId);
-	var that=$(this).parents(".accountList");
-	console.log($(this).parents(".accountList"));
 	setRole($(".modifyRole ul li"));
 	$(".modifyRole ul li").removeClass("cheacked").addClass("disabled");
 	$(".modifyAccountMask").fadeIn(200);
@@ -186,7 +180,6 @@ function modify(_id){
 			}
 			$(data.roles).each(function(index, ele) {
 				if (ele == $(".modifyRole ul li").eq(index).html()) {
-
 					$(".modifyRole ul li").eq(index).removeClass("disabled").addClass("cheacked")
 				}
 			})
