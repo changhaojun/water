@@ -4,7 +4,7 @@ $.fn.extend({
 		var aChild = $(this).children();
 		var iLen = aChild.length;
 		var info = navigator.userAgent.toLowerCase();
-		if (info.indexOf("msie 9")>=0||info.indexOf("msie 8")>=0||info.indexOf("msie 7")>=0) {
+		if (info.indexOf("msie")>=0||info.indexOf("trident")>=0) {
 			//IE9以下浏览器：淡入淡出
 			var iIndex = 0;
 			turnHide();
@@ -62,19 +62,41 @@ $.fn.extend({
 			setPos(This);
 		});
 		function setPos(){
-			var iObjWidth = This.outerWidth(true);
-			var iObjHeight = This.outerHeight(true);
-			var iDocWidth = $(document).outerWidth(true);
-			var iDocHeight = $(document).outerHeight(true);
+			var iObjWidth = This.width();
+			var iObjHeight = This.height();
+			var iDocWidth = $(window).width();
+			var iDocHeight = $(window).height();
 			This.css({
 				'left': (iDocWidth-iObjWidth)/2,
 				'top': (iDocHeight-iObjHeight)/2
 			});
 		}
 	},
+	'testEmal': function (){
+		var re = /^[a-zA-Z0-9]+@\w+(\.[a-zA-Z]+){1,2}$/;
+		$(this).attr({
+			'msg': '',
+			'ismail': false
+		});
+		$(this).keyup(function (){
+			$(this).attr('msg',$(this).val());
+			if (re.test($(this).attr('msg'))) {
+				$(this).css({
+					'borderColor': '#1ab394'
+				});
+				$(this).attr('ismail',true);
+				$(this).siblings('.tip').addClass('hidden');
+			} else {
+				$(this).attr('ismail',false);
+				$(this).siblings('.tip').removeClass('hidden');
+				$(this).css({
+					'borderColor': '#ff787b'
+				});
+			}
+		});
+	},
 	//弹出层
 	'popUp': function (){
-		var msg;
 		$(this).click(function (){
 			$('.pop').filter('.step1').removeClass('hidden').stayCenter();
 			$('.pop-mask').removeClass('hidden');
@@ -85,15 +107,24 @@ $.fn.extend({
 			$('.pop-mask').addClass('hidden');
 		});
 		$('.pop-submit').click(function (){
-			var re = /^[a-zA-Z0-9]+@\w+(.[a-zA-Z]+){1,2}$/;
-			msg = $('.pop-username').val();
-			if (re.test(msg)) {
+			if ($('.pop-username').attr('ismail')) {
 				$('.pop').filter('.step1').addClass('hidden');
 				$('.pop').filter('.step2').removeClass('hidden').stayCenter();
-				$('.pop-message').html(msg);
-			} else {
-				$('.pop-username').val('请输入正确的邮箱地址');
-			}
+				$('.pop-message').html($('.pop-username').val());
+				$.ajax({
+					type:"get",
+					dataType:"json",
+					//need:提交时需要从服务器查询是否存在该用户名
+					url:globalurl+"/v1/mails",
+					async:true,
+					data:{
+						'email': msg
+					},
+					success: function (data){
+						console.log(data);
+					}
+				});
+			}	
 		});
 		$('.pop-again').click(function (){
 			$('.pop').filter('.step1').removeClass('hidden');
@@ -101,28 +132,29 @@ $.fn.extend({
 		});
 		$('.pop-mail').click(function (){
 			var re = /^\w+@/;
-			var iUrl = msg.replace(re,function (){
+			var iUrl = $('.pop-username').val().replace(re,function (){
 				return 'http://mail.';
 			});
 			window.open(iUrl);
 		});
 	},
-	//文本框相应
+	//文本框响应
 	'smartInput': function (){
 		$(this).focus(function (){
-			if ($(this).val()==='请输入用户名'||$(this).val()==='请输入密码'||$(this).val()==='请输入正确的邮箱地址') {
+			if ($(this).val()==='请输入邮箱'||$(this).val()==='请输入密码'||$(this).val()==='请输入正确的邮箱地址'||$(this).val()==='请输入验证码') {
 				$(this).attr('originval',$(this).val()).val('');
 			}
+			$(this).css('borderColor','#1ab394');
 		});
 		$(this).blur(function (){
 			if ($(this).val()===''){
-				if ($(this).attr('originval')==='请输入用户名'||$(this).attr('originval')==='请输入密码'||$(this).attr('originval')==='请输入正确的邮箱地址') {
+				if ($(this).attr('originval')==='请输入邮箱'||$(this).attr('originval')==='请输入密码'||$(this).attr('originval')==='请输入正确的邮箱地址'||$(this).attr('originval')==='请输入验证码') {
 					$(this).val($(this).attr('originval'));
 				};
 			}
 		});
 	},
-	//密码框相应
+	//密码框响应
 	'passwordInput': function (){
 		$(this).focus(function (){
 			$(this).attr('type','password');
@@ -138,43 +170,72 @@ $.fn.extend({
 		$(this).click(function (){
 			var iUsername = $('input').filter('[name=username]').val();
 			var iPassword = $('input').filter('[name=password]').val();
+			var iCode = $('input').filter('[name=verificationCode]').val()==='请输入验证码' ? '' : $('input').filter('[name=verificationCode]').val();
 			var iClientId = 'admin';
 			var iClientSecret = 'admin';
-			if (iUsername==='请输入用户名'||iPassword==='请输入密码') {
+			if ($('input').filter('[name=username]').attr('ismail')==='false'||iUsername==='请输入邮箱'||iPassword==='请输入密码'||iCode==='请输入验证码') {
 				return;
-			} else {
-				$.getJSON('http://chaxun.1616.net/s.php?type=ip&output=json&callback=?&_='+Math.random(), function(data){
-					var iAddress = data.Isp.split(' ')[0].toString();
-					$.ajax({
-						type:"post",
-						dataType:"JSON",
-						url:"http://121.42.253.149:18801/authorize/authorize",
-						async:true,
-						data:{
-							'username': iUsername,
-							'password': iPassword,
-							'client_id': 'admin',
-							'client_secret': 'admin'
-//							'code': '',
-//							'address': iAddress
-						},
-						success: function (data){
-							console.log(data);
-							if(data.code==200){
+			}
+			$.getJSON('http://chaxun.1616.net/s.php?type=ip&output=json&callback=?&_='+Math.random(), function(data){
+				var iAddress = data.Isp.split(' ')[0].toString();
+				$.ajax({
+					type:"post",
+					dataType:"JSON",
+					url:globalurl+"/authorize/authorize",
+					async:true,
+					data:{
+						'client_id': 'admin',
+						'client_secret': 'admin',
+						'username': iUsername,
+						'password': iPassword,
+						'code': iCode,
+						'address': iAddress
+					},
+					success: function (data){
+						console.info(data)
+						if(data.code==200){
+							$('.login-title .tip').addClass('hidden');
+							$.ajax({
+								url:'/finfosoft-water/login',
+								type:'POST',
+								dataType:'JSON',
+								data:{'data':JSON.stringify(data)},
+								success:function(data){
+										self.location.href="/finfosoft-water/frame"
+								}
+							})
+						} else {
+							if (data.code==400009) {
+								$('.code').removeClass('hidden');
+							} else if (data.code==400010) {
+								$('input').filter('[name=verificationCode]').css('borderColor','#ff787b');
+							}
+							$('input').filter('[name=username]').css('borderColor','#ff787b');
+							$('input').filter('[name=password]').css('borderColor','#ff787b');
+							$('.login-title .tip').removeClass('hidden');
+							$('.login-title .tip p').html(data.error+'!');
+							$('.code a').click(function (){
 								$.ajax({
-									url:'/lanyue-water/login',
-									type:'POST',
-									dataType:'JSON',
-									data:{'data':JSON.stringify(data)},
-									success:function(){
+									type:"post",
+									dataType:"JSON",
+									url:globalurl+"/authorize/authorize",
+									async:false,
+									data:{
+										'client_id': 'admin',
+										'client_secret': 'admin',
+										'username': iUsername,
+										'password': iPassword,
+										'code': iCode
+									},
+									success: function (){
 										
 									}
-								})
-							}
+								});	
+							});
 						}
-					});
-		      });
-			}
+					}
+				});
+	    	});
 		});	
 	}
 });
@@ -186,3 +247,5 @@ $('.popup').popUp();
 $('input').filter('[name=password]').passwordInput();
 $('input').smartInput();
 $('.loginBtn').login();
+$('.username input').testEmal();
+$('.pop-username').testEmal();
