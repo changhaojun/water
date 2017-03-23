@@ -2,7 +2,6 @@
 	getNavData();
 	$(".userName").append("欢迎你，"+user.fullname)
 var flag=-1;
-
 	//二维码的展现	
 		$(".qrCode_dl").on({
 			"mouseenter":function(){
