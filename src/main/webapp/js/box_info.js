@@ -1,3 +1,5 @@
+var companyCode=$("#companyCode").val();	//公司编号，获取用户列表时使用
+var companyId=$("#companyId").val();		//公司ID
 $(function(){
 	toolTip();
 	getDTUList();
@@ -85,8 +87,8 @@ function queryParams(params) {
 			pageSize:params.limit,//每页的条数
 			//sortOrder: params.order,//
 			access_token:window.accesstoken,
-			like:'{"device_name":"'+searchBox.searchCollectorId+'"}'//模糊查询的设备名
-//			filter:'{"startDate":"'+$("#startDate").val()+'","endDate":"'+$("#endDate").val()+'"}'
+			like:'{"device_name":"'+searchBox.searchCollectorId+'"}',//模糊查询的设备名
+			filter:'{"protocal":"A"}'
 		};
 	}else{
 		console.log(searchBox.searchCollectorId)
@@ -95,8 +97,8 @@ function queryParams(params) {
 	    	pageSize:params.limit,
 		    //sortOrder: params.order,
 		    access_token:window.accesstoken,
-			like:'{"device_name":"'+searchBox.searchCollectorId+'"}'
-//			filter:'{"startDate":"'+$("#startDate").val()+'","endDate":"'+$("#endDate").val()+'"}'
+			like:'{"device_name":"'+searchBox.searchCollectorId+'"}',
+			filter:'{"protocal":"A"}'
 	    };
 	}
 }
