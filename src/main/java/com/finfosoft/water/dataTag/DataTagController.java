@@ -155,7 +155,7 @@ public class DataTagController extends Controller{
 	public void editPlc(){
 		String plcId=getPara(0);
 		setAttr("plcId", plcId);
-		render("boc_plc_edit.html");
+		render("box_plc_edit.html");
 	}
 	
 }

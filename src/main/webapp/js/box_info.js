@@ -1,12 +1,11 @@
 var companyCode=$("#companyCode").val();	//公司编号，获取用户列表时使用
 var companyId=$("#companyId").val();		//公司ID
 $(function(){
+	getToken();
 	toolTip();
 	getDTUList();
 })
 var isSearch=false;
-//ip地址
-var URL="http://rap.taobao.org/mockjsdata/15031";
 //搜索功能
 window.searchCollectot=function(){
 	isSearch=true;
@@ -25,7 +24,7 @@ var curpage;
 window.getDTUList=function(){
 	  window.dataTables= $('#dtuList').bootstrapTable({
 		  	method: 'get',
-		  	url:URL+"/v1/devices",
+		  	url:globalurl+"/v1/devices",
 		    sidePagination: 'server',//设置为服务器端分页
 		    pagination: true, //是否分页
 		    search: false, //显示搜索框
@@ -92,7 +91,7 @@ function queryParams(params) {
 			//sortOrder: params.order,//
 			access_token:window.accesstoken,
 			like:'{"device_name":"'+searchBox.searchCollectorId+'"}',//模糊查询的设备名
-			filter:'{"protocal":"A"}'
+			filter:'{"protocal":"A","company_id":"'+companyId+'"}'
 		};
 	}else{
 		console.log(searchBox.searchCollectorId)
@@ -102,7 +101,7 @@ function queryParams(params) {
 		    //sortOrder: params.order,
 		    access_token:window.accesstoken,
 			like:'{"device_name":"'+searchBox.searchCollectorId+'"}',
-			filter:'{"protocal":"A"}'
+			filter:'{"protocal":"A","company_id":"'+companyId+'"}'
 	    };
 	}
 }
@@ -125,7 +124,7 @@ topColor($(".fa-trash-o"),"#ff787b");
 $("pull-right .page-pre a").html("上一页");
 //下一页
 $("pull-right .page-next a").html("下一页");
-function look(_id){
+function look(value){
 	self.location.href="/dataTag/getDatas/"+value+"-'sensor'";
 }
 

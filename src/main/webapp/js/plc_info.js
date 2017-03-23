@@ -2,11 +2,10 @@ var companyCode=$("#companyCode").val();	//公司编号，获取用户列表时�
 var companyId=$("#companyId").val();		//公司ID
 var isSearch=false;
 $(function(){
+	getToken();
 	toolTip();
 	getDTUList();
 })
-//ip地址
-var URL="http://rap.taobao.org/mockjsdata/15031";
 //搜索功能
 window.searchCollectot=function(){
 	isSearch=true;
@@ -25,7 +24,7 @@ var curpage;
 window.getDTUList=function(){
 	  window.dataTables= $('#dtuList').bootstrapTable({
 		  	method: 'get',
-		  	url:URL+"/v1/devices",
+		  	url:globalurl+"/v1/devices",
 		    sidePagination: 'server',//设置为服务器端分页
 		    pagination: true, //是否分页
 		    search: false, //显示搜索框
@@ -124,7 +123,7 @@ $("pull-right .page-next a").html("下一页");
 
 
 
-function look(_id){
+function look(value){
 	self.location.href=itemName+"/dataTag/getDatas/"+value+"-'plc'";
 }
 function modify(value){
