@@ -1,46 +1,5 @@
 	var flag=-1;
-	//左侧边栏的伸缩
-		$(".onOff").click(function(){
-			$("body").toggleClass("mini-navbar");
-			$(".nav-label").toggleClass('onOff');
-			if($("body").hasClass("mini-navbar")){
-				$(".showHide").show();
-				$(".logoHide").hide();
-				$(".companyName").hide();
-				$("[data-toggle='tooltip']").tooltip();
-				
-			}else{
-				$(".showHide").hide();
-				$(".logoHide").show();
-				$(".companyName").show();
-				$("[data-toggle='tooltip']").tooltip('destroy');//隐藏并销毁元素的提示工具。
-			}
-		});
-		//侧边栏的下拉效果以及点击导航的li添加class
-		$("#side-menu .changeLi>a").each(function(i,ele){
-			$(ele).click(function(){
-				if(flag==i){
-					$(this).offsetParent().removeClass("active");
-					flag=-1;
-				}else{
-					flag=i;
-					$("#side-menu .changeLi").removeClass("active");
-					$(this).offsetParent().addClass("active");
-				}
-				//console.log(flag)
-				if($("body").hasClass("mini-navbar")){
-					$(this).next().hide();
-				}else{
-					/*$(this).find("slideToggle").next().stop().slideToggle(500);
-					$("#side-menu .slideToggle").next().slideUp(500);*/
-					$("#side-menu .changeLi").find(".nav-second-box").finish().slideUp(500);
-					$(this).next().stop().slideToggle(500);
-				}
-				$("#side-menu .changeLi").removeClass("activeFocus");
-				$(this).offsetParent().addClass("activeFocus");
-			});
-			
-		})
+	
 	//二维码的展现	
 		$(".qrCode_dl").on({
 			"mouseenter":function(){
@@ -58,20 +17,90 @@
 	//导航的数据交互
 	$.ajax({
 		type:'get',
-		url:"http://rap.taobao.org/mockjsdata/15031/v1",
+		url:"http://121.42.253.149:18801/v1/resources?access_token=58d08cb3afbacb1100a42c37",
 		datatype:'json',
 		success:function(data){
-			//console.log(data)
-			var strNav=$('<li class="changeLi" data-type="" data-toggle="tooltip" data-placement="right"'+
-			' title="'+data.resource_name+'"><a class="J_menuItem slideToggle" href="javascript:;">'+
-			'<i class="fa fa-edit"></i><span class="nav-label">'+data.resource_name+'</span>'+
-			'<span class="fa arrow"></span></a><div class="nav-second-box"><ul class="nav nav-second-level nav_list"></ul></div></li>');
-			$('#side-menu .slideToggle a').after(strNav);
-			var childData=data.children_resource;
-			for (var i in childData){
-				var childStr=$('<li><a class="J_menuItem" href="javascript:;" data-index="0">'+childData[i].resource_name+'</a></li>');	
-		   }
-			$(".nav_list").prepend(childStr)
+			console.log(data);
+			var strNav="";
+			for(var i=0 ;i<data.length;i++){
+				var iIcon="";
+				switch (data[i].resource_name) {
+					case "账号管理": iIcon = 'fa-user-circle';break;
+					case "数据标签配置":iIcon = 'fa-edit';break;
+					case "框架页":iIcon = 'fa-microchip';break;
+					case "组态":iIcon = 'fa-sitemap';break;
+					case "操作日志":iIcon = 'fa-file-text-o';break;
+					default :break;
+				}
+				
+				if(data[i].is_navigation>0){
+					var navURL="javascript:;"
+					if(data[i].is_navigation==1){
+						navURL=data[i].resource_url;
+					}
+					strNav=$('<li class="changeLi" data-type="" data-toggle="tooltip" data-placement="right"'+
+					' title="'+data[i].resource_name+'"><a class="J_menuItem slideToggle" href="'+navURL+'">'+
+					'<i class="fa '+iIcon+'"></i><span class="nav-label">'+data[i].resource_name+'</span>'+
+					'<span class="fa arrow"></span></a><div class="nav-second-box"><ul class="nav nav-second-level nav_list"></ul></div></li>');
+					$('#side-menu ').append(strNav);
+					if(data[i].children_resource.length){
+						var childStr="";
+						for(var j=0;j<data[i].children_resource.length;j++){
+							//console.log(i+"pp")
+							//console.log(j)
+							var childData=data[i].children_resource[j];
+							childStr+='<li><a class="J_menuItem" href="'+childData.resource_url+'" data-index="0">'+childData.resource_name+'</a></li>';
+						}
+						$(".changeLi .nav_list").eq(i).append(childStr);
+					}	
+				}
+				
+			}
+			//左侧边栏的伸缩
+			$(".onOff").click(function(){
+				$("body").toggleClass("mini-navbar");
+				$(".nav-label").toggleClass('onOff');
+				if($("body").hasClass("mini-navbar")){
+					$(".showHide").show();
+					$(".logoHide").hide();
+					$(".companyName").hide();
+					$(".nav_list").hide();
+					$("[data-toggle='tooltip']").tooltip();
+					
+				}else{
+					$(".showHide").hide();
+					$(".logoHide").show();
+					$(".nav_list").show();
+					$(".companyName").show();
+					$("[data-toggle='tooltip']").tooltip('destroy');//隐藏并销毁元素的提示工具。
+				}
+			});
+			//侧边栏的下拉效果以及点击导航的li添加class
+			$("#side-menu .changeLi>a").each(function(i,ele){
+				$(ele).click(function(){
+					if(flag==i){
+						$(this).offsetParent().removeClass("active");
+						flag=-1;
+					}else{
+						flag=i;
+						$("#side-menu .changeLi").removeClass("active");
+						$(this).offsetParent().addClass("active");
+					}
+					//console.log(flag)
+					if($("body").hasClass("mini-navbar")){
+						$(this).next().hide();
+					}else{
+						/*$(this).find("slideToggle").next().stop().slideToggle(500);
+						$("#side-menu .slideToggle").next().slideUp(500);*/
+						$("#side-menu .changeLi").find(".nav-second-box").finish().slideUp(500);
+						$(this).next().stop().slideToggle(500);
+					}
+					$("#side-menu .changeLi").removeClass("activeFocus");
+					$(this).offsetParent().addClass("activeFocus");
+				});
+				
+			});
+			
 		}	
 		
 	});
@@ -180,3 +209,5 @@
 		});
 		
 	});
+	//点击退出
+	
