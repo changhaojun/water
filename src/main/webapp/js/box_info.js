@@ -68,7 +68,11 @@ window.getDTUList=function(){
 }
 //操作列的格式化
 function editFormatter(value,row,index){
-	return "<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#1cb295;margin-left:15px;cursor: pointer;' class='fa fa-laptop' onclick=look('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='下发' style='color:#48c2a9;margin-left:15px;cursor: pointer;' class='fa fa-arrow-circle-down' onclick=give('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='修改' style='color:#ffb400;margin-left:15px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:15px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol('"+value+"')></span>"
+	var oneTips="<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#1cb295;margin-left:15px;cursor: pointer;' class='fa fa-laptop' onclick=look('"+value+"')></span>";
+	var twoTips="<span data-toggle='tooltip' data-placement='top' title='下发' style='color:#48c2a9;margin-left:15px;cursor: pointer;' class='fa fa-arrow-circle-down' onclick=give('"+value+"')></span>";
+	var threeTips="<span data-toggle='tooltip' data-placement='top' title='修改' style='color:#ffb400;margin-left:15px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span>";
+	var fourTips="<span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:15px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol('"+value+"')></span>";
+	return oneTips+twoTips+threeTips+fourTips;
 }
 //box状态列的格式化
 function statusFormatter(value,row,index){
