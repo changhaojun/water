@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../finfosoft-water/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../finfosoft-water/plugins/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="../finfosoft-water/css/sensorLook.css"/>
+		<link rel="stylesheet" type="text/css" href="../finfosoft-water/plugins/bootstarp/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../finfosoft-water/plugins/layer/skin/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="../finfosoft-water/plugins/layer/skin/moon/style.css"/>
+	</head>
+	<body>
+		<div class="look sensorLook">
+			<div class="lookTop sensorTop">
+					<span>查看传感器</span>
+					<span>/</span>
+					<span>Look Sensor</span>
+					<div class="right">
+						<span>当前位置：</span>
+						<span>接入PLC</span>
+						>
+						<span>查看数据</span>
+					</div>
+			</div>
+			<hr>
+			<div class="lookContent sensorContent">
+				<div class="lookList  normal">
+					<div class="listTop">
+						<span>水流量</span>
+						<span class="fa fa-area-chart" data-toggle="tooltip" data-placement="top" "tooltip" data-placement="top" title="数据" onclick="show()" ></span>
+					</div>
+					<div class="listHr"></div>
+					<div class="listContent">
+						<div class="contentTop">
+							<div class="water">
+								<button type="button"id="give">下发</button>
+							</div>							
+						</div>
+						<div class="contentBottom">
+							<span class="fa fa-clock-o">2016-11-03</span>
+							<span class="hour">14:28:34</span>
+						</div>
+					</div>			
+				</div>
+				<div class="lookList  normal">
+					<div class="listTop">
+						<span>阀门给定</span>
+						<span class="fa fa-area-chart" data-toggle="tooltip" data-placement="top" "tooltip" data-placement="top" title="数据" onclick=""></span>
+					</div>
+					<div class="listHr"></div>
+					<div class="listContent">
+						<div class="contentTop">	
+							<div class="on-off">
+								<button type="button" class="Iopen Iactive" onclick="Iopen()">打开</button>
+								<div class="off">
+									<div class="circle">				
+									</div>
+								</div>
+								<button type="button" class="Iclose" onclick="Iclose()">关闭</button>
+							</div>								
+						</div>
+						<div class="contentBottom">
+							<span class="fa fa-clock-o">2016-11-03</span>
+							<span class="hour">14:28:34</span>
+						</div>
+					</div>			
+				</div>
+			</div>
+		</div>
+		<!--实时数据页面-->
+		<div class="dataMsg">
+			<div class="dataBox">
+				<div class="dataTop">
+					<span>实时数据</span>
+					<span onclick="shut()">&times;</span>
+				</div>
+				<div class="dataContent"></div>
+			</div>
+		</div>
+	</body>
+	<script src="../finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../finfosoft-water/plugins/bootstarp/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../finfosoft-water/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../finfosoft-water/js/sensorLook.js" type="text/javascript" charset="utf-8"></script>
+</html>

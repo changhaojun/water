@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../finfosoft-water/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../finfosoft-water/plugins/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="../finfosoft-water/css/boxInfo.css"/>
+		<link rel="stylesheet" type="text/css" href="../finfosoft-water/plugins/bootstarp/css/bootstrap.css"/>
+	</head>
+	<body>
+		<div class="accountBox  PLCInfo">
+			<div class="accountTop  PLCTop">
+					<span>接入PLC</span>
+					<span>/</span>
+					<span>Access PLC</span>
+					<input type="button" value="新增" class="btn-primary"/>
+					<span class="search">
+						<input type="text" value="请输入姓名查找" id="searchId"/>
+						<i class="fa fa-search"></i>					
+					</span>
+			</div>
+			<hr>
+			<div class="boxList PLCList">
+				<div class="listTop">
+					<span>名称</span>
+					<span>状态</span>
+					<span>操作</span>
+				</div>
+				<div class="listContent">
+					
+				</div>
+				<div class="boxFooter">
+					<p class="page">显示第<span class="first"></span>到第<span class="trans"></span>条记录，总共<span class="sum"></span>条记录</p>
+					<nav aria-label="Page navigation">
+						<li class="pre">上一页</li>
+					  	<ul class="pagination">					    
+						    <!--<li><a href="#">1</a></li>-->
+					  	</ul>
+					  	 <li class="after">下一页</li>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../finfosoft-water/plugins/bootstarp/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../finfosoft-water/js/PLCinfo.js" type="text/javascript" charset="utf-8"></script>
+</html>
