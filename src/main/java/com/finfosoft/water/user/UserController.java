@@ -13,7 +13,6 @@ public class UserController extends Controller{
 	
 	public void index(){
 		Record company=getSessionAttr(Constants.SESSION_COMPANY);
-		System.err.println(company);
 		String companyCode=company.get("companyCode");
 		String companyId=company.get("companyId");
 		setAttr("companyCode", companyCode);
