@@ -4,11 +4,11 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="../css/reset.css"/>
-		<!--<link rel="stylesheet" type="text/css" href="../plugins/bootstarp/css/bootstrap.css"/>-->
+		<link rel="stylesheet" type="text/css" href="../plugins/bootstarp/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../plugins/bootstrap-table/bootstrap-table.css"/>
 		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/boxInfo.css"/>
-		<link rel="stylesheet" type="text/css" href="../plugins/layer/skin/layer.css"/>
-		<link rel="stylesheet" type="text/css" href="../plugins/layer/skin/moon/style.css"/>
+
 	</head>
 	<body>
 		<div class="accountBox boxInfo">
@@ -24,29 +24,13 @@
 			</div>
 			<hr>
 			<div class="boxList">
-				<div class="listTop">
-					<span>名称</span>
-					<span>状态</span>
-					<span>操作</span>
-				</div>
-				<div class="listContent">
-					
-				</div>
-				<div class="boxFooter">
-					<p class="page">显示第<span class="first"></span>到第<span class="trans"></span>条记录，总共<span class="sum"></span>条记录</p>
-					<nav aria-label="Page navigation">
-						<li class="pre">上一页</li>
-					  	<ul class="pagination">					    
-						    <!--<li><a href="#">1</a></li>-->
-					  	</ul>
-					  	 <li class="after">下一页</li>
-					</nav>
-				</div>
+				<ul class="table table-hover" id="dtuList" >
+			    </ul>
 			</div>
 		</div>
 	</body>
 	<script src="../plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<!--<script src="../plugins/bootstarp/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>-->
+	<script src="../plugins/bootstarp/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../plugins/bootstrap-table/bootstrap-table.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../js/boxInfo.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
 </html>
