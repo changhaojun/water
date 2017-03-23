@@ -88,7 +88,14 @@ $(".status").each(function(index,ele){
 
 
 function look(_id){
-	
+	self.location.href="/dataTag/getDatas/"+value+"-'plc'";
+}
+function modify(value){
+	self.location.href="/dataTag/editPlc/"+value;
+}
+
+function addPlc(){
+	self.location.href="/dataTag/addPcl/";
 }
 
 

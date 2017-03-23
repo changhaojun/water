@@ -167,9 +167,16 @@ topColor($(".listUl li span:nth-child(3) i:nth-child(4)"),"#ff787b");
 //})
 //点击查看;
 function look(_id){
-	
+	self.location.href="/dataTag/getDatas/"+value+"-'sensor'";
 }
 
+function modify(value){
+	self.location.href="/dataTag/editSensor/"+value;
+}
+
+function addBox(){
+	self.location.href="/dataTag/addSensor/";
+}
 
 
 

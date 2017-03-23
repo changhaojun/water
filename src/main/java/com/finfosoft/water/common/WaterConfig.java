@@ -1,6 +1,7 @@
 package com.finfosoft.water.common;
 
 import com.finfosoft.db.mongo.MongodbPlugin;
+import com.finfosoft.water.dataTag.DataTagController;
 import com.finfosoft.water.frame.FrameController;
 import com.finfosoft.water.login.LoginController;
 import com.finfosoft.water.user.UserController;
@@ -29,6 +30,7 @@ public class WaterConfig extends JFinalConfig{
 		me.add("/", LoginController.class);                        //登录页面
 		me.add("/frame",FrameController.class,"/");                //框架页面
 		me.add("/user",UserController.class,"/");                //框架页面
+		me.add("/dataTag",DataTagController.class,"/");			//设备相关
 		
 	}
 

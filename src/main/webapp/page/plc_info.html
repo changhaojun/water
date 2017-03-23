@@ -3,10 +3,10 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="../finfosoft-water/css/reset.css"/>
-		<link rel="stylesheet" type="text/css" href="../finfosoft-water/plugins/font-awesome/css/font-awesome.css"/>
-		<link rel="stylesheet" type="text/css" href="../finfosoft-water/css/boxInfo.css"/>
-		<link rel="stylesheet" type="text/css" href="../finfosoft-water/plugins/bootstarp/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/box_info.css"/>
+		<link rel="stylesheet" type="text/css" href="../plugins/bootstarp/css/bootstrap.css"/>
 	</head>
 	<body>
 		<div class="accountBox  PLCInfo">
@@ -14,7 +14,7 @@
 					<span>接入PLC</span>
 					<span>/</span>
 					<span>Access PLC</span>
-					<input type="button" value="新增" class="btn-primary"/>
+					<input type="button" value="新增" class="btn btn-primary" onclick="addPlc()"/>
 					<span class="search">
 						<input type="text" value="请输入姓名查找" id="searchId"/>
 						<i class="fa fa-search"></i>					
@@ -43,7 +43,8 @@
 			</div>
 		</div>
 	</body>
-	<script src="../finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../finfosoft-water/plugins/bootstarp/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../finfosoft-water/js/PLCinfo.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../plugins/bootstarp/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../js/public_resources.js"></script>
+	<script src="../js/plc_info.js" type="text/javascript" charset="utf-8"></script>
 </html>
