@@ -90,6 +90,11 @@ public class DataTagController extends Controller{
 	 * @exception  (说明在某情况下，将发生什么异常)
 	 */
 	public void addSensor(){
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String companyCode=company.get("companyCode");
+		String companyId=company.get("companyId");
+		setAttr("companyCode", companyCode);
+		setAttr("companyId", companyId);
 		render("box_sensor_add.html");
 	}
 	
@@ -113,7 +118,7 @@ public class DataTagController extends Controller{
 	}
 	/**
 	 * 
-	 * @Title: addPcl
+	 * @Title: addPlc
 	 * @Description:
 	 *    作用:打开新增PLC页面
 	 *    限制:
@@ -124,7 +129,12 @@ public class DataTagController extends Controller{
 	 * @return void 
 	 * @exception  (说明在某情况下，将发生什么异常)
 	 */
-	public void addPcl(){
+	public void addPlc(){
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String companyCode=company.get("companyCode");
+		String companyId=company.get("companyId");
+		setAttr("companyCode", companyCode);
+		setAttr("companyId", companyId);
 		render("box_plc_add.html");
 	}
 	

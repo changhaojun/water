@@ -72,7 +72,7 @@ function queryParams(params) {
 			sortOrder: params.order,
 //			access_token:window.accesstoken,
 //			like:'{"collectorId":"'+searchBox.searchCollectorId+'"}',
-//			filter:'{"startDate":"'+$("#startDate").val()+'","endDate":"'+$("#endDate").val()+'"}'
+			filter:'{"protocal":"A"}'
 		};
 	}else{
 	    return {
@@ -81,7 +81,7 @@ function queryParams(params) {
 		    sortOrder: params.order,
 //		    access_token:window.accesstoken,
 //			like:'{"collectorId":"'+searchBox.searchCollectorId+'"}',
-//			filter:'{"startDate":"'+$("#startDate").val()+'","endDate":"'+$("#endDate").val()+'"}'
+			filter:'{"protocal":"A"}'
 	    };
 	}
 }

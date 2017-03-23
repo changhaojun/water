@@ -88,14 +88,14 @@ $(".status").each(function(index,ele){
 
 
 function look(_id){
-	self.location.href="/dataTag/getDatas/"+value+"-'plc'";
+	self.location.href=itemName+"/dataTag/getDatas/"+value+"-'plc'";
 }
 function modify(value){
-	self.location.href="/dataTag/editPlc/"+value;
+	self.location.href=itemName+"/dataTag/editPlc/"+value;
 }
 
 function addPlc(){
-	self.location.href="/dataTag/addPcl/";
+	self.location.href=itemName+"/dataTag/addPlc/";
 }
 
 
