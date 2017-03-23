@@ -72,26 +72,23 @@ $.fn.extend({
 			});
 		}
 	},
+	//邮箱验证
 	'testEmal': function (){
 		var re = /^[a-zA-Z0-9]+@\w+(\.[a-zA-Z]+){1,2}$/;
-		$(this).attr({
-			'msg': '',
-			'ismail': false
-		});
+		$(this).attr('isright','false');
 		$(this).keyup(function (){
-			$(this).attr('msg',$(this).val());
-			if (re.test($(this).attr('msg'))) {
+			if (re.test($(this).val())) {
 				$(this).css({
 					'borderColor': '#1ab394'
 				});
-				$(this).attr('ismail',true);
 				$(this).siblings('.tip').addClass('hidden');
+				$(this).attr('isright','true');
 			} else {
-				$(this).attr('ismail',false);
 				$(this).siblings('.tip').removeClass('hidden');
 				$(this).css({
 					'borderColor': '#ff787b'
 				});
+				$(this).attr('isright','false');
 			}
 		});
 	},
@@ -114,7 +111,6 @@ $.fn.extend({
 				$.ajax({
 					type:"get",
 					dataType:"json",
-					//need:提交时需要从服务器查询是否存在该用户名
 					url:globalurl+"/v1/mails",
 					async:true,
 					data:{
@@ -141,10 +137,14 @@ $.fn.extend({
 	//文本框响应
 	'smartInput': function (){
 		$(this).focus(function (){
+			console.log($(this).attr('class'));
 			if ($(this).val()==='请输入邮箱'||$(this).val()==='请输入密码'||$(this).val()==='请输入正确的邮箱地址'||$(this).val()==='请输入验证码') {
 				$(this).attr('originval',$(this).val()).val('');
 			}
-			$(this).css('borderColor','#1ab394');
+			$(this).css({
+				'color': $(this).attr('class')==='pop-username' ? '#000' : '#fff',
+				'borderColor':'#1ab394'
+			});
 		});
 		$(this).blur(function (){
 			if ($(this).val()===''){
@@ -156,26 +156,53 @@ $.fn.extend({
 	},
 	//密码框响应
 	'passwordInput': function (){
+		$(this).attr('isright','false');
 		$(this).focus(function (){
 			$(this).attr('type','password');
 		});
 		$(this).blur(function (){
 			if ($(this).val()==='') {
 				$(this).attr('type','text');
+			} else {
+				$(this).attr('isright','true');
 			}
 		});
 	},
 	//登录交互
 	'login': function (){
+		var This = this;
 		$(this).click(function (){
 			var iUsername = $('input').filter('[name=username]').val();
 			var iPassword = $('input').filter('[name=password]').val();
 			var iCode = $('input').filter('[name=verificationCode]').val()==='请输入验证码' ? '' : $('input').filter('[name=verificationCode]').val();
 			var iClientId = 'admin';
 			var iClientSecret = 'admin';
-			if ($('input').filter('[name=username]').attr('ismail')==='false'||iUsername==='请输入邮箱'||iPassword==='请输入密码'||iCode==='请输入验证码') {
+			if (iUsername==='请输入邮箱') {
+				$('input').filter('[name=username]').css({
+					'color': '#ff787b',
+					'borderColor': '#ff787b'
+				});
+				return;
+			} else if (iPassword==='请输入密码') {
+				$('input').filter('[name=password]').css({
+					'color': '#ff787b',
+					'borderColor': '#ff787b'
+				});
+				return;
+			} else if (iCode==='请输入验证码') {
+				$('input').filter('[name=verificationCode]').css({
+					'color': '#ff787b',
+					'borderColor': '#ff787b'
+				});
 				return;
 			}
+			if ($('input').filter('[name=username]').attr('isright')==='false'||$('input').filter('[name=password]').attr('isright')==='false') {
+				return;
+			}
+			$(this).html('正在登录中，请稍后...').css({
+				'letterSpacing': 0,
+				'textIndent': 0
+			});
 			$.getJSON('http://chaxun.1616.net/s.php?type=ip&output=json&callback=?&_='+Math.random(), function(data){
 				var iAddress = data.Isp.split(' ')[0].toString();
 				$.ajax({
@@ -205,6 +232,10 @@ $.fn.extend({
 								}
 							})
 						} else {
+							$(this).html('登录').css({
+								'letterSpacing': 14,
+								'textIndent': 14
+							});
 							if (data.code==400009) {
 								$('.code').removeClass('hidden');
 							} else if (data.code==400010) {

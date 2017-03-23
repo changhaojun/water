@@ -107,6 +107,7 @@
 2017-03-16 16:41:38
 [DEBUG]-[Thread: qtp14681992-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\git\finfosoft-water\src\main\webapp\page\login.html didn't change.
 
+<<<<<<< HEAD
 2017-03-17 11:41:56
 [DEBUG]-[Thread: qtp23251462-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
 
@@ -25787,3 +25788,94 @@ java.lang.NullPointerException
 
 2017-03-22 16:33:32
 [DEBUG]-[Thread: qtp32025711-21]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/account.html"["zh_CN",UTF-8,parsed]  using cached since E:\first\finfosoft-water\src\main\webapp\page\account.html didn't change.
+=======
+2017-03-21 09:33:33
+[DEBUG]-[Thread: qtp14681992-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-21 09:33:33
+[DEBUG]-[Thread: qtp14681992-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\git\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-21 16:01:32
+[DEBUG]-[Thread: qtp14681992-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\git\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 16:05:34
+[DEBUG]-[Thread: qtp14681992-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\git\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 16:05:58
+[DEBUG]-[Thread: qtp14681992-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\git\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 16:06:09
+[DEBUG]-[Thread: qtp14681992-15]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\git\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 16:06:15
+[DEBUG]-[Thread: qtp14681992-12]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\git\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 16:06:17
+[DEBUG]-[Thread: qtp14681992-18]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\git\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 16:07:55
+[DEBUG]-[Thread: qtp14681992-13]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/login.html"["zh_CN",UTF-8,parsed]  using cached since E:\git\finfosoft-water\src\main\webapp\page\login.html didn't change.
+
+2017-03-21 18:17:31
+[DEBUG]-[Thread: qtp14681992-18]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-21 18:17:31
+[DEBUG]-[Thread: qtp14681992-18]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\git\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+>>>>>>> refs/remotes/origin/Michael.Lu-login
+
+2017-03-23 10:18:31
+[DEBUG]-[Thread: qtp1255371390-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/login.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-23 10:18:31
+[DEBUG]-[Thread: qtp1255371390-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/login.html"["zh_CN",UTF-8,parsed]  from "E:\\Program Files (x86)\\workspace\\finfosoft-water\\src\\main\\webapp\\page\\login.html"
+
+2017-03-23 10:19:11
+[INFO]-[Thread: qtp1255371390-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-23 10:19:11
+[INFO]-[Thread: qtp1255371390-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-23 10:19:11
+[INFO]-[Thread: qtp1255371390-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-23 10:19:11
+[INFO]-[Thread: qtp1255371390-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-23 10:19:11
+[INFO]-[Thread: qtp1255371390-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-23 10:19:11
+[INFO]-[Thread: qtp1255371390-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-23 10:19:11
+[DEBUG]-[Thread: qtp1255371390-14]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-23 10:19:11
+[DEBUG]-[Thread: qtp1255371390-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Could not find template in cache, creating new one; id=["page/index.html"["zh_CN",UTF-8,parsed] ]
+
+2017-03-23 10:19:11
+[DEBUG]-[Thread: qtp1255371390-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: Compiling FreeMarker template "page/index.html"["zh_CN",UTF-8,parsed]  from "E:\\Program Files (x86)\\workspace\\finfosoft-water\\src\\main\\webapp\\page\\index.html"
+
+2017-03-23 10:19:12
+[INFO]-[Thread: qtp1255371390-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取用户请求的URI
+
+2017-03-23 10:19:12
+[INFO]-[Thread: qtp1255371390-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-23 10:19:12
+[INFO]-[Thread: qtp1255371390-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 获取登录session
+
+2017-03-23 10:19:12
+[INFO]-[Thread: qtp1255371390-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户令牌
+
+2017-03-23 10:19:12
+[INFO]-[Thread: qtp1255371390-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证用户登陆
+
+2017-03-23 10:19:12
+[INFO]-[Thread: qtp1255371390-14]-[com.finfosoft.water.common.AuthInterceptor.intercept()]: 验证页面权限
+
+2017-03-23 10:19:12
+[DEBUG]-[Thread: qtp1255371390-14]-[com.finfosoft.water.common.AuthInterceptor.checkPrivilege()]: url auth passed
+
+2017-03-23 10:19:12
+[DEBUG]-[Thread: qtp1255371390-14]-[freemarker.log._Log4JLoggerFactory$Log4JLogger.debug()]: "page/index.html"["zh_CN",UTF-8,parsed]  using cached since E:\Program Files (x86)\workspace\finfosoft-water\src\main\webapp\page\index.html didn't change.
