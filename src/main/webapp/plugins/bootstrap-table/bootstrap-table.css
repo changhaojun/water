@@ -81,9 +81,17 @@
     height: 0;
     padding: 0;
     margin: 0;
- 
+ 	
 }
-
+.fixed-table-container thead>th:nth-child(1){
+	width:35%;
+}
+.fixed-table-container thead>th:nth-child(2){
+	width:55%;
+}
+.fixed-table-container thead>th:nth-child(3){
+	 width:192px;
+}
 .fixed-table-container thead th:focus {
     outline: 0 solid transparent;
 }
@@ -103,6 +111,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    width:100%;
 }
 
 .fixed-table-container thead th .sortable {
@@ -128,14 +137,26 @@
     width: 30px;
 }
 
-.fixed-table-container tbody td {
-  
+.fixed-table-container tbody{
+  width:100%;
 }
 
 .fixed-table-container tbody tr:first-child td {
     border-top: none;
-}
 
+}
+.fixed-table-container tbody tr td:nth-child(1){
+    border-top: none;
+    width:35%;
+}
+.fixed-table-container tbody tr td:nth-child(2){
+    border-top: none;
+    width:55%;
+}
+.fixed-table-container tbody tr td:nth-child(3){
+    border-top: none;
+    width:192px;
+}
 .fixed-table-container tbody td:first-child {
     border-left: none;
 }
@@ -287,7 +308,7 @@
 
 /* support bootstrap 3 */
 .bootstrap-table .table thead > tr > th {
-    padding: 0;
+    padding: 0 8px calc;
     margin: 0;
 }
 
