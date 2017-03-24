@@ -19,12 +19,12 @@ function allList(){
 			access_token: accesstoken,
 			filter:searchFilter
 		},
-		success: function(data) {
-			console.info(data.rows.length>0)
+		success: function(data) {		
 			if(data.code==400005){
 				getNewToken();
 				allList();
 			}else if(data.rows.length>0){
+				console.log(data)
 				$(".accountContent").html("");
 				if (data == null) {
 					$(".noneData").css("display", "block");

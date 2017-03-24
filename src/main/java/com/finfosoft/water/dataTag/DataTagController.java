@@ -75,7 +75,24 @@ public class DataTagController extends Controller{
 		setAttr("type", type);
 		render("sensor_look.html");
 	}
-	
+	/**
+	 * 
+	 * @Title: dataChart
+	 * @Description:
+	 *    作用:打开查看数据页面
+	 *    限制:
+	 *    注意事项:
+	 *    修改历史:(date:xxxx by:xxx comment:xxx)
+	 * @author dongmo(113552669@qq.com)
+	 * @date 2017年3月23日    
+	 * @return void 
+	 * @exception  (说明在某情况下，将发生什么异常)
+	 */
+	public void dataChart(){
+		String dataId=getPara(0);
+		setAttr("dataId", dataId);
+		render("realtime_data.html");
+	}
 	/**
 	 * 
 	 * @Title: addSensor

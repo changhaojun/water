@@ -1,12 +1,13 @@
 var companyCode=$("#companyCode").val();	//公司编号，获取用户列表时使用
 var companyId=$("#companyId").val();		//公司ID
+var isSearch=false;
 $(function(){
 	toolTip();
 	getDTUList();
+	getToken();//刷新令牌
 })
 var isSearch=false;
-//ip地址
-var URL="http://rap.taobao.org/mockjsdata/15031";
+var  globalurl="http://rap.taobao.org/mockjsdata/15031";
 //搜索功能
 window.searchCollectot=function(){
 	isSearch=true;
@@ -25,7 +26,7 @@ var curpage;
 window.getDTUList=function(){
 	  window.dataTables= $('#dtuList').bootstrapTable({
 		  	method: 'get',
-		  	url:URL+"/v1/devices",
+		  	url: globalurl+"/v1/devices",
 		    sidePagination: 'server',//设置为服务器端分页
 		    pagination: true, //是否分页
 		    search: false, //显示搜索框
@@ -68,11 +69,7 @@ window.getDTUList=function(){
 }
 //操作列的格式化
 function editFormatter(value,row,index){
-	var oneTips="<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#1cb295;margin-left:15px;cursor: pointer;' class='fa fa-laptop' onclick=look('"+value+"')></span>";
-	var twoTips="<span data-toggle='tooltip' data-placement='top' title='下发' style='color:#48c2a9;margin-left:15px;cursor: pointer;' class='fa fa-arrow-circle-down' onclick=give('"+value+"')></span>";
-	var threeTips="<span data-toggle='tooltip' data-placement='top' title='修改' style='color:#ffb400;margin-left:15px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span>";
-	var fourTips="<span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:15px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol('"+value+"')></span>";
-	return oneTips+twoTips+threeTips+fourTips;
+	return "<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#1cb295;cursor: pointer;' class='fa fa-laptop' onclick=look('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='下发' style='color:#48c2a9;margin-left:15px;cursor: pointer;' class='fa fa-arrow-circle-down' onclick=give('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='修改' style='color:#ffb400;margin-left:15px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:15px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol('"+value+"')></span>"
 }
 //box状态列的格式化
 function statusFormatter(value,row,index){
@@ -91,8 +88,8 @@ function queryParams(params) {
 			pageSize:params.limit,//每页的条数
 			//sortOrder: params.order,//
 			access_token:window.accesstoken,
-			like:'{"device_name":"'+searchBox.searchCollectorId+'"}',//模糊查询的设备名
-			filter:'{"protocal":"A"}'
+			like:'{"device_name":"'+searchBox.searchCollectorId+'"}'//模糊查询的设备名
+//			filter:'{"startDate":"'+$("#startDate").val()+'","endDate":"'+$("#endDate").val()+'"}'
 		};
 	}else{
 		console.log(searchBox.searchCollectorId)
@@ -101,8 +98,8 @@ function queryParams(params) {
 	    	pageSize:params.limit,
 		    //sortOrder: params.order,
 		    access_token:window.accesstoken,
-			like:'{"device_name":"'+searchBox.searchCollectorId+'"}',
-			filter:'{"protocal":"A"}'
+			like:'{"device_name":"'+searchBox.searchCollectorId+'"}'
+//			filter:'{"startDate":"'+$("#startDate").val()+'","endDate":"'+$("#endDate").val()+'"}'
 	    };
 	}
 }
@@ -122,19 +119,19 @@ topColor($(".fa-arrow-circle-down"),"#1ab394");
 topColor($(".fa-cog"),"#ffb400");
 topColor($(".fa-trash-o"),"#ff787b");
 //上一页
-$("pull-right .page-pre a").html("上一页");
+$("pull-right .page-pre a").html("");
 //下一页
-$("pull-right .page-next a").html("下一页");
-function look(_id){
-	self.location.href="/dataTag/getDatas/"+value+"-'sensor'";
+$("pull-right .page-next a").html("");
+function look(value){
+	self.location.href="/finfosoft-water/dataTag/getDatas/"+value+"-A";
 }
 
 function modify(value){
-	self.location.href="/dataTag/editSensor/"+value;
+	self.location.href="/finfosoft-water/dataTag/editSensor/"+value;
 }
 
 function addBox(){
-	self.location.href="/dataTag/addSensor/";
+	self.location.href="/finfosoft-water/dataTag/addSensor/";
 }
 
 

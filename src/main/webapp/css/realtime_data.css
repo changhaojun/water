@@ -1,0 +1,64 @@
+.timeData{
+	width:100%;
+	height:100%;
+}
+.timeData .dataTop{
+	width:100%;
+	height:50px;
+	border-bottom: 1px solid #e6e6e6;
+	color:#E6E6E6;
+	font-size:16px;
+	line-height:50px;
+}
+.timeData .dataTop span:nth-child(1){
+	margin-left:15px;
+}
+.timeData .dataTop .dataTime{
+	float: right;
+	border-left:1px solid #E6E6E6;
+	width:289px;
+	font-size:14px;
+	height:50px;
+}
+.timeData .dataContrast{
+	padding-left:15px;
+	padding-right:15px;
+	border-bottom:1px solid #E6E6E6;
+}
+.timeData .dataContrast .contrastTop{
+	height:40px;
+	border-bottom:1px solid #1ab394;
+	line-height:40px;
+	color:#39bda2;
+}
+.timeData .dataContrast .contrastList{
+	width:100%;
+	min-height:95px;
+}
+.timeData .dataContrast .contrastList>ul li{
+	float:left;
+	padding:5px 19px;
+	background:#1ab394;
+	margin-right:10px;
+	font-size:14px;
+	color:#fff;
+	margin-top:10px;
+	
+}
+#reservationtime{
+	width:289px;
+	font-size:14px;
+	margin-top:8px !important;
+	border:0;
+	outline: none !important;
+	height:30px;
+	color:#9096a4 !important;
+}
+
+
+
+
+
+
+
+

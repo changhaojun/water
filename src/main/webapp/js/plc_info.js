@@ -4,9 +4,10 @@ var isSearch=false;
 $(function(){
 	toolTip();
 	getDTUList();
+	getToken();	
 })
 //ip地址
-var URL="http://rap.taobao.org/mockjsdata/15031";
+var  globalurl="http://rap.taobao.org/mockjsdata/15031";
 //搜索功能
 window.searchCollectot=function(){
 	isSearch=true;
@@ -25,7 +26,7 @@ var curpage;
 window.getDTUList=function(){
 	  window.dataTables= $('#dtuList').bootstrapTable({
 		  	method: 'get',
-		  	url:URL+"/v1/devices",
+		  	url: globalurl+"/v1/devices",
 		    sidePagination: 'server',//设置为服务器端分页
 		    pagination: true, //是否分页
 		    search: false, //显示搜索框
@@ -124,15 +125,15 @@ $("pull-right .page-next a").html("下一页");
 
 
 
-function look(_id){
-	self.location.href=itemName+"/dataTag/getDatas/"+value+"-'plc'";
+function look(value){
+	self.location.href="/finfosoft-water/dataTag/getDatas/"+value+"-P";
 }
 function modify(value){
-	self.location.href=itemName+"/dataTag/editPlc/"+value;
+	self.location.href="/finfosoft-water/dataTag/editPlc/"+value;
 }
 
 function addPlc(){
-	self.location.href=itemName+"/dataTag/addPlc/";
+	self.location.href="/finfosoft-water/dataTag/addPcl/";
 }
 
 

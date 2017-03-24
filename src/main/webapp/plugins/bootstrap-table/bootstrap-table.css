@@ -71,6 +71,9 @@
     overflow-y: auto;
     height: 100%;
     width:100%;
+    color:#797979;
+    font-size:14px;
+     font-family: "微软雅黑";
 }
 
 .fixed-table-container table {
@@ -81,6 +84,8 @@
     height: 0;
     padding: 0;
     margin: 0;
+    color:#515151;
+    font-family: "微软雅黑";
  	
 }
 .fixed-table-container thead>th:nth-child(1){
@@ -91,6 +96,7 @@
 }
 .fixed-table-container thead>th:nth-child(3){
 	 width:192px;
+	 text-align:left;
 }
 .fixed-table-container thead th:focus {
     outline: 0 solid transparent;
@@ -105,7 +111,7 @@
 
 .fixed-table-container thead th .th-inner,
 .fixed-table-container tbody td .th-inner {
- 
+ 	text-align:left;
     line-height: 24px;
     vertical-align: top;
     overflow: hidden;
@@ -148,14 +154,17 @@
 .fixed-table-container tbody tr td:nth-child(1){
     border-top: none;
     width:35%;
+    
 }
 .fixed-table-container tbody tr td:nth-child(2){
     border-top: none;
     width:55%;
+   
 }
 .fixed-table-container tbody tr td:nth-child(3){
     border-top: none;
     width:192px;
+    text-align:left !important;
 }
 .fixed-table-container tbody td:first-child {
     border-left: none;
@@ -167,7 +176,7 @@
 }
 
 .fixed-table-container .bs-checkbox {
-    text-align: center;
+    text-align: left;
 }
 
 .fixed-table-container .bs-checkbox .th-inner {
@@ -187,6 +196,7 @@
 .fixed-table-pagination .pagination-detail {
     margin-top: 10px;
     margin-bottom: 10px;
+    display:block !important;
 }
 
 .fixed-table-pagination div.pagination .pagination {
@@ -321,7 +331,9 @@
     border-radius: 0;
     padding: 0 !important;
 }
-
+.pull-right{
+	display:block;
+}
 .pull-right .dropdown-menu {
     right: 0;
     left: auto;
