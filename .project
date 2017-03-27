@@ -6,6 +6,11 @@
 	</projects>
 	<buildSpec>
 		<buildCommand>
+			<name>com.aptana.editor.php.aptanaPhpBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
 			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
 			<triggers>full,incremental,</triggers>
 			<arguments>
@@ -49,6 +54,7 @@
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
+		<nature>com.aptana.editor.php.phpNature</nature>
 	</natures>
 	<filteredResources>
 		<filter>
