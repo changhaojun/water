@@ -1,5 +1,5 @@
 //getToken();
-var dataId="";
+
 var onOff=0;
 var pngName="",imgName="";
 var j=0;
@@ -13,9 +13,14 @@ var dataName=$(".dataName input").val();
 var highBattery=$(".rangeData").eq(0).find("input").val();
 var lowBattery=$(".rangeData").eq(1).find("input").val();
 var portName=$(".portName span").html();
-/*var commonUrl="http://121.42.253.149:18801";*/
-var commonUrl="http://192.168.1.114";
-var access_token="58da135bb769971fcc5e3bdf";
+var deviceCode=$(".deviceCode").val();
+var deviceName=$(".deviceName").val();
+var contactPhone=$(".contactPhone").val();
+var warningSpace=$(".warningSpace").val();
+var delayTime=$(".delayTime").val();
+var access_token="58d9cc6db76997153cdf8f05";
+var commonUrl="http://121.42.253.149:18801";
+/*var commonUrl="http://192.168.1.37";*/
 $.fn.extend({
 	//智能input
 	'smartInput': function (callback){
@@ -75,15 +80,15 @@ $.fn.extend({
 	$(".pop").stayCenter();
 	//点击掉线提醒事件
 	$(".controlBtn span").eq(0).click(function(){
-		$(".contactPhone").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
-		$(".warningSpace").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
-		$(".delayTime").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
+		$(".contactPhone").attr("disabled",false).css("border","1px solid #e5e6e7");
+		$(".warningSpace").attr("disabled",false).css("border","1px solid #e5e6e7");
+		$(".delayTime").attr("disabled",false).css("border","1px solid #e5e6e7");
 		onOff=0;
 	});   
 	$(".controlBtn span").eq(1).click(function(){
-		$(".contactPhone").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
-		$(".warningSpace").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
-		$(".delayTime").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
+		$(".contactPhone").attr("disabled",true).css("border",0);
+		$(".warningSpace").attr("disabled",true).css("border",0);
+		$(".delayTime").attr("disabled",true).css("border",0);
 		onOff=-1;
 	});
 	
@@ -100,6 +105,26 @@ $.fn.extend({
 	
 	var collector_id="",collectornum=0,collectorArr=[];
 	var dataTypeStr,operTypeStr;
+	getEquipment();
+	function getEquipment(){
+		$.ajax({
+			type:"get",
+			datatype:"json",
+			url:commonUrl+"/v1/devices/58ccb438d77a1e15ac5da16a?access_token="+access_token,
+			success:function(data){
+				console.log(data)
+				$(".deviceCode").val(data.device_code);
+				$(".deviceName").val(data.device_name);
+				$(".contactPhone").val(data.device_code);
+				$(".warningSpace").val(data.device_code);
+				$(".delayTime").val(data.device_code);
+				//console.log(collectorArr);
+			}
+		});
+	};
+	//选择采集器ID触发的事件
+	var collector_id="",collectornum=0,collectorArr=[];
+	var dataTypeStr,operTypeStr;
 	collectorSelect();
 	function collectorSelect(){
 		$.ajax({
@@ -107,7 +132,7 @@ $.fn.extend({
 			datatype:"json",
 			url:commonUrl+"/v1/controllers?access_token="+access_token,
 			success:function(data){
-//				console.log(data)
+				console.log(data)
 				for(var i in data.rows){
 					collector_id=data.rows[i].collector_id;
 					var str='<option value="'+collector_id+'">'+collector_id+'</option>';
@@ -123,7 +148,7 @@ $.fn.extend({
 	
 	var dataInfo="",info=[],infoJson="",dataConfigJson="",dataConfig=[];
 	var optionValue="",deviceId="";
-	//var rangeLow="",rangeHigh="",realHigh="",realLow="",dataUnit="",dataName="",highBattery="",lowBattery="";
+	var rangeLow="",rangeHigh="",realHigh="",realLow="",dataUnit="",dataName="",highBattery="",lowBattery="";
 	function modelCollector(){
 		optionValue=$(".collector select").not("option[value=0]").val();
 		var data="{'collector_id':'"+optionValue+"'}";
@@ -137,8 +162,7 @@ $.fn.extend({
 				data:data
 			},
 			success:function(data) {
-				
-//				console.log(data);
+				console.log(data);
 				$(".detialData tbody").empty();
 				pngName=(data.collector_model.split("-"))[1].toLowerCase();
 				//console.log(pngName)
@@ -166,17 +190,10 @@ $.fn.extend({
 					infoJson=JSON.parse(infoJson)
 					//console.log(infoJson);
 					info.push(infoJson)
-				
 				}
-				
 			}
-			
 		});
 	}	
-	$(".collector select").change(function(){
-		modelCollector();
-	})
-	
 	//点击问号的事件
 	function devicePNG(){
 		if(pngName==""){
@@ -198,6 +215,7 @@ $.fn.extend({
 			});
 		}
 	}
+	
 	//点击编辑数据同步到弹窗
 	function editClick(i){
 		$('.pop').filter('.step1').removeClass('hidden');
@@ -219,11 +237,8 @@ $.fn.extend({
 		}
 		//端口名称
 		$(".portName span").html(info[i].portName);
-		//读写状态
-		
 		var aStr="",dStr="";
 		rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
-		//console.log(rangeLow)
 		rangeHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[1];
 		realLow=$("#dataTable").find(" tr").eq(i).find("td").eq(5).text().split("-")[0];
 		realHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(5).text().split("-")[1];
@@ -249,7 +264,7 @@ $.fn.extend({
 			+'</div><div class="dataRow dataName"><label>数据名称</label><input type="text"/></div>';
 			$(".changeData").append(dStr);
 		}
-		j=i
+		j=i;
 		$.each($('input'),function (){
 			$(this).smartInput();
 		});
@@ -265,14 +280,15 @@ $.fn.extend({
 			$(this).css("background-position-x",-48+"px");
 			onOff=0;
 		}
-	})
-	
+	});
 	
 	//点击保存的时候数据同步到页面中
 	
 	function editCollector(j){
 		
 		//读写状态
+		//console.log(realRange)
+		//$(".detialData tbody").find("tr").eq(j).html();
 		if($(".realLow").val()=="" || $(".realHigh").val()==""){
 			layer.msg('请填写实际量程，且必须为数字', {
 				icon : 2,
@@ -379,7 +395,9 @@ $.fn.extend({
 		editCollector(j);
 		
 	})
-	var data_id="";
+	/*var dataUnit =$(".dataUnit input").val();"{'device_code':'" + deviceCode + "','device_name':'"
+		var dataName=$(".dataName input").val();*/
+	
 	function saveDevice(){
 		var deviceName = $(".deviceName").val();
 		var deviceCode = $(".deviceCode").val();
@@ -388,7 +406,7 @@ $.fn.extend({
 		var warningSpace=Number($(".warningSpace").val()?$(".warningSpace").val():0);
 		var delayTime=Number($(".delayTime").val()?$(".delayTime").val():0);
 		var collectInterval = $(".collectInterval").val();
-		var communication = "{'collect_interval':" + collectInterval+ ",'collector_id':" + optionValue+ "}";
+		var communication = "{'collect_interval':" + collectInterval+ ",'collector_id':" + optionValue+ ",'protocal':'A'}";
 		var controlBtn=$(".controlBtn span");
 		var status="";
 		var device=""
@@ -444,29 +462,37 @@ $.fn.extend({
 					console.log(onOff)
 					device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
 						+  "','mobile':'" + mobile + "','status':" + status + ",'communication':" + communication 
-						+",'is_remind':1,'remind_interval':"+warningSpace+",'protocal':'A','remind_delay':"+delayTime+"}";
+						+",'is_remind':1,'remind_interval':"+warningSpace+",'remind_delay':"+delayTime+",'status':" + status +"}";
+					/*if($(".controlBtn span").eq(1).hasClass("activeBtn")){
+						device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
+						+  "','mobile':'" + mobile + "','status':" + status + ",'communication':" + communication + "','status':" + status +"}";
+					}else{
+						device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
+						+  "','mobile':'" + mobile + "','status':" + status + ",'communication':" + communication 
+						+",'is_remind':1,'remind_interval':"+warningSpace+",'remind_delay':"+delayTime+",'status':" + status +"}";
+					}*/
 					data=device;
 					console.log(data)
 					$.ajax({
 						type:"post",
 						datatype:"json",
-						url:commonUrl+"/v1/devices?access_token="+access_token,
+						url:commonUrl+"/v1/devices?access_token=58d8ba58b769971a146f8989",
 						data:{
 							data:data
 						},
 						success:function(data){
 							console.log(data)
-							data._id=data._id;
-							//deviceId=device_id;
-							//console.log(deviceId);
-							save();
+							var device_id=data._id;
+							deviceId=device_id;
+							console.log(deviceId);
 						}
 					})
 				}
 			}else{
+				console.log(onOff)
 				device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
-						+  "','communication':" + communication 
-						+",'is_remind':0,'protocal':'A','status':" + status +"}";		
+						+  "','status':" + status + ",'communication':" + communication 
+						+",'is_remind':0,'status':" + status +"}";		
 				data=device;
 			//	console.log(data)
 				$.ajax({
@@ -478,33 +504,27 @@ $.fn.extend({
 					},
 					success:function(data){
 						console.log(data)
-						dataId=data._id;
-						//data._id=device_id;
-						//console.log(dataId);
-						save();
+						var device_id=data._id;
+						deviceId=device_id;
+						console.log(deviceId);
 					}
 				})
 			}
 		}	
 	}
+	
+	
+	/*infoJson='{"dataType":"'+dataInfo[i].data_type+'","operType":"'+operTypeStr+'","portName":"'+dataInfo[i].port_name
+		+'","rangeLow":"'+rangeLow+'","rangeHigh":"'+rangeHigh+'","realLow":"'+realLow+'","realHigh":"'+realHigh
+		+'","lowBattery":"'+lowBattery+'","highBattery":"'+highBattery+'","dataUnit":"'+dataUnit+'","dataName":"'+dataName+'"}';*/
+	//data='{"device_id":"'+deviceId+'", "data_name":"'+dataName+'","data_unit":"'+dataUnit
+		//	+'","data_name":"'+dataName+'","data_name":"'+dataName+'","data_name":"'+dataName+'","data_name":"'+dataName+'","data_name":"'+dataName+'","data_name":"'+dataName+'", "data_name":"'+dataName+'"}';
+	
 	function save(){
 		var dataConfig=[];
-		//console.log(info.length);
-		console.log(dataId)
-		var data={};
-		console.log(info.length)
-		var controlBtn=$(".controlBtn span");
-		for(var i=0;i<controlBtn.length;i++){
-			if(controlBtn.eq(i).hasClass("activeBtn")){
-				//console.log(111)
-				status +=controlBtn.eq(i).attr("value");
-				//console.log(status)
-			}
-		}
+		console.log(info.length);
 		for (var i = 0; i < info.length; i++) {
-			
-				
-				console.log(33434)
+			if(info[i]!=""){
 				rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
 				//console.log(rangeLow)
 				rangeHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[1];
@@ -515,45 +535,40 @@ $.fn.extend({
 				dataUnit=$("#dataTable").find(" tr").eq(i).find("td").eq(8).text();
 				//console.log(dataUnit)
 				dataName=$("#dataTable").find(" tr").eq(i).find("td").eq(9).text();
-				dataConfigJson='{"data_type":"'+dataInfo[i].data_type+'",'+
-				'"oper_type":"'+dataInfo[i].oper_type+'",'+
-				'"port_name":"'+dataInfo[i].port_name+'",'+
-				'"collect_range_high":"'+rangeHigh+'",'+
-				'"collect_range_low":"'+rangeLow+'",'+
-				'"real_range_high":"'+realHigh+'",'+
-				'"real_range_low":"'+realLow+'",'+
-				'"low_battery":"'+lowBattery+'",'+
-				'"high_battery":"'+highBattery+'",'+
-				'"status":"'+status+'",'+
-				'"data_unit":"'+dataUnit+'",'+
-				'"data_name":"'+dataName+'"}';
-				//console.log(dataConfigJson)
+				console.log(dataName)
+				//infoJson='{"dataType":"'+dataInfo[j].data_type+'","operType":"'+operTypeStr+'","portName":"'+dataInfo[j].port_name
+				//+'","rangeLow":"'+rangeLow+'","rangeHigh":"'+rangeHigh+'","realLow":"'+realLow+'","realHigh":"'+realHigh
+				//+'","lowBattery":"'+lowBattery+'","highBattery":"'+highBattery+'","dataUnit":"'+dataUnit+'","dataName":"'+dataName+'"}';
+				dataConfigJson='{"dataType":"'+dataInfo[j].data_type+'","operType":"'+dataInfo[j].oper_type+'","portName":"'+dataInfo[j].port_name
+				+'","collectRange":"'+rangeLow+'-'+rangeHigh+'","realRange":"'+realLow+'-'+realHigh
+				+'","lowBattery":"'+lowBattery+'","highBattery":"'+highBattery+'","dataUnit":"'+dataUnit+'","dataName":"'+dataName+'"}';
 				dataConfigJson=JSON.parse(dataConfigJson);
-				//console.log(dataConfigJson);
-				dataConfig.push(dataConfigJson);
-				//console.log(dataConfig)
-			
-				data=JSON.stringify(dataConfig);
+				//console.log(infoJson);
+				dataConfig.push(dataConfigJson)
+			}
 		}
-		console.log(dataId)
-		//http://192.168.1.37/v1/devices/"+data._id+"/dataConfigs
-		$.ajax({
-			type:"post",
+		data={'device':device,'dataConfig':JSON.stringify(dataConfig)};
+		console.log(data)
+		console.log(deviceId)
+		
+		/*$.ajax({
+			type:"put",
 			datatype:"json",
-			url:commonUrl+"/v1/devices/"+dataId+"/dataConfigs",
+			url:commonUrl+"/v1/dataConfigs/"+deviceId,
 			data:{
-				access_token:access_token,
+				access_token:"58d8ba58b769971a146f8989",
 				data:data
 			},
 			success:function(data){
 				console.log(data)
 			}
-		});
+		});*/
 	}
 	
 	//点击保存新增
 	$(".saveSettings button").click(function(){
 		saveDevice();
 		
-		//save();
+		save();
 	})
+	
