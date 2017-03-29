@@ -56,7 +56,7 @@ function currentChart(dataId){
 		async: false,
 		crossDomain: true == !(document.all),
 		data: {
-			access_token: "58da135bb769971fcc5e3bdf",
+			access_token: accesstoken,
 			data:data
 		},
 		success: function(data) {
@@ -101,7 +101,7 @@ function contrastData(){
 		async: false,
 		crossDomain: true == !(document.all),
 		data: {
-			access_token: "58da135bb769971fcc5e3bdf",
+			access_token: accesstoken,
 			"filter":"{'device_id':'"+deviceId+"'}"			
 		},
 		success: function(data) {

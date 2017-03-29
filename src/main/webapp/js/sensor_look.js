@@ -16,10 +16,10 @@ function toolTip(){
 //初始化头部
 if(type=="A"){
 	$(".sensorTop .Itype").html("查看传感器");
-	$(".sensorTop .Etype").html("Look Sensor");
+	$(".sensorTop .Etype").html(" / Look Sensor");
 }else{
 	$(".sensorTop .Itype").html("查看PLC");
-	$(".sensorTop .Etype").html("Look PLC");
+	$(".sensorTop .Etype").html(" / Look PLC");
 }
 //获取数据列表
 function listBox(){
@@ -150,6 +150,7 @@ function show(value){
 	  title: '实时数据页面',
 	  shadeClose: true,
 	  shade: 0.8,
+	  scrollbar: false,
 	  area: ['873px', '90%'],
 	  content: '/finfosoft-water/dataTag/dataChart/'+value //iframe的url
 	}); 
