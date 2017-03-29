@@ -382,3 +382,37 @@ body{
     font-size: 15px;
     padding-left: 10px;
 }
+.collector .list input ,.collector .list ul{
+    float: left;
+    background-color: #FFFFFF;
+    background-image: none;
+    border: 1px solid #e5e6e7;
+    border-radius: 1px;
+    color: inherit;
+    display: block;
+    padding-left: 12px;
+    width: 70%;
+    font-size: 14px;
+    color: #a7a7a7;
+    height: 42px;
+    line-height: 42px;
+}
+.collector .list ul{
+	height: auto;
+	margin-left: 74px;
+	border:1px solid #1ab394;
+	display: none;
+	border-top:none;
+	padding-left: 0;
+}
+.collector .list ul li{ 
+	list-style: none;
+	height: 30px; 
+	font:14px/30px "微软雅黑";
+	cursor: pointer;
+	padding-left: 15px;
+}
+.collector .list ul li:hover{
+	background: #F0F6FA;
+}
+

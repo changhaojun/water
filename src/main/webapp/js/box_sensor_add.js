@@ -3,7 +3,7 @@ var dataId="";
 var onOff=0;
 var pngName="",imgName="";
 var j=0;
-var dataType=$(".datanodeType select").val();
+/*var dataType=$(".datanodeType select").val();
 var rangeLow=$(".collectorLow").val();
 var rangeHigh=$(".collectorHigh ").val();
 var realLow=$(".realRange input:eq(0)").val();
@@ -12,10 +12,10 @@ var dataUnit =$(".dataUnit input").val();
 var dataName=$(".dataName input").val();
 var highBattery=$(".rangeData").eq(0).find("input").val();
 var lowBattery=$(".rangeData").eq(1).find("input").val();
-var portName=$(".portName span").html();
-/*var commonUrl="http://121.42.253.149:18801";*/
-var commonUrl="http://192.168.1.114";
-var access_token="58da135bb769971fcc5e3bdf";
+var portName=$(".portName span").html();*/
+var commonUrl="http://121.42.253.149:18801";
+var commonUrl="http://192.168.1.37";
+var access_token="58db6c02b769970e7872c4d4";
 $.fn.extend({
 	//智能input
 	'smartInput': function (callback){
@@ -102,30 +102,44 @@ $.fn.extend({
 	var dataTypeStr,operTypeStr;
 	collectorSelect();
 	function collectorSelect(){
-		$.ajax({
-			type:"get",
-			datatype:"json",
-			url:commonUrl+"/v1/controllers?access_token="+access_token,
-			success:function(data){
-//				console.log(data)
-				for(var i in data.rows){
-					collector_id=data.rows[i].collector_id;
-					var str='<option value="'+collector_id+'">'+collector_id+'</option>';
-					$(".collector select option:selected").after(str);
-					collectorArr.push(data.rows[i]._id);
-					collectornum=i;
+		$('.collector input').on('keyup', function () {
+		    $('.collector ul').empty();
+			var value=$.trim($(this).val())
+			var collector='{"collector_id":"'+value+'"}';
+			$.ajax({
+				type:"get",
+				dataType:'json',
+				url:"http://121.42.253.149:18801/v1/controllers",
+				data:{
+					access_token:access_token,
+					like:collector
+				},
+				success:function(data){
+					console.log(data);
+					$('.collector ul').show();
+					$('.collector ul').empty();
+					var item=0;
+					for(var  i in data.rows){
+						var strLi='<li onclick="serchItem('+i+')">'+data.rows[i].collector_id+'</li>';
+						$('.collector ul').append(strLi);
+						
+					}
 				}
-				//console.log(collectorArr);
-			}
+			})
+		    
 		});
 	};
+	
 	//根据采集器ID获取采集器型号的信息
 	
 	var dataInfo="",info=[],infoJson="",dataConfigJson="",dataConfig=[];
 	var optionValue="",deviceId="";
 	//var rangeLow="",rangeHigh="",realHigh="",realLow="",dataUnit="",dataName="",highBattery="",lowBattery="";
-	function modelCollector(){
-		optionValue=$(".collector select").not("option[value=0]").val();
+	function serchItem(i){
+		$('.collector input').val($('.list ul li').eq(i).text());
+		$('.collector ul').hide();
+		$('.collector input').css("border","1px solid #1ab394");
+		optionValue=$(".collector input").val();
 		var data="{'collector_id':'"+optionValue+"'}";
 	//console.log(data)
 		$.ajax({
@@ -138,7 +152,7 @@ $.fn.extend({
 			},
 			success:function(data) {
 				
-//				console.log(data);
+				console.log(data);
 				$(".detialData tbody").empty();
 				pngName=(data.collector_model.split("-"))[1].toLowerCase();
 				//console.log(pngName)
@@ -173,7 +187,7 @@ $.fn.extend({
 			
 		});
 	}	
-	$(".collector select").change(function(){
+	$(".collector ul li").click(function(){
 		modelCollector();
 	})
 	
@@ -384,7 +398,7 @@ $.fn.extend({
 		var deviceName = $(".deviceName").val();
 		var deviceCode = $(".deviceCode").val();
 		var mobile = $(".contactPhone").val();
-		var collectorId = $(".collector select").val();
+		var collectorId = $(".collector input").val();
 		var warningSpace=Number($(".warningSpace").val()?$(".warningSpace").val():0);
 		var delayTime=Number($(".delayTime").val()?$(".delayTime").val():0);
 		var collectInterval = $(".collectInterval").val();
@@ -502,9 +516,6 @@ $.fn.extend({
 			}
 		}
 		for (var i = 0; i < info.length; i++) {
-			
-				
-				console.log(33434)
 				rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
 				//console.log(rangeLow)
 				rangeHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[1];
@@ -555,5 +566,4 @@ $.fn.extend({
 	$(".saveSettings button").click(function(){
 		saveDevice();
 		
-		//save();
 	})

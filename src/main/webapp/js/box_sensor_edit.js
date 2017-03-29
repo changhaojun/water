@@ -3,24 +3,11 @@
 var onOff=0;
 var pngName="",imgName="";
 var j=0;
-var dataType=$(".datanodeType select").val();
-var rangeLow=$(".collectorLow").val();
-var rangeHigh=$(".collectorHigh ").val();
-var realLow=$(".realRange input:eq(0)").val();
-var realHigh=$(".realRange input:eq(1)").val();
-var dataUnit =$(".dataUnit input").val();
-var dataName=$(".dataName input").val();
-var highBattery=$(".rangeData").eq(0).find("input").val();
-var lowBattery=$(".rangeData").eq(1).find("input").val();
-var portName=$(".portName span").html();
-var deviceCode=$(".deviceCode").val();
-var deviceName=$(".deviceName").val();
-var contactPhone=$(".contactPhone").val();
-var warningSpace=$(".warningSpace").val();
-var delayTime=$(".delayTime").val();
-var access_token="58d9cc6db76997153cdf8f05";
-var commonUrl="http://121.42.253.149:18801";
-/*var commonUrl="http://192.168.1.37";*/
+var dataId=[];
+
+var access_token="58db1858b769970a9092c5b6";
+/*var commonUrl="http://121.42.253.149:18801";*/
+var commonUrl="http://192.168.1.37";
 $.fn.extend({
 	//智能input
 	'smartInput': function (callback){
@@ -80,15 +67,15 @@ $.fn.extend({
 	$(".pop").stayCenter();
 	//点击掉线提醒事件
 	$(".controlBtn span").eq(0).click(function(){
-		$(".contactPhone").attr("disabled",false).css("border","1px solid #e5e6e7");
-		$(".warningSpace").attr("disabled",false).css("border","1px solid #e5e6e7");
-		$(".delayTime").attr("disabled",false).css("border","1px solid #e5e6e7");
+		$(".contactPhone").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
+		$(".warningSpace").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
+		$(".delayTime").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
 		onOff=0;
 	});   
 	$(".controlBtn span").eq(1).click(function(){
-		$(".contactPhone").attr("disabled",true).css("border",0);
-		$(".warningSpace").attr("disabled",true).css("border",0);
-		$(".delayTime").attr("disabled",true).css("border",0);
+		$(".contactPhone").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
+		$(".warningSpace").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
+		$(".delayTime").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
 		onOff=-1;
 	});
 	
@@ -103,97 +90,108 @@ $.fn.extend({
 	$("[data-toggle='tooltip']").tooltip();
 	//选择采集器ID触发的事件
 	
-	var collector_id="",collectornum=0,collectorArr=[];
+	var collector_id="",deviceId="";
 	var dataTypeStr,operTypeStr;
 	getEquipment();
 	function getEquipment(){
 		$.ajax({
 			type:"get",
 			datatype:"json",
-			url:commonUrl+"/v1/devices/58ccb438d77a1e15ac5da16a?access_token="+access_token,
+			url:commonUrl+"/v1/devices/58da4b4f30e731311475e1f7?access_token="+access_token,
 			success:function(data){
-				console.log(data)
+				//console.log(data)
+				//console.log(data.communication.collector_id)
+				deviceId=data._id;
+				//console.log(deviceId);
 				$(".deviceCode").val(data.device_code);
 				$(".deviceName").val(data.device_name);
-				$(".contactPhone").val(data.device_code);
-				$(".warningSpace").val(data.device_code);
-				$(".delayTime").val(data.device_code);
+				$(".contactPhone").val(data.mobile);
+				$(".warningSpace").val(data.remind_interval);
+				$(".delayTime").val(data.remind_delay);
+				$(".collectInterval").val(data.communication.collect_interval);
+				$(".collector input").val(data.communication.collector_id);
 				//console.log(collectorArr);
+				modelCollector()
 			}
 		});
+		
 	};
 	//选择采集器ID触发的事件
-	var collector_id="",collectornum=0,collectorArr=[];
-	var dataTypeStr,operTypeStr;
-	collectorSelect();
-	function collectorSelect(){
+	
+	var collector_id="";
+	var dataInfo="",info=[],infoJson="",dataConfigJson="",dataConfig=[];
+	var optionValue="";
+	var dataTypeStr="",operTypeStr="";
+	var IdArr=[];
+	function modelCollector(){
+		optionValue=$(".collector").val();
+		var data="{'collector_id':'"+optionValue+"'}";
 		$.ajax({
 			type:"get",
-			datatype:"json",
-			url:commonUrl+"/v1/controllers?access_token="+access_token,
-			success:function(data){
-				console.log(data)
-				for(var i in data.rows){
-					collector_id=data.rows[i].collector_id;
-					var str='<option value="'+collector_id+'">'+collector_id+'</option>';
-					$(".collector select option:selected").after(str);
-					collectorArr.push(data.rows[i]._id);
-					collectornum=i;
-				}
-				//console.log(collectorArr);
-			}
-		});
-	};
-	//根据采集器ID获取采集器型号的信息
-	
-	var dataInfo="",info=[],infoJson="",dataConfigJson="",dataConfig=[];
-	var optionValue="",deviceId="";
-	var rangeLow="",rangeHigh="",realHigh="",realLow="",dataUnit="",dataName="",highBattery="",lowBattery="";
-	function modelCollector(){
-		optionValue=$(".collector select").not("option[value=0]").val();
-		var data="{'collector_id':'"+optionValue+"'}";
-	//console.log(data)
-		$.ajax({
-			type:"post",
 			dataType:"JSON",
-			url:commonUrl+"/v1/collectorModels",
+			url:commonUrl+"/v1/devices/"+deviceId+"/dataConfigs",
 			data:{
 				access_token:access_token,
-				data:data
+				filter:'{"device_id":"'+deviceId+'"}'
 			},
 			success:function(data) {
+				
 				console.log(data);
 				$(".detialData tbody").empty();
-				pngName=(data.collector_model.split("-"))[1].toLowerCase();
+				/*pngName=(data.collector_model.split("-"))[1].toLowerCase();
 				//console.log(pngName)
-				imgName="dtu_"+pngName+".png";
-				dataInfo=data.collector_port;
+				imgName="dtu_"+pngName+".png";*/
+				dataInfo=data.rows;
 				
 				for(var i in dataInfo){
-					switch(dataInfo[i].data_type){
-						case 0:dataTypeStr="电流"; break;
-						case 1:dataTypeStr="电压"; break;
-						case 2:dataTypeStr="输入IO"; break;
-						case 3:dataTypeStr="输出IO";break;
+				//console.log(dataInfo[i].data_type)
+					if(dataInfo[i].data_type==0){
+						dataTypeStr="电流";
+					}else if(dataInfo[i].data_type==1){
+						dataTypeStr="电压";
+					}else if(dataInfo[i].data_type==2){
+						dataTypeStr="输入IO";
+					}else{
+						dataTypeStr="输出IO";
 					}
-					switch(dataInfo[i].oper_type){
-						case 1:operTypeStr="读取"; break;
-						case 2:operTypeStr="写入"; break;
+					if(dataInfo[i].oper_type){
+						operTypeStr="读取";
+					}else{
+						operTypeStr="写入";
 					}
-					/*editCollector(i)*/
-					var dataTr='<tr><td><input type="checkbox" disabled="disabled"/></td><td>'+dataInfo[i].port_name+'</td>'
-								+'<td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>4-20</td><td>'
-								+'50-100</td><td></td><td></td><td></td><td></td><td ><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>'										
-					$(".detialData tbody").append(dataTr);	
+					dataId.push(dataInfo[i].data_id);
+					IdArr.push(dataInfo[i]._id)
+					var dataTr="";
+					if(dataInfo[i].port_name.substr(0,1)=="A"){
+						dataTr+='<tr><td><input type="checkbox" disabled="disabled"/></td><td>'+dataInfo[i].port_name
+						+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'<td>'+dataInfo[i].collect_range_low+'-'
+						+dataInfo[i].collect_range_high+'</td><td>'+dataInfo[i].real_range_low+'-'+dataInfo[i].real_range_high
+						+'<td>-</td><td>-</td><td>'+dataInfo[i].data_name+'</td><td>'+dataInfo[i].data_unit
+						+'</td><td ><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>';								
+					}else{
+						dataTr+='<tr><td><input type="checkbox" disabled="disabled"/></td><td>'+dataInfo[i].port_name
+						+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'<td>-</td><td>-</td><td>'+dataInfo[i].high_battery
+						+'</td><td>'+dataInfo[i].low_battery+'<td>-</td><td>'+dataInfo[i].data_unit
+						+'</td><td><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>';
+					};
+					//console.log(dataTr)
+					$("#dataTable").append(dataTr);	
 					j=i;
 					infoJson='{"dataType":"'+dataInfo[i].data_type+'","operType":"'+dataInfo[i].oper_type+'","portName":"'+dataInfo[i].port_name+'"}';
 					infoJson=JSON.parse(infoJson)
 					//console.log(infoJson);
 					info.push(infoJson)
+				
 				}
+				
 			}
+			
 		});
 	}	
+	$(".collector select").change(function(){
+		modelCollector();
+	})
+	
 	//点击问号的事件
 	function devicePNG(){
 		if(pngName==""){
@@ -215,7 +213,6 @@ $.fn.extend({
 			});
 		}
 	}
-	
 	//点击编辑数据同步到弹窗
 	function editClick(i){
 		$('.pop').filter('.step1').removeClass('hidden');
@@ -237,8 +234,11 @@ $.fn.extend({
 		}
 		//端口名称
 		$(".portName span").html(info[i].portName);
+		//读写状态
+		
 		var aStr="",dStr="";
 		rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
+		//console.log(rangeLow)
 		rangeHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[1];
 		realLow=$("#dataTable").find(" tr").eq(i).find("td").eq(5).text().split("-")[0];
 		realHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(5).text().split("-")[1];
@@ -258,13 +258,13 @@ $.fn.extend({
 			$(".changeData").append(aStr);
 		}else{
 			$(".changeData").empty();
-			dStr='<div class="dataRow collectorRange"><label>低电瓶</label><div class="rangeData">'
+			dStr='<div class="dataRow collectorRange"><label>低电平</label><div class="rangeData">'
 			+'<input type="text" class="lowBattery" value="'+lowBattery+'" style="width:350px;" /></div></div><div class="dataRow realRange">'
-			+'<label>高电瓶</label><div class="rangeData "><input type="text" class="highBattery" style="width:350px;" value="'+lowBattery+'" /></div>'
+			+'<label>高电平</label><div class="rangeData "><input type="text" class="highBattery" style="width:350px;" value="'+lowBattery+'" /></div>'
 			+'</div><div class="dataRow dataName"><label>数据名称</label><input type="text"/></div>';
 			$(".changeData").append(dStr);
 		}
-		j=i;
+		j=i
 		$.each($('input'),function (){
 			$(this).smartInput();
 		});
@@ -280,15 +280,14 @@ $.fn.extend({
 			$(this).css("background-position-x",-48+"px");
 			onOff=0;
 		}
-	});
+	})
+	
 	
 	//点击保存的时候数据同步到页面中
 	
 	function editCollector(j){
 		
 		//读写状态
-		//console.log(realRange)
-		//$(".detialData tbody").find("tr").eq(j).html();
 		if($(".realLow").val()=="" || $(".realHigh").val()==""){
 			layer.msg('请填写实际量程，且必须为数字', {
 				icon : 2,
@@ -344,8 +343,6 @@ $.fn.extend({
 	}
 	function editContent(j){
 		var portName=$(".portName span").html();
-		var collectRange=$(".collectorLow").val()+"-"+$(".collectorHigh").val();
-		var realRange=$(".realRange input:eq(0)").val()+"-"+$(".realRange input:eq(1)").val();
 		var operType=$(".readState select").val();
 		var dataType=$(".datanodeType select").val();
 		var dataUnit =$(".dataUnit input").val();
@@ -371,21 +368,21 @@ $.fn.extend({
 		if(info[j].portName.substr(0,1)=="A"){
 			collectRange=$(".collectorLow").val()+"-"+$(".collectorHigh").val();
 			realRang=$(".realRange input:eq(0)").val()+"-"+$(".realRange input:eq(1)").val();
-			highBattery="——";
-			lowBattery="——";
+			highBattery="-";
+			lowBattery="-";
 			dataUnit=dataUnit;
 			dataName:$(".dataName input").val();
 		}else{
-			collectRange="——";
-			realRang="——";
+			collectRange="-";
+			realRang="-";
 			highBattery=highBattery;
 			lowBattery=lowBattery;
-			dataUnit="——";
+			dataUnit="-";
 			dataName:$(".dataName input").val();
 		};
 		var dataTr='<td><input type="checkbox" checked="checked"/></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
 					+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'										
-					//console.log(dataTr)
+					
 		$(".detialData tbody").find("tr").eq(j).html(dataTr);	
 	}
 	
@@ -395,34 +392,31 @@ $.fn.extend({
 		editCollector(j);
 		
 	})
-	/*var dataUnit =$(".dataUnit input").val();"{'device_code':'" + deviceCode + "','device_name':'"
-		var dataName=$(".dataName input").val();*/
 	
 	function saveDevice(){
 		var deviceName = $(".deviceName").val();
 		var deviceCode = $(".deviceCode").val();
 		var mobile = $(".contactPhone").val();
-		var collectorId = $(".collector select").val();
+		var collectorId = $(".collector input").val();
 		var warningSpace=Number($(".warningSpace").val()?$(".warningSpace").val():0);
 		var delayTime=Number($(".delayTime").val()?$(".delayTime").val():0);
 		var collectInterval = $(".collectInterval").val();
-		var communication = "{'collect_interval':" + collectInterval+ ",'collector_id':" + optionValue+ ",'protocal':'A'}";
+		var communication = "{'collect_interval':" + collectInterval+ ",'collector_id':" + collectorId+ "}";
 		var controlBtn=$(".controlBtn span");
 		var status="";
 		var device=""
 		for(var i=0;i<controlBtn.length;i++){
 			if(controlBtn.eq(i).hasClass("activeBtn")){
-				//console.log(111)
 				status +=controlBtn.eq(i).attr("value");
 				//console.log(status)
 			}
 		}
-		if (deviceCode == "请输入设备编号") {
+		if (deviceCode == "") {
 			layer.msg('设备编号不能为空', {
 				icon : 2,
 				time:1500
 			});
-		} else if (deviceName == "请输入设备名称") {
+		} else if (deviceName == "请输入设备名称" ||deviceName == ""){
 			layer.msg('设备名称不能为空', {
 				icon : 2,
 				time:1500
@@ -435,19 +429,19 @@ $.fn.extend({
 		}else {
 			if(status==1){
 				var phoneReg=/^1[34578]\d{9}$/;
-				if(mobile =="此号码用于接收掉线提醒，如有多个号码请用逗号分隔"){
+				if(mobile ==""){
 					layer.msg('联系电话不能为空', {
 						icon : 2,
 						time:1500
 					});
 					//console.log(111)
-				}else if($(".warningSpace").val() == "掉线提醒的间隔时间，单位分钟"){
+				}else if($(".warningSpace").val() == "掉线提醒的间隔时间，单位分钟" ||$(".warningSpace").val() ==""){
 					layer.msg('掉线提醒的间隔时间不能为空', {
 						icon : 2,
 						time:1500
 					});
 					//console.log(222)
-				}else if($(".delayTime").val() =="掉线后提醒的延迟时间，单位分钟"){
+				}else if($(".delayTime").val() =="掉线后提醒的延迟时间，单位分钟"||$(".delayTime").val() ==""){
 					layer.msg('掉线后提醒的延迟时间不能为空', {
 						icon : 2,
 						time:1500
@@ -459,72 +453,61 @@ $.fn.extend({
 						time:1500
 					});
 				}else{
-					console.log(onOff)
+					//console.log(onOff)
 					device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
 						+  "','mobile':'" + mobile + "','status':" + status + ",'communication':" + communication 
-						+",'is_remind':1,'remind_interval':"+warningSpace+",'remind_delay':"+delayTime+",'status':" + status +"}";
-					/*if($(".controlBtn span").eq(1).hasClass("activeBtn")){
-						device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
-						+  "','mobile':'" + mobile + "','status':" + status + ",'communication':" + communication + "','status':" + status +"}";
-					}else{
-						device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
-						+  "','mobile':'" + mobile + "','status':" + status + ",'communication':" + communication 
-						+",'is_remind':1,'remind_interval':"+warningSpace+",'remind_delay':"+delayTime+",'status':" + status +"}";
-					}*/
+						+",'is_remind':1,'remind_interval':"+warningSpace+",'protocal':'A','remind_delay':"+delayTime+"}";
 					data=device;
-					console.log(data)
+					//console.log(data)
 					$.ajax({
-						type:"post",
+						type:"put",
 						datatype:"json",
-						url:commonUrl+"/v1/devices?access_token=58d8ba58b769971a146f8989",
+						url:commonUrl+"/v1/devices/"+deviceId+"?access_token="+access_token,
 						data:{
 							data:data
 						},
 						success:function(data){
 							console.log(data)
-							var device_id=data._id;
-							deviceId=device_id;
-							console.log(deviceId);
+							data._id=data._id;
+							save();
 						}
 					})
 				}
 			}else{
-				console.log(onOff)
 				device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
-						+  "','status':" + status + ",'communication':" + communication 
-						+",'is_remind':0,'status':" + status +"}";		
+						+  "','communication':" + communication 
+						+",'is_remind':0,'protocal':'A','status':" + status +"}";		
 				data=device;
 			//	console.log(data)
 				$.ajax({
-					type:"post",
+					type:"put",
 					datatype:"json",
-					url:commonUrl+"/v1/devices?access_token="+access_token,
+					url:commonUrl+"/v1/devices/"+deviceId+"?access_token="+access_token,
 					data:{
 						data:data
 					},
 					success:function(data){
-						console.log(data)
-						var device_id=data._id;
-						deviceId=device_id;
-						console.log(deviceId);
+						save();
 					}
 				})
 			}
 		}	
 	}
-	
-	
-	/*infoJson='{"dataType":"'+dataInfo[i].data_type+'","operType":"'+operTypeStr+'","portName":"'+dataInfo[i].port_name
-		+'","rangeLow":"'+rangeLow+'","rangeHigh":"'+rangeHigh+'","realLow":"'+realLow+'","realHigh":"'+realHigh
-		+'","lowBattery":"'+lowBattery+'","highBattery":"'+highBattery+'","dataUnit":"'+dataUnit+'","dataName":"'+dataName+'"}';*/
-	//data='{"device_id":"'+deviceId+'", "data_name":"'+dataName+'","data_unit":"'+dataUnit
-		//	+'","data_name":"'+dataName+'","data_name":"'+dataName+'","data_name":"'+dataName+'","data_name":"'+dataName+'","data_name":"'+dataName+'","data_name":"'+dataName+'", "data_name":"'+dataName+'"}';
-	
 	function save(){
 		var dataConfig=[];
-		console.log(info.length);
+		//console.log(dataId)
+		var data={};
+		//console.log(info.length)
+		var controlBtn=$(".controlBtn span");
+		for(var i=0;i<controlBtn.length;i++){
+			if(controlBtn.eq(i).hasClass("activeBtn")){
+				//console.log(111)
+				status +=controlBtn.eq(i).attr("value");
+				//console.log(status)
+			}
+		}
 		for (var i = 0; i < info.length; i++) {
-			if(info[i]!=""){
+				//console.log(33434)
 				rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
 				//console.log(rangeLow)
 				rangeHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[1];
@@ -535,40 +518,45 @@ $.fn.extend({
 				dataUnit=$("#dataTable").find(" tr").eq(i).find("td").eq(8).text();
 				//console.log(dataUnit)
 				dataName=$("#dataTable").find(" tr").eq(i).find("td").eq(9).text();
-				console.log(dataName)
-				//infoJson='{"dataType":"'+dataInfo[j].data_type+'","operType":"'+operTypeStr+'","portName":"'+dataInfo[j].port_name
-				//+'","rangeLow":"'+rangeLow+'","rangeHigh":"'+rangeHigh+'","realLow":"'+realLow+'","realHigh":"'+realHigh
-				//+'","lowBattery":"'+lowBattery+'","highBattery":"'+highBattery+'","dataUnit":"'+dataUnit+'","dataName":"'+dataName+'"}';
-				dataConfigJson='{"dataType":"'+dataInfo[j].data_type+'","operType":"'+dataInfo[j].oper_type+'","portName":"'+dataInfo[j].port_name
-				+'","collectRange":"'+rangeLow+'-'+rangeHigh+'","realRange":"'+realLow+'-'+realHigh
-				+'","lowBattery":"'+lowBattery+'","highBattery":"'+highBattery+'","dataUnit":"'+dataUnit+'","dataName":"'+dataName+'"}';
+				dataConfigJson='{"data_type":"'+dataInfo[i].data_type+'",'+
+				'"oper_type":"'+dataInfo[i].oper_type+'",'+
+				'"port_name":"'+dataInfo[i].port_name+'",'+
+				'"collect_range_high":"'+rangeHigh+'",'+
+				'"collect_range_low":"'+rangeLow+'",'+
+				'"real_range_high":"'+realHigh+'",'+
+				'"real_range_low":"'+realLow+'",'+
+				'"low_battery":"'+lowBattery+'",'+
+				'"high_battery":"'+highBattery+'",'+
+				'"status":"'+status+'",'+
+				'"_id":"'+IdArr[i]+'",'+
+				'"data_id":"'+IdArr[i]+'",'+
+				'"data_unit":"'+dataUnit+'",'+
+				'"data_name":"'+dataName+'"}';
+				//console.log(dataConfigJson)
 				dataConfigJson=JSON.parse(dataConfigJson);
-				//console.log(infoJson);
-				dataConfig.push(dataConfigJson)
-			}
+				//console.log(dataConfigJson);
+				dataConfig.push(dataConfigJson);
+				//console.log(dataConfig)
+			
+				data=JSON.stringify(dataConfig);
 		}
-		data={'device':device,'dataConfig':JSON.stringify(dataConfig)};
-		console.log(data)
-		console.log(deviceId)
-		
-		/*$.ajax({
+		$.ajax({
 			type:"put",
 			datatype:"json",
-			url:commonUrl+"/v1/dataConfigs/"+deviceId,
+			url:commonUrl+"/v1/devices/"+deviceId+"/dataConfigs",
 			data:{
-				access_token:"58d8ba58b769971a146f8989",
+				access_token:access_token,
 				data:data
 			},
 			success:function(data){
 				console.log(data)
 			}
-		});*/
+		});
 	}
 	
 	//点击保存新增
 	$(".saveSettings button").click(function(){
 		saveDevice();
 		
-		save();
+		//save();
 	})
-	
