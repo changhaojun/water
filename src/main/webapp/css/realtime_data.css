@@ -1,6 +1,10 @@
+body{
+	width:100%;
+	height:100%;
+}
 .timeData{
 	width:100%;
-	height:1000px;;
+	height:1000px;
 	overflow-x: hidden;
 }
 .timeData .dataTop{
@@ -44,17 +48,20 @@
 	font-size:14px;
 	color:#fff;
 	margin-top:10px;
+	cursor: pointer;
 	
 }
 #reservationtime{
 	width:580px !important;
 	font-size:14px;
-	margin-top:8px !important;
+	margin-top:0 !important;
 	border:0 !important;
 	outline: none !important;
 	height:30px;
-	border-top:0;
+	border-bottom:1px solid #ccc !important;
 	color:#9096a4 !important;
+	height:100%;
+	cursor: pointer;
 }
 .btn-small{
 	margin-top:20px;

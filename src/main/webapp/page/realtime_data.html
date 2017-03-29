@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.css"/>
 		<link rel="stylesheet" type="text/css" href="../plugins/bootstarp/css/bootstrap.css"/>
 		<link rel="stylesheet" type="text/css" href="../plugins/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"/>
 		<link rel="stylesheet" type="text/css" href="../plugins/bootstrap-datepicker/css/datepicker.css"/>
@@ -13,10 +14,11 @@
 	<body>
 		<input type="text" id="dataId" hidden="hidden" value=${dataId} />
 		<input type="text" id="deviceId" hidden="hidden" value=${deviceId}/>
+		
 		<div class="timeData">
 			<div class="dataTop">
-				<span class="device_name"></span>
-				(<span class="data_name"></span>)
+				<span class="device_name">${deviceName}</span>
+				(<span class="data_name">${dataName}</span>)
 				<div class="dataTime">
 					 <input type="text" style="width: 400px" name="reservation" id="reservationtime" class="form-control"class="span4"/>
 				</div>
@@ -30,10 +32,12 @@
 					</ul>
 				</div>								
 			</div>
-			<div class="nodata">暂无数据</div>
+			
 			<div class="chartContent">
 				<div class="contrastChart">
-					<div id="line" class="row" style="width:890px;height: 300px;margin:20px; overflow: hidden;"></div>
+					
+					<div id="chart2466" class="row" style="width:890px;height: 300px;margin:20px; overflow: hidden;"></div>
+					
 				</div>
 			</div>
 		</div>
