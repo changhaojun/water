@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import com.finfosoft.water.common.Constants;
 import com.finfosoft.water.frame.FrameController;
+import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Record;
 
@@ -113,7 +114,7 @@ public class DataTagController extends Controller{
 	}
 	/**
 	 * 
-	 * @Title: addPcl
+	 * @Title: addPlc
 	 * @Description:
 	 *    作用:打开新增PLC页面
 	 *    限制:
@@ -124,7 +125,7 @@ public class DataTagController extends Controller{
 	 * @return void 
 	 * @exception  (说明在某情况下，将发生什么异常)
 	 */
-	public void addPcl(){
+	public void addPlc(){
 		render("box_plc_add.html");
 	}
 	
@@ -145,7 +146,7 @@ public class DataTagController extends Controller{
 	public void editPlc(){
 		String plcId=getPara(0);
 		setAttr("plcId", plcId);
-		render("boc_plc_edit.html");
+		render("box_plc_edit.html");
 	}
 	
 }

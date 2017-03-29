@@ -12,22 +12,21 @@
 
 	<body>
 		<div>
-			<input type="text" id="companyId" hidden="hidden" value="${companyId}"/>
-			<input type="text" id="companyCode" hidden="hidden" value="${companyCode}"/>
+			<input type="text" id="deviceId" hidden="hidden" value="${deviceId}"/>
 		</div>
 		<div id="vue">
 			<div class="boxAccess">
 				<div class="boxHeader">
 					<h3>
-						<span>新增PLC</span>
+						<span>编辑PLC</span>
 						<span>/</span>
-						<span>ADD PLC</span>
+						<span>EDIT PLC</span>
 					</h3>
 					<h4>
 						<span>当前位置：</span>
 						<span>接入PLC</span>
 						<span>></span>
-						<span>新增PLC</span>
+						<span>编辑PLC</span>
 					</h4>
 				</div>
 				<!--主要内容部分-->
@@ -72,6 +71,7 @@
 						<div class="dataCircle">
 							<label>采集周期</label>
 							<select v-model="deviceData.communication.collect_interval">
+								<option value="120">120</option>
 								<option value="180">180</option>
 								<option value="240">240</option>
 								<option value="300">300</option>
@@ -80,7 +80,7 @@
 						</div>
 						<div class="dataCircle">
 							<label for="collector_id">采集器ID</label>
-							<input id="collector_id" type="text" num-limit="limit" class="textInput" v-model="deviceData.communication.collector_id" datasrc="deviceData.communication.collector_id" v-bind:empty="!deviceData.communication.collector_id&&!deviceData.communication.collector_id!==0 ? true : false" placeholder="请输入采集器ID" @keyup="requestCollectorList()"/>
+							<input id="collector_id" type="text" num-limit="limit" class="textInput" v-model="deviceData.communication.collector_id" datasrc="deviceData.communication.collector_id" v-bind:empty="!deviceData.communication.collector_id&&!deviceData.communication.collector_id!==0 ? true : false" placeholder="请输入采集器ID" @keyup="requestCollectorList(ev)"/>
 							<ul id="collector_id_list" class="hidden">
 								<li v-for="id in collectorData" @click="confirmId()">{{ id.collector_id }}</li>
 							</ul>
@@ -325,6 +325,6 @@
 		<script type="text/javascript" src="../plugins/jQuery/jquery-1.11.3.min.js"></script>
 		<script src="../plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/public_resources.js"></script>
-		<script src="../js/box_plc_add.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/box_plc_edit.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 </html>

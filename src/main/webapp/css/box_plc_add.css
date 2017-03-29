@@ -13,6 +13,25 @@ td>.fa{
 	margin-left: 8px;
 	cursor: pointer;
 }
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #c2c2c2; opacity:1; 
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #c2c2c2; opacity:1;
+}
+
+input:-ms-input-placeholder{
+    color: #c2c2c2; opacity:1;
+}
+
+input::-webkit-input-placeholder{
+    color: #c2c2c2; opacity:1;
+}
+
+input:disabled{
+	background-color: #f2f2f2;
+}
 
 .boxAccess{
 	width: 100%;
@@ -64,6 +83,7 @@ td>.fa{
 	width: 50%;
 	float: left;
 	padding-top: 25px;
+	position: relative;
 }
 .boxContent .dataCircle label,
 .dataEdit label{
@@ -99,6 +119,27 @@ td>.fa{
 .dataEdit select{
 	padding-left: 12px;
 	background: url(../img/select_arrow.png) no-repeat scroll right center transparent; 
+}
+#collector_id_list{
+	border: 1px solid #1ab394;
+    border-radius: 1px;
+    width: 70%;
+    line-height: 26px;
+    font-size: 14px;
+    color: #a7a7a7;
+	position: absolute;
+	left: 90px;
+	top: 58px;
+	background: #fff;
+	z-index: 1;
+	text-indent: 12px;
+}
+#collector_id_list>li{
+	cursor: pointer;
+}
+#collector_id_list>li:hover{
+	color: #fff;
+	background: #1e90ff;
 }
 
 .controlBtn{
@@ -210,6 +251,9 @@ td>.fa{
 	background: #1ab394;
 	border-radius: 3px;
 }
+button:hover{
+	background: #24c5a4;
+}
 
 .pop-mask{
 	width: 100%;
@@ -280,4 +324,13 @@ td>.fa{
 	right: -7px;
 	bottom: -7px;
 	z-index: -1;
+}
+
+.fixIeSelect{
+	width: 50px;
+	overflow: hidden;
+}
+.fixIeSelect select{
+	width: 100px;
+	overflow: hidden;
 }

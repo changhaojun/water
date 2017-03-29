@@ -1,8 +1,11 @@
 //Vue页面总数据流
 var initData = {
 	//令牌
+//	access_token: "58d4c2e5b76997198cd2146a", //test
+//	deviceId: "58d373a5cfd737459c433585", //test
 	access_token: "",
-	//采集器ID
+	deviceId: $('#deviceId').val(),
+//	//采集器ID
 	collectorData: [],
 	//{ 设备信息, { 通讯参数 } }
 	deviceData: {
@@ -13,10 +16,10 @@ var initData = {
 		remind_interval: "",
 		remind_delay: "",
 		communication: {
-			collect_interval: 180,
+			collect_interval: 120,
 			collector_id: "",
-			plc_id: 1,
-			CRC_check: 16,
+			plc_id: 0,
+			CRC_check: 0,
 			baud_rate: 0,
 			data_addr: 0,
 			check_bit: 0,
@@ -26,13 +29,13 @@ var initData = {
 		},
 		protocal: "P", //无渲染
 		status: 1, //无渲染
-		company_id: $('#companyId').val(), //无渲染
-		company_code: $('#companyCode').val() //无渲染
+		company_id: "", //无渲染
+		company_code: "" //无渲染
 	},
 	//新增端口接口
 	newPort: {
 		data_name: "",
-		oper_type: 1,
+		oper_type: 0,
 		data_unit: "",
 		data_type: 0,
 		data_precision: "",
@@ -150,7 +153,7 @@ var $extend = $.fn.extend({
 		this.portData.splice(this.portIndex, 1);
 	},
 	//请求采集器ID所对应的端口列表
-	requestCollectorList: function(e) {
+	requestCollectorList: function() {
 		var This = this;
 		var $This = $(event.target);
 		if (!this.deviceData.communication.collector_id&&this.deviceData.communication.collector_id!==0) {
@@ -158,8 +161,9 @@ var $extend = $.fn.extend({
 			return;
 		}
 		$.ajax({
-			type:"get",
+			type: "get",
 			dataType: "json",
+//			url: "http://192.168.1.37/v1/collectors", //test
 			url: globalurl+"/v1/collectors",
 			async:true,
 			data: {
@@ -203,7 +207,8 @@ var $extend = $.fn.extend({
 				$(this).attr('disabled',true);
 			};
 			$(this).changeTip('正在保存，请稍后...');
-			$.doAjax();
+			$.doDeviceAjax();
+			$.doPortAjax();
 		});
 	}
 });
@@ -217,6 +222,7 @@ $.extend({
 			methods: $extend
 		});
 		//获取令牌
+		$.getInitData();
 		getToken();
 		initData.access_token = accesstoken;
 		$('input').changeBorderColor();
@@ -255,11 +261,13 @@ $.extend({
 			}
 		});
 	},
-	doAjax: function() {
+	//保存设备请求
+	doDeviceAjax: function() {
 		$.ajax({
-			type: "post",
+			type: "put",
 			dataType: "json",
-			url: globalurl+"/v1/devices",
+//			url: "http://192.168.1.37/v1/devices/"+initData.deviceId, //test
+			url: globalurl+"/v1/devices/"+initData.deviceId,
 			async: true,
 			data: {
 				access_token: initData.access_token,
@@ -267,32 +275,85 @@ $.extend({
 			},
 			success: function(data) {
 				switch (data.code) {
-					case 200: 
-						//发送dataConfig
-						$.ajax({
-							type: "post",
-							dataType: "json",
-							url: globalurl+"/v1/devices/"+data._id+"/dataConfigs",
-							async: true,
-							data: {
-								access_token: initData.access_token,
-								data: JSON.stringify(initData.portData)
-							},
-							success: function(data) {
-								if (data.code===200) {
-									layer.msg('保存成功！', {icon: 1});
-								}
+					case 400005:
+						getNewToken();
+						initData.access_token = refreshToken;
+						$.doDeviceAjax();
+						return;
+				}
+			}
+		});
+	},
+	//保存端口请求
+	doPortAjax: function() {
+		$.ajax({
+			type: "put",
+			dataType: "json",
+//			url: "http://192.168.1.37/v1/devices/"+initData.deviceId+"/dataConfigs", //test
+			url: globalurl+"/v1/devices/"+initData.deviceId+"/dataConfigs",
+			async: true,
+			data: {
+				access_token: initData.access_token,
+				data: JSON.stringify(initData.portData)
+			},
+			success: function(data) {
+				console.log('dataConfig',data);
+				switch (data.code) {
+					case 200:
+						layer.msg('保存成功！',{
+							icon: 1,
+							end: function() {
+								//页面跳转
 							}
 						});
 						break;
 					case 400005:
 						getNewToken();
 						initData.access_token = refreshToken;
-						$.doAjax();
-						break;
+						$.doPortAjax();
+						return;
 				}
 			}
 		});
+	},
+	//获取数据流请求
+	getInitData: function (){
+		$.ajax({
+			type: "get",
+			dataType: "json",
+//			url: "http://192.168.1.37/v1/devices/"+initData.deviceId, //test
+			url: globalurl+"/v1/devices/"+initData.deviceId,
+			async: true,
+			data: {
+				access_token: initData.access_token
+			},                                                                                                                                                                                                                                                                                
+			success: function(data) {
+				$.deepCopy(data,initData.deviceData);
+			}
+		});
+		$.ajax({
+			type: "get",
+			dataType: "json",
+//			url: "http://192.168.1.37/v1/devices/"+initData.deviceId+"/dataConfigs", //test
+			url: globalurl+"/v1/devices/"+initData.deviceId+"/dataConfigs",
+			async: true,
+			data: {
+				access_token: initData.access_token,
+				filter: JSON.stringify({device_id: initData.deviceId})
+			},
+			success: function(data) {
+				for (var i=data.rows.length-1; i>=0; i--) {
+					initData.portData.push(data.rows[i]);
+				}
+			}
+		});
+	},
+	//深拷贝
+	deepCopy: function(copyFrom,copyFor) {
+		for (var key in copyFor) {
+			copyFor[key] = typeof copyFrom[key]==='object' ? $.deepCopy(copyFrom[key],copyFor[key]) : copyFrom[key];
+		}
+		return copyFor;
 	}
 });
 
