@@ -213,9 +213,8 @@ function initChart(data,chartType){
 	console.log(chartDivArr)
 } 
 
-
+//删除图表
 function closeChart(closeId){
-//	console.log(13)
 	chartDivArr.splice(chartDivArr.indexOf(closeId),1);
 	$("#chart"+closeId).remove();
 	$(".chart"+closeId).remove();
