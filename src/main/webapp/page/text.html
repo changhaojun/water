@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="shortcut icon"  href="../img/favicon.ico"/>
+		<link rel="stylesheet" href="../plugins/bootstarp/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/box_sensor_add.css" />
+		<style>
+			.collector .list input ,.collector .list ul{
+			    float: left;
+			    background-color: #FFFFFF;
+			    background-image: none;
+			    border: 1px solid #e5e6e7;
+			    border-radius: 1px;
+			    color: inherit;
+			    display: block;
+			    padding-left: 12px;
+			    width: 70%;
+			    font-size: 14px;
+			    color: #a7a7a7;
+			    height: 42px;
+			    line-height: 42px;
+			}
+			.collector .list ul{
+				height: auto;
+				margin-left: 75px;
+				border:1px solid #1ab394;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="boxAccess">
+			<div class="boxHeader">
+				<h3>新增传感器 &nbsp;/ <span>ADD传感器</span></h3>
+				<h4>当前位置：接入传感器 >&nbsp; <span>新增传感器</span></h4>
+			</div>
+			<!--主要内容部分-->
+			<div class="dataInfo">
+				<div class="boxContent clearfix">
+					<div class="equipment">
+						<i class="fa fa-book"></i>&nbsp;设备信息
+					</div>
+					<div class="dataCircle">
+						<label>设备编号</label>
+						<input type="text" class="deviceCode" value="请输入设备编号"/>
+					</div> 
+					<div class="dataCircle">
+						<label>设备名称</label>
+						<input type="text" class="deviceName"  value="请输入设备名称"/>
+					</div>
+					<div class="dataCircle">
+						<label>掉线提醒</label>
+						<p class="controlBtn">
+							<span class="activeBtn" value="1">开启</span>
+							<span value="0">关闭</span>
+						</p>
+						<em>注 : 开启提醒后即可进行相关设置。</em>
+					</div>
+					<div class="dataCircle">
+						<label>联系电话</label>
+						<input type="text" class="contactPhone" value="此号码用于接收掉线提醒，如有多个号码请用逗号分隔"/>
+					</div>
+					<div class="dataCircle">
+						<label>提醒间隔</label>
+						<input type="text" class="warningSpace" value="掉线提醒的间隔时间，单位分钟"/>
+					</div>
+					<div class="dataCircle">
+						<label>延长时间</label>
+						<input type="text" class="delayTime" value="掉线后提醒的延迟时间，单位分钟"/>
+					</div>
+				</div>
+				<div class="boxContent clearfix">
+					<div class="equipment">
+						<i class="fa fa-cogs"></i>&nbsp;通讯参数
+					</div>
+					<div class="dataCircle">
+						<label>采集周期</label>
+						<select class="collectInterval">
+							<option selected="selected" value="120">120</option>
+							<option value="180">180</option>
+							<option value="240">240</option>
+							<option value="300">300</option>
+							<option value="360">360</option>
+							<option value="420">420</option>
+						</select>
+					</div> 
+					<div class="dataCircle collector">
+						<label>采集器ID</label>
+						<div class="list">
+							<input type="text" />
+							<ul></ul>
+						</div>
+						
+					</div>
+				</div>
+				<div class="boxContent clearfix">
+					<div class="equipment">
+						<div class="equipment1">
+							<i class="fa fa-wrench"></i>&nbsp;数据配置
+							<a class="btnYellow" data-toggle="tooltip" data-placement="top" title="复制">
+								<i class="fa fa-copy "></i>
+							</a>
+							<span onclick="devicePNG()">?</span>
+						</div>
+						<div class="copyType"></div>
+						
+					</div>
+					<div class="detialData">
+						<table>
+							<thead>
+								<tr>
+									<th>启用状态</th>
+									<th>端口名称</th>
+									<th>读写状态</th>
+									<th>数据类型</th>
+									<th>采集量程</th>
+									<th>实际量程</th>
+									<th>高电瓶</th>
+									<th>低电瓶</th>
+									<th>数据单位</th>
+									<th>数据名称</th>
+									<th>编辑</th>
+								</tr>
+							</thead>
+							<tbody id="dataTable"></tbody>
+						</table>
+					</div> 
+				</div>
+			
+				<div class="saveSettings"><button >保存设置</button></div>
+			</div>
+		</div>
+		
+		<!--============遮罩层===================-->
+		<div class="hidden pop-mask"></div>
+		<!--数据标签弹窗-->
+		<div class="hidden pop step1">
+			<div class="clearfix pop-title">
+				<p class="pull-left">编辑数据标签</p>
+				<a href="###" class="pull-right pop-close maskClose"></a>
+			</div>
+			<div class="pop-main">
+				<div class="editData_label">
+					<div class="portName clearfix">
+						<label>端口名称</label>
+						<span>AI2</span>
+						<p><i></i>是否启用</p>
+					</div>
+					
+					<div class="advanceOption">
+						<div class="dataType">
+							<div class="dataRow datanodeType">
+								<label>数据类型</label>
+								<div class="dataNode">
+									
+								</div>
+								
+							</div>
+							<div class="changeData"></div>
+							
+						</div>
+					</div>
+				</div>
+				<button class="saveEquipment">保存</button>
+			</div>
+			
+		</div>
+		<script type="text/javascript" src="../plugins/jQuery/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="../plugins/bootstarp/js/bootstrap.min.js"></script>
+		<script src="../plugins/layer/layer.min.js" type="text/javascript"></script>
+		<script type="text/javascript" src="../js/public_resources.js" ></script>
+		<!--<script type="text/javascript" src="../js/box_sensor_add.js"></script>-->
+		<script>
+			
+			
+			
+			
+			
+			
+			/*$(".collector ul")*/
+			/*$.ajax({
+				type:"get",
+				dataType: "json",
+				url:"http://192.168.1.37/v1/controllers?like={collector_id:"+This.deviceData.communication.collector_id+"}",
+				async:true,
+				data: {
+					access_token: initData.access_token
+				},	
+				success: function(data) {
+					if (data.rows.length) {
+						$This.siblings('ul').removeClass('hidden');
+						This.collectorData = data.rows;
+					} else {
+						$This.siblings('ul').addClass('hidden');
+					}
+				}
+			});*/
+
+		</script>
+		
+	</body>
+</html>
