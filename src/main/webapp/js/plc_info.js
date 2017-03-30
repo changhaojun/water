@@ -5,6 +5,7 @@ $(function(){
 	getToken();
 	toolTip();
 	getDTUList();
+	getToken();	
 })
 //搜索功能
 window.searchCollectot=function(){
@@ -124,11 +125,11 @@ $("pull-right .page-next a").html("下一页");
 
 
 function look(value){
-	self.location.href=itemName+"/dataTag/getDatas/"+value+"-'plc'";
+	self.location.href="/finfosoft-water/dataTag/getDatas/"+value+"-P";
 }
 
 function modify(value){
-	self.location.href=itemName+"/dataTag/editPlc/"+value;
+	self.location.href="/finfosoft-water/dataTag/editPlc/"+value;
 }
 
 function addPlc(){

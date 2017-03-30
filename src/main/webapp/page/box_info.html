@@ -3,11 +3,11 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="../css/reset.css"/>
-		<link rel="stylesheet" type="text/css" href="../plugins/bootstarp/css/bootstrap.css"/>
-		<link rel="stylesheet" type="text/css" href="../plugins/bootstrap-table/bootstrap-table.css"/>
-		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.css"/>	
-		<link rel="stylesheet" type="text/css" href="../css/box_info.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/bootstarp/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/bootstrap-table/bootstrap-table.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.css"/>	
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/box_info.css"/>
 	</head>
 	<body>
 		<input type="text" id="companyCode" hidden="hidden" value=${companyCode} />
@@ -17,12 +17,13 @@
 					<span>接入传感器</span>
 					<span>/</span>
 					<span>Access Sensor</span>
-					<input type="button" value="新增" class="btn-primary"/>
 					<span class="search">
 						<input v-model="searchCollectorId" type="text" placeholder="请输入姓名查找" id="searchId" onkeypress="if(event.keyCode==13) {searchCollectot();return false;}"/>
 						<i class="fa fa-search" onclick="searchCollectot()"></i>
 						
 					</span>
+					<input type="button" value="新增" class="btn-primary" onclick="addBox()"/>
+					
 			</div>
 			<hr>
 			<div class="boxList">
@@ -31,13 +32,13 @@
 			</div>
 		</div>
 	</body>
-	<script src="../plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../plugins/bootstarp/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../plugins/bootstrap-table/bootstrap-table.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/public_resources.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../plugins/vue/dist/vue-resource.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/box_info.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/plugins/bootstarp/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/plugins/bootstrap-table/bootstrap-table.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/plugins/vue/dist/vue-resource.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/js/box_info.js" type="text/javascript" charset="utf-8"></script>
 </html>

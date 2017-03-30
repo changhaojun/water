@@ -3,19 +3,21 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="../finfosoft-water/css/reset.css"/>
-		<link rel="stylesheet" type="text/css" href="../finfosoft-water/plugins/font-awesome/css/font-awesome.css"/>
-		<link rel="stylesheet" type="text/css" href="../finfosoft-water/css/sensor_look.css"/>
-		<link rel="stylesheet" type="text/css" href="../finfosoft-water/plugins/bootstarp/css/bootstrap.css"/>
-		<link rel="stylesheet" type="text/css" href="../finfosoft-water/plugins/layer/skin/layer.css"/>
-		<link rel="stylesheet" type="text/css" href="../finfosoft-water/plugins/layer/skin/moon/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../plugins/layer/skin/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="../../plugins/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/sensor_look.css"/>
+		<link rel="stylesheet" type="text/css" href="../../plugins/bootstarp/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="../../plugins/layer/skin/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="../../plugins/layer/skin/moon/style.css"/>
 	</head>
 	<body>
+		<input type="text" id="boxId" hidden="hidden" value=${boxId} />
+		<input type="text" id="type" hidden="hidden" value=${type} />
 		<div class="look sensorLook">
 			<div class="lookTop sensorTop">
-					<span>查看传感器</span>
-					<span>/</span>
-					<span>Look Sensor</span>
+					<span class="Itype"></span>
+					<span class="Etype"></span>
 					<div class="right">
 						<span>当前位置：</span>
 						<span>接入PLC</span>
@@ -25,7 +27,7 @@
 			</div>
 			<hr>
 			<div class="lookContent sensorContent">
-				<div class="lookList  normal">
+				<!--<div class="lookList  normal">
 					<div class="listTop">
 						<span>水流量</span>
 						<span class="fa fa-area-chart" data-toggle="tooltip" data-placement="top" "tooltip" data-placement="top" title="数据" onclick="show()" ></span>
@@ -65,22 +67,16 @@
 							<span class="hour">14:28:34</span>
 						</div>
 					</div>			
-				</div>
-			</div>
-		</div>
-		<!--实时数据页面-->
-		<div class="dataMsg">
-			<div class="dataBox">
-				<div class="dataTop">
-					<span>实时数据</span>
-					<span onclick="shut()">&times;</span>
-				</div>
-				<div class="dataContent"></div>
+				</div>-->
 			</div>
 		</div>
 	</body>
-	<script src="../finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../finfosoft-water/plugins/bootstarp/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../finfosoft-water/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../finfosoft-water/js/sensor_look.js" type="text/javascript" charset="utf-8"></script>
+	<script src="http://rap.taobao.org/rap.plugin.js?projectId=15031&mode=1"></script>
+	<script src="../plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../plugins/bootstarp/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/public_resources.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/finfosoft.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../js/sensor_look.js" type="text/javascript" charset="utf-8"></script>
 </html>

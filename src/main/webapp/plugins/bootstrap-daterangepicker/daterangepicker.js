@@ -18,8 +18,7 @@
 
         //create the picker HTML object
         var DRPTemplate = '<div class="daterangepicker dropdown-menu">' +
-                '<div class="calendar left"></div>' +
-                '<div class="calendar right"></div>' +
+               
                 '<div class="ranges">' +
                   '<div class="range_inputs">' +
                     '<div class="daterangepicker_start_input">' +
@@ -34,6 +33,12 @@
                     '<button class="cancelBtn"></button>' +
                   '</div>' +
                 '</div>' +
+                '<div class="rangefooter">'+
+                '<div class="calendar left"></div>' +
+                '<div class="calendar right"></div>' +
+                 
+                
+                '</div>'+
               '</div>';
 
         //custom options
@@ -106,7 +111,7 @@
             this.showDropdowns = false;
             this.showWeekNumbers = false;
             this.timePicker = false;
-            this.timePickerIncrement = 30;
+            this.timePickerIncrement = 10;
             this.timePicker12Hour = true;
             this.singleDatePicker = false;
             this.ranges = {};

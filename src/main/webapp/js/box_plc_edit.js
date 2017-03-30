@@ -1,8 +1,7 @@
+
 //Vue页面总数据流
 var initData = {
 	//令牌
-//	access_token: "58d4c2e5b76997198cd2146a", //test
-//	deviceId: "58d373a5cfd737459c433585", //test
 	access_token: "",
 	deviceId: $('#deviceId').val(),
 //	//采集器ID
@@ -216,14 +215,15 @@ var $extend = $.fn.extend({
 $.extend({
 	//系统初始化
 	init: function() {
+		getToken();
 		var device = new Vue({
 			el: '#vue',
 			data: initData,
 			methods: $extend
 		});
+		
 		//获取令牌
 		$.getInitData();
-		getToken();
 		initData.access_token = accesstoken;
 		$('input').changeBorderColor();
 		$('input').limitSpacing();

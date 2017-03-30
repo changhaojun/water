@@ -280,7 +280,12 @@ $.extend({
 							},
 							success: function(data) {
 								if (data.code===200) {
-									layer.msg('保存成功！', {icon: 1});
+									layer.msg('保存成功！', {
+										icon: 1,
+										end: function() {
+											console.info("111")
+											self.location.href='/finfosoft-water/dataTag/plc/'
+										}});
 								}
 							}
 						});

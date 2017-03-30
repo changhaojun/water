@@ -1,9 +1,11 @@
 var companyCode=$("#companyCode").val();	//公司编号，获取用户列表时使用
 var companyId=$("#companyId").val();		//公司ID
+var isSearch=false;
 $(function(){
 	getToken();
 	toolTip();
 	getDTUList();
+	getToken();//刷新令牌
 })
 var isSearch=false;
 //搜索功能
@@ -67,11 +69,7 @@ window.getDTUList=function(){
 }
 //操作列的格式化
 function editFormatter(value,row,index){
-	var oneTips="<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#1cb295;margin-left:15px;cursor: pointer;' class='fa fa-laptop' onclick=look('"+value+"')></span>";
-	var twoTips="<span data-toggle='tooltip' data-placement='top' title='下发' style='color:#48c2a9;margin-left:15px;cursor: pointer;' class='fa fa-arrow-circle-down' onclick=give('"+value+"')></span>";
-	var threeTips="<span data-toggle='tooltip' data-placement='top' title='修改' style='color:#ffb400;margin-left:15px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span>";
-	var fourTips="<span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:15px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol('"+value+"')></span>";
-	return oneTips+twoTips+threeTips+fourTips;
+	return "<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#1cb295;cursor: pointer;' class='fa fa-laptop' onclick=look('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='下发' style='color:#48c2a9;margin-left:15px;cursor: pointer;' class='fa fa-arrow-circle-down' onclick=give('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='修改' style='color:#ffb400;margin-left:15px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:15px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol('"+value+"')></span>"
 }
 //box状态列的格式化
 function statusFormatter(value,row,index){
@@ -88,7 +86,6 @@ function queryParams(params) {
 		return {
 			pageNumber:params.offset,//第几页
 			pageSize:params.limit,//每页的条数
-			//sortOrder: params.order,//
 			access_token:window.accesstoken,
 			like:'{"device_name":"'+searchBox.searchCollectorId+'"}',//模糊查询的设备名
 			filter:'{"protocal":"A","company_id":"'+companyId+'"}'
@@ -98,7 +95,6 @@ function queryParams(params) {
 	    return {
 	    	pageNumber:0,
 	    	pageSize:params.limit,
-		    //sortOrder: params.order,
 		    access_token:window.accesstoken,
 			like:'{"device_name":"'+searchBox.searchCollectorId+'"}',
 			filter:'{"protocal":"A","company_id":"'+companyId+'"}'
@@ -124,16 +120,17 @@ topColor($(".fa-trash-o"),"#ff787b");
 $("pull-right .page-pre a").html("上一页");
 //下一页
 $("pull-right .page-next a").html("下一页");
+
 function look(value){
-	self.location.href="/dataTag/getDatas/"+value+"-'sensor'";
+	self.location.href="/finfosoft-water/dataTag/getDatas/"+value+"-A";
 }
 
 function modify(value){
-	self.location.href="/dataTag/editSensor/"+value;
+	self.location.href="/finfosoft-water/dataTag/editSensor/"+value;
 }
 
 function addBox(){
-	self.location.href="/dataTag/addSensor/";
+	self.location.href="/finfosoft-water/dataTag/addSensor/";
 }
 
 

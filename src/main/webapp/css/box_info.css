@@ -3,7 +3,6 @@
 	background:#f3f3f4;
 	float:left;
 	position: relative;	
-	min-width:1366px;
 }
 /*账户top区域*/
 .accountBox .accountTop{
@@ -33,12 +32,14 @@
 	width:128px;
 	height:35px;
 	background:#1AB394;
-	margin-left:32.8%;
+	float:right;
 	border-radius: 5px 5px;
 	color:#fff;
 	font-size:14px;
 	cursor: pointer;
 	border:0;
+	margin-top:25px;
+	margin-right:20px;
 }
 .accountBox .accountTop .btn-primary:hover{
 	background:#1ab380;
@@ -47,12 +48,13 @@
 .accountBox .accountTop .search{
 	border:1px solid #c1c1c1;
 	background:#fff;
-	margin-left:15px;
+	float:right;
 	border-radius: 5px 5px;
 	width:360px;
 	padding:0;
 	height:36px;
 	font-size:14px;
+	margin-top:25px;
 }
 .accountBox .accountTop .search input:nth-child(1){
 	color:#1AB394;
@@ -152,6 +154,16 @@
 .boxList #dtuList{
 	width:100%;
 	border:0;
+}
+.pagination-info{
+	color:#8b91a0;
+}
+.pagination > .active > a{
+	color:#ddd;
+	
+}
+.pagination > .active > a:focus{
+	background:#F4F4F4 !important;
 }
 /*分页样式*/
 .boxFooter{

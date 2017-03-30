@@ -3,9 +3,6 @@ var dataId="";
 var onOff=0;
 var pngName="",imgName="";
 var j=0;
-var commonUrl="http://121.42.253.149:18801";
-var commonUrl="http://192.168.1.37";
-var access_token="58db6c02b769970e7872c4d4";
 $.fn.extend({
 	//智能input
 	'smartInput': function (callback){
@@ -99,7 +96,7 @@ $.fn.extend({
 			$.ajax({
 				type:"get",
 				dataType:'json',
-				url:"http://121.42.253.149:18801/v1/controllers",
+				url:globalurl+"/v1/controllers",
 				data:{
 					access_token:access_token,
 					like:collector
@@ -118,7 +115,7 @@ $.fn.extend({
 							
 						}
 					}
-					//console.log(data);
+					console.log(data);
 					
 				}
 			})
@@ -137,11 +134,10 @@ $.fn.extend({
 		$('.collector input').css("border","1px solid #1ab394");
 		optionValue=$(".collector input").val();
 		var data="{'collector_id':'"+optionValue+"'}";
-	//console.log(data)
 		$.ajax({
 			type:"post",
 			dataType:"JSON",
-			url:commonUrl+"/v1/collectorModels",
+			url:globalurl+"/v1/collectorModels",
 			data:{
 				access_token:access_token,
 				data:data
@@ -151,7 +147,6 @@ $.fn.extend({
 				console.log(data);
 				$(".detialData tbody").empty();
 				pngName=(data.collector_model.split("-"))[1].toLowerCase();
-				//console.log(pngName)
 				imgName="dtu_"+pngName+".png";
 				dataInfo=data.collector_port;
 				
@@ -459,7 +454,7 @@ $.fn.extend({
 					$.ajax({
 						type:"post",
 						datatype:"json",
-						url:commonUrl+"/v1/devices?access_token="+access_token,
+						url:globalurl+"/v1/devices?access_token="+access_token,
 						data:{
 							data:data
 						},
@@ -480,11 +475,10 @@ $.fn.extend({
 						+  "','communication':" + communication 
 						+",'is_remind':0,'protocal':'A','status':" + status +"}";		
 				data=device;
-			//	console.log(data)
 				$.ajax({
 					type:"post",
 					datatype:"json",
-					url:commonUrl+"/v1/devices?access_token="+access_token,
+					url:globalurl+"/v1/devices?access_token="+access_token,
 					data:{
 						data:data
 					},
@@ -551,7 +545,7 @@ $.fn.extend({
 		$.ajax({
 			type:"post",
 			datatype:"json",
-			url:commonUrl+"/v1/devices/"+dataId+"/dataConfigs",
+			url:globalurl+"/v1/devices/"+dataId+"/dataConfigs",
 			data:{
 				access_token:access_token,
 				data:data
