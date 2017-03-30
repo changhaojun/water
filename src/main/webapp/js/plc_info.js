@@ -126,6 +126,7 @@ $("pull-right .page-next a").html("下一页");
 function look(value){
 	self.location.href=itemName+"/dataTag/getDatas/"+value+"-'plc'";
 }
+
 function modify(value){
 	self.location.href=itemName+"/dataTag/editPlc/"+value;
 }

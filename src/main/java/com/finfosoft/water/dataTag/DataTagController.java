@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import com.finfosoft.water.common.Constants;
 import com.finfosoft.water.frame.FrameController;
+import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Record;
 
