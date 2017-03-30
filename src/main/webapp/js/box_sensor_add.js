@@ -1,18 +1,8 @@
-//getToken();
+getToken();
 var dataId="";
 var onOff=0;
 var pngName="",imgName="";
 var j=0;
-/*var dataType=$(".datanodeType select").val();
-var rangeLow=$(".collectorLow").val();
-var rangeHigh=$(".collectorHigh ").val();
-var realLow=$(".realRange input:eq(0)").val();
-var realHigh=$(".realRange input:eq(1)").val();
-var dataUnit =$(".dataUnit input").val();
-var dataName=$(".dataName input").val();
-var highBattery=$(".rangeData").eq(0).find("input").val();
-var lowBattery=$(".rangeData").eq(1).find("input").val();
-var portName=$(".portName span").html();*/
 var commonUrl="http://121.42.253.149:18801";
 var commonUrl="http://192.168.1.37";
 var access_token="58db6c02b769970e7872c4d4";
@@ -115,15 +105,21 @@ $.fn.extend({
 					like:collector
 				},
 				success:function(data){
-					console.log(data);
-					$('.collector ul').show();
-					$('.collector ul').empty();
-					var item=0;
-					for(var  i in data.rows){
-						var strLi='<li onclick="serchItem('+i+')">'+data.rows[i].collector_id+'</li>';
-						$('.collector ul').append(strLi);
-						
+					if(data.code==400005){
+						getNewToken();
+						collectorSelect();
+					}else{
+						$('.collector ul').show();
+						$('.collector ul').empty();
+						var item=0;
+						for(var  i in data.rows){
+							var strLi='<li onclick="serchItem('+i+')">'+data.rows[i].collector_id+'</li>';
+							$('.collector ul').append(strLi);
+							
+						}
 					}
+					//console.log(data);
+					
 				}
 			})
 		    
@@ -393,7 +389,6 @@ $.fn.extend({
 		editCollector(j);
 		
 	})
-	var data_id="";
 	function saveDevice(){
 		var deviceName = $(".deviceName").val();
 		var deviceCode = $(".deviceCode").val();
@@ -470,7 +465,10 @@ $.fn.extend({
 						},
 						success:function(data){
 							console.log(data)
-							data._id=data._id;
+							dataId=data._id;
+							if (data.code===200) {
+								layer.msg('设备保存成功！', {icon: 1});
+							}
 							//deviceId=device_id;
 							//console.log(deviceId);
 							save();
@@ -493,6 +491,9 @@ $.fn.extend({
 					success:function(data){
 						console.log(data)
 						dataId=data._id;
+						if (data.code===200) {
+							layer.msg('设备保存成功！', {icon: 1});
+						}
 						//data._id=device_id;
 						//console.log(dataId);
 						save();
@@ -546,8 +547,7 @@ $.fn.extend({
 			
 				data=JSON.stringify(dataConfig);
 		}
-		console.log(dataId)
-		//http://192.168.1.37/v1/devices/"+data._id+"/dataConfigs
+		//console.log(dataId)
 		$.ajax({
 			type:"post",
 			datatype:"json",
@@ -558,6 +558,9 @@ $.fn.extend({
 			},
 			success:function(data){
 				console.log(data)
+				if (data.code===200) {
+					layer.msg('保存成功！', {icon: 1});
+				}
 			}
 		});
 	}

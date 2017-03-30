@@ -1,10 +1,9 @@
-//getToken();
+getToken();
 
 var onOff=0;
 var pngName="",imgName="";
 var j=0;
 var dataId=[];
-
 var access_token="58db1858b769970a9092c5b6";
 /*var commonUrl="http://121.42.253.149:18801";*/
 var commonUrl="http://192.168.1.37";
@@ -100,18 +99,23 @@ $.fn.extend({
 			url:commonUrl+"/v1/devices/58da4b4f30e731311475e1f7?access_token="+access_token,
 			success:function(data){
 				//console.log(data)
-				//console.log(data.communication.collector_id)
-				deviceId=data._id;
-				//console.log(deviceId);
-				$(".deviceCode").val(data.device_code);
-				$(".deviceName").val(data.device_name);
-				$(".contactPhone").val(data.mobile);
-				$(".warningSpace").val(data.remind_interval);
-				$(".delayTime").val(data.remind_delay);
-				$(".collectInterval").val(data.communication.collect_interval);
-				$(".collector input").val(data.communication.collector_id);
-				//console.log(collectorArr);
-				modelCollector()
+				if(data.code==400005){
+						getNewToken();
+						getEquipment();
+					}else{
+						deviceId=data._id;
+						//console.log(deviceId);
+						$(".deviceCode").val(data.device_code);
+						$(".deviceName").val(data.device_name);
+						$(".contactPhone").val(data.mobile);
+						$(".warningSpace").val(data.remind_interval);
+						$(".delayTime").val(data.remind_delay);
+						$(".collectInterval").val(data.communication.collect_interval);
+						$(".collector input").val(data.communication.collector_id);
+						//console.log(collectorArr);
+						modelCollector()
+					}
+				
 			}
 		});
 		
@@ -188,10 +192,6 @@ $.fn.extend({
 			
 		});
 	}	
-	$(".collector select").change(function(){
-		modelCollector();
-	})
-	
 	//点击问号的事件
 	function devicePNG(){
 		if(pngName==""){
@@ -468,7 +468,9 @@ $.fn.extend({
 						},
 						success:function(data){
 							console.log(data)
-							data._id=data._id;
+							if (data.code===200) {
+								layer.msg('保存成功！', {icon: 1});
+							}
 							save();
 						}
 					})
@@ -487,6 +489,9 @@ $.fn.extend({
 						data:data
 					},
 					success:function(data){
+						if (data.code===200) {
+							layer.msg('保存成功！', {icon: 1});
+						}
 						save();
 					}
 				})
@@ -550,6 +555,9 @@ $.fn.extend({
 			},
 			success:function(data){
 				console.log(data)
+				if (data.code===200) {
+					layer.msg('保存成功！', {icon: 1});
+				}
 			}
 		});
 	}
