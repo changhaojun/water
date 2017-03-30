@@ -88,7 +88,7 @@ $.fn.extend({
 	//数据配置处鼠标滑上的信息提示
 	$("[data-toggle='tooltip']").tooltip();
 	//选择采集器ID触发的事件
-	
+	var editId=$("#deviceId").val();
 	var collector_id="",deviceId="";
 	var dataTypeStr,operTypeStr;
 	getEquipment();
@@ -96,7 +96,7 @@ $.fn.extend({
 		$.ajax({
 			type:"get",
 			datatype:"json",
-			url:commonUrl+"/v1/devices/58da4b4f30e731311475e1f7?access_token="+access_token,
+			url:commonUrl+"/v1/devices/"+editId+"?access_token="+access_token,
 			success:function(data){
 				//console.log(data)
 				if(data.code==400005){
