@@ -45,7 +45,7 @@ $("#reservationtime").val(initstartTime+" - "+initendTime);
 function toolTip(){
 	$('[data-toggle="tooltip"]').tooltip();
 }
-var  globalurl="http://192.168.1.37";
+//var  globalurl="http://192.168.1.37";
 //当前dataId的图表；
 function currentChart(dataId){	
 	var data="{data_id:'"+dataId+"',start_time:'"+startTime+"',end_time:'"+endTime+"'}";
@@ -135,11 +135,11 @@ function initChart(data,chartType){
 			chartDivArr.push(data.data_id);
 				if((chartType=="line"&&data.data_values.length==0&&data.max_values.length==0&&data.min_values.length==0)||(chartType=="bar"&&data.data_values.length==0)){			
 					$(".contrastChart").append("<div class=' "+divId+"'></div>")
-	               $(".contrastChart").append("<div id='"+divId+"' class='row dataChartBox' style='width:890px;height: 300px;overflow: hidden;margin:20px;'><div class='nodata'>暂无数据</div></div>");
+	               	$(".contrastChart").append("<div id='"+divId+"' class='row dataChartBox' style='width:800px;height: 300px;overflow: hidden;margin:20px;'><div class='nodata'>暂无数据</div></div>");
 				}else{
 					console.log(123)
 					$(".contrastChart").append("<div class=' "+divId+"'>"+chartArr[i]+"</div>")
-					$(".contrastChart").append("<div id='"+divId+"' class='row dataChartBox' style='width:890px;height: 300px;overflow: hidden;margin:20px;'></div>");
+					$(".contrastChart").append("<div id='"+divId+"' class='row dataChartBox' style='width:800px;height: 300px;overflow: hidden;margin:20px;'></div>");
 					
 				}			
 			}else{

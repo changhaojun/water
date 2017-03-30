@@ -20,11 +20,12 @@
 	</head>
 	<body>
 		<input type="text" id="dataId" hidden="hidden" value=${dataId} />
-       
+       	<input type="text" id="deviceId" hidden="hidden" value=${deviceId} />
 		
 		<div class="timeData">
 			<div class="dataTop">
-			
+				<span>${deviceName}</span>
+				(<span>${dataName}</span>)
 				<div class="dataTime">
 					 <input type="text" style="width: 400px" name="reservation" id="reservationtime" class="form-control"class="span4"/>
 				</div>
@@ -42,7 +43,7 @@
 			<div class="chartContent">
 				<div class="contrastChart">
 					
-					<div id="chart2466" class="row" style="width:890px;height: 300px;margin:20px; overflow: hidden;"></div>
+					<div id="chart2466" class="row" style="width:800px;height: 300px;margin:20px; overflow: hidden;"></div>
 					
 				</div>
 			</div>

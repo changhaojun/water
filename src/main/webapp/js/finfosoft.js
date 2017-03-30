@@ -105,6 +105,21 @@ Finfosoft.Ring.prototype = {
 		this.drawLine(iDeg,this.mainColor);
 	},
 	
+	//获取到document的距离
+	getPosToDoc: function (obj,dir){
+		var dis = {
+			x: 0,
+			y: 0
+		};
+		while (obj) {
+			dis.x += obj.offsetLeft;
+			dis.y += obj.offsetTop;
+			obj = obj.offsetParent;
+		}
+		console.log(dis.x,dis.y);
+		return dir==='left' ? dis.x : dis.y;
+	},
+	
 	//鼠标交互逻辑
 	mouseCtrl: function (x,y){
 		if (y<=this.height/2) {
@@ -131,8 +146,8 @@ Finfosoft.Ring.prototype = {
 	//鼠标按下时进度条响应
 	mousedown: function (ev){
 		var This = this;
-		var x = ev.clientX - this.canvas.offsetLeft;
-		var y = ev.clientY - this.canvas.offsetTop;
+		var x = ev.clientX - this.getPosToDoc(this.canvas,'left');
+		var y = ev.clientY - this.getPosToDoc(this.canvas,'top');
 		this.mouseCtrl(x,y);
 		document.onmousemove = function (ev){
 			var ev = ev || window.event;
@@ -145,8 +160,8 @@ Finfosoft.Ring.prototype = {
 	
 	//鼠标移动时进度条响应
 	mousemove: function (ev){
-		var x = ev.clientX - this.canvas.offsetLeft;
-		var y = ev.clientY - this.canvas.offsetTop;
+		var x = ev.clientX - this.getPosToDoc(this.canvas,'left');
+		var y = ev.clientY - this.getPosToDoc(this.canvas,'top');
 		this.mouseCtrl(x,y);
 	},
 	

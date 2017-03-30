@@ -1,6 +1,4 @@
-
 .timeData{
-	overflow-x: hidden;
 	height: 100%;
 }
 .timeData .dataTop{
@@ -114,14 +112,13 @@ float:right;
 	border-bottom:1px solid #ccc;
 }
 .contrastChart{
-	width:950px;
 	height:316px;
 	/*background:#de3;*/
 	margin:auto;
 	
 }
 #line{
-	width:860px;
+	width:800px;
 	height:316px;
 	margin:auto;
 	color:#1ab394;

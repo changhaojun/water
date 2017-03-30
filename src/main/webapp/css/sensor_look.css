@@ -8,6 +8,7 @@
 .look .lookTop{
 	height:65px;
 	margin-right:20px;	
+	
 
 }
 .look .lookTop>span:nth-child(1)
@@ -22,11 +23,7 @@
 	margin-left:20px;
 	color:#5d5d5d;
 }
-.look .lookTop>span:nth-child(2){
-	margin-left:5px;
-	margin-right:5px;
-}
-.look .lookTop>span:nth-child(3){
+.look .lookTop .Etype{
 	color:#1ab394;		
 }
 .look .right{
@@ -57,6 +54,7 @@
 	border-left:8px solid #1ab394;
 	margin-left:20px;
 	float:left;
+	margin-top:20px;
 }
 .lookContent .normal{
 	color:#1ab394;
@@ -97,7 +95,6 @@
 	width:100%;
 	height:131px;
 	text-align:center;
-
 }
 .lookList .listContent .contentTop #give{
 	width:60px;
@@ -107,7 +104,8 @@
 	background: #1ab394;
 	border-radius: 10px 10px;
 	position: relative;
-	top:100px;
+	top:-10px;
+	left:5px
 }
 .lookList .listContent .contentBottom{
 	color:#afafaf;
@@ -129,7 +127,7 @@
 	color:#c4c4c4;
 }
 .lookList .listContent .on-off .Iopen{
-	margin-left:15px;
+	
 	font-size:18px;
 	
 }
@@ -167,7 +165,13 @@
 	position: relative;
 	cursor: pointer;
 	width:100px;
+	height:104px;
 	margin-left:84px;
+	margin-top:10px;
+}
+.board-ring .canvas{
+	width:100px;
+	height:100px;
 }
 .board-ring>input{
 	display: block;

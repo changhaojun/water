@@ -1,7 +1,5 @@
 var boxId=$("#boxId").val();	//获取box的id
 var type=$("#type").val();      //获取box类型
-var globalurl="http://rap.taobao.org/mockjsdata/15031/v1/devices/{_id}/datas";
-//var globalurl= "http://rap.taobao.org/mockjsdata/15031/v1/devices/%7B_id%7D/datas"
 console.info(boxId)
 console.info(type)
 $(function(){
@@ -25,7 +23,7 @@ if(type=="A"){
 function listBox(){
 	$.ajax({
 		type: "get",
-		url:  globalurl,
+		url: globalurl+"/v1/devices/"+'58db6d70b769970e78fb9d2b'+"/datas",
 		dataType: "JSON",
 		async: false,
 		crossDomain: true == !(document.all),
@@ -37,19 +35,12 @@ function listBox(){
 			if(data.code==400005||data.code==500){
 		    		window.getNewToken();
 		    }else{
+		    	console.log(data)
 		    	for(var i=0;i<data.datas.length;i++){
+		    		
 		    		var str="";
 		    		//以开关展示
 		    		if(data.datas[i].oper_type==2&&data.datas[i].data_type==3){
-		    			function onoff(){
-		    				if(data.datas[i].status){
-		    					Iopen();
-		    					return "打开";	    					
-			    			}else{
-			    				Iclose();
-			    				return "关闭";
-			    			}
-		    			}
 		    			str='<div class="lookList  normal">'+
 								'<div class="listTop">'+
 									'<span>'+data.datas[i].data_name+'</span>'+
@@ -59,12 +50,12 @@ function listBox(){
 								'<div class="listContent">'+
 									'<div class="contentTop">'+
 										'<div class="on-off">'+
-											'<button type="button" class="Iopen Iactive" onclick="Iopen()">'+onoff+'</button>'+
+											'<button type="button" class="Iopen Iopen'+i+' Iactive" onclick="Iopen('+i+','+data.datas[i].data_id+')">'+data.datas[i].onText+'</button>'+
 											'<div class="off">'+
-												'<div class="circle">'+				
+												'<div class="circle circle'+i+'">'+				
 												'</div>'+
 											'</div>'+
-											'<button type="button" class="Iclose" onclick="Iclose()">'+onoff+'</button>'+
+											'<button type="button" class="Iclose Iclose'+i+'" onclick="Iclose('+i+','+data.datas[i].data_id+')">'+data.datas[i].offText+'</button>'+
 										'</div>'+							
 									'</div>'+
 									'<div class="contentBottom">'+
@@ -73,8 +64,16 @@ function listBox(){
 								'</div>'+			
 							'</div>'
 						$(".sensorContent").append(str);
+						if(data.datas[i].data_value==""||data.datas[i].data_value==0){
+			    			nooff(i);
+			    		}else{
+			    			onoff(i);
+			    		}
 				//仪表盘展示
-		    		}else if((type=="A"&&data.datas[i].oper_type==2&&data.datas[i].dataType==0)||(type=="A"&&data.datas[i].oper_type==2&&data.datas[i].data_type==1)||(type=="P"&&data.datas[i].oper_type==2)){
+		    		}else if((type=="A"&&data.datas[i].oper_type==2&&data.datas[i].data_type==0)||(type=="A"&&data.datas[i].oper_type==2&&data.datas[i].data_type==1)||(type=="P"&&data.datas[i].oper_type==2)){
+		    			if (data.datas[i].data_value==='') {
+		    				data.datas[i].data_value = 0;
+		    			}
 		    			str='<div class="lookList  normal">'+
 								'<div class="listTop">'+
 									'<span>'+data.datas[i].data_name+'</span>'+
@@ -84,11 +83,11 @@ function listBox(){
 								'<div class="listContent">'+
 									'<div class="contentTop">'+
 										'<div class="water">'+
-											'<div class="board-ring">'+
+											'<div class="board-ring board-ring'+i+'">'+
 												'<canvas></canvas>'+
-												'<input type="text" value="'+data.datas[i].data_value+'"/>'+
+												'<input type="text" value="'+data.datas[i].data_value+'" class="dial"/>'+
 											'</div>'+
-											'<button type="button"id="give" onclick="give(&apos;'+data.datas[i].data_config_id+'&apos;)">下发</button>'+
+											'<button type="button"id="give" onclick="give(&apos;'+data.datas[i].data_id+'&apos;)">下发</button>'+
 										'</div>'+						
 									'</div>'+
 									'<div class="contentBottom">'+
@@ -98,7 +97,7 @@ function listBox(){
 							'</div>'
 						$(".sensorContent").append(str);
 						new Finfosoft.Ring({
-							el: '.board-ring',
+							el: '.board-ring'+i,
 							startDeg: 150,
 							endDeg: 30,
 							lineWidth: 20,
@@ -127,21 +126,36 @@ function listBox(){
 						$(".sensorContent").append(str);
 		    		}
 		    	}
+		    	
 		    }
+		    toolTip();
 		}
 	})
 }
+function onoff(i){
+	$(".Iopen"+i+"").addClass("Iactive");
+	$(".Iclose"+i+"").removeClass("Iactive");
+	$(".circle"+i+"").animate({"left":"0px"});
+
+}
+function nooff(i){
+	$(".Iclose"+i+"").addClass("Iactive");
+	$(".Iopen"+i+"").removeClass("Iactive");
+	$(".circle"+i+"").animate({"left":"25px"});
+}
 //打开开关
-function Iopen(){
-	$(".Iopen").addClass("Iactive");
-	$(".Iclose").removeClass("Iactive");
-	$(".circle").animate({"left":"0px"});
+function Iopen(i,id){
+	$(".Iopen"+i+"").addClass("Iactive");
+	$(".Iclose"+i+"").removeClass("Iactive");
+	$(".circle"+i+"").animate({"left":"0px"});
+	clickBtn(id,1)	
 }
 //关闭开关
-function Iclose(){
-	$(".Iclose").addClass("Iactive");
-	$(".Iopen").removeClass("Iactive");
-	$(".circle").animate({"left":"25px"});
+function Iclose(i,id){
+	$(".Iclose"+i+"").addClass("Iactive");
+	$(".Iopen"+i+"").removeClass("Iactive");
+	$(".circle"+i+"").animate({"left":"25px"});
+	clickBtn(id,0)
 }
 //打开数据展示详情页
 function show(value){
@@ -155,7 +169,91 @@ function show(value){
 	  content: '/finfosoft-water/dataTag/dataChart/'+value //iframe的url
 	}); 
 }
-			
+/**
+ * 本方法用于模拟量的下发
+ * 在模拟量的下发按钮调用
+ */
+function give(id){
+	onoff=$(".dial").val();
+	console.log(onoff)
+	var guid=guidGenerator();	
+	layer.confirm("<font size='4'>确认下发？</font>",function(index){
+		layer.close(index);
+		data="{'data_id':"+id+",'data_value':"+onoff+",'guid':'"+guid+"'}";
+		data={'data':data};
+		$.ajax({
+			url:globalurl+"/v1/homes",
+			data:data,
+			dataType: 'JSON',
+			type: 'POST',
+			success: function(data) {
+				console.log(data)
+				if(data.result==1){
+					layer.msg('已下发', {
+						icon : 1
+					});
+//					window.top.MQTTconnect(guid);
+				}else{
+					layer.msg('下发失败', {
+						icon : 2
+					});
+				}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				layer.msg('下发失败', {
+					icon : 2
+				});
+		    }
+		});
+	});
+}
+//io调控触发
+
+function clickBtn(id,dataValue){
+	dataId=id;
+	onoff=dataValue;	
+	var guid=guidGenerator();
+	console.log("guid:"+guid);
+	
+	layer.confirm("<font size='4'>确认下发？</font>",function(index){
+    	data="{'data_id':"+dataId+",'data_value':"+onoff+",'guid':'"+guid+"'}";    	 
+		data={'data':data};	
+		$.ajax({
+			url:globalurl+"/v1/homes",
+			data:data,
+			dataType: 'JSON',
+			type: 'POST',
+			success: function(data) {
+				console.log(data)
+//				alert(data.result);
+				if(data.result==1){
+					layer.msg('已下发', {
+						icon : 1
+					});
+//					window.top.MQTTconnect(guid);
+
+				}else{
+					layer.msg('下发失败', {
+						icon : 2
+					});
+				}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				layer.msg('下发失败', {
+					icon : 2
+				});
+		    }
+
+		});
+	});
+}
+//控制量guid
+function guidGenerator() {
+	var S4 = function() {
+	return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+	};
+	return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}			
 
 
 
