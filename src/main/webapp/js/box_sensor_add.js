@@ -3,6 +3,7 @@ var dataId="";
 var onOff=0;
 var pngName="",imgName="";
 var j=0;
+var flag=0;
 $.fn.extend({
 	//智能input
 	'smartInput': function (callback){
@@ -102,7 +103,7 @@ $.fn.extend({
 					conditions:value
 				},
 				success:function(data){
-					console.log(data);
+//					console.log(data);
 					if(data.code==400005){
 						getNewToken();
 						collectorSelect();
@@ -119,7 +120,7 @@ $.fn.extend({
 					
 				},
 				error:function(data){
-					console.log(data)
+//					console.log(data)
 					
 				}
 			});
@@ -150,7 +151,7 @@ $.fn.extend({
 			},
 			success:function(data) {
 				
-				console.log(data);
+//				console.log(data);
 				$(".detialData tbody").empty();
 				pngName=(data.collector_model.split("-"))[1].toLowerCase();
 				imgName="dtu_"+pngName+".png";
@@ -168,6 +169,7 @@ $.fn.extend({
 						case 1:operTypeStr="读取"; break;
 						case 2:operTypeStr="写入"; break;
 					}
+					
 					/*editCollector(i)*/
 					var dataTr='<tr><td><input type="checkbox" disabled="disabled"/></td><td>'+dataInfo[i].port_name+'</td>'
 								+'<td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>4-20</td><td>'
@@ -234,6 +236,15 @@ $.fn.extend({
 		//读写状态
 		
 		var aStr="",dStr="";
+		if($("#dataTable").find(" tr").eq(i).find("input").attr("checked")){
+			//console.log(677);
+			$(".portName p i").css("background-position-x",-48+"px");
+		}else{
+			$(".portName p i").css("background-position-x",-95+"px");
+			//console.log(567)
+			$("#dataTable").find(" tr").eq(i).find("input").removeAttr("checked")
+		}
+		
 		rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
 		//console.log(rangeLow)
 		rangeHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[1];
@@ -258,7 +269,7 @@ $.fn.extend({
 			dStr='<div class="dataRow collectorRange"><label>低电平</label><div class="rangeData">'
 			+'<input type="text" class="lowBattery" value="'+lowBattery+'" style="width:350px;" /></div></div><div class="dataRow realRange">'
 			+'<label>高电平</label><div class="rangeData "><input type="text" class="highBattery" style="width:350px;" value="'+lowBattery+'" /></div>'
-			+'</div><div class="dataRow dataName"><label>数据名称</label><input type="text"/></div>';
+			+'</div><div class="dataRow dataName"><label>数据名称</label><input type="text" value="'+dataName+'"/></div>';
 			$(".changeData").append(dStr);
 		}
 		j=i
@@ -269,13 +280,14 @@ $.fn.extend({
 	}
 	
 	//点击弹窗是否启用的状态
+
 	$(".portName p i").click(function(){
-		if(onOff==0){
+		if(flag==0){
 			$(this).css("background-position-x",-95+"px");
-			onOff=-1;
+			flag=-1;
 		}else{
 			$(this).css("background-position-x",-48+"px");
-			onOff=0;
+			flag=0;
 		}
 	})
 	
@@ -301,7 +313,6 @@ $.fn.extend({
 				time:1500
 			});
 		}else{
-			var flag=0;
 			var rangeReg=/^[0-9]*$/;
 			var openClose=$(".collectorLow").val();
 			//console.log(openClose);
@@ -313,20 +324,20 @@ $.fn.extend({
 					icon : 2,
 					time:1500
 				});
-				flag=-1;
+				
 			}else if ($(".dataName input").val() == "") {
 				layer.msg('数据名称不能为空', {
 					icon : 2,
 					time:1500
 				});
-				flag=-1;
+				
 			}else if($(".portName span").html().substr(0,1)=="A"){
 				if(rangeReg.test(openClose)==false || rangeReg.test(openClose1)==false ||rangeReg.test(openClose2)==false ||rangeReg.test(openClose3)==false){
 					layer.msg('量程请输入数字', {
 						icon : 2,
 						time:1500
 					});
-					flag=-1;
+					
 				}else{
 					editContent(j);
 				}
@@ -379,8 +390,18 @@ $.fn.extend({
 			dataUnit="——";
 			dataName:$(".dataName input").val();
 		};
-		var dataTr='<td><input type="checkbox" checked="checked"/></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
-					+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'										
+		if(flag==0){
+			//console.log(11122)
+			//$(".detialData tbody").find("tr").eq(j).find("input").attr("checked","checked");
+			var dataTr='<td><input type="checkbox" checked="checked" /></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
+			+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'	
+		}else{
+			//console.log(634)
+			//$(".detialData tbody").find("tr").eq(j).find("input").attr("disabled","disabled");
+			var dataTr='<td><input type="checkbox" disabled="disabled"/></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
+					+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'	
+		}
+											
 					//console.log(dataTr)
 		$(".detialData tbody").find("tr").eq(j).html(dataTr);	
 	}
@@ -389,7 +410,7 @@ $.fn.extend({
 	//弹窗保存
 	$(".saveEquipment").click(function(){
 		editCollector(j);
-		console.log(collectorArr)
+		//console.log(collectorArr)
 		
 	})
 	function saveDevice(){
@@ -403,12 +424,14 @@ $.fn.extend({
 		var communication = "{'collect_interval':" + collectInterval+ ",'collector_id': '"+ optionValue+ "'}";
 		var controlBtn=$(".controlBtn span");
 		var status="";
-		var device=""
+		var isRemind="";
+		var device="";
+//		console.log(info.length)
 		for(var i=0;i<controlBtn.length;i++){
 			if(controlBtn.eq(i).hasClass("activeBtn")){
 				//console.log(111)
-				status +=controlBtn.eq(i).attr("value");
-				//console.log(status)
+				isRemind = controlBtn.eq(i).attr("value");
+				console.log(isRemind)
 			}
 		}
 		if (deviceCode == "请输入设备编号") {
@@ -427,7 +450,7 @@ $.fn.extend({
 				time:1500
 			});
 		}else {
-			if(status==1){
+			if(isRemind==1){
 				var phoneReg=/^1[34578]\d{9}$/;
 				if(mobile =="此号码用于接收掉线提醒，如有多个号码请用逗号分隔"){
 					layer.msg('联系电话不能为空', {
@@ -453,18 +476,18 @@ $.fn.extend({
 						time:1500
 					});
 				}else{
-					console.log(onOff)
+//					console.log(onOff)
 					device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
-						+  "','mobile':'" + mobile + "','status':" + status + ",'communication':" + communication 
+						+  "','mobile':'" + mobile +"','status': 1 ,'communication':" + communication 
 						+",'is_remind':1,'remind_interval':"+warningSpace+",'protocal':'A','remind_delay':"+delayTime+"}";
-					data=device;
-					console.log(data)
+					
+//					console.log(data)
 					$.ajax({
 						type:"post",
 						datatype:"json",
 						url:globalurl+"/v1/devices?access_token="+accesstoken,
 						data:{
-							data:data
+							data:device
 						},
 						success:function(data){
 							console.log(data)
@@ -497,19 +520,20 @@ $.fn.extend({
 					})
 				}
 			}else{
+				console.log(23243)
 				device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
-						+  "','communication':" + communication 
-						+",'is_remind':0,'protocal':'A','status':" + status +"}";		
-				data=device;
+						+  "','communication':" + communication +",'status': 1 "
+						+",'is_remind':0,'protocal':'A'}";		
+				console.log(device);
 				$.ajax({
 					type:"post",
 					datatype:"json",
 					url:globalurl+"/v1/devices?access_token="+accesstoken,
 					data:{
-						data:data
+						data:device
 					},
 					success:function(data){
-						console.log(data)
+						console.log(data);
 						dataId=data._id;
 						for(var j=0;j<collectorArr.length;j++){
 							if($(".list input").val()!=collectorArr[j]){
@@ -521,7 +545,11 @@ $.fn.extend({
 								if (data.code===200) {
 									layer.msg('设备保存成功！', {
 										icon: 1,
-										time:1000
+										time:1000,
+										end:function(){
+											self.location.href='/finfosoft-water/dataTag/box/'
+										}
+										
 									});
 								}
 								save();
@@ -529,7 +557,10 @@ $.fn.extend({
 						}
 						//data._id=device_id;
 						//console.log(dataId);
-						save();
+						
+					},
+					error:function(data){
+						console.log(data)
 					}
 				})
 			}
@@ -538,18 +569,20 @@ $.fn.extend({
 	function save(){
 		var dataConfig=[];
 		//console.log(info.length);
-		console.log(dataId)
+//		console.log(dataId)
 		var data={};
-		console.log(info.length)
-		var controlBtn=$(".controlBtn span");
-		for(var i=0;i<controlBtn.length;i++){
-			if(controlBtn.eq(i).hasClass("activeBtn")){
-				//console.log(111)
-				status +=controlBtn.eq(i).attr("value");
-				//console.log(status)
-			}
-		}
+		var status = "";
+//		console.log(info.length)
+//		var controlBtn=$(".controlBtn span");
+//		for(var i=0;i<controlBtn.length;i++){
+//			if(controlBtn.eq(i).hasClass("activeBtn")){
+//				//console.log(111)
+//				status += controlBtn.eq(i).attr("value");
+//				//console.log(status)
+//			}
+//		}
 		for (var i = 0; i < info.length; i++) {
+				status=$("#dataTable").find(" tr").eq(i).find("input").attr('checked')==="checked" ? 1 : 0;
 				rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
 				//console.log(rangeLow)
 				rangeHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[1];
@@ -560,6 +593,19 @@ $.fn.extend({
 				dataUnit=$("#dataTable").find(" tr").eq(i).find("td").eq(8).text();
 				//console.log(dataUnit)
 				dataName=$("#dataTable").find(" tr").eq(i).find("td").eq(9).text();
+				
+//				if($("#dataTable").find(" tr").eq(i).find("input").attr("checked")==='checked'){
+//					console.log(i);
+//					status = 1;
+//					/*dataConfig[i].status=1;*/
+//					//status +=$("#dataTable").find(" tr").eq(i).find("input").attr("checked","1");
+//					//console.log($("#dataTable").find(" tr").eq(i).find("input").attr("checked","1"))
+//					//console.log(status)
+//				}else{
+//					//status +=$("#dataTable").find(" tr").eq(i).find("input").attr("checked","0");
+//					status = 0;
+//				}
+				
 				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
 				'"oper_type":'+dataInfo[i].oper_type+','+
 				'"port_name":"'+dataInfo[i].port_name+'",'+
@@ -572,7 +618,7 @@ $.fn.extend({
 				'"status":'+status+','+
 				'"data_unit":"'+dataUnit+'",'+
 				'"data_name":"'+dataName+'"}';
-				console.log(dataConfigJson)
+//				console.log(dataConfigJson)
 				dataConfigJson=JSON.parse(dataConfigJson);
 				//console.log(dataConfigJson);
 				dataConfig.push(dataConfigJson);
@@ -609,7 +655,7 @@ $.fn.extend({
 
 	//鼠标点击
 	$(".collector input").focus(function(){
-		onOff=1;
+		onOff=0;
 		//console.log(111)
 		var value=$(this).val()
 		var collector='{"collector_id":"'+value+'"}';
@@ -640,8 +686,8 @@ $.fn.extend({
 			
 	})
 	$(document).click(function(){
-		onOff=0
-		if(onOff==0){
+		onOff=-1
+		if(onOff==-1){
 			$(".collector ul").hide();
 		}
 	})

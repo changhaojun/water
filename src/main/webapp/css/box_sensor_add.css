@@ -39,10 +39,7 @@ body{
 }
 /*================主要内容部分=================*/
 .dataInfo{
-	/*width: calc(100% - 20px);
-	height: calc(100% - 38px);*/
 	width: 100%;
-	height: calc(100% - 43px )
 	overflow: hidden;
 	background: #fff;
 }
