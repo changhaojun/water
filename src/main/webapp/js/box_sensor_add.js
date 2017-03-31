@@ -125,6 +125,9 @@ $.fn.extend({
 			});
 		    
 		});
+		/*$('.collector input').blur(function(){
+			$(".list ul").delay(3000).hide();
+		})*/
 	};
 	//根据采集器ID获取采集器型号的信息
 	
@@ -598,5 +601,44 @@ $.fn.extend({
 	//点击保存新增
 	$(".saveSettings button").click(function(){
 		saveDevice();
-		
+	});
+	
+
+	//鼠标点击
+	$(".collector input").focus(function(){
+		onOff=1;
+		//console.log(111)
+		var value=$(this).val()
+		var collector='{"collector_id":"'+value+'"}';
+		if(value!=""){
+			$.ajax({
+				type:"get",
+				dataType:'json',
+				url:globalurl+"/v1/collectors",
+				data:{
+					access_token:accesstoken,
+					like:collector
+				},
+				success:function(data){
+					
+					$('.collector ul').show();
+					$('.collector ul').empty();
+					var item=0;
+					for(var  i in data.rows){
+						var strLi='<li onclick="serchItem('+i+')">'+data.rows[i].collector_id+'</li>';
+						$('.collector ul').append(strLi);
+					
+					}
+					//console.log(data);
+					
+				}
+			})
+		}
+			
+	})
+	$(document).click(function(){
+		onOff=0
+		if(onOff==0){
+			$(".collector ul").hide();
+		}
 	})
