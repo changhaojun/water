@@ -32,6 +32,12 @@ public class LoginController extends Controller{
 		render("login.html");
 	}
 	
+	@Clear()
+	public void findback(){
+		String accessToken=getPara(0);
+		setAttr("accessToken", accessToken);
+		render("findback.html");
+	}
 	/**
 	 * 登录操作
 	 */
@@ -73,4 +79,6 @@ public class LoginController extends Controller{
 		}
 		render("login.html");
 	}
+	
+	
 }

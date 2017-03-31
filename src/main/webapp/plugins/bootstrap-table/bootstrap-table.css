@@ -353,3 +353,15 @@ div.fixed-table-scroll-outer {
     height: 150px;
     overflow: hidden;
 }
+.fixed-table-body  #dtuList thead tr th:nth-child(1) {
+    box-sizing: border-box;
+    width:35%
+}
+.fixed-table-body #dtuList thead  tr th:nth-child(2){
+    box-sizing: border-box;
+    width:55%
+}
+.fixed-table-body #dtuList thead  tr th:nth-child(3){
+    box-sizing: border-box;
+    width:192px;
+}

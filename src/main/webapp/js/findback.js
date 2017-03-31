@@ -81,12 +81,12 @@ $.fn.extend({
 				$.ajax({
 					type:"put",
 					dataType:"json",
-					url:"http://192.168.1.107:80/v1/users",
+					url:"http://192.168.1.108:80/v1/users",
 					async:true,
 					data:{
-						'username': '543943341@qq.com',
-						'new_password': $('#new').val(),
-						'confirm_password': $('#again').val()
+						access_token: $("#accessToken").val(),
+						new_password: $('#new').val(),
+						confirm_password: $('#again').val()
 					},
 					success: function (data){
 						console.log(data);

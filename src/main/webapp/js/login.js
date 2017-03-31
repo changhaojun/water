@@ -104,7 +104,11 @@ $.fn.extend({
 			$('.pop-mask').addClass('hidden');
 		});
 		$('.pop-submit').click(function (){
-			if ($('.pop-username').attr('ismail')) {
+			if ($('.pop-username').val()==='') {
+				$('.pop-username').focus();
+				return;
+			}
+			if ($('.pop-username').attr('isright')) {
 				$('.pop').filter('.step1').addClass('hidden');
 				$('.pop').filter('.step2').removeClass('hidden').stayCenter();
 				$('.pop-message').html($('.pop-username').val());
@@ -112,9 +116,10 @@ $.fn.extend({
 					type:"get",
 					dataType:"json",
 					url:globalurl+"/v1/mails",
+//					url:"http://192.168.1.108/v1/mails",
 					async:true,
 					data:{
-						'email': msg
+						email: $('.pop-username').val()
 					},
 					success: function (data){
 						console.log(data);
@@ -270,12 +275,18 @@ $.fn.extend({
 	}
 });
 
-$('.wrap').stayCenter();
-$('.imgBox').goRotate('Y',200,true);
-$('.textBox').goRotate('Y',0,true);
-$('.popup').popUp();
-$('input').filter('[name=password]').passwordInput();
-$('input').smartInput();
-$('.loginBtn').login();
-$('.username input').testEmal();
-$('.pop-username').testEmal();
+$.extend({
+	init: function() {
+		$('.wrap').stayCenter();
+		$('.imgBox').goRotate('Y',200,true);
+		$('.textBox').goRotate('Y',0,true);
+		$('.popup').popUp();
+		$('input').filter('[name=password]').passwordInput();
+		$('input').smartInput();
+		$('.loginBtn').login();
+		$('.username input').testEmal();
+		$('.pop-username').testEmal();
+	}
+});
+
+$.init();

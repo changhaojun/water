@@ -22,7 +22,6 @@ if(type=="A"){
 var time=setInterval(listBox,10000)
 //获取数据列表
 function listBox(){
-	console.log(123);
 	$.ajax({
 		type: "get",
 		url: globalurl+"/v1/devices/"+boxId+"/datas",
@@ -148,26 +147,22 @@ function listBox(){
 function onoff(i){
 	$(".Iopen"+i+"").addClass("Iactive");
 	$(".Iclose"+i+"").removeClass("Iactive");
-	$(".circle"+i+"").animate({"left":"0px"});
+	$(".circle"+i+"").css({"left":"0px"});
 
 }
 function nooff(i){
 	$(".Iclose"+i+"").addClass("Iactive");
 	$(".Iopen"+i+"").removeClass("Iactive");
-	$(".circle"+i+"").animate({"left":"25px"});
+	$(".circle"+i+"").css({"left":"25px"});
 }
 //打开开关
 function Iopen(i,id){
-	$(".Iopen"+i+"").addClass("Iactive");
-	$(".Iclose"+i+"").removeClass("Iactive");
-	$(".circle"+i+"").animate({"left":"0px"});
+	
 	clickBtn(id,1)	
 }
 //关闭开关
 function Iclose(i,id){
-	$(".Iclose"+i+"").addClass("Iactive");
-	$(".Iopen"+i+"").removeClass("Iactive");
-	$(".circle"+i+"").animate({"left":"25px"});
+	
 	clickBtn(id,0)
 }
 //打开数据展示详情页
@@ -244,7 +239,15 @@ function clickBtn(id,dataValue){
 						icon : 1
 					});
 //					window.top.MQTTconnect(guid);
-
+						if(onoff){
+							$(".Iopen"+i+"").addClass("Iactive");
+							$(".Iclose"+i+"").removeClass("Iactive");
+							$(".circle"+i+"").animate({"left":"0px"});
+						}else{
+							$(".Iclose"+i+"").addClass("Iactive");
+							$(".Iopen"+i+"").removeClass("Iactive");
+							$(".circle"+i+"").animate({"left":"25px"});
+						}
 				}else{
 					layer.msg('下发失败', {
 						icon : 2
