@@ -22,6 +22,13 @@ public class LoginController extends Controller{
 	private static LoginService loginService=new LoginService();
 	@Clear()
 	public void index(){
+		HttpSession session=getSession();
+		if(session!=null){
+			session.removeAttribute(Constants.SESSION_USER);
+			session.removeAttribute(Constants.SESSION_COMPANY);
+			session.removeAttribute(Constants.SESSION_ACCESSTOKEN);
+			session.removeAttribute(Constants.SESSION_REFRESHTOKEN);
+		}
 		render("login.html");
 	}
 	
@@ -60,7 +67,6 @@ public class LoginController extends Controller{
 		HttpSession session=getSession();
 		if(session!=null){
 			session.removeAttribute(Constants.SESSION_USER);
-			Record user=getSessionAttr(Constants.SESSION_USER);
 			session.removeAttribute(Constants.SESSION_COMPANY);
 			session.removeAttribute(Constants.SESSION_ACCESSTOKEN);
 			session.removeAttribute(Constants.SESSION_REFRESHTOKEN);

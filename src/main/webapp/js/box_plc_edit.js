@@ -272,7 +272,6 @@ $.extend({
 		$.ajax({
 			type: "put",
 			dataType: "json",
-//			url: "http://192.168.1.37/v1/devices/"+initData.deviceId, //test
 			url: globalurl+"/v1/devices/"+initData.deviceId,
 			async: true,
 			data: {
@@ -295,7 +294,6 @@ $.extend({
 		$.ajax({
 			type: "put",
 			dataType: "json",
-//			url: "http://192.168.1.37/v1/devices/"+initData.deviceId+"/dataConfigs", //test
 			url: globalurl+"/v1/devices/"+initData.deviceId+"/dataConfigs",
 			async: true,
 			data: {
@@ -309,7 +307,7 @@ $.extend({
 						layer.msg('保存成功！',{
 							icon: 1,
 							end: function() {
-								//页面跳转
+								self.location.href='/finfosoft-water/dataTag/plc/'
 							}
 						});
 						break;
@@ -328,7 +326,6 @@ $.extend({
 		$.ajax({
 			type: "get",
 			dataType: "json",
-//			url: "http://192.168.1.37/v1/devices/"+initData.deviceId, //test
 			url: globalurl+"/v1/devices/"+initData.deviceId,
 			async: true,
 			data: {
@@ -342,7 +339,6 @@ $.extend({
 		$.ajax({
 			type: "get",
 			dataType: "json",
-//			url: "http://192.168.1.37/v1/devices/"+initData.deviceId+"/dataConfigs", //test
 			url: globalurl+"/v1/devices/"+initData.deviceId+"/dataConfigs",
 			async: true,
 			data: {
