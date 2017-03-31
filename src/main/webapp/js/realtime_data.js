@@ -1,11 +1,11 @@
-var dataId=2466;//$("#dataId").val()//数据id
-var deviceId="58ccb438d77a1e15ac5da16a";//$("#deviceId").val()//设备Id
+var dataId=$("#dataId").val()//数据id
+var deviceId=$("#deviceId").val()//设备Id
 var startTime;
 var endTime;
 $(function(){
 	toolTip();
 	getToken();	//刷新令牌
-	chartDivArr.push(dataId);//push当前的dataId;
+	chartDivArr.push(parseInt(dataId));//push当前的dataId;
 	currentChart(dataId);//初始化第一次图表;
 	contrastData();//初始化对比数据项列表;
 })
@@ -60,7 +60,7 @@ function currentChart(dataId){
 			data:data
 		},
 		success: function(data) {
-			console.log(data)
+//			console.log(data)
 			var chartType="";
 			if(data.code==400005){
 				getNewToken();
@@ -105,17 +105,23 @@ function contrastData(){
 			"filter":"{'device_id':'"+deviceId+"'}"			
 		},
 		success: function(data) {
+			console.log(data)
 			if(data.code==400005){
 				getNewToken();
 			}else{
-				console.log(data);
-				for(var i=0;i<data.rows.length;i++){
+//				console.log(data);
+//				if(data.rows.length==0){
+//					$(".contrastList .listOul").html("<span>暂无对比数据</span>")
+//				}else{
+					for(var i=0;i<data.rows.length;i++){
 					var Ili="";
 					if(data.rows[i].data_id!=dataId){
 						Ili="<li onclick='getChart("+data.rows[i].data_id+")'>"+data.rows[i].data_name+"</li>"
 						$(".contrastList .listOul").append(Ili)									
 					}
-				}
+					}
+//				}
+				
 			}
 		}
 	})
@@ -128,14 +134,15 @@ function getChart(dataId){
 function initChart(data,chartType){	
 	var legendData=[];
 	var chartSeries=[];
-
 	for(var i=0;i<chartDivArr.length;i++){						
 			var divId='chart'+data.data_id;
 			if(chartDivArr.indexOf(data.data_id)==-1){
 			chartDivArr.push(data.data_id);
-				if((chartType=="line"&&data.data_values.length==0&&data.max_values.length==0&&data.min_values.length==0)||(chartType=="bar"&&data.data_values.length==0)){			
+			
+				if((chartType=="line"&&data.data_values.length==0&&data.max_values.length==0&&data.min_values.length==0)||(chartType=="line"&&data.data_values==[]&&data.max_values==[]&&data.min_values==[])||(chartType=="bar"&&data.data_values.length==0)||(chartType=="bar"&&data.data_values==[])){	
+					console.log(123)
 					$(".contrastChart").append("<div class=' "+divId+"'></div>")
-	               	$(".contrastChart").append("<div id='"+divId+"' class='row dataChartBox' style='width:800px;height: 300px;overflow: hidden;margin:20px;'><div class='nodata'>暂无数据</div></div>");
+	               	$(".contrastChart").append("<div id='"+divId+"' class='row dataChartBox' style='width:800px;height: 300px;overflow: hidden;margin:20px;'>暂无数据</div>");
 				}else{
 					console.log(123)
 					$(".contrastChart").append("<div class=' "+divId+"'>"+chartArr[i]+"</div>")

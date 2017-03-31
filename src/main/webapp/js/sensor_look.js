@@ -18,6 +18,8 @@ if(type=="A"){
 	$(".sensorTop .Itype").html("查看PLC");
 	$(".sensorTop .Etype").html(" / Look PLC");
 }
+//每隔十秒刷新一次
+var time=setInterval(listBox,10000)
 //获取数据列表
 function listBox(){
 	console.log(123);
@@ -31,16 +33,18 @@ function listBox(){
 			access_token: accesstoken
 		},
 		success: function(data) {
+			$(".sensorContent").html("");
 			console.log(data)
 			if(data.code==400005){
 		    		getNewToken();
 		    		listBox();
 		    }else{
+		    	if(data.datas.length==0){
+		    		$(".sensorContent").html("<p>暂无数据</p>");
+		    	}
 		    	deviceName=data.device.device_name
 		    	deviceId=data.device._id
-		    	for(var i=0;i<data.datas.length;i++){
-		    		
-		    		var str="";
+		    	for(var i=0;i<data.datas.length;i++){	    		
 		    		//以开关展示
 		    		if(data.datas[i].oper_type==2&&data.datas[i].data_type==3){
 		    			str='<div class="lookList  normal">'+
@@ -126,6 +130,13 @@ function listBox(){
 								'</div>'+			
 							'</div>'
 						$(".sensorContent").append(str);
+		    		}
+		    		if(data.datas[i].status==1||data.datas[i].status==undefined){
+		    			$(".lookList").css({"border-left-color":"#1ab394","color":"#1ab394"});
+		    		}else if(data.datas[i].status==0){
+		    			$(".lookList").css({"border-left-color":"#acacac","color":"#acacac"});
+		    		}else{
+		    			$(".lookList").css({"border-left-color":"#a01f24","color":"#a01f24"});
 		    		}
 		    	}
 		    	

@@ -1,15 +1,13 @@
+body{
+	background:#f3f3f4 !important;
+}
 .look{
-	width:100%;		
-	background:#f3f3f4;
+	width:98%;		
 	float:left;
 	position: relative;	
-	overflow-x: hidden;	
 }
 .look .lookTop{
 	height:65px;
-	margin-right:20px;	
-	
-
 }
 .look .lookTop>span:nth-child(1)
 ,.look .lookTop>span:nth-child(2)
@@ -185,7 +183,12 @@
 	position: absolute;
 	cursor: pointer;
 }
-
+.lookContent p{
+	text-align:center;
+	color:#acacac;
+	font-size:24px;
+	margin-top:30px;
+}
 
 
 

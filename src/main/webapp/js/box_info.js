@@ -40,7 +40,7 @@ window.getDTUList=function(){
 		    striped: true,//条纹
 //		    ajaxOptions:"",//公司ID
 		    onLoadSuccess:function(value){
-		    	console.log(value);
+//		    	console.log(value);
 		    	if(value.code==400005||value.code==500){
 		    		window.getNewToken();
 		    		$('#dtuList').bootstrapTable("refresh",queryParams)
@@ -120,20 +120,40 @@ topColor($(".fa-trash-o"),"#ff787b");
 $("pull-right .page-pre a").html("上一页");
 //下一页
 $("pull-right .page-next a").html("下一页");
-
+//查看数据事件
 function look(value){
 	self.location.href="/finfosoft-water/dataTag/getDatas/"+value+"-A";
 }
-
+//修改数据事件
 function modify(value){
 	self.location.href="/finfosoft-water/dataTag/editSensor/"+value;
 }
-
+//添加数据事件
 function addBox(){
 	self.location.href="/finfosoft-water/dataTag/addSensor/";
 }
-
-
+//删除一条数据
+window.deleteCol=function(value){
+	layer.confirm('是否要将此采集器删除？', {
+		  btn: ['确定','取消'] //按钮
+		}, function(){
+		  $.ajax({
+			  url:globalurl+'/v1/devices/'+value+'?access_token='+window.accesstoken,
+			  dataType : 'JSON',
+			  type : 'delete',
+			  success : function(data) {
+				  if(data.code==200){
+					  layer.msg(data.success,{icon:1})
+					  setTimeout("self.location.reload()",2000)
+//					  $('#dtuList').bootstrapTable("refresh",queryParams)
+				  }else if(data.code==400005){
+					  window.getNewToken()
+					  deleteCol(value)
+				  }
+			  }
+		  })
+		});
+}
 
 
 

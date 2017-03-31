@@ -5,7 +5,7 @@
 	width:98%;
 	height:50px;
 	border-bottom: 1px solid #e6e6e6;
-	color:#E6E6E6;
+	color:#acacac;
 	font-size:16px;
 	line-height:50px;
 	margin-left:10px;
@@ -35,6 +35,12 @@
 .timeData .dataContrast .contrastList{
 	width:100%;
 	min-height:95px;
+}
+.timeData .dataContrast .contrastList .listOul span{
+	color:#ACACAC;
+	padding-left:10px;
+	margin-top:20px;
+	display: inline-block;
 }
 .timeData .dataContrast .contrastList>ul li{
 	float:left;
@@ -133,5 +139,9 @@ float:right;
 	margin-right:10px;
 	cursor: pointer;
 }
-
+.dataChartBox{
+	text-align:center;
+	color:#acacac;
+	line-height:300px;
+}
 

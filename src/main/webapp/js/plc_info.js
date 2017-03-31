@@ -135,7 +135,28 @@ function modify(value){
 function addPlc(){
 	self.location.href=itemName+"/dataTag/addPlc/";
 }
-
+//删除一条数据
+window.deleteCol=function(value){
+	layer.confirm('是否要将此采集器删除？', {
+		  btn: ['确定','取消'] //按钮
+		}, function(){
+		  $.ajax({
+			  url:globalurl+'/v1/devices/'+value+'?access_token='+window.accesstoken,
+			  dataType : 'JSON',
+			  type : 'delete',
+			  success : function(data) {
+				  if(data.code==200){
+					  layer.msg(data.success,{icon:1})
+					  setTimeout("self.location.reload()",2000)
+//					  $('#dtuList').bootstrapTable("refresh",queryParams)
+				  }else if(data.code==400005){
+					  window.getNewToken()
+					  deleteCol(value)
+				  }
+			  }
+		  })
+		});
+}
 
 
 

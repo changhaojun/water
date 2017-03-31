@@ -11,7 +11,7 @@ var getToken=function(callBack){
 		type : 'GET',
 		async:false,
 		success : function(data) {
-			console.info('1')
+//			console.info('1')
 			 accesstoken=data.accesstoken;
 			 refreshToken=data.refreshToken;
 			 callBack && callBack()
