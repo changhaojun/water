@@ -96,12 +96,13 @@ $.fn.extend({
 			$.ajax({
 				type:"get",
 				dataType:'json',
-				url:globalurl+"/v1/controllers",
+				url:globalurl+"/v1/collectors",
 				data:{
-					access_token:access_token,
+					access_token:accesstoken,
 					like:collector
 				},
 				success:function(data){
+					console.log(data);
 					if(data.code==400005){
 						getNewToken();
 						collectorSelect();
@@ -112,17 +113,19 @@ $.fn.extend({
 						for(var  i in data.rows){
 							var strLi='<li onclick="serchItem('+i+')">'+data.rows[i].collector_id+'</li>';
 							$('.collector ul').append(strLi);
-							
+							collectorArr.push(data.rows[i].collector_id)
 						}
 					}
-					console.log(data);
+					
+				},
+				error:function(data){
+					console.log(data)
 					
 				}
-			})
+			});
 		    
 		});
 	};
-	
 	//根据采集器ID获取采集器型号的信息
 	
 	var dataInfo="",info=[],infoJson="",dataConfigJson="",dataConfig=[];
@@ -139,7 +142,7 @@ $.fn.extend({
 			dataType:"JSON",
 			url:globalurl+"/v1/collectorModels",
 			data:{
-				access_token:access_token,
+				access_token:accesstoken,
 				data:data
 			},
 			success:function(data) {
@@ -148,6 +151,7 @@ $.fn.extend({
 				$(".detialData tbody").empty();
 				pngName=(data.collector_model.split("-"))[1].toLowerCase();
 				imgName="dtu_"+pngName+".png";
+				//console.log(imgName)
 				dataInfo=data.collector_port;
 				
 				for(var i in dataInfo){
@@ -199,7 +203,7 @@ $.fn.extend({
 				skin: 'layui-layer-demo', //样式类名
 				anim: 2,
 				shadeClose: true, //开启遮罩关闭
-				content: "<img class='imgName' src='../img/box_sensor/"+imgName+"'/>"
+				content: "<img class='imgName' src='/finfosoft-water/img/box_sensor/"+imgName+"'/>"
 			});
 		}
 	}
@@ -382,6 +386,7 @@ $.fn.extend({
 	//弹窗保存
 	$(".saveEquipment").click(function(){
 		editCollector(j);
+		console.log(collectorArr)
 		
 	})
 	function saveDevice(){
@@ -392,7 +397,7 @@ $.fn.extend({
 		var warningSpace=Number($(".warningSpace").val()?$(".warningSpace").val():0);
 		var delayTime=Number($(".delayTime").val()?$(".delayTime").val():0);
 		var collectInterval = $(".collectInterval").val();
-		var communication = "{'collect_interval':" + collectInterval+ ",'collector_id':" + optionValue+ "}";
+		var communication = "{'collect_interval':" + collectInterval+ ",'collector_id': '"+ optionValue+ "'}";
 		var controlBtn=$(".controlBtn span");
 		var status="";
 		var device=""
@@ -454,19 +459,34 @@ $.fn.extend({
 					$.ajax({
 						type:"post",
 						datatype:"json",
-						url:globalurl+"/v1/devices?access_token="+access_token,
+						url:globalurl+"/v1/devices?access_token="+accesstoken,
 						data:{
 							data:data
 						},
 						success:function(data){
 							console.log(data)
+							//cons
 							dataId=data._id;
-							if (data.code===200) {
-								layer.msg('设备保存成功！', {icon: 1});
+							for(var j=0;j<collectorArr.length;j++){
+								if($(".list input").val()!=collectorArr[j]){
+									layer.msg('请重新选择采集器ID！', {
+										icon: 2,
+										time:2000
+									});
+								}else{
+									if (data.code===200) {
+										layer.msg('设备保存成功！', {
+											icon: 1,
+											time:1000
+										});	
+									}
+									save();
+								}
 							}
+							
 							//deviceId=device_id;
 							//console.log(deviceId);
-							save();
+							
 						}
 					})
 				}
@@ -478,15 +498,28 @@ $.fn.extend({
 				$.ajax({
 					type:"post",
 					datatype:"json",
-					url:globalurl+"/v1/devices?access_token="+access_token,
+					url:globalurl+"/v1/devices?access_token="+accesstoken,
 					data:{
 						data:data
 					},
 					success:function(data){
 						console.log(data)
 						dataId=data._id;
-						if (data.code===200) {
-							layer.msg('设备保存成功！', {icon: 1});
+						for(var j=0;j<collectorArr.length;j++){
+							if($(".list input").val()!=collectorArr[j]){
+								layer.msg('请重新选择采集器ID！', {
+									icon: 2,
+									time:2000
+								});
+							}else{
+								if (data.code===200) {
+									layer.msg('设备保存成功！', {
+										icon: 1,
+										time:1000
+									});
+								}
+								save();
+							}
 						}
 						//data._id=device_id;
 						//console.log(dataId);
@@ -521,8 +554,8 @@ $.fn.extend({
 				dataUnit=$("#dataTable").find(" tr").eq(i).find("td").eq(8).text();
 				//console.log(dataUnit)
 				dataName=$("#dataTable").find(" tr").eq(i).find("td").eq(9).text();
-				dataConfigJson='{"data_type":"'+dataInfo[i].data_type+'",'+
-				'"oper_type":"'+dataInfo[i].oper_type+'",'+
+				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
+				'"oper_type":'+dataInfo[i].oper_type+','+
 				'"port_name":"'+dataInfo[i].port_name+'",'+
 				'"collect_range_high":"'+rangeHigh+'",'+
 				'"collect_range_low":"'+rangeLow+'",'+
@@ -530,7 +563,7 @@ $.fn.extend({
 				'"real_range_low":"'+realLow+'",'+
 				'"low_battery":"'+lowBattery+'",'+
 				'"high_battery":"'+highBattery+'",'+
-				'"status":"'+status+'",'+
+				'"status":'+status+','+
 				'"data_unit":"'+dataUnit+'",'+
 				'"data_name":"'+dataName+'"}';
 				//console.log(dataConfigJson)
@@ -547,13 +580,16 @@ $.fn.extend({
 			datatype:"json",
 			url:globalurl+"/v1/devices/"+dataId+"/dataConfigs",
 			data:{
-				access_token:access_token,
+				access_token:accesstoken,
 				data:data
 			},
 			success:function(data){
-				console.log(data)
-				if (data.code===200) {
-					layer.msg('保存成功！', {icon: 1});
+				//console.log(data)
+				if (data.code==200) {
+					layer.msg('数据保存成功！', {
+						icon: 1,
+						time:2000
+					});
 				}
 			}
 		});

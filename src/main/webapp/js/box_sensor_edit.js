@@ -4,9 +4,9 @@ var onOff=0;
 var pngName="",imgName="";
 var j=0;
 var dataId=[];
-var access_token="58db1858b769970a9092c5b6";
-/*var commonUrl="http://121.42.253.149:18801";*/
-var commonUrl="http://192.168.1.37";
+/*var access_token="58db1858b769970a9092c5b6";
+/*var globalurl="http://121.42.253.149:18801";*
+var globalurl="http://192.168.1.37";*/
 $.fn.extend({
 	//智能input
 	'smartInput': function (callback){
@@ -96,7 +96,7 @@ $.fn.extend({
 		$.ajax({
 			type:"get",
 			datatype:"json",
-			url:commonUrl+"/v1/devices/"+editId+"?access_token="+access_token,
+			url:globalurl+"/v1/devices/"+editId+"?access_token="+accesstoken,
 			success:function(data){
 				//console.log(data)
 				if(data.code==400005){
@@ -133,9 +133,9 @@ $.fn.extend({
 		$.ajax({
 			type:"get",
 			dataType:"JSON",
-			url:commonUrl+"/v1/devices/"+deviceId+"/dataConfigs",
+			url:globalurl+"/v1/devices/"+deviceId+"/dataConfigs",
 			data:{
-				access_token:access_token,
+				access_token:accesstoken,
 				filter:'{"device_id":"'+deviceId+'"}'
 			},
 			success:function(data) {
@@ -401,7 +401,7 @@ $.fn.extend({
 		var warningSpace=Number($(".warningSpace").val()?$(".warningSpace").val():0);
 		var delayTime=Number($(".delayTime").val()?$(".delayTime").val():0);
 		var collectInterval = $(".collectInterval").val();
-		var communication = "{'collect_interval':" + collectInterval+ ",'collector_id':" + collectorId+ "}";
+		var communication = "{'collect_interval':" + collectInterval+ ",'collector_id':'" + collectorId+ "'}";
 		var controlBtn=$(".controlBtn span");
 		var status="";
 		var device=""
@@ -462,7 +462,7 @@ $.fn.extend({
 					$.ajax({
 						type:"put",
 						datatype:"json",
-						url:commonUrl+"/v1/devices/"+deviceId+"?access_token="+access_token,
+						url:globalurl+"/v1/devices/"+deviceId+"?access_token="+accesstoken,
 						data:{
 							data:data
 						},
@@ -484,7 +484,7 @@ $.fn.extend({
 				$.ajax({
 					type:"put",
 					datatype:"json",
-					url:commonUrl+"/v1/devices/"+deviceId+"?access_token="+access_token,
+					url:globalurl+"/v1/devices/"+deviceId+"?access_token="+accesstoken,
 					data:{
 						data:data
 					},
@@ -523,8 +523,8 @@ $.fn.extend({
 				dataUnit=$("#dataTable").find(" tr").eq(i).find("td").eq(8).text();
 				//console.log(dataUnit)
 				dataName=$("#dataTable").find(" tr").eq(i).find("td").eq(9).text();
-				dataConfigJson='{"data_type":"'+dataInfo[i].data_type+'",'+
-				'"oper_type":"'+dataInfo[i].oper_type+'",'+
+				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
+				'"oper_type":'+dataInfo[i].oper_type+','+
 				'"port_name":"'+dataInfo[i].port_name+'",'+
 				'"collect_range_high":"'+rangeHigh+'",'+
 				'"collect_range_low":"'+rangeLow+'",'+
@@ -534,7 +534,7 @@ $.fn.extend({
 				'"high_battery":"'+highBattery+'",'+
 				'"status":"'+status+'",'+
 				'"_id":"'+IdArr[i]+'",'+
-				'"data_id":"'+IdArr[i]+'",'+
+				'"data_id":'+IdArr[i]+','+
 				'"data_unit":"'+dataUnit+'",'+
 				'"data_name":"'+dataName+'"}';
 				//console.log(dataConfigJson)
@@ -548,9 +548,9 @@ $.fn.extend({
 		$.ajax({
 			type:"put",
 			datatype:"json",
-			url:commonUrl+"/v1/devices/"+deviceId+"/dataConfigs",
+			url:globalurl+"/v1/devices/"+deviceId+"/dataConfigs",
 			data:{
-				access_token:access_token,
+				access_token:accesstoken,
 				data:data
 			},
 			success:function(data){

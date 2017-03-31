@@ -1,7 +1,6 @@
 var boxId=$("#boxId").val();	//获取box的id
 var type=$("#type").val();      //获取box类型
-console.info(boxId)
-console.info(type)
+var deviceId,deviceName,dataName;
 $(function(){
 	getToken();//刷新令牌
 	toolTip();//提示框
@@ -21,9 +20,10 @@ if(type=="A"){
 }
 //获取数据列表
 function listBox(){
+	console.log(123);
 	$.ajax({
 		type: "get",
-		url: globalurl+"/v1/devices/"+'58db6d70b769970e78fb9d2b'+"/datas",
+		url: globalurl+"/v1/devices/"+boxId+"/datas",
 		dataType: "JSON",
 		async: false,
 		crossDomain: true == !(document.all),
@@ -32,10 +32,12 @@ function listBox(){
 		},
 		success: function(data) {
 			console.log(data)
-			if(data.code==400005||data.code==500){
-		    		window.getNewToken();
+			if(data.code==400005){
+		    		getNewToken();
+		    		listBox();
 		    }else{
-		    	console.log(data)
+		    	deviceName=data.device.device_name
+		    	deviceId=data.device._id
 		    	for(var i=0;i<data.datas.length;i++){
 		    		
 		    		var str="";
@@ -44,7 +46,7 @@ function listBox(){
 		    			str='<div class="lookList  normal">'+
 								'<div class="listTop">'+
 									'<span>'+data.datas[i].data_name+'</span>'+
-									'<span class="fa fa-area-chart" data-toggle="tooltip" data-placement="top" "tooltip" data-placement="top" title="数据" onclick="show(&apos;'+data.datas[i].data_id+'&apos;)"></span>'+
+									'<span class="fa fa-area-chart" data-toggle="tooltip" data-placement="top" "tooltip" data-placement="top" title="数据" onclick="show(&apos;'+data.datas[i].data_id+'&apos;,&apos;'+data.datas[i].data_name+'&apos;)"></span>'+
 								'</div>'+
 								'<div class="listHr"></div>'+
 								'<div class="listContent">'+
@@ -71,13 +73,13 @@ function listBox(){
 			    		}
 				//仪表盘展示
 		    		}else if((type=="A"&&data.datas[i].oper_type==2&&data.datas[i].data_type==0)||(type=="A"&&data.datas[i].oper_type==2&&data.datas[i].data_type==1)||(type=="P"&&data.datas[i].oper_type==2)){
-		    			if (data.datas[i].data_value==='') {
+		    			if (data.datas[i].data_value===''||data.datas[i].data_value===null) {
 		    				data.datas[i].data_value = 0;
 		    			}
 		    			str='<div class="lookList  normal">'+
 								'<div class="listTop">'+
 									'<span>'+data.datas[i].data_name+'</span>'+
-									'<span class="fa fa-area-chart" data-toggle="tooltip" data-placement="top" "tooltip" data-placement="top" title="数据" onclick="show(&apos;'+data.datas[i].data_id+'&apos;)" ></span>'+
+									'<span class="fa fa-area-chart" data-toggle="tooltip" data-placement="top" "tooltip" data-placement="top" title="数据" onclick="show(&apos;'+data.datas[i].data_id+'&apos;,&apos;'+data.datas[i].data_name+'&apos;)" ></span>'+
 								'</div>'+
 								'<div class="listHr"></div>'+
 								'<div class="listContent">'+
@@ -110,7 +112,7 @@ function listBox(){
 		    			str='<div class="lookList  normal">'+
 								'<div class="listTop">'+
 									'<span>'+data.datas[i].data_name+'</span>'+
-									'<span class="fa fa-area-chart" data-toggle="tooltip" data-placement="top" "tooltip" data-placement="top" title="数据" onclick="show(&apos;'+data.datas[i].data_id+'&apos;)" ></span>'+
+									'<span class="fa fa-area-chart" data-toggle="tooltip" data-placement="top" "tooltip" data-placement="top" title="数据" onclick="show(&apos;'+data.datas[i].data_id+'&apos;,&apos;'+data.datas[i].data_name+'&apos;)" ></span>'+
 								'</div>'+
 								'<div class="listHr"></div>'+
 								'<div class="listContent">'+
@@ -158,7 +160,7 @@ function Iclose(i,id){
 	clickBtn(id,0)
 }
 //打开数据展示详情页
-function show(value){
+function show(value,dataName){
 	layer.open({
 	  type: 2,
 	  title: '实时数据页面',
@@ -166,7 +168,7 @@ function show(value){
 	  shade: 0.8,
 	  scrollbar: false,
 	  area: ['873px', '90%'],
-	  content: '/finfosoft-water/dataTag/dataChart/'+value //iframe的url
+	  content: '/finfosoft-water/dataTag/dataChart/'+value+'-'+dataName+'-'+deviceId+'-'+deviceName
 	}); 
 }
 /**
