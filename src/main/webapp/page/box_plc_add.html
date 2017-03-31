@@ -80,9 +80,9 @@
 						</div>
 						<div class="dataCircle">
 							<label for="collector_id">采集器ID</label>
-							<input id="collector_id" type="text" num-limit="limit" class="textInput" v-model="deviceData.communication.collector_id" datasrc="deviceData.communication.collector_id" v-bind:empty="!deviceData.communication.collector_id&&!deviceData.communication.collector_id!==0 ? true : false" placeholder="请输入采集器ID" @keyup="requestCollectorList()"/>
+							<input id="collector_id" type="text" num-limit="limit" class="textInput" v-model="deviceData.communication.collector_id" datasrc="deviceData.communication.collector_id" v-bind:empty="!deviceData.communication.collector_id&&!deviceData.communication.collector_id!==0 ? true : false" placeholder="请输入采集器ID" @keyup="requestCollectorList($event)" @focus="toggleList($event)" @blur="toggleList($event,true)"/>
 							<ul id="collector_id_list" class="hidden">
-								<li v-for="id in collectorData" @click="confirmId()">{{ id.collector_id }}</li>
+								<li v-for="id in collectorData" @mousedown="confirmId($event)">{{ id.collector_id }}</li>
 							</ul>
 						</div>
 						<div class="dataCircle">
@@ -145,7 +145,7 @@
 					<div class="boxContent clearfix">
 						<div class="equipment">
 							<i class="fa fa-wrench"></i>&nbsp;数据配置
-							<a class="btnYellow addPort" @click="createPort()">
+							<a class="btnYellow addPort" @click="createPort($event)">
 								<i class="fa fa-plus"></i>
 								<div class="tip">
 									添加端口
@@ -202,7 +202,7 @@
 										<td>{{ port.real_range_low }}</td>
 										<td>{{ port.real_range_high }}</td>
 										<td>
-											<i class="fa fa-edit" @click="editPort(index)"></i>
+											<i class="fa fa-edit" @click="editPort(index,$event)"></i>
 										</td>
 										<td>
 											<i class="fa fa-trash" @click="deletePort(index)"></i>
@@ -264,7 +264,7 @@
 						<input id="new_real_range_high" type="text" v-model="newPort.real_range_high" datasrc="newPort.real_range_high" v-bind:empty="!newPort.real_range_high&&newPort.real_range_high!==0 ? true : false" num-limit="limit" placeholder="请输入实际量程高"/>
 					</dd>
 					<dt>
-						<button @click="saveNewPort()">保存</button>
+						<button @click="saveNewPort($event)">保存</button>
 					</dt>
 				</dl>
 				<div class="pop-shadow"></div>
@@ -315,7 +315,7 @@
 						<input id="edit_real_range_high" type="text" v-model="newPort.real_range_high" datasrc="newPort.real_range_high" v-bind:empty="!newPort.real_range_high&&newPort.real_range_high!==0 ? true : false" num-limit="limit" placeholder="请输入实际量程高"/>
 					</dd>
 					<dt>
-						<button @click="saveEditPort()">保存</button>
+						<button @click="saveEditPort($event)">保存</button>
 					</dt>
 				</dl>
 				<div class="pop-shadow"></div>

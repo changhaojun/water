@@ -137,7 +137,6 @@ $.fn.extend({
 	//文本框响应
 	'smartInput': function (){
 		$(this).focus(function (){
-			console.log($(this).attr('class'));
 			if ($(this).val()==='请输入邮箱'||$(this).val()==='请输入密码'||$(this).val()==='请输入正确的邮箱地址'||$(this).val()==='请输入验证码') {
 				$(this).attr('originval',$(this).val()).val('');
 			}
@@ -219,7 +218,6 @@ $.fn.extend({
 						'address': iAddress
 					},
 					success: function (data){
-						console.info(data)
 						if(data.code==200){
 							$('.login-title .tip').addClass('hidden');
 							$.ajax({
@@ -232,7 +230,8 @@ $.fn.extend({
 								}
 							})
 						} else {
-							$(this).html('登录').css({
+							console.log(1);
+							This.html('登录').css({
 								'letterSpacing': 14,
 								'textIndent': 14
 							});

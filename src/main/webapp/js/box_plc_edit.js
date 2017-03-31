@@ -106,16 +106,16 @@ var $extend = $.fn.extend({
 		this.deviceData.is_remind = index;
 	},
 	//新增端口
-	createPort: function() {
+	createPort: function(event) {
 		//将原生DOM转化为jQueryDOM
-		var $This = $(event.target);
+		var $This = $(event.currentTarget);
 		$This.openWindow([$('.newPort'), $('.pop-mask')], true);
 		$.initNewPort();
 	},
 	//编辑端口
-	editPort: function(index) {
+	editPort: function(index,event) {
 		//将原生DOM转化为jQueryDOM
-		var $This = $(event.target);
+		var $This = $(event.currentTarget);
 		this.portIndex = index;
 		for (var key in this.portData[index]) {
 			this.newPort[key] = this.portData[index][key];
@@ -123,9 +123,9 @@ var $extend = $.fn.extend({
 		$This.openWindow([$('.editPort'), $('.pop-mask')], true);
 	},
 	//新端口信息保存
-	saveNewPort: function() {
+	saveNewPort: function(event) {
 		//将原生DOM转化为jQueryDOM
-		var $This = $(event.target);
+		var $This = $(event.currentTarget);
 		$This.attr('isright','false');
 		$.isEmpty($('.newPort'),$This);
 		if ($This.attr('isright')==='false') return;
@@ -134,9 +134,9 @@ var $extend = $.fn.extend({
 		$.initNewPort();
 	},
 	//编辑端口信息保存
-	saveEditPort: function() {
+	saveEditPort: function(event) {
 		//将原生DOM转化为jQueryDOM
-		var $This = $(event.target);
+		var $This = $(event.currentTarget);
 		$This.attr('isright','false');
 		$.isEmpty($('.editPort'),$This);
 		if ($This.attr('isright')==='false') return;
@@ -146,28 +146,46 @@ var $extend = $.fn.extend({
 		}
 	},
 	//删除端口信息
-	deletePort: function(index) {
-		var $This = $(event.target);
+	deletePort: function(index,event) {
+		var $This = $(event.currentTarget);
 		this.portIndex = index;
 		this.portData.splice(this.portIndex, 1);
 	},
+	//选择采集器ID
+	confirmId: function(event) {
+		var $This = typeof event==="undefined" ? $(this) : $(event.currentTarget);
+		initData.deviceData.communication.collector_id = $This.html();
+		$This.parent().addClass('hidden');
+		$This.parent().siblings('input').attr('selectedid',$This.html());
+	},
+	//显示采集器ID列表
+	toggleList: function(event,hide) {
+		var $This = typeof event==="undefined" ? $(this) : $(event.currentTarget);
+		if (!initData.collectorData.length) {
+			$This.siblings('ul').addClass('hidden');
+		} else {
+			$This.siblings('ul').removeClass('hidden');
+		}
+		if (hide) {
+			initData.deviceData.communication.collector_id = !$This.attr('selectedid') ? '' : $This.attr('selectedid');
+			$This.siblings('ul').addClass('hidden');
+		}
+	},
 	//请求采集器ID所对应的端口列表
-	requestCollectorList: function() {
-		var This = this;
-		var $This = $(event.target);
-		if (!this.deviceData.communication.collector_id&&this.deviceData.communication.collector_id!==0) {
+	requestCollectorList: function(event) {
+		var $This = typeof event==="undefined" ? $(this) : $(event.currentTarget);
+		if ($This.val()==='') {
 			$This.siblings('ul').addClass('hidden');
 			return;
 		}
 		$.ajax({
-			type: "get",
+			type:"get",
 			dataType: "json",
-//			url: "http://192.168.1.37/v1/collectors", //test
 			url: globalurl+"/v1/collectors",
 			async:true,
 			data: {
 				access_token: initData.access_token,
-				like: JSON.stringify({collector_id: This.deviceData.communication.collector_id})
+				like: JSON.stringify({collector_id: $This.val()})
 			},	
 			success: function(data) {
 				if (data.code===400005) {
@@ -176,20 +194,10 @@ var $extend = $.fn.extend({
 					$This.requestCollectorList();
 					return;
 				}
-				if (data.rows.length) {
-					$This.siblings('ul').removeClass('hidden');
-					This.collectorData = data.rows;
-				} else {
-					$This.siblings('ul').addClass('hidden');
-				}
+				initData.collectorData = data.rows;
+				$This.toggleList();
 			}
 		});
-	},
-	//选择采集器ID
-	confirmId: function() {
-		var $This = $(event.target);
-		this.deviceData.communication.collector_id = $This.html();
-		$This.parent().addClass('hidden');
 	},
 	//提交按钮状态相应
 	changeTip: function(content) {
@@ -316,7 +324,6 @@ $.extend({
 	},
 	//获取数据流请求
 	getInitData: function (){
-		console.info('2')
 		initData.access_token = accesstoken;
 		$.ajax({
 			type: "get",
@@ -329,6 +336,7 @@ $.extend({
 			},                                                                                                                                                                                                                                                                                
 			success: function(data) {
 				$.deepCopy(data,initData.deviceData);
+				$('#collector_id').attr('selectedid',initData.deviceData.communication.collector_id);
 			}
 		});
 		$.ajax({

@@ -11,7 +11,6 @@ var getToken=function(callBack){
 		type : 'GET',
 		async:false,
 		success : function(data) {
-//			console.info('1')
 			 accesstoken=data.accesstoken;
 			 refreshToken=data.refreshToken;
 			 callBack && callBack()
@@ -32,7 +31,6 @@ var getNewToken=function(){
 			grant_type:"refresh_token",
 		},
 		success:function(data){
-			console.info(data)
 			if(data.code==200){
 				accesstoken=data.access_token;
 				refreshToken=data.refresh_token;
