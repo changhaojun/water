@@ -1,5 +1,7 @@
 package com.finfosoft.water.dataTag;
 
+import java.io.UnsupportedEncodingException;
+
 import org.apache.log4j.Logger;
 
 import com.finfosoft.water.common.Constants;
@@ -87,11 +89,19 @@ public class DataTagController extends Controller{
 	 * @author dongmo(113552669@qq.com)
 	 * @date 2017年3月23日    
 	 * @return void 
+	 * @throws UnsupportedEncodingException 
 	 * @exception  (说明在某情况下，将发生什么异常)
 	 */
-	public void dataChart(){
+	public void dataChart() throws UnsupportedEncodingException{
 		String dataId=getPara(0);
+		String dataName=getPara(1);
+		String deviceId=getPara(2);
+		String deviceName=getPara(3);
+		
 		setAttr("dataId", dataId);
+		setAttr("dataName", java.net.URLDecoder.decode(dataName, "UTF-8"));
+		setAttr("deviceId", deviceId);
+		setAttr("deviceName", java.net.URLDecoder.decode(deviceName, "UTF-8"));
 		render("realtime_data.html");
 	}
 	/**
