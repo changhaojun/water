@@ -141,7 +141,7 @@ public class DataTagController extends Controller{
 	 */
 	public void editSensor(){
 		String sensorId=getPara(0);
-		setAttr("sensorId", sensorId);
+		setAttr("deviceId", sensorId);
 		render("box_sensor_edit.html");
 	}
 	/**

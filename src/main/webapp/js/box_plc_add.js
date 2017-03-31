@@ -182,7 +182,7 @@ var $extend = $.fn.extend({
 			async:true,
 			data: {
 				access_token: initData.access_token,
-				like: JSON.stringify({collector_id: $This.val()})
+				conditions: $This.val()
 			},	
 			success: function(data) {
 				if (data.code===400005) {

@@ -92,14 +92,14 @@ $.fn.extend({
 		$('.collector input').on('keyup', function () {
 		    $('.collector ul').empty();
 			var value=$.trim($(this).val())
-			var collector='{"collector_id":"'+value+'"}';
+			//var collector='{"collector_id":"'+value+'"}';
 			$.ajax({
 				type:"get",
 				dataType:'json',
 				url:globalurl+"/v1/collectors",
 				data:{
 					access_token:accesstoken,
-					like:collector
+					conditions:value
 				},
 				success:function(data){
 					console.log(data);
@@ -255,9 +255,9 @@ $.fn.extend({
 			$(".changeData").append(aStr);
 		}else{
 			$(".changeData").empty();
-			dStr='<div class="dataRow collectorRange"><label>低电瓶</label><div class="rangeData">'
+			dStr='<div class="dataRow collectorRange"><label>低电平</label><div class="rangeData">'
 			+'<input type="text" class="lowBattery" value="'+lowBattery+'" style="width:350px;" /></div></div><div class="dataRow realRange">'
-			+'<label>高电瓶</label><div class="rangeData "><input type="text" class="highBattery" style="width:350px;" value="'+lowBattery+'" /></div>'
+			+'<label>高电平</label><div class="rangeData "><input type="text" class="highBattery" style="width:350px;" value="'+lowBattery+'" /></div>'
 			+'</div><div class="dataRow dataName"><label>数据名称</label><input type="text"/></div>';
 			$(".changeData").append(dStr);
 		}
@@ -291,12 +291,12 @@ $.fn.extend({
 				time:1500
 			});	
 		}else if($(".lowBattery").val()==""){
-			layer.msg('请填写低电瓶', {
+			layer.msg('请填写低电平', {
 				icon : 2,
 				time:1500
 			});
 		}else if($(".highBattery").val()==""){
-			layer.msg('请填写高电瓶', {
+			layer.msg('请填写高电平', {
 				icon : 2,
 				time:1500
 			});
@@ -478,9 +478,12 @@ $.fn.extend({
 									});
 								}else{
 									if (data.code===200) {
-										layer.msg('设备保存成功！', {
+										layer.msg(data.success, {
 											icon: 1,
-											time:1000
+											time:1000,
+											end:function(){
+												self.location.href='/finfosoft-water/dataTag/box/'
+											}
 										});	
 									}
 									save();
@@ -569,7 +572,7 @@ $.fn.extend({
 				'"status":'+status+','+
 				'"data_unit":"'+dataUnit+'",'+
 				'"data_name":"'+dataName+'"}';
-				//console.log(dataConfigJson)
+				console.log(dataConfigJson)
 				dataConfigJson=JSON.parse(dataConfigJson);
 				//console.log(dataConfigJson);
 				dataConfig.push(dataConfigJson);

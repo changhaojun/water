@@ -294,12 +294,12 @@ $.fn.extend({
 				time:1500
 			});	
 		}else if($(".lowBattery").val()==""){
-			layer.msg('请填写低电瓶', {
+			layer.msg('请填写低电平', {
 				icon : 2,
 				time:1500
 			});
 		}else if($(".highBattery").val()==""){
-			layer.msg('请填写高电瓶', {
+			layer.msg('请填写高电平', {
 				icon : 2,
 				time:1500
 			});
