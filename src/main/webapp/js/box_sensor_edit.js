@@ -4,6 +4,7 @@ var onOff=0;
 var pngName="",imgName="";
 var j=0;
 var dataId=[];
+var flag=0;
 /*var access_token="58db1858b769970a9092c5b6";
 /*var globalurl="http://121.42.253.149:18801";*
 var globalurl="http://192.168.1.37";*/
@@ -237,6 +238,14 @@ $.fn.extend({
 		//读写状态
 		
 		var aStr="",dStr="";
+		if($("#dataTable").find(" tr").eq(i).find("input").attr("checked")){
+			//console.log(677);
+			$(".portName p i").css("background-position-x",-48+"px");
+		}else{
+			$(".portName p i").css("background-position-x",-95+"px");
+			//console.log(567)
+			$("#dataTable").find(" tr").eq(i).find("input").removeAttr("checked")
+		}
 		rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
 		//console.log(rangeLow)
 		rangeHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[1];
@@ -261,7 +270,7 @@ $.fn.extend({
 			dStr='<div class="dataRow collectorRange"><label>低电平</label><div class="rangeData">'
 			+'<input type="text" class="lowBattery" value="'+lowBattery+'" style="width:350px;" /></div></div><div class="dataRow realRange">'
 			+'<label>高电平</label><div class="rangeData "><input type="text" class="highBattery" style="width:350px;" value="'+lowBattery+'" /></div>'
-			+'</div><div class="dataRow dataName"><label>数据名称</label><input type="text"/></div>';
+			+'</div><div class="dataRow dataName"><label>数据名称</label><input type="text" value="'+dataName+'"/></div>';
 			$(".changeData").append(dStr);
 		}
 		j=i
@@ -273,12 +282,12 @@ $.fn.extend({
 	
 	//点击弹窗是否启用的状态
 	$(".portName p i").click(function(){
-		if(onOff==0){
+		if(flag==0){
 			$(this).css("background-position-x",-95+"px");
-			onOff=-1;
+			flag=-1;
 		}else{
 			$(this).css("background-position-x",-48+"px");
-			onOff=0;
+			flag=0;
 		}
 	})
 	
@@ -380,9 +389,19 @@ $.fn.extend({
 			dataUnit="-";
 			dataName:$(".dataName input").val();
 		};
-		var dataTr='<td><input type="checkbox" checked="checked"/></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
-					+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'										
-					
+		/*var dataTr='<td><input type="checkbox" checked="checked"/></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
+					+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'										*/
+		if(flag==0){
+			//console.log(11122)
+			//$(".detialData tbody").find("tr").eq(j).find("input").attr("checked","checked");
+			var dataTr='<td><input type="checkbox" checked="checked" /></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
+			+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'	
+		}else{
+			//console.log(634)
+			//$(".detialData tbody").find("tr").eq(j).find("input").attr("disabled","disabled");
+			var dataTr='<td><input type="checkbox" disabled="disabled"/></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
+					+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'	
+		}			
 		$(".detialData tbody").find("tr").eq(j).html(dataTr);	
 	}
 	
@@ -403,11 +422,11 @@ $.fn.extend({
 		var collectInterval = $(".collectInterval").val();
 		var communication = "{'collect_interval':" + collectInterval+ ",'collector_id':'" + collectorId+ "'}";
 		var controlBtn=$(".controlBtn span");
-		var status="";
+		var isRemind="";
 		var device=""
 		for(var i=0;i<controlBtn.length;i++){
 			if(controlBtn.eq(i).hasClass("activeBtn")){
-				status +=controlBtn.eq(i).attr("value");
+				isRemind +=controlBtn.eq(i).attr("value");
 				//console.log(status)
 			}
 		}
@@ -427,7 +446,7 @@ $.fn.extend({
 				time:1500
 			});
 		}else {
-			if(status==1){
+			if(isRemind==1){
 				var phoneReg=/^1[34578]\d{9}$/;
 				if(mobile ==""){
 					layer.msg('联系电话不能为空', {
@@ -455,7 +474,7 @@ $.fn.extend({
 				}else{
 					//console.log(onOff)
 					device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
-						+  "','mobile':'" + mobile + "','status':" + status + ",'communication':" + communication 
+						+  "','mobile':'" + mobile + "','status': 1 ,'communication':" + communication 
 						+",'is_remind':1,'remind_interval':"+warningSpace+",'protocal':'A','remind_delay':"+delayTime+"}";
 					data=device;
 					//console.log(data)
@@ -478,7 +497,7 @@ $.fn.extend({
 			}else{
 				device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
 						+  "','communication':" + communication 
-						+",'is_remind':0,'protocal':'A','status':" + status +"}";		
+						+",'is_remind':0,'protocal':'A','status':1}";		
 				data=device;
 			//	console.log(data)
 				$.ajax({
@@ -503,16 +522,10 @@ $.fn.extend({
 		//console.log(dataId)
 		var data={};
 		//console.log(info.length)
-		var controlBtn=$(".controlBtn span");
-		for(var i=0;i<controlBtn.length;i++){
-			if(controlBtn.eq(i).hasClass("activeBtn")){
-				//console.log(111)
-				status +=controlBtn.eq(i).attr("value");
-				//console.log(status)
-			}
-		}
+		var status = "";
 		for (var i = 0; i < info.length; i++) {
 				//console.log(33434)
+				status=$("#dataTable").find(" tr").eq(i).find("input").attr('checked')==="checked" ? 1 : 0;
 				rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
 				//console.log(rangeLow)
 				rangeHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[1];
@@ -534,7 +547,7 @@ $.fn.extend({
 				'"high_battery":"'+highBattery+'",'+
 				'"status":"'+status+'",'+
 				'"_id":"'+IdArr[i]+'",'+
-				'"data_id":'+IdArr[i]+','+
+				'"data_id":"'+IdArr[i]+'",'+
 				'"data_unit":"'+dataUnit+'",'+
 				'"data_name":"'+dataName+'"}';
 				//console.log(dataConfigJson)

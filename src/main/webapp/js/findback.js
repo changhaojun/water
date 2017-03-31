@@ -81,7 +81,7 @@ $.fn.extend({
 				$.ajax({
 					type:"put",
 					dataType:"json",
-					url:"http://192.168.1.108:80/v1/users",
+					url:globalurl+"/v1/users",
 					async:true,
 					data:{
 						access_token: $("#accessToken").val(),
@@ -89,7 +89,7 @@ $.fn.extend({
 						confirm_password: $('#again').val()
 					},
 					success: function (data){
-						console.log(data);
+						self.location.href="/finfosoft-water/"
 						$('.step1').addClass('hidden');
 						$('.step2').removeClass('hidden');
 					}
