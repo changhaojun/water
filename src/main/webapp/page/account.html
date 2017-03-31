@@ -18,11 +18,12 @@
 				<span>账号管理</span>
 				<span>/</span>
 				<span>Account</span>
-				<input type="button" value="添加账号" class="btn btn-primary"/>
 				<span class="search">
 					<input type="text" value="请输入姓名查找" id="searchId"/>
 					<i class="fa fa-search"></i>					
 				</span>
+				<input type="button" value="添加账号" class="btn btn-primary"/>
+				
 			</div>
 			<hr>
 			<div class="noneData">
@@ -68,8 +69,10 @@
 					<div class="accountNum accountState addState">
 						
 						<label>状态：</label>
-						<input type="button" value="有效" id="addValid" class="stats"/>
-						<input type="button" value="无效" id="addInvalid" />
+						<div class="status">
+							<input type="button" value="有效" id="addValid" class="stats"/>
+							<input type="button" value="无效" id="addInvalid" />
+						</div>
 					</div> 
 				</div>
 				<div class="selectRole">
@@ -134,8 +137,10 @@
 					</div>
 					<div class="accountNum modifyState">
 						<label>状态：</label>
-						<input type="button" value="有效" id="modifyValid"/>
-						<input type="button" value="无效" id="modifyInvalid" />
+						<div class="status">
+							<input type="button" value="有效" id="modifyValid"/>
+							<input type="button" value="无效" id="modifyInvalid" />
+						</div>
 					</div> 
 				</div>
 				<div class="selectRole">
@@ -175,8 +180,9 @@
 				<div class="delContent">
 					确定删除？
 				</div>
-				<button type="button" class="cancelDel">取消</button>
 				<button type="button" class="sureDel" onclick="sureDel()">确定</button>
+				<button type="button" class="cancelDel">取消</button>
+				
 			</div>
 		</div>
 

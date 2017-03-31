@@ -321,8 +321,8 @@
         paginationHAlign: 'right', //right, left
         paginationVAlign: 'bottom', //bottom, top, both
         paginationDetailHAlign: 'left', //right, left
-        paginationPreText: '&lsaquo;',
-        paginationNextText: '&rsaquo;',
+        paginationPreText: '上一页',
+        paginationNextText: '下一页',
         search: false,
         searchOnEnterKey: false,
         strictSearch: false,

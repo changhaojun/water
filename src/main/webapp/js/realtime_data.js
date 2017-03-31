@@ -105,22 +105,24 @@ function contrastData(){
 			"filter":"{'device_id':'"+deviceId+"'}"			
 		},
 		success: function(data) {
-			console.log(data)
+			
 			if(data.code==400005){
 				getNewToken();
-			}else{
-//				console.log(data);
-//				if(data.rows.length==0){
-//					$(".contrastList .listOul").html("<span>暂无对比数据</span>")
-//				}else{
+			}else{				
+				
 					for(var i=0;i<data.rows.length;i++){
 					var Ili="";
-					if(data.rows[i].data_id!=dataId){
-						Ili="<li onclick='getChart("+data.rows[i].data_id+")'>"+data.rows[i].data_name+"</li>"
-						$(".contrastList .listOul").append(Ili)									
+					if(data.rows.length==1){
+						$(".contrastList .listOul").html("<span>暂无数据</span>");
+					}else{
+						if(data.rows[i].data_id!=dataId){
+							Ili="<li onclick='getChart("+data.rows[i].data_id+")'>"+data.rows[i].data_name+"</li>"
+							$(".contrastList .listOul").append(Ili)									
+						}
 					}
+					
 					}
-//				}
+				
 				
 			}
 		}

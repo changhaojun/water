@@ -15,7 +15,6 @@ html{
 	width:100%;
 	height:65px;
 	
-	
 }
 .accountBox .accountTop span{
 	font-size:22px;
@@ -39,12 +38,14 @@ html{
 	width:128px;
 	height:35px;
 	background:#1AB394;
-	margin-left:32.8%;
 	border-radius: 5px 5px;
+	float:right;
 	color:#fff;
 	font-size:14px;
 	cursor: pointer;
 	border:0;
+	margin-right:20px;
+	margin-top:30px;
 }
 .accountBox .accountTop .btn-primary:hover{
 	background:#1ab380;
@@ -53,12 +54,14 @@ html{
 .accountBox .accountTop .search{
 	border:1px solid #c1c1c1;
 	background:#fff;
-	margin-left:15px;
 	border-radius: 5px 5px;
 	width:360px;
 	padding:0;
 	height:36px;
 	font-size:14px;
+	float:right;
+	margin-right:20px;
+	margin-top:30px;
 }
 .accountBox .accountTop .search input:nth-child(1){
 	color:#1AB394;
@@ -221,15 +224,20 @@ html{
 	box-shadow: 10px 10px #676A6C;
 }
 /*账户状态*/
-.accountMask .accountState #addInvalid,.accountMask .accountState #addValid,.accountMask .modifyState #modifyInvalid,.accountMask .modifyState #modifyValid{
-	width:54px;
-	padding:0;
-	border:1px solid #1AB394;
+.accountMask .accountState #addInvalid,.accountMask .accountState #addValid,.accountMask .modifyState #modifyInvalid,.accountMask .modifyState #modifyValid{	
 	color:#1AB394;
-	text-align:center;
-	margin:0;
+	height:33px;
+	width:52px;	
+}
+.status{
+	display: inline-block;
 	border-radius: 5px 5px;
-	
+	border:1px solid #1AB394;
+	width:108px;
+	height:35px;
+}
+.accountMask .accountState #addInvalid,.accountMask .modifyState #modifyInvalid{
+	float:right;
 }
 .accountMask .addAccountContent .addState .stats,.accountMask .modifyAccountContent .modifyState .stats{
 	background:#1AB394;
@@ -356,8 +364,8 @@ html{
 }
 /*删除账户*/
 .accountMask .delAccount,.successMsg .addAccount,.modifyMsg .addAccount{
-	width:360px;
-	height:168px;
+	width:300px;
+	height:150px;
 	border-radius: 3px 3px;
 }
 .accountMask .delContent,.successMsg .addback,.modifyMsg .modifyback{
@@ -370,18 +378,17 @@ html{
 .accountMask .delAccount .cancelDel{	
 	border:1px solid #ADADAD;
 	color:#9E9E9E;	
-	margin-left:197px;	
+	margin-left:8px;
 }
 .accountMask .delAccount button,.successMsg button,.modifyMsg button{
 	width:65px;
 	height:25px;
-	margin-top:10px;
 	border-radius: 3px 3px;	
 }
 .accountMask .delAccount .sureDel,.successMsg .addSuccess,.modifyMsg .modifySuccess{
 	background:#1AB394;
-	color:#fff;
-	margin-left:8px;
+	color:#fff;	
+	margin-left:147px;
 }
 
 

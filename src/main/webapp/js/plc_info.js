@@ -117,12 +117,6 @@ topColor($(".fa-laptop"),"#1ab394");
 topColor($(".fa-arrow-circle-down"),"#1ab394");
 topColor($(".fa-cog"),"#ffb400");
 topColor($(".fa-trash-o"),"#ff787b");
-//上一页
-$("pull-right .page-pre a").html("上一页");
-//下一页
-$("pull-right .page-next a").html("下一页");
-
-
 
 function look(value){
 	self.location.href="/finfosoft-water/dataTag/getDatas/"+value+"-P";

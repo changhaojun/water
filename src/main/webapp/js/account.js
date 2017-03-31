@@ -370,7 +370,7 @@ $("#searchId").on("keyup", function(event) {
 
 function ajaxRequest() {
 	var search = "";
-	if($("#searchId").val()==""){
+	if($("#searchId").val()==""||$("#searchId").val()=="请输入姓名查找"){
 		allList();
 	}else{
 		var okey = '{"fullname":"' + $("#searchId").val() + '"}';
@@ -419,5 +419,7 @@ function ajaxRequest() {
 }
 //按搜索图标进行查找
 $(".fa-search").on("click", function() {
+
 	ajaxRequest();
+	
 })

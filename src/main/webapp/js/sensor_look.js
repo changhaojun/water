@@ -70,9 +70,13 @@ function listBox(){
 							'</div>'
 						$(".sensorContent").append(str);
 						if(data.datas[i].data_value==""||data.datas[i].data_value==0){
-			    			nooff(i);
+			    			$(".Iclose"+i+"").addClass("Iactive");
+							$(".Iopen"+i+"").removeClass("Iactive");
+							$(".circle"+i+"").css({"left":"25px"});
 			    		}else{
-			    			onoff(i);
+			    			$(".Iopen"+i+"").addClass("Iactive");
+							$(".Iclose"+i+"").removeClass("Iactive");
+							$(".circle"+i+"").css({"left":"0px"});
 			    		}
 				//仪表盘展示
 		    		}else if((type=="A"&&data.datas[i].oper_type==2&&data.datas[i].data_type==0)||(type=="A"&&data.datas[i].oper_type==2&&data.datas[i].data_type==1)||(type=="P"&&data.datas[i].oper_type==2)){
@@ -145,25 +149,21 @@ function listBox(){
 	})
 }
 function onoff(i){
-	$(".Iopen"+i+"").addClass("Iactive");
-	$(".Iclose"+i+"").removeClass("Iactive");
-	$(".circle"+i+"").css({"left":"0px"});
+	
 
 }
 function nooff(i){
-	$(".Iclose"+i+"").addClass("Iactive");
-	$(".Iopen"+i+"").removeClass("Iactive");
-	$(".circle"+i+"").css({"left":"25px"});
+	
 }
 //打开开关
 function Iopen(i,id){
 	
-	clickBtn(id,1)	
+	clickBtn(id,1,i)	
 }
 //关闭开关
 function Iclose(i,id){
 	
-	clickBtn(id,0)
+	clickBtn(id,0,i)
 }
 //打开数据展示详情页
 function show(value,dataName){
@@ -217,7 +217,7 @@ function give(id){
 }
 //io调控触发
 
-function clickBtn(id,dataValue){
+function clickBtn(id,dataValue,i){
 	dataId=id;
 	onoff=dataValue;	
 	var guid=guidGenerator();
