@@ -4,16 +4,17 @@ var itemName="/finfosoft-water";
 var accesstoken;
 var refreshToken;
 //获取token
-var getToken=function(){
+var getToken=function(callBack){
 	$.ajax({
 		url:itemName+'/frame/getToken',
 		dataType : 'JSON',
 		type : 'GET',
 		async:false,
 		success : function(data) {
-//			console.info(data)
+			console.info('1')
 			 accesstoken=data.accesstoken;
 			 refreshToken=data.refreshToken;
+			 callBack && callBack()
 		}
 	})
 }

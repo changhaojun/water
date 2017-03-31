@@ -215,16 +215,14 @@ var $extend = $.fn.extend({
 $.extend({
 	//系统初始化
 	init: function() {
-		getToken();
 		var device = new Vue({
 			el: '#vue',
 			data: initData,
 			methods: $extend
 		});
-		
+		getToken($.getInitData);
 		//获取令牌
-		$.getInitData();
-		initData.access_token = accesstoken;
+//		$.getInitData();
 		$('input').changeBorderColor();
 		$('input').limitSpacing();
 		$('input').filter('[num-limit=limit]').numOnly();
@@ -318,6 +316,8 @@ $.extend({
 	},
 	//获取数据流请求
 	getInitData: function (){
+		console.info('2')
+		initData.access_token = accesstoken;
 		$.ajax({
 			type: "get",
 			dataType: "json",

@@ -150,9 +150,9 @@ var $extend = $.fn.extend({
 		this.portData.splice(this.portIndex, 1);
 	},
 	//请求采集器ID所对应的端口列表
-	requestCollectorList: function(e) {
-		var This = this;
+	requestCollectorList: function() {
 		var $This = $(event.target);
+		var This = this;
 		if (!this.deviceData.communication.collector_id&&this.deviceData.communication.collector_id!==0) {
 			$This.siblings('ul').addClass('hidden');
 			return;
