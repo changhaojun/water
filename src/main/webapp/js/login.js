@@ -231,11 +231,10 @@ $.fn.extend({
 								dataType:'JSON',
 								data:{'data':JSON.stringify(data)},
 								success:function(data){
-										self.location.href="/finfosoft-water/frame"
+									self.location.href="/finfosoft-water/frame"
 								}
 							})
 						} else {
-							console.log(1);
 							This.html('登录').css({
 								'letterSpacing': 14,
 								'textIndent': 14
@@ -253,16 +252,12 @@ $.fn.extend({
 								$.ajax({
 									type:"post",
 									dataType:"JSON",
-									url:globalurl+"/authorize/authorize",
+									url:globalurl+"/v1/mails",
 									async:false,
 									data:{
-										'client_id': 'admin',
-										'client_secret': 'admin',
-										'username': iUsername,
-										'password': iPassword,
-										'code': iCode
+										filter: JSON.stringify({username: iUsername})
 									},
-									success: function (){
+									success: function (data){
 										
 									}
 								});	
