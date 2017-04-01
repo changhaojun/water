@@ -362,6 +362,14 @@ body.fixed-sidebar .navbar-static-side{
 	display: inline-block;
 	width: 32px;
 	height: 33px;
+	background: url(../img/icon_btn.png) 0 0;
+	float: left;
+}
+.errorMsg i.error{
+	display: inline-block;
+	width: 32px;
+	height: 33px;
+	background: url(../img/icon_btn.png) -32px 0;
 	float: left;
 }
 .errorMsg span{

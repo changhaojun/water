@@ -188,7 +188,7 @@ function getNavData(){
 				console.info(data)
 				$(".popMsg").show();
 				if(data.code==400011){
-					$(".errorMsg i").css('background','url(/finfosoft-water/img/icon_btn.png) no-repeat -32px 0;');
+					$(".errorMsg i").addClass("error");
 					$(".errorMsg span").html(data.error).css("color","#f55659");
 					
 					$(".popMsg .pop-close,.popMsg_content button").click(function(){
@@ -196,7 +196,7 @@ function getNavData(){
 						$(".oldPassword .pop-username").val("");
 					});
 				}else{
-					$(".errorMsg i").css('background','url(/finfosoft-water/img/icon_btn.png) no-repeat 0 0; ');
+					$(".errorMsg i").removeClass("error");
 					$(".errorMsg span").html(data[1]).css("color","#1ab394");
 					$(".popMsg_content button").click(function(){
 						$('.pop').addClass('hidden');

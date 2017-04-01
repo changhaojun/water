@@ -99,20 +99,36 @@ $.fn.extend({
 			datatype:"json",
 			url:globalurl+"/v1/devices/"+editId+"?access_token="+accesstoken,
 			success:function(data){
-				//console.log(data)
 				if(data.code==400005){
 						getNewToken();
 						getEquipment();
 					}else{
+						
 						deviceId=data._id;
 						//console.log(deviceId);
 						$(".deviceCode").val(data.device_code);
 						$(".deviceName").val(data.device_name);
-						$(".contactPhone").val(data.mobile);
-						$(".warningSpace").val(data.remind_interval);
-						$(".delayTime").val(data.remind_delay);
 						$(".collectInterval").val(data.communication.collect_interval);
 						$(".collector input").val(data.communication.collector_id);
+						if(data.is_remind==0){
+							$(".controlBtn span").eq(1).addClass('activeBtn');
+							$(".controlBtn span").eq(0).removeClass('activeBtn');
+							$(".contactPhone").val("此号码用于接收掉线提醒，如有多个号码请用逗号分隔");
+							$(".warningSpace").val("掉线提醒的间隔时间，单位分钟");
+							$(".delayTime").val("掉线后提醒的延迟时间，单位分钟");
+							$(".contactPhone").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
+							$(".warningSpace").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
+							$(".delayTime").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
+						}else{
+							$(".controlBtn span").eq(0).addClass('activeBtn');
+							$(".controlBtn span").eq(1).removeClass('activeBtn');
+							$(".contactPhone").val(data.mobile);
+							$(".warningSpace").val(data.remind_interval);
+							$(".delayTime").val(data.remind_delay);
+							$(".contactPhone").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
+							$(".warningSpace").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
+							$(".delayTime").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
+						}
 						//console.log(collectorArr);
 						modelCollector()
 					}
@@ -140,8 +156,6 @@ $.fn.extend({
 				filter:'{"device_id":"'+deviceId+'"}'
 			},
 			success:function(data) {
-				
-				console.log(data);
 				$(".detialData tbody").empty();
 				/*pngName=(data.collector_model.split("-"))[1].toLowerCase();
 				//console.log(pngName)
@@ -164,19 +178,36 @@ $.fn.extend({
 					}else{
 						operTypeStr="写入";
 					}
+					var stateEnabled=""
+					switch(dataInfo[i].status) {
+						case 0:stateEnabled="disabled"; break;
+						case 1:stateEnabled="checked"; break;
+					}
 					dataId.push(dataInfo[i].data_id);
 					IdArr.push(dataInfo[i]._id)
 					var dataTr="";
+					if(dataInfo[i].data_unit==""){
+						dataInfo[i].data_unit="-"
+					}
+					if(dataInfo[i].low_battery==""){
+						dataInfo[i].low_battery="-"
+					}
+					if(dataInfo[i].high_battery==""){
+						dataInfo[i].high_battery="-"
+					}
+					if(dataInfo[i].data_name==""){
+						dataInfo[i].data_name="-"
+					}
 					if(dataInfo[i].port_name.substr(0,1)=="A"){
-						dataTr+='<tr><td><input type="checkbox" disabled="disabled"/></td><td>'+dataInfo[i].port_name
+						dataTr+='<tr><td><input type="checkbox" '+stateEnabled+'/></td><td>'+dataInfo[i].port_name
 						+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'<td>'+dataInfo[i].collect_range_low+'-'
 						+dataInfo[i].collect_range_high+'</td><td>'+dataInfo[i].real_range_low+'-'+dataInfo[i].real_range_high
-						+'<td>-</td><td>-</td><td>'+dataInfo[i].data_name+'</td><td>'+dataInfo[i].data_unit
+						+'<td>-</td><td>-</td><td>'+dataInfo[i].data_unit+'</td><td>'+dataInfo[i].data_name
 						+'</td><td ><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>';								
 					}else{
-						dataTr+='<tr><td><input type="checkbox" disabled="disabled"/></td><td>'+dataInfo[i].port_name
+						dataTr+='<tr><td><input type="checkbox" '+stateEnabled+'/></td><td>'+dataInfo[i].port_name
 						+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'<td>-</td><td>-</td><td>'+dataInfo[i].high_battery
-						+'</td><td>'+dataInfo[i].low_battery+'<td>-</td><td>'+dataInfo[i].data_unit
+						+'</td><td>'+dataInfo[i].low_battery+'<td>-</td><td>'+dataInfo[i].data_name
 						+'</td><td><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>';
 					};
 					//console.log(dataTr)
@@ -238,14 +269,7 @@ $.fn.extend({
 		//读写状态
 		
 		var aStr="",dStr="";
-		if($("#dataTable").find(" tr").eq(i).find("input").attr("checked")){
-			//console.log(677);
-			$(".portName p i").css("background-position-x",-48+"px");
-		}else{
-			$(".portName p i").css("background-position-x",-95+"px");
-			//console.log(567)
-			$("#dataTable").find(" tr").eq(i).find("input").removeAttr("checked")
-		}
+		
 		rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
 		//console.log(rangeLow)
 		rangeHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[1];
@@ -269,7 +293,7 @@ $.fn.extend({
 			$(".changeData").empty();
 			dStr='<div class="dataRow collectorRange"><label>低电平</label><div class="rangeData">'
 			+'<input type="text" class="lowBattery" value="'+lowBattery+'" style="width:350px;" /></div></div><div class="dataRow realRange">'
-			+'<label>高电平</label><div class="rangeData "><input type="text" class="highBattery" style="width:350px;" value="'+lowBattery+'" /></div>'
+			+'<label>高电平</label><div class="rangeData "><input type="text" class="highBattery" style="width:350px;" value="'+highBattery+'" /></div>'
 			+'</div><div class="dataRow dataName"><label>数据名称</label><input type="text" value="'+dataName+'"/></div>';
 			$(".changeData").append(dStr);
 		}
@@ -519,23 +543,33 @@ $.fn.extend({
 	}
 	function save(){
 		var dataConfig=[];
-		//console.log(dataId)
 		var data={};
-		//console.log(info.length)
 		var status = "";
 		for (var i = 0; i < info.length; i++) {
 				//console.log(33434)
 				status=$("#dataTable").find(" tr").eq(i).find("input").attr('checked')==="checked" ? 1 : 0;
 				rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
-				//console.log(rangeLow)
 				rangeHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[1];
 				realLow=$("#dataTable").find(" tr").eq(i).find("td").eq(5).text().split("-")[0];
 				realHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(5).text().split("-")[1];
 				highBattery=$("#dataTable").find(" tr").eq(i).find("td").eq(6).text();
 				lowBattery=$("#dataTable").find(" tr").eq(i).find("td").eq(7).text();
 				dataUnit=$("#dataTable").find(" tr").eq(i).find("td").eq(8).text();
-				//console.log(dataUnit)
 				dataName=$("#dataTable").find(" tr").eq(i).find("td").eq(9).text();
+				if(rangeHigh=="-"){
+					rangeHigh="";
+				};
+				if(rangeLow=="-"){
+					rangeLow="";
+				}
+				if(realHigh=="-"){
+					realHigh=""
+				}
+				if(realLow=="-"){
+					realLow="-"
+				}
+				
+				
 				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
 				'"oper_type":'+dataInfo[i].oper_type+','+
 				'"port_name":"'+dataInfo[i].port_name+'",'+
@@ -547,7 +581,7 @@ $.fn.extend({
 				'"high_battery":"'+highBattery+'",'+
 				'"status":"'+status+'",'+
 				'"_id":"'+IdArr[i]+'",'+
-				'"data_id":"'+IdArr[i]+'",'+
+				'"data_id":"'+dataId[i]+'",'+
 				'"data_unit":"'+dataUnit+'",'+
 				'"data_name":"'+dataName+'"}';
 				//console.log(dataConfigJson)

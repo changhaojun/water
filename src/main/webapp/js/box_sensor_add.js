@@ -74,7 +74,15 @@ $.fn.extend({
 		$(".delayTime").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
 		onOff=-1;
 	});
-	
+	if($(".controlBtn span").eq(1).hasClass("activeBtn")){
+		$(".contactPhone").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
+		$(".warningSpace").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
+		$(".delayTime").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
+	}else{
+		$(".contactPhone").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
+		$(".warningSpace").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
+		$(".delayTime").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
+	}
 		
 	//关闭弹窗
 	$(".maskClose").click(function(){
@@ -221,7 +229,7 @@ $.fn.extend({
 		//点击编辑的时候同时获取里面的内容和弹窗的内容同步
 		//数据类型
 		$(".dataNode ").remove();
-		
+		$(".portName p i").css("background-position-x",-48+"px");
 		if(info[i].dataType==0){
 			$(".datanodeType ").append("<div class='dataNode' ><select><option selected='selected' value='0'>电流</option><option value='1'>电压</option></select></div>");
 		}else if(info[i].dataType==1){
@@ -236,14 +244,7 @@ $.fn.extend({
 		//读写状态
 		
 		var aStr="",dStr="";
-		if($("#dataTable").find(" tr").eq(i).find("input").attr("checked")){
-			//console.log(677);
-			$(".portName p i").css("background-position-x",-48+"px");
-		}else{
-			$(".portName p i").css("background-position-x",-95+"px");
-			//console.log(567)
-			$("#dataTable").find(" tr").eq(i).find("input").removeAttr("checked")
-		}
+		
 		
 		rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
 		//console.log(rangeLow)
@@ -378,16 +379,16 @@ $.fn.extend({
 		if(info[j].portName.substr(0,1)=="A"){
 			collectRange=$(".collectorLow").val()+"-"+$(".collectorHigh").val();
 			realRang=$(".realRange input:eq(0)").val()+"-"+$(".realRange input:eq(1)").val();
-			highBattery="——";
-			lowBattery="——";
+			highBattery="-";
+			lowBattery="-";
 			dataUnit=dataUnit;
 			dataName:$(".dataName input").val();
 		}else{
-			collectRange="——";
-			realRang="——";
+			collectRange="-";
+			realRang="-";
 			highBattery=highBattery;
 			lowBattery=lowBattery;
-			dataUnit="——";
+			dataUnit="-";
 			dataName:$(".dataName input").val();
 		};
 		if(flag==0){
@@ -431,7 +432,7 @@ $.fn.extend({
 			if(controlBtn.eq(i).hasClass("activeBtn")){
 				//console.log(111)
 				isRemind = controlBtn.eq(i).attr("value");
-				console.log(isRemind)
+				//console.log(isRemind)
 			}
 		}
 		if (deviceCode == "请输入设备编号") {
@@ -490,7 +491,7 @@ $.fn.extend({
 							data:device
 						},
 						success:function(data){
-							console.log(data)
+							//console.log(data)
 							//cons
 							dataId=data._id;
 							for(var j=0;j<collectorArr.length;j++){
@@ -503,7 +504,6 @@ $.fn.extend({
 									if (data.code===200) {
 										layer.msg(data.success, {
 											icon: 1,
-											time:1000,
 											end:function(){
 												self.location.href='/finfosoft-water/dataTag/box/'
 											}
@@ -520,11 +520,11 @@ $.fn.extend({
 					})
 				}
 			}else{
-				console.log(23243)
+//				console.log(23243)
 				device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
 						+  "','communication':" + communication +",'status': 1 "
 						+",'is_remind':0,'protocal':'A'}";		
-				console.log(device);
+			//	console.log(device);
 				$.ajax({
 					type:"post",
 					datatype:"json",
@@ -533,7 +533,7 @@ $.fn.extend({
 						data:device
 					},
 					success:function(data){
-						console.log(data);
+					//	console.log(data);
 						dataId=data._id;
 						for(var j=0;j<collectorArr.length;j++){
 							if($(".list input").val()!=collectorArr[j]){
@@ -545,7 +545,6 @@ $.fn.extend({
 								if (data.code===200) {
 									layer.msg('设备保存成功！', {
 										icon: 1,
-										time:1000,
 										end:function(){
 											self.location.href='/finfosoft-water/dataTag/box/'
 										}
@@ -605,7 +604,18 @@ $.fn.extend({
 //					//status +=$("#dataTable").find(" tr").eq(i).find("input").attr("checked","0");
 //					status = 0;
 //				}
-				
+				if(rangeHigh=="-"){
+					rangeHigh="";
+				};
+				if(rangeLow=="-"){
+					rangeLow="";
+				}
+				if(realHigh=="-"){
+					realHigh=""
+				}
+				if(realLow=="-"){
+					realLow="-"
+				}
 				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
 				'"oper_type":'+dataInfo[i].oper_type+','+
 				'"port_name":"'+dataInfo[i].port_name+'",'+
