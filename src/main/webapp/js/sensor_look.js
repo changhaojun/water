@@ -19,7 +19,7 @@ if(type=="A"){
 	$(".sensorTop .Etype").html(" / Look PLC");
 }
 //每隔十秒刷新一次
-var time=setInterval(listBox,10000)
+//var time=setInterval(listBox,10000)
 //获取数据列表
 function listBox(){
 	$.ajax({
@@ -147,13 +147,6 @@ function listBox(){
 		    toolTip();
 		}
 	})
-}
-function onoff(i){
-	
-
-}
-function nooff(i){
-	
 }
 //打开开关
 function Iopen(i,id){
