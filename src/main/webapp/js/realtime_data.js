@@ -35,12 +35,13 @@ if(h>=12){
 var chartArr=new Array();
 var chartDivArr =new Array();
 //转换初始化时间值的格式
-startTime=year+"$"+p(month)+"$"+(p(date)-p(date)+1)+"$"+(p(h)-p(h))+":"+(p(m)-p(m))+":"+(p(s)-p(s));
+startTime=year+"$"+p(month)+"$"+(p(date-date+1))+"$"+(p(h-h))+":"+(p(m-m))+":"+(p(s-s));
 endTime=year+"$"+p(month)+"$"+(p(date))+"$"+(p(h))+":"+(p(m))+":"+(p(s));
 initstartTime=year+'-'+p(month)+"-"+p(date)+" AM "+p(h-h)+':'+p(m-m);
 initendTime=year+'-'+p(month)+"-"+p(date)+ flag +p(h)+':'+p(m);
 $("#reservationtime").val(initstartTime+" - "+initendTime);
-
+console.log(startTime+endTime);
+//console.log(myDate);
 //初始化提示框；
 function toolTip(){
 	$('[data-toggle="tooltip"]').tooltip();
@@ -60,7 +61,7 @@ function currentChart(dataId){
 			data:data
 		},
 		success: function(data) {
-//			console.log(data)
+			console.log(data)
 			var chartType="";
 			if(data.code==400005){
 				getNewToken();
@@ -83,8 +84,8 @@ $(document).ready(function() {
               timePickerIncrement: 30,
               format: 'YYYY-MM-DD A h:mm '
            }, function(start, end, label) {				        		
-              start=new Date(start).getFullYear()+"$"+p(new Date(start).getMonth())+"$"+p(new Date(start).getDate())+"$"+p(new Date(start).getHours())+":"+p(new Date(start).getMinutes())+":"+p(new Date(start).getSeconds());
-    		  end=new Date(end).getFullYear()+"$"+p(new Date(end).getMonth())+"$"+p(new Date(end).getDate())+"$"+p(new Date(end).getHours())+":"+p(new Date(end).getMinutes())+":"+p(new Date(end).getSeconds());			           
+              start=new Date(start).getFullYear()+"$"+p(new Date(start).getMonth()+1)+"$"+p(new Date(start).getDate())+"$"+p(new Date(start).getHours())+":"+p(new Date(start).getMinutes())+":"+p(new Date(start).getSeconds());
+    		  end=new Date(end).getFullYear()+"$"+p(new Date(end).getMonth()+1)+"$"+p(new Date(end).getDate())+"$"+p(new Date(end).getHours())+":"+p(new Date(end).getMinutes())+":"+p(new Date(end).getSeconds());			           
            	  startTime=start;
            	  endTime=end;
            	 for(var i=0;i<chartDivArr.length;i++){
