@@ -362,7 +362,6 @@ body.fixed-sidebar .navbar-static-side{
 	display: inline-block;
 	width: 32px;
 	height: 33px;
-	background: url(../img/icon_btn.png) no-repeat -32px 0;
 	float: left;
 }
 .errorMsg span{
