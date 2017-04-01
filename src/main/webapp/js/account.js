@@ -300,6 +300,8 @@ function event(obj, str) {
 	obj.on("blur", function() {
 		if (obj.val() == "") {
 			obj.val(str);
+		$(".modifyuserError").css("display", "none");	
+		$(".adduserError").css("display", "none");
 		}
 		if (obj.val() != "") {
 			$(".adduserError").html("");

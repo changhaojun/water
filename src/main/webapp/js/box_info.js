@@ -40,7 +40,7 @@ window.getDTUList=function(){
 		    striped: true,//条纹
 //		    ajaxOptions:"",//公司ID
 		    onLoadSuccess:function(value){
-//		    	console.log(value);
+
 		    	if(value.code==400005||value.code==500){
 		    		window.getNewToken();
 		    		$('#dtuList').bootstrapTable("refresh",queryParams)
@@ -103,7 +103,7 @@ function queryParams(params) {
 }
 
 //初始化提示框
-function toolTip(){
+function toolTip(){	
 	 $('[data-toggle="tooltip"]').tooltip();
 }
 function topColor(obj,color){
@@ -141,7 +141,6 @@ window.deleteCol=function(value){
 				  if(data.code==200){
 					  layer.msg(data.success,{icon:1})
 					  setTimeout("self.location.reload()",2000)
-//					  $('#dtuList').bootstrapTable("refresh",queryParams)
 				  }else if(data.code==400005){
 					  window.getNewToken()
 					  deleteCol(value)
@@ -150,8 +149,46 @@ window.deleteCol=function(value){
 		  })
 		});
 }
-
-
+//设备下发
+function give(value){
+	var guid=guidGenerator();	
+	layer.confirm("<font size='4'>确认下发？</font>",function(index){
+		layer.close(index);
+		data="{'device_id':'"+value+"','guid':'"+guid+"'}";
+		data={'data':data};
+		$.ajax({
+			url:globalurl+"/v1/homes",
+			data:data,
+			dataType: 'JSON',
+			type: 'POST',
+			success: function(data) {
+				console.log(data)
+				if(data.result==1){
+					layer.msg('已下发', {
+						icon : 1
+					});
+//					window.top.MQTTconnect(guid);
+				}else{
+					layer.msg('下发失败', {
+						icon : 2
+					});
+				}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				layer.msg('下发失败', {
+					icon : 2
+				});
+		    }
+		});
+	});
+}
+//控制量guid
+function guidGenerator() {
+	var S4 = function() {
+	return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+	};
+	return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}
 
 
 

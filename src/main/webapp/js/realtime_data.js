@@ -83,8 +83,8 @@ $(document).ready(function() {
               timePickerIncrement: 30,
               format: 'YYYY-MM-DD A h:mm '
            }, function(start, end, label) {				        		
-              start=new Date(start).getFullYear()+"$"+p(new Date(start).getMonth())+"$"+p(new Date(start).getDate())+"$"+p(new Date(start).getHours())+":"+p(new Date(start).getMinutes())+":"+p(new Date(start).getSeconds());
-    		  end=new Date(end).getFullYear()+"$"+p(new Date(end).getMonth())+"$"+p(new Date(end).getDate())+"$"+p(new Date(end).getHours())+":"+p(new Date(end).getMinutes())+":"+p(new Date(end).getSeconds());			           
+              start=new Date(start).getFullYear()+"$"+p(new Date(start).getMonth()+1)+"$"+p(new Date(start).getDate())+"$"+p(new Date(start).getHours())+":"+p(new Date(start).getMinutes())+":"+p(new Date(start).getSeconds());
+    		  end=new Date(end).getFullYear()+"$"+p(new Date(end).getMonth()+1)+"$"+p(new Date(end).getDate())+"$"+p(new Date(end).getHours())+":"+p(new Date(end).getMinutes())+":"+p(new Date(end).getSeconds());			           
            	  startTime=start;
            	  endTime=end;
            	 for(var i=0;i<chartDivArr.length;i++){
@@ -105,27 +105,25 @@ function contrastData(){
 			"filter":"{'device_id':'"+deviceId+"'}"			
 		},
 		success: function(data) {
-			
+			console.log(data);
 			if(data.code==400005){
 				getNewToken();
-			}else{				
-				
-					for(var i=0;i<data.rows.length;i++){
+			}else{							
+				for(var i=0;i<data.rows.length;i++){
 					var Ili="";
-					if(data.rows.length==1){
-						$(".contrastList .listOul").html("<span>暂无数据</span>");
+					if(data.rows[i].status==1&&data.rows.length==1||data.rows[i].status==0&&data.rows.length>=1){							
+						$(".contrastList .listOul").html("<span>暂无对比数据</span>");
 					}else{
-						if(data.rows[i].data_id!=dataId){
+						if(data.rows[i].data_id!=dataId&&data.rows[i].status==1&&data.rows.length>1){							
 							Ili="<li onclick='getChart("+data.rows[i].data_id+")'>"+data.rows[i].data_name+"</li>"
 							$(".contrastList .listOul").append(Ili)									
 						}
 					}
+				}
 					
-					}
-				
-				
-			}
-		}
+					
+				}	
+			}		
 	})
 }
 //获取除本身外的图表
@@ -144,11 +142,11 @@ function initChart(data,chartType){
 				if((chartType=="line"&&data.data_values.length==0&&data.max_values.length==0&&data.min_values.length==0)||(chartType=="line"&&data.data_values==[]&&data.max_values==[]&&data.min_values==[])||(chartType=="bar"&&data.data_values.length==0)||(chartType=="bar"&&data.data_values==[])){	
 					console.log(123)
 					$(".contrastChart").append("<div class=' "+divId+"'></div>")
-	               	$(".contrastChart").append("<div id='"+divId+"' class='row dataChartBox' style='width:800px;height: 300px;overflow: hidden;margin:20px;'>暂无数据</div>");
+	               	$(".contrastChart").append("<div id='"+divId+"' class='row dataChartBox' style='width:780px;height: 300px;overflow: hidden;margin:20px;'>暂无数据</div>");
 				}else{
 					console.log(123)
 					$(".contrastChart").append("<div class=' "+divId+"'>"+chartArr[i]+"</div>")
-					$(".contrastChart").append("<div id='"+divId+"' class='row dataChartBox' style='width:800px;height: 300px;overflow: hidden;margin:20px;'></div>");
+					$(".contrastChart").append("<div id='"+divId+"' class='row dataChartBox' style='width:780px;height: 300px;overflow: hidden;margin:20px;'></div>");
 					
 				}			
 			}else{
@@ -156,7 +154,7 @@ function initChart(data,chartType){
 			$("."+divId).show();
 			}
 			$("."+divId).empty();
-			$("."+divId).append("<span class='closeChart' style='float:right;margin-right:30px;cursor:pointer;' onclick='closeChart("+data.data_id+")' data-toggle='tooltip' data-placement='top' title='删除'>&times;</span>")
+			$("."+divId).append("<span class='closeChart' style='float:right;margin-right:20px;cursor:pointer;' onclick='closeChart("+data.data_id+")' data-toggle='tooltip' data-placement='top' title='删除'>&times;</span>")
 	}
 	toolTip();
 	var myChart = echarts.init(document.getElementById('chart'+data.data_id));
@@ -208,17 +206,28 @@ function initChart(data,chartType){
 	    xAxis: {
 	        type: 'category',
 	        boundaryGap: false,
-	        data:data.data_times
+	        data:data.data_times,
+	        axisLabel: {
+                show: true,
+                textStyle: {
+                    color: '#1ab394'
+                }
+           }
 	    },
 	    yAxis: {
 	        type: 'value',
-	        axisLabel : {formatter: '{value}'}
+	        axisLabel : {
+	        	formatter: '{value}',
+	        	show: true,
+                textStyle: {
+                    color: '#1ab394'
+                }
+	        }
 	    },
 	    series: chartSeries
 };	
 	myChart.setOption(option);
 	chartArr.push(myChart);
-
 	console.log(chartDivArr)
 } 
 
