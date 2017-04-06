@@ -6,7 +6,7 @@ html{
 	background:#f3f3f4;
 	float:left;
 	position: relative;	
-	min-width:1366px;
+	/*min-width:1366px;*/
 	overflow-y: hidden;
 	overflow-x: hidden;
 }

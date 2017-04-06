@@ -3,7 +3,7 @@ var companyId=$("#companyId").val();		//公司ID
 var isSearch=false;
 $(function(){
 	getToken();
-	toolTip();
+//	toolTip();
 	getDTUList();
 	getToken();	
 })
@@ -45,6 +45,7 @@ window.getDTUList=function(){
 		    		$('#dtuList').bootstrapTable("refresh",queryParams)
 		    	}
 		    	toolTip();//顶部提示框
+		    	
 		    },
 		    columns: [
 	                    {
@@ -68,14 +69,14 @@ window.getDTUList=function(){
 }
 //操作列的格式化
 function editFormatter(value,row,index){
-	return "<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#1cb295;margin-left:15px;cursor: pointer;' class='fa fa-laptop' onclick=look('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='下发' style='color:#48c2a9;margin-left:15px;cursor: pointer;' class='fa fa-arrow-circle-down' onclick=give('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='修改' style='color:#ffb400;margin-left:15px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:15px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol('"+value+"')></span>"
+	return "<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#1cb295;cursor: pointer;' class='fa fa-laptop' onclick=look('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='下发' style='color:#48c2a9;margin-left:15px;cursor: pointer;' class='fa fa-arrow-circle-down' onclick=give('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='修改' style='color:#ffb400;margin-left:15px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:15px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol('"+value+"')></span>"
 }
 //box状态列的格式化
 function statusFormatter(value,row,index){
 	if(value==1){
-		return "在线"
+		return "<span style='color:#2cb7c8;background:url(../img/box_info.png)no-repeat -20px 0px;padding-left:25px;'>在线</span>"
 	}else{
-		return "离线"
+		return "<span style='color:#a3a3a3;background:url(../img/box_info.png)no-repeat 0px 0px;padding-left:25px;'>离线</span>"
 	}
 }
 //表格数据获取的参数
@@ -105,19 +106,18 @@ function queryParams(params) {
 
 //初始化提示框
 function toolTip(){
-	 $('[data-toggle="tooltip"]').tooltip();
+	$('[data-toggle="tooltip"]').tooltip();
+	topColor($(".fa-laptop"),"#1ab394");
+	topColor($(".fa-arrow-circle-down"),"#1ab394");
+	topColor($(".fa-cog"),"#ffb400");
+	topColor($(".fa-trash-o"),"#ff787b");
 }
 function topColor(obj,color){
-	obj.on("mouseover",function(){
+	obj.on("mouseover",function(){		
 		$(".tooltip-inner").css("background-color",color);
 		$(".tooltip.top .tooltip-arrow").css("border-top-color",color);
 	})
 }
-topColor($(".fa-laptop"),"#1ab394");
-topColor($(".fa-arrow-circle-down"),"#1ab394");
-topColor($(".fa-cog"),"#ffb400");
-topColor($(".fa-trash-o"),"#ff787b");
-
 function look(value){
 	self.location.href="/finfosoft-water/dataTag/getDatas/"+value+"-P";
 }

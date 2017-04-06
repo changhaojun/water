@@ -1345,7 +1345,6 @@
             this.options.onlyInfoPagination ? this.options.formatDetailPagination(this.options.totalRows) :
             this.options.formatShowingRows(this.pageFrom, this.pageTo, this.options.totalRows),
             '</span>');
-
         if (!this.options.onlyInfoPagination) {
             html.push('<span class="page-list">');
 

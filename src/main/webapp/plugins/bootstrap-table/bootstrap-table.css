@@ -196,7 +196,7 @@
 .fixed-table-pagination .pagination-detail {
     margin-top: 10px;
     margin-bottom: 10px;
-    display:block !important;
+    /*display:block !important;*/
 }
 
 .fixed-table-pagination div.pagination .pagination {

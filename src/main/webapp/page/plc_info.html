@@ -19,7 +19,7 @@
 					<span>/</span>
 					<span>Access PLC</span>
 					<span class="search">
-						<input v-model="searchCollectorId" type="text" placeholder="请输入姓名查找" id="searchId" onkeypress="if(event.keyCode==13) {searchCollectot();return false;}"/>
+						<input  v-model="searchCollectorId" type="text" placeholder="请输入关键字查找" id="searchId" onkeypress="if(event.keyCode==13) {searchCollectot();return false;}"/>
 						<i class="fa fa-search" onclick="searchCollectot()"></i>					
 					</span>
 					<input type="button" value="新增" class="btn btn-primary" onclick="addPlc()"/>

@@ -6,6 +6,7 @@ $(function(){
 	getToken();
 	allList();
 	showTips();
+	setRole();
 })
 function allList(){
 	var searchFilter='{"company_code":"'+companyCode+'"}';
@@ -24,7 +25,6 @@ function allList(){
 				getNewToken();
 				allList();
 			}else if(data.rows.length>0){
-				console.log(data)
 				$(".accountContent").html("");
 				if (data == null) {
 					$(".noneData").css("display", "block");
@@ -70,12 +70,22 @@ function allList(){
 	})
 };
 //点击添加角色
-function setRole(obj) {
-	obj.each(function(index, ele) {
+function setRole() {
+	$(".addRole ul li").each(function(index, ele) {
 		$(this).on("click", function() {
-			if ($(this).attr("class") == "disabled") {
-				$(this).removeClass("disabled").addClass("cheacked");
-			} else {
+			if($(this).attr("class") == "disabled"){
+					$(this).removeClass("disabled").addClass("cheacked");	
+			}else{
+				$(this).removeClass("cheacked").addClass("disabled");
+			}
+		})
+	});
+	
+	$(".modifyRole ul li").each(function(index, ele) {
+		$(this).on("click", function() {
+			if($(this).attr("class") == "disabled"){
+					$(this).removeClass("disabled").addClass("cheacked");	
+			}else{
 				$(this).removeClass("cheacked").addClass("disabled");
 			}
 		})
@@ -84,16 +94,23 @@ function setRole(obj) {
 //点击显示添加页面
 $(".btn-primary").on("click", function() {
 		$(".addAccountMask").fadeIn(200);
-		setRole($(".addRole ul li"));
+		$(".addRole ul li").removeClass("cheacked").addClass("disabled");
 })
 //点击添加账户的保存
-function addUser(){	
+function addUser(){
+	var flag;
 	if ($(".addState .stats").val() == "有效") {
 		flag = 1;
 	} else {
 		flag = 0;
 	}
-	var flag;
+	//添加角色
+		var addoRole = [];
+		$(".addRole ul .cheacked").each(function(index, ele) {
+			addoRole.push($(".addRole ul .cheacked").eq(index).attr("rolename_id"));
+		})
+		addoRole += "";
+		console.log(addoRole);
 	if ($("#addText").val() == "请输入邮箱") {
 		$(".addaccountError").css("display", "block");
 		$(".addaccountError").html("邮箱不能为空");
@@ -118,14 +135,9 @@ function addUser(){
 		$(".addphoneError").css("display", "block");
 		$(".addphoneError").html("请输入正确的手机号");
 		$(".addphoneError").css("color", "#fff");
-	} else {
-		
-		//添加角色
-		var addoRole = [];
-		$(".addRole ul .cheacked").each(function(index, ele) {
-			addoRole.push($(".addRole ul .cheacked").eq(index).attr("rolename_id"));
-		})
-		addoRole += "";
+	} else if(addoRole.length==0){
+		layer.msg("账户角色不能为空", {icon: 2,});
+	}else{
 		var data = "{'fullname':'" + $("#addUsername").val() + "','username':'" + $("#addText").val() + "','password':'" + $("#addPassword").val() + "','mobile':'" + $("#addPhone").val() + "','status':" + flag + ",'company_id':'" + companyId + "','company_code':'" +companyCode+ "'}";
 		$.ajax({
 			type: 'POST',
@@ -138,29 +150,31 @@ function addUser(){
 				access_token: accesstoken
 			},
 			success: function(data) {
-				console.log(data);
-				$(".successMsg").css("display", "block");
-				if (data.code == 200) {
-					$(".successMsg .addback .backImg").css("background-position", "0px 0px");
-					$(".successMsg .addback .addText").html(data.success);
-					location.reload("account.html");
-				} else {
-					$(".successMsg .addback .backImg").css("background-position", "-32px 0px");
-					$(".successMsg .addback .addText").html(data.error);
-				}
-				$(".addSuccess").on("click", function() {
-					$(".addAccountMask").fadeOut(200);
-					$(".successMsg").css("display", "none");
-
-				});
+			if(data.code==400005){
+				getNewToken();
+				addUser();
+			}else if (data.code ==  400014) {
+				layer.msg(data.error, {icon: 2,});
+//				layer.alert(data.error, {
+//				   icon: 2,
+//				   skin: 'layui-layer-molv' ,
+//				   shade :0,
+//				   closeBtn: 0
+//				});
+			}else if(data.code ==  200){
+				layer.msg(data.success, {
+					icon: 1,
+					end: function() {
+					self.location.href='/finfosoft-water/user'
+				}})
+			}
 			}
 		})
 	}
 };
 //修改账户
 function modify(_id){
-	editId = _id;
-	setRole($(".modifyRole ul li"));
+	editId = _id;	
 	$(".modifyRole ul li").removeClass("cheacked").addClass("disabled");
 	$(".modifyAccountMask").fadeIn(200);
 	$(".modifyState input").removeClass();
@@ -172,17 +186,20 @@ function modify(_id){
 			access_token: accesstoken
 		},
 		success: function(data) {
-			console.log(data);
 			if (data.status) {
 				$(".modifyState #modifyValid").addClass("stats")
 			} else {
 				$(".modifyState #modifyInvalid").addClass("stats")
 			}
 			$(data.roles).each(function(index, ele) {
-				if (ele == $(".modifyRole ul li").eq(index).html()) {
-					$(".modifyRole ul li").eq(index).removeClass("disabled").addClass("cheacked")
-				}
+//				console.log($(".modifyRole ul li").eq(index).html())
+				for(i=0;i<$(".modifyRole ul li").length;i++){
+					if (ele == $(".modifyRole ul li").eq(i).html()) {
+						$(".modifyRole ul li").eq(i).removeClass("disabled").addClass("cheacked")
+					}
+				}			
 			})
+			
 			$("#modifyUsername").val(data.fullname);
 			$("#modifyText").val(data.username);
 			$("#modifyPhone").val(data.mobile);
@@ -193,6 +210,12 @@ function modify(_id){
 
 //确定修改
 function sureModify() {
+	//添加角色
+		var addoRole = [];
+		$(".modifyRole ul .cheacked").each(function(index, ele) {
+			addoRole.push($(".modifyRole ul .cheacked").eq(index).attr("rolename_id"));
+		})
+		addoRole += "";
 	if ($("#modifyText").val() == "请输入邮箱") {
 		$(".modifyaccountError").css("display", "block");
 		$(".modifyaccountError").html("邮箱不能为空");
@@ -202,6 +225,7 @@ function sureModify() {
 		$(".modifyuserError").html("姓名不能为空");
 		$(".modifyuserError").css("color", "#fff");
 	} else if ($("#modifyPhone").val() == "请输入手机号") {
+		$(".modifyuserError").css("display", "none");
 		$(".modifyphoneError").css("display", "block");
 		$(".modifyphoneError").html("手机号不能为空");
 		$(".modifyphoneError").css("color", "#fff");
@@ -217,7 +241,10 @@ function sureModify() {
 		$(".modifypassError").css("display", "block");
 		$(".modifypassError").html("请输入正确密码(6到16位字母数字或下划线)");
 		$(".modifypassError").css("color", "#fff");
-	} else {
+	} else if(addoRole.length==0){
+		layer.msg("账户角色不能为空", {icon: 2,});
+	}else{
+		$(".modifyuserError").css("display", "none");
 		//修改状态
 		var setVar;
 		if ($(".modifyState .stats").val() == "有效") {
@@ -225,12 +252,7 @@ function sureModify() {
 		} else {
 			setVar = 0;
 		}
-		//添加角色
-		var addoRole = [];
-		$(".modifyRole ul .cheacked").each(function(index, ele) {
-			addoRole.push($(".modifyRole ul .cheacked").eq(index).attr("rolename_id"));
-		})
-		addoRole += "";
+		
 		var modifydata = "{'fullname':'" + $("#modifyUsername").val() + "','username':'" + $("#modifyText").val() + "','password':'" + $("#modifyPassword").val() + "','mobile':'" + $("#modifyPhone").val() + "','status':" + setVar + "}";
 		$.ajax({
 			type: 'put',
@@ -243,21 +265,25 @@ function sureModify() {
 				access_token: accesstoken
 			},
 			success: function(data) {
-				$(".modifyMsg").css("display", "block");
-				if (data.code == 200) {
-					$(".modifyMsg .modifyback  .backImg").css("background-position", "0px 0px");
-					$(".modifyMsg .modifyback .modifyText").html(data.success);
-
-				} else {
-					$(".modifyMsg .modifyback .backImg").css("background-position", "-32px 0px");
-					$(".modifyMsg .modifyback  .modifyText").html(data.error);
+				if(data.code==400005){
+					getNewToken();
+					sureModify();
+				}else if (data.code ==  400014) {
+					layer.msg(data.error, {icon: 2,});
+	//				layer.alert(data.error, {
+	//				   icon: 2,
+	//				   skin: 'layui-layer-molv' ,
+	//				   shade :0,
+	//				   closeBtn: 0
+	//				});
+				}else if(data.code ==  200){
+					layer.msg(data.success, {
+						icon: 1,
+						end: function() {
+						self.location.href='/finfosoft-water/user'
+					}})
 				}
-				$(".modifySuccess").on("click", function() {
-					$(".addAccountMask").fadeOut(200);
-					$(".modifyMsg").css("display", "none");
-					location.reload("account.html");
-				});
-			}
+				}
 		})
 	}
 };
@@ -292,11 +318,16 @@ $(".cancelDel").on("click", function() {
 })
 //按搜索键进行查找聚焦失焦
 function event(obj, str) {
-	obj.on("focus", function() {
+	obj.on({"focus ": function() {
 		if (obj.val() == str) {
 			obj.val("");
 		}
-	})
+	},"keyup":function(event){
+		console.log(123);
+		if(event.keyCode==32){
+			obj.val("");
+		}
+	}})
 	obj.on("blur", function() {
 		if (obj.val() == "") {
 			obj.val(str);
@@ -316,11 +347,16 @@ var re = /^[a-zA-Z0-9]+@\w+(\.[a-zA-Z]+){1,2}$/; //验证邮箱
 var phone = /^1[3|4|5|8][0-9]\d{8}$/; //验证手机号
 var pass = /^\w{6,16}$/; //验证密码
 function blank(obj1, obj2, str1, str2, Var) {
-	obj1.on("focus", function() {
+	obj1.on({"focus ": function() {
 		if (obj1.val() == str1) {
 			obj1.val("");
 		}
-	})
+	},"keyup":function(event){
+		console.log(123);
+		if(event.keyCode==32){
+			obj1.val("");
+		}
+	}})
 	obj1.on("blur", function() {
 		if (obj1.val() == "") {
 			obj1.val(str1);
@@ -421,7 +457,5 @@ function ajaxRequest() {
 }
 //按搜索图标进行查找
 $(".fa-search").on("click", function() {
-
-	ajaxRequest();
-	
+	ajaxRequest();	
 })
