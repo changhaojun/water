@@ -27,11 +27,11 @@
 					</div>
 					<div class="dataCircle">
 						<label>设备编号</label>
-						<input type="text" class="deviceCode" value="请输入设备编号"/>
+						<input type="text" class="deviceCode" value="请输入设备编号" data-info="请输入设备编号"/>
 					</div> 
 					<div class="dataCircle">
 						<label>设备名称</label>
-						<input type="text" class="deviceName"  value="请输入设备名称"/>
+						<input type="text" class="deviceName"  value="请输入设备名称" data-info="请输入设备名称"/>
 					</div>
 					<div class="dataCircle">
 						<label>掉线提醒</label>
@@ -43,15 +43,15 @@
 					</div>
 					<div class="dataCircle">
 						<label>联系电话</label>
-						<input type="text" class="contactPhone" value="此号码用于接收掉线提醒，如有多个号码请用逗号分隔"/>
+						<input type="text" class="contactPhone" value="此号码用于接收掉线提醒，如有多个号码请用逗号分隔" data-info="此号码用于接收掉线提醒，如有多个号码请用逗号分隔"/>
 					</div>
 					<div class="dataCircle">
 						<label>提醒间隔</label>
-						<input type="text" class="warningSpace" value="掉线提醒的间隔时间，单位分钟"/>
+						<input type="text" class="warningSpace" value="掉线提醒的间隔时间，单位分钟" data-info="掉线提醒的间隔时间，单位分钟"/>
 					</div>
 					<div class="dataCircle">
 						<label>延长时间</label>
-						<input type="text" class="delayTime" value="掉线后提醒的延迟时间，单位分钟"/>
+						<input type="text" class="delayTime" value="掉线后提醒的延迟时间，单位分钟" data-info="掉线后提醒的延迟时间，单位分钟"/>
 					</div>
 				</div>
 				<div class="boxContent clearfix">
@@ -71,13 +71,8 @@
 					</div> 
 					<div class="dataCircle collector">
 						<label>采集器ID</label>
-						<!--<select >
-							<option selected="selected" value="0" >请选择采集器ID</option>
-							<!--<option >130</option>
-							<option >140</option>--
-						</select>-->
 						<div class="list">
-							<input type="text" value="请选择采集器ID"/>
+							<input type="text" value="请选择采集器ID" data-info="请选择采集器ID"/>
 							<ul></ul>
 						</div>
 					</div>
@@ -112,36 +107,6 @@
 								</tr>
 							</thead>
 							<tbody id="dataTable"></tbody>
-							<!--<tr>
-								<td>
-									<input type="checkbox" checked="checked"/>
-								</td>
-								<td>AI1</td>
-								<td>读取</td>
-								<td>电流</td>
-								<td>4-20</td>
-								<td>-50-100</td>
-								<td>A</td>
-								<td>温度</td>
-								<td >
-									<i class="fa fa-edit"></i>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<input type="checkbox" />
-								</td>
-								<td>AI2</td>
-								<td>读取</td>
-								<td>电流</td>
-								<td>4-20</td>
-								<td>-50-100</td>
-								<td>A</td>
-								<td>温度</td>
-								<td>
-									<i class="fa fa-edit"></i>
-								</td>
-							</tr>-->
 						</table>
 					</div> 
 				</div>
@@ -188,7 +153,7 @@
 		<script type="text/javascript" src="/finfosoft-water/plugins/bootstarp/js/bootstrap.min.js"></script>
 		<script src="/finfosoft-water/plugins/layer/layer.min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="/finfosoft-water/js/public_resources.js" ></script>
-		<script type="text/javascript" src="/finfosoft-water/js/box_sensor_add.js"></script>
+		<script type="text/javascript" src="/finfosoft-water/js/box_sensor_add.js?1.12"></script>
 		
 	</body>
 </html>
