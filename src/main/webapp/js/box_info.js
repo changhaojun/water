@@ -82,8 +82,7 @@ function statusFormatter(value,row,index){
 	}
 }
 //表格数据获取的参数
-function queryParams(params) {
-	
+function queryParams(params) {	
 	if(	isSearch==false){
 		return {
 			pageNumber:params.offset,//第几页
