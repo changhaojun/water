@@ -390,11 +390,9 @@ blank($("#modifyText"), $(".modifyaccountError"), "请输入邮箱", "请输入�
 blank($("#modifyPassword"), $(".modifypassError"), "请输入密码(由6到16位字母数字下划线组成)", "请输入正确密码(6到16位字母数字或下划线)", pass);
 blank($("#modifyPhone"), $(".modifyphoneError"), "请输入手机号", "请输入正确的手机号", phone);
 //初始化提示框
-
 function showTips(){
 	$('[data-toggle="tooltip"]').tooltip();
 }
-
 //选择状态
 setStatus($(".addState input"));
 setStatus($(".modifyState input"));
