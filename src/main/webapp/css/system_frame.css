@@ -125,12 +125,14 @@ body.fixed-sidebar .navbar-static-side{
 }
 
 #wrapper  .indexHeader ul li .qrCode {
-	width: 264px;
+	width: 160px;
+	float: right;
 	display: none;
 }
 
 #wrapper  .indexHeader ul li .qrCode img {
-	width: 180px;
+	width: 140px;
+	border:10px solid #C7C7C7;
 	margin: 20px auto;
 }
 
