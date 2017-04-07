@@ -3,9 +3,7 @@ var companyId=$("#companyId").val();		//公司ID
 var isSearch=false;
 $(function(){
 	getToken();
-//	toolTip();
 	getDTUList();
-	getToken();	
 })
 //搜索功能
 window.searchCollectot=function(){
@@ -69,14 +67,14 @@ window.getDTUList=function(){
 }
 //操作列的格式化
 function editFormatter(value,row,index){
-	return "<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#1cb295;cursor: pointer;' class='fa fa-laptop' onclick=look('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='下发' style='color:#48c2a9;margin-left:15px;cursor: pointer;' class='fa fa-arrow-circle-down' onclick=give('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='修改' style='color:#ffb400;margin-left:15px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:15px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol('"+value+"')></span>"
+	return "<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#1cb295;cursor: pointer;' class='fa fa-laptop' onclick=look('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='下发' style='color:#48c2a9;margin-left:12px;cursor: pointer;' class='fa fa-arrow-circle-down' onclick=give('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='修改' style='color:#ffb400;margin-left:12px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:12px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol('"+value+"')></span>"
 }
 //box状态列的格式化
 function statusFormatter(value,row,index){
 	if(value==1){
-		return "<span style='color:#2cb7c8;background:url(../img/box_info.png)no-repeat -20px 0px;padding-left:25px;'>在线</span>"
+		return "<span style='color:#2cb7c8;background:url(/finfosoft-water/img/box_info.png)no-repeat -20px 0px;padding-left:25px;'>在线</span>"
 	}else{
-		return "<span style='color:#a3a3a3;background:url(../img/box_info.png)no-repeat 0px 0px;padding-left:25px;'>离线</span>"
+		return "<span style='color:#a3a3a3;background:url(/finfosoft-water/img/box_info.png)no-repeat 0px 0px;padding-left:25px;'>离线</span>"
 	}
 }
 //表格数据获取的参数
@@ -118,26 +116,27 @@ function topColor(obj,color){
 		$(".tooltip.top .tooltip-arrow").css("border-top-color",color);
 	})
 }
+//查看plc
 function look(value){
 	self.location.href="/finfosoft-water/dataTag/getDatas/"+value+"-P";
 }
-
+//修改plc
 function modify(value){
 	self.location.href="/finfosoft-water/dataTag/editPlc/"+value;
 }
-
+//添加plc
 function addPlc(){
 	self.location.href=itemName+"/dataTag/addPlc/";
 }
 //删除一条数据
 window.deleteCol=function(value){
-	layer.confirm('是否要将此采集器删除？', {
-		  btn: ['确定','取消'] //按钮
-		}, function(){
+	layer.confirm("<font size='2'>是否将此采集器删除？</font>", {icon:7}, function(index){
+		layer.close(index);
 		  $.ajax({
 			  url:globalurl+'/v1/devices/'+value+'?access_token='+window.accesstoken,
 			  dataType : 'JSON',
 			  type : 'delete',
+			  crossDomain: true == !(document.all),
 			  success : function(data) {
 				  if(data.code==200){
 					  layer.msg(data.success,{icon:1})
@@ -154,7 +153,7 @@ window.deleteCol=function(value){
 //设备下发
 function give(value){
 	var guid=guidGenerator();	
-	layer.confirm("<font size='4'>确认下发？</font>",function(index){
+	layer.confirm("<font size='2'>确认下发？</font>",{icon:7},function(index){
 		layer.close(index);
 		data="{'device_id':'"+value+"','guid':'"+guid+"'}";
 		data={'data':data};
@@ -163,9 +162,12 @@ function give(value){
 			data:data,
 			dataType: 'JSON',
 			type: 'POST',
+			crossDomain: true == !(document.all),
 			success: function(data) {
-				console.log(data)
-				if(data.result==1){
+				if(data.code==400005){
+					  window.getNewToken()
+					  give(value)
+				}else if(data.result==1){
 					layer.msg('已下发', {
 						icon : 1
 					});

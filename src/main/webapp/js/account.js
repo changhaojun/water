@@ -186,7 +186,10 @@ function modify(_id){
 			access_token: accesstoken
 		},
 		success: function(data) {
-			if (data.status) {
+			if(data.code==400005){
+				getNewToken();
+				modify(_id);
+			}else if (data.status) {
 				$(".modifyState #modifyValid").addClass("stats")
 			} else {
 				$(".modifyState #modifyInvalid").addClass("stats")
@@ -303,8 +306,14 @@ function sureDel() {
 		crossDomain: true == !(document.all),
 		url: globalurl + "/v1/users/" + editId + "?access_token=" + accesstoken,
 		success: function(data) {
-			location.reload("account.html");
-			$(".delAccountMask").fadeOut(200);
+			if(data.code==400005){
+				getNewToken();
+				sureDel();
+			}else{
+				location.reload("account.html");
+				$(".delAccountMask").fadeOut(200);
+			}
+			
 		}
 	})
 }
@@ -331,12 +340,14 @@ function event(obj, str) {
 	obj.on("blur", function() {
 		if (obj.val() == "") {
 			obj.val(str);
-		$(".modifyuserError").css("display", "none");	
-		$(".adduserError").css("display", "none");
+		
+		
 		}
 		if (obj.val() != "") {
 			$(".adduserError").html("");
 			$(".modifyuserError").html("");
+			$(".adduserError").css("display", "none");
+			$(".modifyuserError").css("display", "none");	
 		}
 	})
 }
@@ -423,34 +434,39 @@ function ajaxRequest() {
 				access_token: accesstoken
 			},
 			success: function(data) {
-				var str = '';
-				//获取列表页
-				for (var i = 0; i < data.rows.length; i++) {
-					var str2 = '';
-					if (data.rows[i].roles) {
-						for (var j = 0; j < data.rows[i].roles.length; j++) {
-							str2 += '<li>' + data.rows[i].roles[j] + '</li>';
+				if(data.code==400005){
+				getNewToken();
+				ajaxRequest();
+				}else{
+					var str = '';
+					//获取列表页
+					for (var i = 0; i < data.rows.length; i++) {
+						var str2 = '';
+						if (data.rows[i].roles) {
+							for (var j = 0; j < data.rows[i].roles.length; j++) {
+								str2 += '<li>' + data.rows[i].roles[j] + '</li>';
+							}
+						}
+						str = '<div class="accountList">' +
+							'<div class="listTop">' +
+							'<span>' + data.rows[i].fullname + '</span>' +
+							'<i class="fa fa-wrench set" data-toggle="tooltip" data-placement="top" title="修改"></i>' +
+							'<strong class="accountClose" data-toggle="tooltip" data-placement="top" title="删除">&times;</strong>' +
+							'</div>' +
+							'<div class="listName">' + data.rows[i].username + '</div>' +
+							'<ul class="positionList" >' + str2 +
+							'</ul>' +
+							'</div>';
+						$(".accountContent").append(str);
+						//判断列表的状态
+						if (data.rows[i].status == 0) {
+							$(".accountList").eq(i).addClass("invalidList");
+							$(".accountList .positionList").eq(i).find("li").addClass("disabled");
+						} else {
+							$(".accountList .positionList").eq(i).find("li").addClass("cheacked");
 						}
 					}
-					str = '<div class="accountList">' +
-						'<div class="listTop">' +
-						'<span>' + data.rows[i].fullname + '</span>' +
-						'<i class="fa fa-wrench set" data-toggle="tooltip" data-placement="top" title="修改"></i>' +
-						'<strong class="accountClose" data-toggle="tooltip" data-placement="top" title="删除">&times;</strong>' +
-						'</div>' +
-						'<div class="listName">' + data.rows[i].username + '</div>' +
-						'<ul class="positionList" >' + str2 +
-						'</ul>' +
-						'</div>';
-					$(".accountContent").append(str);
-					//判断列表的状态
-					if (data.rows[i].status == 0) {
-						$(".accountList").eq(i).addClass("invalidList");
-						$(".accountList .positionList").eq(i).find("li").addClass("disabled");
-					} else {
-						$(".accountList .positionList").eq(i).find("li").addClass("cheacked");
-					}
-				}
+				}			
 			}
 		})
 	}	

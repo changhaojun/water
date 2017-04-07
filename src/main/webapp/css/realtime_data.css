@@ -70,7 +70,7 @@
 	margin-top:20px;
 }
 .applyBtn{
-	background:#0088CC;
+	background:#1ab394;
 	color:#fff;
 	margin-left:10px;
 }
@@ -147,4 +147,25 @@ float:right;
 	color:#acacac;
 	line-height:300px;
 }
+.hourselect,.minuteselect,.ampmselect{
+	text-align:center !important;
+}
+.daterangepicker td.active{
+	background: #1ab394;
+	border-radius: 5px 5px;
+}
+.daterangepicker td.active:hover{
+	background: #1ab394;
+	border-radius: 5px 5px;
+}
+option:hover{
+	background:#1ab394 !important;
+}
+option{
+	text-align:center;
+}
+.layui-layer{
+	box-shadow: 8px 8px rgba(0,0,0,.5) !important;
+}
+
 

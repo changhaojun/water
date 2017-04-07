@@ -163,7 +163,7 @@
 }
 .fixed-table-container tbody tr td:nth-child(3){
     border-top: none;
-    width:192px;
+    width:70%;
     text-align:left !important;
 }
 .fixed-table-container tbody td:first-child {

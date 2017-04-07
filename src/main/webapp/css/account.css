@@ -324,7 +324,7 @@ html{
 .addAccount .accountRole>ul li{
 	width:100px;
 	height:26px;
-	
+	cursor: pointer;
 	float:left;
 	margin-left:10px;
 	margin-top:15px;
@@ -368,17 +368,39 @@ html{
 	height:150px;
 	border-radius: 3px 3px;
 }
-.accountMask .delContent,.successMsg .addback,.modifyMsg .modifyback{
+
+.successMsg .addback,.modifyMsg .modifyback{
 	height:70px;
 	line-height:70px;
 	color:#9C9C9C;
 	font-size:16px;
 	padding-left:35px;
 }
+.accountMask .delContent{
+	color:#ffc844;
+	text-align:center;
+
+	height:70px;
+
+}
+.accountMask .delContent b{
+	margin-left:35px;
+	font-weight:900;
+	font-size:14px;
+}
+.accountMask .delContent .delIcon{
+	display: inline-block;
+	width:120px;
+	height:72px;
+	line-height:72px;
+	background: url(../img/icon_btn.png) no-repeat;
+    background-position: -64px 20px;
+}
 .accountMask .delAccount .cancelDel{	
-	border:1px solid #ADADAD;
-	color:#9E9E9E;	
-	margin-left:8px;
+	border:1px solid #1ab394;
+	color:#1ab394;	
+	margin-left:28px;
+	
 }
 .accountMask .delAccount button,.successMsg button,.modifyMsg button{
 	width:65px;
@@ -388,7 +410,7 @@ html{
 .accountMask .delAccount .sureDel,.successMsg .addSuccess,.modifyMsg .modifySuccess{
 	background:#1AB394;
 	color:#fff;	
-	margin-left:147px;
+	margin-left:67px;
 }
 
 

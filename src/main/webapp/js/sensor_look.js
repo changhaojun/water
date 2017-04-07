@@ -12,11 +12,11 @@ function toolTip(){
 }
 //初始化头部
 if(type=="A"){
-	$(".sensorTop .Itype").html("查看传感器");
-	$(".sensorTop .Etype").html(" / Look Sensor");
+	$(".sensorTop .Itype").html("查看传感器  / ");
+	$(".sensorTop .Etype").html("Look Sensor");
 }else{
-	$(".sensorTop .Itype").html("查看PLC");
-	$(".sensorTop .Etype").html(" / Look PLC");
+	$(".sensorTop .Itype").html("查看PLC  / ");
+	$(".sensorTop .Etype").html("Look PLC");
 }
 //每隔十秒刷新一次
 //var time=setInterval(listBox,10000)
@@ -111,7 +111,7 @@ function listBox(){
 							endDeg: 30,
 							lineWidth: 20,
 					//		bgColor: '#0055ff',
-					//		mainColor: '#ff4400'
+							mainColor: '#1ab394'
 					//		initVal: this.input.value
 						});			
 				//数据展示
@@ -178,7 +178,7 @@ function give(id){
 	onoff=$(".dial").val();
 	console.log(onoff)
 	var guid=guidGenerator();	
-	layer.confirm("<font size='4'>确认下发？</font>",function(index){
+	layer.confirm("<font size='2'>确认下发？</font>", {icon:7},function(index){
 		layer.close(index);
 		data="{'data_id':"+id+",'data_value':"+onoff+",'guid':'"+guid+"'}";
 		data={'data':data};
@@ -187,9 +187,12 @@ function give(id){
 			data:data,
 			dataType: 'JSON',
 			type: 'POST',
+			crossDomain: true == !(document.all),
 			success: function(data) {
-				console.log(data)
-				if(data.result==1){
+				if(data.code==400005){
+				getNewToken();
+				contrastData()
+			}else if(data.result==1){
 					layer.msg('已下发', {
 						icon : 1
 					});
@@ -216,7 +219,8 @@ function clickBtn(id,dataValue,i){
 	var guid=guidGenerator();
 	console.log("guid:"+guid);
 	
-	layer.confirm("<font size='4'>确认下发？</font>",function(index){
+	layer.confirm("<font size='2'>确认下发？</font>",{icon:7},function(index){
+		layer.close(index);
     	data="{'data_id':"+dataId+",'data_value':"+onoff+",'guid':'"+guid+"'}";    	 
 		data={'data':data};	
 		$.ajax({
@@ -224,11 +228,13 @@ function clickBtn(id,dataValue,i){
 			data:data,
 			dataType: 'JSON',
 			type: 'POST',
+			crossDomain: true == !(document.all),
 			success: function(data) {
-				console.log(data)
-//				alert(data.result);
-				if(data.result==1){
-					layer.msg('已下发', {
+				if(data.code==400005){
+					getNewToken();
+					contrastData()
+				}else if(data.result==1){
+						layer.msg('已下发', {
 						icon : 1
 					});
 //					window.top.MQTTconnect(guid);

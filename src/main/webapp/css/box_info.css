@@ -207,12 +207,25 @@ html{
 	height:30px;
 	width:30px;
 }
-.fixed-table-container thead th .th-inner, .fixed-table-container tbody td .th-inner{
 
+.layui-layer-dialog .layui-layer-content{
+
+	margin-left:40px !important;
 }
-
-
-
+.layui-layer-btn{
+	text-align:center !important;
+}
+.layui-layer-btn1{
+	margin-left:20px !important;
+	border:1px solid #1ab394 !important;
+	color:#1ab394 !important;
+}
+.layui-layer-dialog .layui-layer-content font{
+		color:#FFAE5B !important;
+}
+.layui-layer{
+	box-shadow: 8px 8px rgba(0,0,0,.5) !important;
+}
 
 
 
