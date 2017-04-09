@@ -17,10 +17,10 @@ var flag=-1;
 	//个人信息的修改
 	$("#personInfo").on({
 		"mouseenter":function(){
-			$(".personMsg").slideDown(500);
+			$(".personMsg").stop().slideDown(500);
 		},
 		"mouseleave":function(){
-			$(".personMsg").slideUp(500);
+			$(".personMsg").finish().slideUp(500);
 		}
 	})
 		
@@ -144,6 +144,7 @@ function getNavData(){
 	$(".maskClose").click(function(){
 		$('.pop').addClass('hidden');
 		$('.pop-mask').addClass('hidden');
+		$(".pop-username").val("");
 	});
 	//修改时确认密码
 	/*var dataPass="{'old_password':'"+$(".oldPassword").val()+",'new_password':"+$(".newPassword").val()+",'confirm_password':"+$(".confirmPassword").val()+"}";*/
@@ -193,6 +194,7 @@ function getNavData(){
 	$(".pop-submit").click(function(){
 		if($(".passwordOld").val()!="" && $(".passwordNew").val()!="" && $(".passwordConfirm").val()!=""){
 			editPassword();
+			
 		}
 		
 		
@@ -213,41 +215,38 @@ function getNavData(){
 				_id:user.user_id
 			},
 			success:function(data){
-				console.info(data)
+				//console.info(data)
 				$(".popMsg").show();
 				if(data.code==400011){
 					$(".errorMsg i").addClass("error");
 					$(".errorMsg span").html(data.error).css("color","#f55659");
+					$(".passwordOld ").val("");
 					
-					$(".popMsg .pop-close,.popMsg_content button").click(function(){
-						$(".popMsg").hide();
-						$(".passwordOld ").val("");
-					});
-				}else if(data.code==400012){
-					$(".errorMsg i").addClass("error");
-					$(".errorMsg span").html(data.error).css("color","#f55659");
-					
-					$(".popMsg .pop-close,.popMsg_content button").click(function(){
-						$(".popMsg").hide();
+				}else {
+					if(data.code==400012){
+						$(".errorMsg i").addClass("error");
+						$(".errorMsg span").html(data.error).css("color","#f55659");
 						$(".passwordNew ").val("");
 						$(".passwordConfirm ").val("");
-					});
-				}else{
-					$(".errorMsg i").removeClass("error");
-					$(".errorMsg span").html(data[1]).css("color","#1ab394");
-					$(".popMsg_content button").click(function(){
-						$('.pop').addClass('hidden');
-						$('.pop-mask').addClass('hidden');
 						
-					});			
-					$(".popMsg_content button,.popMsg .pop-close").click(function(){
-						$(".popMsg").hide();
-						//$(".oldPassword ").val("");
-						$(".pop-username").val("");
-						//$(".confirmPassword .pop-username").val("");
-					});
+					}else{
+						$(".errorMsg i").removeClass("error");
+						$(".errorMsg span").html(data[1]).css("color","#1ab394");
+						$(".popMsg_content button").click(function(){
+							$('.pop').addClass('hidden');
+							$('.pop-mask').addClass('hidden');
+							
+						});			
+							$(".pop-username").val("");
+							//$(".confirmPassword .pop-username").val("");
+						
+					}
+					
 				}
 			}
 		});
 	}
 	
+$(".popMsg_content button,.popMsg .pop-close").click(function(){
+	$(".popMsg").hide();
+});
