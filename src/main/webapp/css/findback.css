@@ -8,6 +8,9 @@ body *{
 	font-family: "微软雅黑";
 	box-sizing: border-box;
 }
+input{
+	transition: 0.5s;
+}
 
 /* BEGIN .header */
 .header{
@@ -123,9 +126,6 @@ body *{
 	right: 0;
 	top: -26px;
 }
-/*.newPassword .tip{
-	top: -26px;
-}*/
 .tip>span{
 	width: 0;
     height: 0;
@@ -136,56 +136,6 @@ body *{
 	left: 30px;
 	bottom: -6px;
 }
-/*.newPassword .tip>span{
-	width: 0;
-    height: 0;
-    border-left: 3.5px solid transparent;
-    border-right: 3.5px solid transparent;
-    border-top: 6px solid #ff787b;
-	position: absolute;
-	left: 30px;
-	bottom: -6px;
-}
-.againPassword .tip{
-	bottom: -26px;
-}
-.againPassword .tip>span{
-	width: 0;
-    height: 0;
-    border-left: 3.5px solid transparent;
-    border-right: 3.5px solid transparent;
-    border-bottom: 6px solid #ff787b;
-	position: absolute;
-	left: 30px;
-	top: -6px;
-}*/
-/*.wrong{
-	padding: 5px 0;
-	width: 20px;
-	line-height: 14px;
-	background: #ff787b;
-	text-align: center;
-	color: #fff;
-	border-radius: 2px;
-	position: absolute;
-	right: 29px;
-	top: 6px;
-}
-.wrong>span{
-	width: 0;
-    height: 0;
-    border-top: 3.5px solid transparent;
-    border-bottom: 3.5px solid transparent;
-    border-right: 6px solid #ff787b;
-	position: absolute;
-	left: -6px;
-}
-.wrong>.top{
-	top: 40px;
-}
-.wrong>.btm{
-	bottom: 40px;
-}*/
 .main-form .divider{
 	margin-bottom: 30px;
 	height: 1px;
@@ -203,6 +153,7 @@ body *{
 	background: #1ab394;
 	border-radius: 22.5px;
 	text-align: center;
+	transition: 0.5s;
 }
 .main-form button:hover{
 	background: #24c5a4;

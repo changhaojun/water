@@ -3,24 +3,24 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/bootstarp/css/bootstrap.min.css"/>
-		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/reset.css"/>
-		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/findback.css"/>
+		<link rel="stylesheet" type="text/css" href="../plugins/bootstarp/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/findback.css"/>
 	</head>
 	<body>
 		<input type="text" hidden="hidden" id="accessToken" value="${accessToken}" />
 		<div class="clearfix header">
 			<h1 class="pull-left header-left">
-				<img src="/finfosoft-water/img/frame_logo.png" alt="lanyue" />
+				<img src="../img/frame_logo.png" alt="lanyue" />
 			</h1>
 			<div class="clearfix pull-left header-right">
 				<h2 class="pull-left">
-					<img src="/finfosoft-water/img/name_logo.png" alt="water" />
+					<img src="../img/name_logo.png" alt="water" />
 				</h2>
 				<div class="clearfix pull-right qr">
 					<span class="pull-left">扫描下载APP 随时随地智慧物联</span>
-					<img class="pull-left" src="/finfosoft-water/img/qr_code_thumbnail.png" alt="" />
-					<img class="qr-img" src="/finfosoft-water/img/qr_code.png" alt="" />
+					<img class="pull-left" src="../img/qr_code_thumbnail.png" alt="" />
+					<img class="qr-img" src="../img/qr_code.png" alt="" />
 				</div>
 			</div>
 		</div>
@@ -32,27 +32,14 @@
 				<div class="main-form">
 					<div class="clearfix center newPassword">
 						<label class="pull-left" for="new">新密码</label>
-						<input class="pull-left" type="password" id="new"/>
-						<div class="hidden tip">
-							请输入6~16位密码
-							<span></span>
-						</div>
+						<input class="pull-left" type="password" id="new" warning="请输入6~16位密码！" isright="false"/>
 					</div>
 					<div class="clearfix center againPassword">
 						<label class="pull-left" for="again">确认密码</label>
-						<input class="pull-left" type="password" id="again"/>
-						<div class="hidden tip">
-							两次密码输入不一致
-							<span></span>
-						</div>
+						<input class="pull-left" type="password" id="again" warning="两次输入密码不一致！" isright="false"/>
 					</div>
 					<div class="center divider"></div>
-					<button class="submit-btn">重置</button>
-					<!--<div class="hidden wrong">
-						两次密码输入不一致
-						<span class="top"></span>
-						<span class="btm"></span>
-					</div>-->
+					<button class="submit-btn" isright="false">重置</button>
 				</div>
 			</div>
 			<div class="hidden wrap step2">
@@ -64,12 +51,13 @@
 						<span class="icon icon-right"></span>
 						<strong >恭喜您，密码重置成功！</strong>
 					</p>
-					<p class="center info">即将跳转至登陆界面/finfosoft-water.</p>
+					<p class="center info">即将跳转至登陆界面...</p>
 				</div>
 			</div>
 		</div>
-		<script src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/finfosoft-water/js/public_resources.js"></script>
-		<script src="/finfosoft-water/js/findback.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../js/public_resources.js" ></script>
+		<script src="../js/findback.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 </html>
