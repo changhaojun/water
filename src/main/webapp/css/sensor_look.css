@@ -131,7 +131,10 @@ body{
 	font-size:18px;	
 }
 .lookList .listContent .Iopen{
-	margin-left:-5px
+	margin-left:-40px;
+	position: relative;
+	left:10px;
+	width:80px;
 } 
 .lookList .listContent .on-off  .off{
 	width:50px;
@@ -141,7 +144,7 @@ body{
 	position: relative;
 	float:left;
 	top:60px;
-	left:105px;
+	left:100px;
 }
 .lookList .listContent .on-off  .off .circle{
 	width:30px;
@@ -156,7 +159,7 @@ body{
 
 	font-size:18px;
 	position: relative;
-	left:120px;
+	left:80px;
 }
 .lookList .listContent .on-off  .Iactive{
 	color:#1ab394

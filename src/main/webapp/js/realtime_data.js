@@ -2,13 +2,14 @@ var dataId=$("#dataId").val()//数据id
 var deviceId=$("#deviceId").val()//设备Id
 var startTime;
 var endTime;
-
-console.log(deviceId)
+var arrLi=[];
+//console.log(dataId);
 
 $(function(){
 	toolTip();
 	getToken();	//刷新令牌
 	chartDivArr.push(parseInt(dataId));//push当前的dataId;
+//	console.log(chartDivArr)
 	currentChart(dataId);//初始化第一次图表;
 	contrastData();//初始化对比数据项列表;
 })
@@ -64,7 +65,7 @@ function currentChart(dataId){
 			data:data
 		},
 		success: function(data) {
-			console.log(data);
+			
 			var chartType="";
 			if(data.code==400005){
 				getNewToken();
@@ -76,7 +77,6 @@ function currentChart(dataId){
 						chartType="bar";													
 				}				
 				initChart(data,chartType)
-		       dataId=data.data_id;	
 			}		
 		}
 	})
@@ -117,23 +117,30 @@ function contrastData(){
 			}else{							
 				for(var i=0;i<data.rows.length;i++){
 					var Ili="";
-					if(data.rows[i].status==1&&data.rows.length==1||data.rows[i].data_name=="-"&&data.rows.length>1){							
+					if(data.rows[i].status==1&&data.rows[i].data_name!=""){
+						arrLi.push(data.rows[i]);
+					}
+				}
+				for(var i=0;i<arrLi.length;i++){
+					if(arrLi[i].status==1&&arrLi.length==1){							
 						$(".contrastList .listOul").html("<span>暂无对比数据</span>");
 					}else{
-						if(data.rows[i].data_id!=dataId&&data.rows[i].status==1&&data.rows.length>1&&data.rows[i].data_name!=""){							
-							Ili="<li onclick='getChart("+data.rows[i].data_id+")'>"+data.rows[i].data_name+"</li>"
-							$(".contrastList .listOul").append(Ili)									
+						if(arrLi[i].data_id!=dataId&&arrLi[i].status==1&&arrLi.length>1&&arrLi[i].data_name!=""){	
+			
+							Ili="<li onclick='currentChart("+arrLi[i].data_id+")'>"+arrLi[i].data_name+"</li>"
+							$(".contrastList .listOul").append(Ili)
+							
 						}
 					}
 				}
+			}					
+		}	
 					
-					
-				}	
-			}		
 	})
 }
 //获取除本身外的图表
 function getChart(dataId){
+//	console.log(dataId)
 	currentChart(dataId);
 }
 // 指定图表的配置项和数据
@@ -145,20 +152,11 @@ function initChart(data,chartType){
 			var divId='chart'+data.data_id;
 			if(chartDivArr.indexOf(data.data_id)==-1){
 			chartDivArr.push(data.data_id);
-			
-//				if((chartType=="line"&&data.data_values.length==0&&data.max_values.length==0&&data.min_values.length==0)||(chartType=="line"&&data.data_values==[]&&data.max_values==[]&&data.min_values==[])||(chartType=="bar"&&data.data_values.length==0)||(chartType=="bar"&&data.data_values==[])){	
-//					
-//					$(".contrastChart").append("<div class=' "+divId+"'></div>")
-//	               	$(".contrastChart").append("<div id='"+divId+"' class='row dataChartBox' style='width:780px;height: 300px;overflow: hidden;margin:20px;'>暂无数据</div>");
-//				}else{
-					
-					$(".contrastChart").append("<div class=' "+divId+"'>"+chartArr[i]+"</div>")
-					$(".contrastChart").append("<div id='"+divId+"' class='row dataChartBox' style='width:780px;height: 300px;overflow: hidden;margin:20px;'></div>");
-					
-//				}			
+				$(".contrastChart").append("<div class=' "+divId+"'>"+chartArr[i]+"</div>")
+				$(".contrastChart").append("<div id='"+divId+"' class='row dataChartBox' style='width:780px;height: 300px;overflow: hidden;margin:20px;'></div>");			
 			}else{
-					$("#"+divId).show();
-					$("."+divId).show();
+				$("#"+divId).show();
+				$("."+divId).show();
 			}
 			$("."+divId).empty();
 			$("."+divId).append("<span class='closeChart' style='float:right;margin-right:20px;cursor:pointer;' onclick='closeChart("+data.data_id+")' data-toggle='tooltip' data-placement='top' title='删除'>&times;</span>")
@@ -235,7 +233,6 @@ function initChart(data,chartType){
 };	
 	myChart.setOption(option);
 	chartArr.push(myChart);
-	console.log(chartDivArr)
 } 
 
 //删除图表
