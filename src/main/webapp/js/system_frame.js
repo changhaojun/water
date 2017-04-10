@@ -192,15 +192,21 @@ function getNavData(){
 	});
 	//修改密码弹窗内确定事件
 	$(".pop-submit").click(function(){
-		if($(".passwordOld").val()!="" && $(".passwordNew").val()!="" && $(".passwordConfirm").val()!=""){
+		var passReg = /[a-zA-Z\d+]{6,16}/;
+		passText=$(".passwordNew").val();
+		if($(".passwordOld").val()==""){
+			$(this).next().show().html("原密码不能为空!");
+			$(this).css("border-color","#e11818");
+		}else if(passReg.test(passText)==false){
+			$(".passwordNew").next().show().html("密码为6-16位!");
+			$(".passwordNew").css("border-color","#e11818");
+		}else{
 			editPassword();
-			
 		}
-		
-		
 	});
 	//修改密码
 	function editPassword(){
+		console.log(44455)
 		$.ajax({
 			type:"put",
 			crossDomain: true == !(document.all),
