@@ -157,7 +157,7 @@ $.fn.extend({
 			},
 			success:function(data) {
 				
-				console.log(data);
+//				console.log(data);
 				$(".detialData tbody").empty();
 				pngName=(data.collector_model.split("-"))[1].toLowerCase();
 				imgName="dtu_"+pngName+".png";
@@ -383,13 +383,11 @@ $.fn.extend({
 			dataUnit="-";
 			dataName:$(".dataName input").val();
 		};
-		if(flag==0){
+		
 			var dataTr='<td><input type="checkbox" checked="checked" /></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
 			+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'	
-		}else{
-			var dataTr='<td><input type="checkbox" disabled="disabled"/></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
-					+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'	
-		}				
+		
+					
 		$(".detialData tbody").find("tr").eq(j).html(dataTr);	
 	}
 	
@@ -662,13 +660,44 @@ $.fn.extend({
 	});
 	
 
-	//鼠标点击
-	$(".collector input").focus(function(){
-		onOff=0;		
-	})
-	$(document).click(function(){
-		onOff=-1
-		if(onOff==-1){
-			$(".collector ul").hide();
-		}
-	})
+	//采集器获取焦点的时候
+	$(".collector input").focus(function(event){
+		onOff=0;
+	    $('.collector ul').empty();
+		var value=$(this).val().split(0,1).join("");
+		console.log(value)
+	    if(value==""){
+	    	$('.collector ul').hide();
+	    	return;
+	    }
+		//var collector='{"collector_id":"'+value+'"}';
+		$.ajax({
+			type:"get",
+			dataType:'json',
+			crossDomain: true == !(document.all),
+			url:globalurl+"/v1/collectors",
+			data:{
+				access_token:accesstoken,
+				conditions:value
+			},
+			success:function(data){
+				//console.log(data)
+				$('.collector ul').show();
+				$('.collector ul').empty();
+				var item=0;
+				for(var  i in data.rows){
+					var strLi='<li onclick="serchItem('+i+')">'+data.rows[i].collector_id+'</li>';
+					$('.collector ul').append(strLi);
+					collectorArr.push(data.rows[i].collector_id)
+				}
+			} 
+		});
+		$(".collector input").blur(function(){
+			onOff=-1
+			if(onOff==-1){
+				$(".collector ul").delay(5000).fadeOut();
+			}
+		});
+	});
+	
+	

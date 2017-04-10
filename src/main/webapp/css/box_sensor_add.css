@@ -404,7 +404,7 @@ body{
 .collector .list ul{
 	height: auto;
 	margin-left: 74px;
-	border:1px solid #1ab394;
+	border-color: #1ab394;
 	display: none;
 	border-top:none;
 	padding-left: 0;
