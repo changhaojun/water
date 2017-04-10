@@ -19,6 +19,9 @@ body *{
 .rectGreenOK{
 	background-position: -48px 0;
 }
+input{
+	transition: 0.5s;
+}
 
 @keyframes rotateY{
 	0%{
@@ -164,34 +167,34 @@ body *{
 		.right>h1>img{
 			width: 239px;
 		}
-		.right>form{
+		.right>.form{
 			margin-top: 88px;
 			width: 100%;
 			position: relative;
 		}
-		.right>form>.hastip{
+		/*.right>.form>.hastip{
 			margin-bottom: 20px;
 			font-size: 16px;
-		}
-		.right>form>.login-title{
+		}*/
+		.right>.form>.login-title{
 			height: 25px;
 			font-size: 16px;
 			margin-bottom: 14px;
 		}
-		.right>form>.login-title>.tip{
+		/*.right>.form>.login-title>.tip{
 			height: 25px;
 			position: relative;
 			left: 8px;
 			top: 0;
-		}
-		.right>form>.hastip>.tip>p{
+		}*/
+		/*.right>.form>.hastip>.tip>p{
 			padding: 0 5px;
 			line-height: 25px;
 			text-align: center;
 			color: #fff;
 			border-radius: 2px;
-		}
-		.right>form>.hastip>.tip>span{
+		}*/
+		/*.right>.form>.hastip>.tip>span{
 			width: 0;
 		    height: 0;
 		    border-top: 3.5px solid transparent;
@@ -200,23 +203,23 @@ body *{
 			position: absolute;
 			left: -8px;
 			top: 9px;
-		}
-		.right>form>.hastip>.tip-danger>p{
+		}*/
+		/*.right>.form>.hastip>.tip-danger>p{
 			background: #ff787b;
-		}
-		.right>form>p{
+		}*/
+		.right>.form>p{
 			margin-bottom: 29px;
 			font-size: 16px;
 		}
-		.right>form>.username{
+		.right>.form>.username{
 			position: relative;
 		}
-		.right>form>.username>.tip{
+		/*.right>.form>.username>.tip{
 			position: absolute;
 			right: 0;
 			top: -31px;
-		}
-		.right>form>.username>.tip>span{
+		}*/
+		/*.right>.form>.username>.tip>span{
 			width: 0;
 		    height: 0;
 		    border-left: 3.5px solid transparent;
@@ -225,29 +228,30 @@ body *{
 			position: absolute;
 			left: 14px;
 			top: 25px;
-		}
-		.right>form>.forget{
+		}*/
+		.right>.form>.forget{
 			margin-bottom: 136px;
 			position: relative;
 		}
-		.right>form>.forget>input{
+		.right>.form>.forget>input{
 			margin: 0;
 		}
-		.right>form>.code{
+		.right>.form>.code{
 			width: 100%;
 			position: absolute;
 			left: 0;
 			bottom: 128px;
 		}
-		.right>form>.code>input{
+		.right>.form>.code>input{
 			margin: 0;
 		}
-		.right>form>.forget>p,
-		.right>form>.code>p{
+		.right>.form>.forget>p,
+		.right>.form>.code>p{
 			line-height: 35px;
 			position: absolute;
 			right: 0;
 			top: 0;
+			cursor: pointer;
 		}
 		.right input{
 			display: block;
@@ -272,7 +276,7 @@ body *{
 		.right a:active{
 			color: #1ab394;
 		}
-		.right>form>button{
+		.right>.form>button{
 			margin: 0 auto;
 			display: block;
 			width: 253px;
@@ -284,8 +288,9 @@ body *{
 			text-indent: 14px;
 			letter-spacing: 14px;
 			border-radius: 22.5px;
+			transition: 0.5s;
 		}
-		.right>form>button:hover{
+		.right>.form>button:hover{
 			background: #24c5a4;
 		}
 		/* ENG .right */
@@ -343,6 +348,7 @@ body *{
 	width: 40px;
 	height: 100%;
 	background: url(../img/login/login_layer_close.png) no-repeat 10px 10px;
+	transition: 0.5s;
 }
 .pop-close:hover{
 	background-color: #24c5a4;
@@ -386,6 +392,7 @@ body *{
 	text-indent: 14px;
 	text-align: center;
 	border-radius: 22px;
+	transition: 0.5s;
 }
 .pop-message{
 	color: #1ab394;
@@ -396,13 +403,14 @@ body *{
 	width: 100px;
 	height: 37px;
 	background: #1ab394;
-	font-size: 15px;
+	font-size: 13px;
 	line-height: 37px;
 	color: #fff;
 	letter-spacing: 0;
 	text-indent: 0;
 	text-align: center;
-	border-radius: 9px;
+	border-radius: 12px;
+	transition: 0.5s;
 }
 .pop-submit:hover,
 .pop-mail:hover{
@@ -451,10 +459,10 @@ body *{
 	z-index: -1;
 }
 
-.hastip{
+/*.hastip{
 	position: relative;
-}
-.tip{
+}*/
+/*.tip{
 	height: 31px;
 	position: absolute;
 	right: 0;
@@ -479,5 +487,5 @@ body *{
 }
 .tip-danger>p{
 	background: #ff787b;
-}
+}*/
 /* END .layer */
