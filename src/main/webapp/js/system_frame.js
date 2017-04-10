@@ -9,17 +9,28 @@ var flag=-1;
 			},
 			"mouseleave":function(){
 				$(".qrCode").hide();
-			}
+			},
 		});
+		$(".qrCode").mouseleave(function(){
+			$(".qrCode").hide();
+		})
 	//个人信息的修改
-		$("#personInfo").click(function(){
-			$(".personMsg").slideToggle(500);
-		});
+	$("#personInfo").on({
+		"mouseenter":function(){
+			$(".personMsg").stop().slideDown(500);
+		},
+		"mouseleave":function(){
+			$(".personMsg").finish().slideUp(500);
+		}
+	})
+		
+	
 		
 	//导航的数据交互
 function getNavData(){
 	$.ajax({
 		type:'get',
+		crossDomain: true == !(document.all),
 		url:globalurl+"/v1/resources?access_token="+accesstoken,
 		datatype:'json',
 		success:function(data){
@@ -81,6 +92,18 @@ function getNavData(){
 						$("[data-toggle='tooltip']").tooltip('destroy');//隐藏并销毁元素的提示工具。
 					}
 				});
+				$(".navbar-default").on({
+					"mouseenter":function(){
+						if($("body").hasClass("mini-navbar")){
+							$("[data-toggle='tooltip']").tooltip();
+						}else{
+							$("[data-toggle='tooltip']").tooltip('destroy');
+						}
+					},
+					"mouseleave":function(){
+						$("[data-toggle='tooltip']").tooltip('destroy');
+					}
+				});
 				//侧边栏的下拉效果以及点击导航的li添加class
 				$("#side-menu .changeLi>a").each(function(i,ele){
 					$(ele).click(function(){
@@ -121,6 +144,7 @@ function getNavData(){
 	$(".maskClose").click(function(){
 		$('.pop').addClass('hidden');
 		$('.pop-mask').addClass('hidden');
+		$(".pop-username").val("");
 	});
 	//修改时确认密码
 	/*var dataPass="{'old_password':'"+$(".oldPassword").val()+",'new_password':"+$(".newPassword").val()+",'confirm_password':"+$(".confirmPassword").val()+"}";*/
@@ -155,11 +179,7 @@ function getNavData(){
 	});
 	//确认新密码
 	$(".passwordConfirm").blur(function(){
-		if($(".passwordConfirm").val()!=passText){
-		//console.log(passText)
-			$(this).next().show().html("两次密码不一致");
-			$(this).css("border-color","#e11818");
-		}else if($(".passwordConfirm").val()==""){
+		if($(".passwordConfirm").val()==""){
 			$(".confirmPassword span").hide();
 			$(this).css("border-color","#ccc");
 		}else{
@@ -172,8 +192,24 @@ function getNavData(){
 	});
 	//修改密码弹窗内确定事件
 	$(".pop-submit").click(function(){
+		var passReg = /[a-zA-Z\d+]{6,16}/;
+		passText=$(".passwordNew").val();
+		if($(".passwordOld").val()==""){
+			$(this).next().show().html("原密码不能为空!");
+			$(this).css("border-color","#e11818");
+		}else if(passReg.test(passText)==false){
+			$(".passwordNew").next().show().html("密码为6-16位!");
+			$(".passwordNew").css("border-color","#e11818");
+		}else{
+			editPassword();
+		}
+	});
+	//修改密码
+	function editPassword(){
+		console.log(44455)
 		$.ajax({
 			type:"put",
+			crossDomain: true == !(document.all),
 			url:globalurl+"/v1/users",
 			datatype:"json",
 			data:{
@@ -185,32 +221,38 @@ function getNavData(){
 				_id:user.user_id
 			},
 			success:function(data){
-				console.info(data)
+				//console.info(data)
 				$(".popMsg").show();
 				if(data.code==400011){
 					$(".errorMsg i").addClass("error");
 					$(".errorMsg span").html(data.error).css("color","#f55659");
+					$(".passwordOld ").val("");
 					
-					$(".popMsg .pop-close,.popMsg_content button").click(function(){
-						$(".popMsg").hide();
-						$(".oldPassword .pop-username").val("");
-					});
-				}else{
-					$(".errorMsg i").removeClass("error");
-					$(".errorMsg span").html(data[1]).css("color","#1ab394");
-					$(".popMsg_content button").click(function(){
-						$('.pop').addClass('hidden');
-						$('.pop-mask').addClass('hidden');
+				}else {
+					if(data.code==400012){
+						$(".errorMsg i").addClass("error");
+						$(".errorMsg span").html(data.error).css("color","#f55659");
+						$(".passwordNew ").val("");
+						$(".passwordConfirm ").val("");
 						
-					});			
-					$(".popMsg_content button,.popMsg .pop-close").click(function(){
-						$(".popMsg").hide();
-						$(".oldPassword .pop-username").val("");
-					});
+					}else{
+						$(".errorMsg i").removeClass("error");
+						$(".errorMsg span").html(data[1]).css("color","#1ab394");
+						$(".popMsg_content button").click(function(){
+							$('.pop').addClass('hidden');
+							$('.pop-mask').addClass('hidden');
+							
+						});			
+							$(".pop-username").val("");
+							//$(".confirmPassword .pop-username").val("");
+						
+					}
+					
 				}
 			}
 		});
-		
-	});
-	//点击退出
+	}
 	
+$(".popMsg_content button,.popMsg .pop-close").click(function(){
+	$(".popMsg").hide();
+});

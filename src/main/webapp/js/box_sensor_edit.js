@@ -5,28 +5,11 @@ var pngName="",imgName="";
 var j=0;
 var dataId=[];
 var flag=0;
-/*var access_token="58db1858b769970a9092c5b6";
-/*var globalurl="http://121.42.253.149:18801";*
-var globalurl="http://192.168.1.37";*/
 $.fn.extend({
 	//智能input
 	'smartInput': function (callback){
 		//模拟placeholder
-		$(this).attr('tip',$(this).val());
-		$(this).focus(function (){
-			$(this).css('borderColor','#1ab394');
-			if ($(this).val()===$(this).attr('tip')) {
-				$(this).val('');
-			}
-		});
-		$(this).blur(function (){
-			if ($(this).val()==='') {
-				$(this).val($(this).attr('tip'));
-				$(this).css('borderColor','#e5e6e7');
-			} else {
-				callback && callback();
-			}
-		});
+		
 		//限制空格
 		$(this).keyup(function (){
 			$(this).val($(this).val().replace(/\s/g,''));
@@ -97,49 +80,49 @@ $.fn.extend({
 		$.ajax({
 			type:"get",
 			datatype:"json",
+			crossDomain: true == !(document.all),
 			url:globalurl+"/v1/devices/"+editId+"?access_token="+accesstoken,
 			success:function(data){
+//				console.log(data)
 				if(data.code==400005){
 						getNewToken();
 						getEquipment();
+				}else{
+					deviceId=data._id;
+					collector_id=data.communication.collector_id
+					$(".deviceCode").val(data.device_code);
+					$(".deviceName").val(data.device_name);
+					$(".collectInterval").val(data.communication.collect_interval);
+					$(".collector input").val(data.communication.collector_id);
+					if(data.is_remind==0){
+						$(".controlBtn span").eq(1).addClass('activeBtn');
+						$(".controlBtn span").eq(0).removeClass('activeBtn');
+						$(".contactPhone").val("此号码用于接收掉线提醒，如有多个号码请用逗号分隔");
+						$(".warningSpace").val("掉线提醒的间隔时间，单位分钟");
+						$(".delayTime").val("掉线后提醒的延迟时间，单位分钟");
+						$(".contactPhone").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
+						$(".warningSpace").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
+						$(".delayTime").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
 					}else{
-						
-						deviceId=data._id;
-						//console.log(deviceId);
-						$(".deviceCode").val(data.device_code);
-						$(".deviceName").val(data.device_name);
-						$(".collectInterval").val(data.communication.collect_interval);
-						$(".collector input").val(data.communication.collector_id);
-						if(data.is_remind==0){
-							$(".controlBtn span").eq(1).addClass('activeBtn');
-							$(".controlBtn span").eq(0).removeClass('activeBtn');
-							$(".contactPhone").val("此号码用于接收掉线提醒，如有多个号码请用逗号分隔");
-							$(".warningSpace").val("掉线提醒的间隔时间，单位分钟");
-							$(".delayTime").val("掉线后提醒的延迟时间，单位分钟");
-							$(".contactPhone").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
-							$(".warningSpace").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
-							$(".delayTime").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
-						}else{
-							$(".controlBtn span").eq(0).addClass('activeBtn');
-							$(".controlBtn span").eq(1).removeClass('activeBtn');
-							$(".contactPhone").val(data.mobile);
-							$(".warningSpace").val(data.remind_interval);
-							$(".delayTime").val(data.remind_delay);
-							$(".contactPhone").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
-							$(".warningSpace").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
-							$(".delayTime").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
-						}
-						//console.log(collectorArr);
-						modelCollector()
+						$(".controlBtn span").eq(0).addClass('activeBtn');
+						$(".controlBtn span").eq(1).removeClass('activeBtn');
+						$(".contactPhone").val(data.mobile);
+						$(".warningSpace").val(data.remind_interval);
+						$(".delayTime").val(data.remind_delay);
+						$(".contactPhone").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
+						$(".warningSpace").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
+						$(".delayTime").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
 					}
+					modelCollector()
+				}
 				
 			}
 		});
 		
 	};
+	
 	//选择采集器ID触发的事件
 	
-	var collector_id="";
 	var dataInfo="",info=[],infoJson="",dataConfigJson="",dataConfig=[];
 	var optionValue="";
 	var dataTypeStr="",operTypeStr="";
@@ -150,6 +133,7 @@ $.fn.extend({
 		$.ajax({
 			type:"get",
 			dataType:"JSON",
+			crossDomain: true == !(document.all),
 			url:globalurl+"/v1/devices/"+deviceId+"/dataConfigs",
 			data:{
 				access_token:accesstoken,
@@ -157,9 +141,7 @@ $.fn.extend({
 			},
 			success:function(data) {
 				$(".detialData tbody").empty();
-				/*pngName=(data.collector_model.split("-"))[1].toLowerCase();
-				//console.log(pngName)
-				imgName="dtu_"+pngName+".png";*/
+				
 				dataInfo=data.rows;
 				
 				for(var i in dataInfo){
@@ -224,27 +206,7 @@ $.fn.extend({
 			
 		});
 	}	
-	//点击问号的事件
-	function devicePNG(){
-		if(pngName==""){
-			layer.msg('请先选择采集器ID，在获取设备型号', {
-				icon : 2,
-				time:1000
-			});
-		}else{
-		 	layer.open({
-				type: 1,
-				title: false,
-				area: '500px',
-				shade:[0.1, '#000', false],
-				closeBtn: 0,//不显示关闭按钮
-				skin: 'layui-layer-demo', //样式类名
-				anim: 2,
-				shadeClose: true, //开启遮罩关闭
-				content: "<img class='imgName' src='../img/box_sensor/"+imgName+"'/>"
-			});
-		}
-	}
+	
 	//点击编辑数据同步到弹窗
 	function editClick(i){
 		$('.pop').filter('.step1').removeClass('hidden');
@@ -283,18 +245,18 @@ $.fn.extend({
 		if(info[i].portName.substr(0,1)=='A'){
 			$(".changeData").empty();
 			aStr='<div class="dataRow collectorRange"><label>采集量程</label><div class="rangeData">'
-			+'<input type="text" class="collectorLow" value="'+rangeLow+'"  /><span>-</span><input type="text" class="collectorHigh" value="'+rangeHigh+'"/></div>'
+			+'<input type="text" class="collectorLow number" value="'+rangeLow+'" data-info="请输入采集量程" /><span>-</span><input type="text" class="number collectorHigh" data-info="请输入采集量程" value="'+rangeHigh+'"/></div>'
 			+'</div><div class="dataRow realRange"><label>实际量程</label><div class="rangeData ">'
-			+'<input type="text" class="realLow" value="'+realLow+'" /><span>-</span><input type="text"  class="realHigh" value="'+realHigh+'" /></div>'
-			+'</div><div class="dataRow dataUnit"><label>数据单位</label><input type="text" value="'+dataUnit+'"/></div>'
-			+'<div class="dataRow dataName"><label>数据名称</label><input type="text" value="'+dataName+'"/></div>';
+			+'<input type="text" class="number realLow" value="'+realLow+'" data-info="请输入实际量程"/><span>-</span><input type="text"  class="realHigh number" value="'+realHigh+'" data-info="请输入实际量程"/></div>'
+			+'</div><div class="dataRow dataUnit"><label>数据单位</label><input type="text" value="'+dataUnit+'" data-info="请填写数据单位"/></div>'
+			+'<div class="dataRow dataName"><label>数据名称</label><input type="text" value="'+dataName+'" data-info="请填写数据名称"></div>';
 			$(".changeData").append(aStr);
 		}else{
 			$(".changeData").empty();
 			dStr='<div class="dataRow collectorRange"><label>低电平</label><div class="rangeData">'
-			+'<input type="text" class="lowBattery" value="'+lowBattery+'" style="width:350px;" /></div></div><div class="dataRow realRange">'
-			+'<label>高电平</label><div class="rangeData "><input type="text" class="highBattery" style="width:350px;" value="'+highBattery+'" /></div>'
-			+'</div><div class="dataRow dataName"><label>数据名称</label><input type="text" value="'+dataName+'"/></div>';
+			+'<input type="text" class="lowBattery" value="'+lowBattery+'" data-info="请填写低电平" style="width:350px;" /></div></div><div class="dataRow realRange">'
+			+'<label>高电平</label><div class="rangeData "><input type="text" data-info="请填写高电平" class="highBattery" style="width:350px;" value="'+lowBattery+'" /></div>'
+			+'</div><div class="dataRow dataName"><label>数据名称</label><input type="text" value="'+dataName+'" data-info="请填写数据名称"/></div>';
 			$(".changeData").append(dStr);
 		}
 		j=i
@@ -315,65 +277,47 @@ $.fn.extend({
 		}
 	})
 	
-	
-	//点击保存的时候数据同步到页面中
-	
+	//弹窗保存
+	$(".saveEquipment").click(function(){
+		editCollector(j);
+	});
+
 	function editCollector(j){
 		
-		//读写状态
-		if($(".realLow").val()=="" || $(".realHigh").val()==""){
-			layer.msg('请填写实际量程，且必须为数字', {
-				icon : 2,
-				time:1500
-			});	
-		}else if($(".lowBattery").val()==""){
-			layer.msg('请填写低电平', {
-				icon : 2,
-				time:1500
-			});
-		}else if($(".highBattery").val()==""){
-			layer.msg('请填写高电平', {
-				icon : 2,
-				time:1500
-			});
-		}else{
-			var flag=0;
-			var rangeReg=/^[0-9]*$/;
-			var openClose=$(".collectorLow").val();
-			//console.log(openClose);
-			var openClose1=$(".collectorHigh").val();
-			var openClose2=$(".realLow").val();
-			var openClose3=$(".realHigh").val();
-			if ($(".dataUnit input").val() == "") {
-				layer.msg('数据单位不能为空', {
-					icon : 2,
-					time:1500
-				});
-				flag=-1;
-			}else if ($(".dataName input").val() == "") {
-				layer.msg('数据名称不能为空', {
-					icon : 2,
-					time:1500
-				});
-				flag=-1;
-			}else if($(".portName span").html().substr(0,1)=="A"){
-				if(rangeReg.test(openClose)==false || rangeReg.test(openClose1)==false ||rangeReg.test(openClose2)==false ||rangeReg.test(openClose3)==false){
-					layer.msg('量程请输入数字', {
-						icon : 2,
-						time:1500
-					});
-					flag=-1;
-				}else{
-					editContent(j);
-				}
-				 
-			}else{
-				editContent(j);
-			}	
+		var rangeReg=/^[0-9]*$/;
+		//弹窗内容有空
+		var openClose=0,openClose1=0;
+		$(".pop").find("input").each( function(i) {
 			
+			if($(this).val()==$(this).attr("data-info") ||$(this).val()=="" ||$(this).val()=="-"){
+				$(this).css("border","1px solid #f00");
+				$(this).val($(this).attr("data-info"));
+				layer.tips($(this).attr("data-info"),$(this),{
+					tips:1
+				});
+				$(this).focus(function(){
+					$(this).val("");
+					$(this).css("border","1px solid #1ab394");
+				})
+				openClose=-1;
+			}else if($(this).hasClass("number") && rangeReg.test($(this).val())==false){
+				$(this).css("border","1px solid #f00");
+				layer.tips('请输入数字',$(this),{
+					tips:1
+				});
+				//$(this).val("");
+				openClose=-1;
+			}else{
+				$(this).css("border","1px solid #ccc");	
+			}
+			
+		});
+		if(openClose==0 && openClose1==0){
+			editContent(j);
 		}
 		
 	}
+	//修改弹窗数据同步到页面
 	function editContent(j){
 		var portName=$(".portName span").html();
 		var operType=$(".readState select").val();
@@ -413,132 +357,189 @@ $.fn.extend({
 			dataUnit="-";
 			dataName:$(".dataName input").val();
 		};
-		/*var dataTr='<td><input type="checkbox" checked="checked"/></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
-					+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'										*/
 		if(flag==0){
-			//console.log(11122)
-			//$(".detialData tbody").find("tr").eq(j).find("input").attr("checked","checked");
 			var dataTr='<td><input type="checkbox" checked="checked" /></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
 			+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'	
 		}else{
-			//console.log(634)
-			//$(".detialData tbody").find("tr").eq(j).find("input").attr("disabled","disabled");
 			var dataTr='<td><input type="checkbox" disabled="disabled"/></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
 					+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'	
 		}			
 		$(".detialData tbody").find("tr").eq(j).html(dataTr);	
 	}
-	
-	
-	//弹窗保存
-	$(".saveEquipment").click(function(){
-		editCollector(j);
-		
-	})
-	
+	//保存设备
 	function saveDevice(){
 		var deviceName = $(".deviceName").val();
 		var deviceCode = $(".deviceCode").val();
 		var mobile = $(".contactPhone").val();
 		var collectorId = $(".collector input").val();
-		var warningSpace=Number($(".warningSpace").val()?$(".warningSpace").val():0);
-		var delayTime=Number($(".delayTime").val()?$(".delayTime").val():0);
+		var warningSpace=$(".warningSpace").val();
+		var delayTime=$(".delayTime").val();
 		var collectInterval = $(".collectInterval").val();
-		var communication = "{'collect_interval':" + collectInterval+ ",'collector_id':'" + collectorId+ "'}";
+		var communication = "{'collect_interval':" + collectInterval+ ",'collector_id': '"+ collector_id+ "'}";
 		var controlBtn=$(".controlBtn span");
+		var status="";
 		var isRemind="";
-		var device=""
+		var device="";
+		var phoneReg=/^1[34578]\d{9}$/;
+		var remindReg=/^[0-9]*$/;
+		var nullInput1=0,nullInput2=0,nullInput3=0,nullInput4=0,nullInput5=0;
 		for(var i=0;i<controlBtn.length;i++){
 			if(controlBtn.eq(i).hasClass("activeBtn")){
-				isRemind +=controlBtn.eq(i).attr("value");
-				//console.log(status)
+				isRemind = controlBtn.eq(i).attr("value");
 			}
 		}
-		if (deviceCode == "") {
-			layer.msg('设备编号不能为空', {
-				icon : 2,
-				time:1500
+		$("input").blur(function(){
+			$("input").css("border","1px solid #ccc");
+		});
+		if(deviceCode=="" ||deviceCode==$(".deviceCode").attr("data-info")){
+			$(".deviceCode").css("border","1px solid #f00");
+			$(".deviceCode").val($(".deviceCode").attr("data-info"));
+			layer.tips($(".deviceCode").attr("data-info"),$(".deviceCode"),{
+				tips:1
 			});
-		} else if (deviceName == "请输入设备名称" ||deviceName == ""){
-			layer.msg('设备名称不能为空', {
-				icon : 2,
-				time:1500
+			$(".deviceCode").focus(function(){
+				$(this).css("border","1px solid #1ab394");
 			});
-		}else if(collectorId==0||collectorId==''){
-			layer.msg("请选择有效的采集器ID", {
-				icon : 2,
-				time:1500
+			nullInput1=-1;
+		}else if(deviceName=="" ||deviceName==$(".deviceName").attr("data-info")){
+			$(".deviceName").css("border","1px solid #f00");
+			$(".deviceName").val($(".deviceName").attr("data-info"));
+			layer.tips($(".deviceName").attr("data-info"),$(".deviceName"),{
+				tips:1,
 			});
+			$(".deviceName").focus(function(){
+				$(this).css("border","1px solid #1ab394");
+			});
+			nullInput2=-1;
+		}else if(collectorId=="" ||collectorId==$(".collector input").attr("data-info")){
+			$(".collector input").css("border","1px solid #f00");
+			$(".collector input").val($(".collector input").attr("data-info"));
+			layer.tips("请选择采集器ID",$(".collector input"),{
+				tips:1
+			});
+			$(".collector input").focus(function(){
+				$(this).css("border","1px solid #1ab394");
+			});
+			nullInput3=-1;
 		}else {
-			if(isRemind==1){
-				var phoneReg=/^1[34578]\d{9}$/;
-				if(mobile ==""){
-					layer.msg('联系电话不能为空', {
-						icon : 2,
-						time:1500
-					});
-					//console.log(111)
-				}else if($(".warningSpace").val() == "掉线提醒的间隔时间，单位分钟" ||$(".warningSpace").val() ==""){
-					layer.msg('掉线提醒的间隔时间不能为空', {
-						icon : 2,
-						time:1500
-					});
-					//console.log(222)
-				}else if($(".delayTime").val() =="掉线后提醒的延迟时间，单位分钟"||$(".delayTime").val() ==""){
-					layer.msg('掉线后提醒的延迟时间不能为空', {
-						icon : 2,
-						time:1500
-					});
-					
-				}else if(phoneReg.test(mobile) ==false){
-					layer.msg('请输入正确的联系电话', {
-						icon : 2,
-						time:1500
-					});
-				}else{
-					//console.log(onOff)
-					device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
-						+  "','mobile':'" + mobile + "','status': 1 ,'communication':" + communication 
-						+",'is_remind':1,'remind_interval':"+warningSpace+",'protocal':'A','remind_delay':"+delayTime+"}";
-					data=device;
-					//console.log(data)
-					$.ajax({
-						type:"put",
-						datatype:"json",
-						url:globalurl+"/v1/devices/"+deviceId+"?access_token="+accesstoken,
-						data:{
-							data:data
-						},
-						success:function(data){
-							console.log(data)
-							if (data.code===200) {
-								layer.msg('保存成功！', {icon: 1});
-							}
-							save();
-						}
-					})
-				}
+			nullInput1=0;
+			nullInput2=0
+			nullInput3=0
+			$("input").css("border","1px solid #ccc");
+			
+		}
+		if(isRemind==1){
+			if(mobile=="" ||mobile==$(".contactPhone").attr("data-info")){
+				$(".contactPhone").css("border","1px solid #f00");
+				$(".contactPhone").val($(".contactPhone").attr("data-info"));
+				layer.tips("请输入联系电话",$(".contactPhone"),{
+					tips:1
+				});
+				$(".contactPhone").focus(function(){
+					$(this).css("border","1px solid #1ab394");
+				});
+				nullInput4=-1;
+			}else if(phoneReg.test(mobile)==false){
+				$(".contactPhone").css("border","1px solid #f00");
+				layer.tips('请输入正确的电话号码',$(".contactPhone"),{
+					tips:1
+				});
+				nullInput4=-1;
+			}else if(warningSpace=="" ||warningSpace==$(".warningSpace").attr("data-info")){
+				$(".warningSpace").css("border","1px solid #f00");
+				$(".warningSpace").val($(".warningSpace").attr("data-info"));
+				layer.tips("请输入联系提醒间隔",$(".warningSpace"),{
+					tips:1
+				});
+				$(".warningSpace").focus(function(){
+					$(this).css("border","1px solid #1ab394");
+				});
+				nullInput5=-1;
+			}else if(remindReg.test(warningSpace)==false){
+				$(".warningSpace").css("border","1px solid #f00");
+				layer.tips('掉线提醒的间隔为数字',$(".warningSpace"),{
+					tips:1
+				});
+				nullInput5=-1;
+			}else if(delayTime=="" ||delayTime==$(".delayTime").attr("data-info")){
+				$(".delayTime").css("border","1px solid #f00");
+				$(".delayTime").val($(".delayTime").attr("data-info"));
+				layer.tips("请输入延迟时间",$(".delayTime"),{
+					tips:1
+				});
+				$(".warningSpace").focus(function(){
+					$(this).css("border","1px solid #1ab394");
+				});
+				nullInput5=-1;
+			}else if(remindReg.test(delayTime)==false ){
+				$(".delayTime").css("border","1px solid #f00");
+				layer.tips('掉线后提醒的延迟时间为数字',$(".delayTime"),{
+					tips:1
+				});
+				nullInput5=-1;
 			}else{
-				device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
-						+  "','communication':" + communication 
-						+",'is_remind':0,'protocal':'A','status':1}";		
-				data=device;
-			//	console.log(data)
-				$.ajax({
-					type:"put",
-					datatype:"json",
-					url:globalurl+"/v1/devices/"+deviceId+"?access_token="+accesstoken,
-					data:{
-						data:data
-					},
-					success:function(data){
-						if (data.code===200) {
-							layer.msg('保存成功！', {icon: 1});
-						}
-						save();
-					}
-				})
+				nullInput4=0;
+				nullInput5=0;
+				$("input").blur(function(){
+					$("input").css("border","1px solid #ccc");
+				});
+				
 			}
+		}else{
+			nullInput4=0;
+			nullInput5=0;
+		}
+		if(isRemind==1 && nullInput1==0 && nullInput2==0 && nullInput3==0 && nullInput4==0&& nullInput5==0){
+			device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
+					+  "','mobile':'" + mobile +"','status': 1 ,'communication':" + communication 
+					+",'is_remind':1,'remind_interval':"+warningSpace+",'protocal':'A','remind_delay':"+delayTime+"}";
+			$.ajax({
+				type:"put",
+				datatype:"json",
+				crossDomain: true == !(document.all),
+				url:globalurl+"/v1/devices/"+deviceId+"?access_token="+accesstoken,
+				data:{
+					data:device
+				},
+				success:function(data){
+					if($(".collector input").val() !=collector_id){
+						layer.tips('请重新选择采集器ID！',$(".collector input"),{
+							tips: 1,
+							time:2000
+						});
+					}else{
+						save();
+						return;
+					}
+					
+				}
+			});
+		}
+		if(isRemind==0 && nullInput1==0 && nullInput2==0 && nullInput3==0 && nullInput4==0&& nullInput5==0){
+			
+			device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
+					+  "','communication':" + communication +",'status': 1 "
+					+",'is_remind':0,'protocal':'A'}";	
+			$.ajax({
+				type:"put",
+				datatype:"json",
+				crossDomain: true == !(document.all),
+				url:globalurl+"/v1/devices/"+deviceId+"?access_token="+accesstoken,
+				data:{
+					data:device
+				},
+				success:function(data){
+					if($(".collector input").val() !=collector_id){
+						layer.tips('请重新选择采集器ID！',$(".collector input"),{
+							tips: 1,
+							time:2000
+						});
+					}else{
+						save();
+						return;
+					}
+				}
+			});
 		}	
 	}
 	function save(){
@@ -547,63 +548,69 @@ $.fn.extend({
 		var status = "";
 		for (var i = 0; i < info.length; i++) {
 				//console.log(33434)
-				status=$("#dataTable").find(" tr").eq(i).find("input").attr('checked')==="checked" ? 1 : 0;
-				rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
-				rangeHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[1];
-				realLow=$("#dataTable").find(" tr").eq(i).find("td").eq(5).text().split("-")[0];
-				realHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(5).text().split("-")[1];
-				highBattery=$("#dataTable").find(" tr").eq(i).find("td").eq(6).text();
-				lowBattery=$("#dataTable").find(" tr").eq(i).find("td").eq(7).text();
-				dataUnit=$("#dataTable").find(" tr").eq(i).find("td").eq(8).text();
-				dataName=$("#dataTable").find(" tr").eq(i).find("td").eq(9).text();
-				if(rangeHigh=="-"){
-					rangeHigh="";
-				};
-				if(rangeLow=="-"){
-					rangeLow="";
-				}
-				if(realHigh=="-"){
-					realHigh=""
-				}
-				if(realLow=="-"){
-					realLow="-"
-				}
-				
-				
-				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
-				'"oper_type":'+dataInfo[i].oper_type+','+
-				'"port_name":"'+dataInfo[i].port_name+'",'+
-				'"collect_range_high":"'+rangeHigh+'",'+
-				'"collect_range_low":"'+rangeLow+'",'+
-				'"real_range_high":"'+realHigh+'",'+
-				'"real_range_low":"'+realLow+'",'+
-				'"low_battery":"'+lowBattery+'",'+
-				'"high_battery":"'+highBattery+'",'+
-				'"status":"'+status+'",'+
-				'"_id":"'+IdArr[i]+'",'+
-				'"data_id":"'+dataId[i]+'",'+
-				'"data_unit":"'+dataUnit+'",'+
-				'"data_name":"'+dataName+'"}';
-				//console.log(dataConfigJson)
-				dataConfigJson=JSON.parse(dataConfigJson);
-				//console.log(dataConfigJson);
-				dataConfig.push(dataConfigJson);
-				//console.log(dataConfig)
+			status=$("#dataTable").find(" tr").eq(i).find("input").attr('checked')==="checked" ? 1 : 0;
+			rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
+			rangeHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[1];
+			realLow=$("#dataTable").find(" tr").eq(i).find("td").eq(5).text().split("-")[0];
+			realHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(5).text().split("-")[1];
+			highBattery=$("#dataTable").find(" tr").eq(i).find("td").eq(6).text();
+			lowBattery=$("#dataTable").find(" tr").eq(i).find("td").eq(7).text();
+			dataUnit=$("#dataTable").find(" tr").eq(i).find("td").eq(8).text();
+			dataName=$("#dataTable").find(" tr").eq(i).find("td").eq(9).text();
+			if(rangeHigh=="-"){
+				rangeHigh="";
+			};
+			if(rangeLow=="-"){
+				rangeLow="";
+			}
+			if(realHigh=="-"){
+				realHigh=""
+			}
+			if(realLow=="-"){
+				realLow="-"
+			}
 			
-				data=JSON.stringify(dataConfig);
+			
+			dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
+			'"oper_type":'+dataInfo[i].oper_type+','+
+			'"port_name":"'+dataInfo[i].port_name+'",'+
+			'"collect_range_high":"'+rangeHigh+'",'+
+			'"collect_range_low":"'+rangeLow+'",'+
+			'"real_range_high":"'+realHigh+'",'+
+			'"real_range_low":"'+realLow+'",'+
+			'"low_battery":"'+lowBattery+'",'+
+			'"high_battery":"'+highBattery+'",'+
+			'"status":"'+status+'",'+
+			'"_id":"'+IdArr[i]+'",'+
+			'"data_id":"'+dataId[i]+'",'+
+			'"data_unit":"'+dataUnit+'",'+
+			'"data_name":"'+dataName+'"}';
+			//console.log(dataConfigJson)
+			dataConfigJson=JSON.parse(dataConfigJson);
+			//console.log(dataConfigJson);
+			dataConfig.push(dataConfigJson);
+			//console.log(dataConfig)
+		
+			data=JSON.stringify(dataConfig);
 		}
 		$.ajax({
 			type:"put",
 			datatype:"json",
+			crossDomain: true == !(document.all),
 			url:globalurl+"/v1/devices/"+deviceId+"/dataConfigs",
 			data:{
 				access_token:accesstoken,
 				data:data
 			},
 			success:function(data){
-				console.log(data)
 				if (data.code===200) {
-					layer.msg('保存成功！', {icon: 1});
+					layer.msg('保存成功！', {
+						icon: 1,
+						time:3000,
+						end:function(){
+							self.location.href='/finfosoft-water/dataTag/box/'
+						}
+					});
 				}
 			}
 		});
@@ -612,6 +619,43 @@ $.fn.extend({
 	//点击保存新增
 	$(".saveSettings button").click(function(){
 		saveDevice();
+	});
+	
+//点击问号的事件
+	function devicePNG(){
+		optionValue=$(".collector input").val();
+		var data="{'collector_id':'"+optionValue+"'}";
+		$.ajax({
+			type:"post",
+			dataType:"JSON",
+			url:globalurl+"/v1/collectorModels",
+			data:{
+				access_token:accesstoken,
+				data:data
+			},
+			success:function(data) {
+				pngName=(data.collector_model.split("-"))[1].toLowerCase();
+				imgName="dtu_"+pngName+".png";
+				if(pngName==""){
+					layer.msg('请先选择采集器ID，在获取设备型号', {
+						icon : 2,
+						time:1000
+					});
+				}else{
+				 	layer.open({
+						type: 1,
+						title: false,
+						area: '500px',
+						shade:[0.1, '#000', false],
+						closeBtn: 0,//不显示关闭按钮
+						skin: 'layui-layer-demo', //样式类名
+						anim: 2,
+						shadeClose: true, //开启遮罩关闭
+						content: "<img class='imgName' src='/finfosoft-water/img/box_sensor/"+imgName+"'/>"
+					});
+				}
+					
+			}
+		});
 		
-		//save();
-	})
+	}
