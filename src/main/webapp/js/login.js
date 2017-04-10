@@ -210,10 +210,10 @@ $.fn.extend({
 			$.getJSON('http://chaxun.1616.net/s.php?type=ip&output=json&callback=?&_='+Math.random(), function(data){
 				var iAddress = data.Isp.split(' ')[0].toString();
 				$.ajax({
-					type:"post",
+					type:"POST",
 					dataType:"JSON",
 					url:globalurl+"/authorize/authorize",
-					async:true,
+					crossDomain: true == !(document.all),
 					data:{
 						'client_id': 'admin',
 						'client_secret': 'admin',
@@ -223,6 +223,7 @@ $.fn.extend({
 						'address': iAddress
 					},
 					success: function (data){
+						console.info(data)
 						if(data.code==200){
 							$('.login-title .tip').addClass('hidden');
 							$.ajax({
