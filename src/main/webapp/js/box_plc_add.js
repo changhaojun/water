@@ -68,7 +68,7 @@ var $extend = $.fn.extend({
 	numOnly: function() {
 		$(this).keyup(function() {
 			$(this).val($(this).val().replace(/[^0-9-]/g, ''));
-			eval('initData.'+$(this).attr('datasrc')+'=$(this).val()');
+			eval('initData.'+$(this).attr('datasrc')+'=Number($(this).val())');
 		});
 	},
 	//居中位置计算
@@ -292,7 +292,8 @@ $.extend({
 										icon: 1,
 										end: function() {
 											self.location.href='/finfosoft-water/dataTag/plc/'
-										}});
+										}
+									});
 								}
 							}
 						});
