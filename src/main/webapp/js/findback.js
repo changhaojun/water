@@ -95,6 +95,7 @@ $.fn.extend({
 			dataType: "json",
 			url: globalurl + "/v1/users",
 			async: true,
+			crossDomain: true == !(document.all),
 			data: $.passwordInfo,
 			success: function(data) {
 				if (data.code==200) {

@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="/finfosoft-water/plugins/bootstarp/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.min.css" />
 		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/reset.css" />
-		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/box_plc_add.css" />
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/box_plc_add.css?1.0" />
 	</head>
 
 	<body>
@@ -38,31 +38,31 @@
 						</div>
 						<div class="dataCircle">
 							<label for="device_code">设备编号</label>
-							<input type="text" id="device_code" class="textInput" v-model="deviceData.device_code" datasrc="deviceData.device_code" v-bind:empty="!deviceData.device_code&&deviceData.device_code!==0 ? true : false" placeholder="请输入设备编号"/>
+							<input type="text" id="device_code" class="textInput" v-model="deviceData.device_code" datasrc="deviceData.device_code" v-bind:empty="!deviceData.device_code&&deviceData.device_code!==0 ? true : false" warning="请输入设备编号" placeholder="请输入设备编号"/>
 						</div>
 						<div class="dataCircle">
 							<label for="device_name">设备名称</label>
-							<input id="device_name" type="text" class="textInput" v-model="deviceData.device_name" datasrc="deviceData.device_name" v-bind:empty="!deviceData.device_name&&deviceData.device_name!==0 ? true : false" placeholder="请输入设备名称"/>
+							<input id="device_name" type="text" class="textInput" v-model="deviceData.device_name" datasrc="deviceData.device_name" v-bind:empty="!deviceData.device_name&&deviceData.device_name!==0 ? true : false" warning="请输入设备名称" placeholder="请输入设备名称"/>
 						</div>
 						<div class="dataCircle">
 							<label>掉线提醒</label>
 							<p class="controlBtn">
-								<span v-bind:class="{ activeBtn : !deviceData.is_remind }" @click="remindOnOff(0)">关闭</span>
 								<span v-bind:class="{ activeBtn : deviceData.is_remind }" @click="remindOnOff(1)">开启</span>
+								<span v-bind:class="{ activeBtn : !deviceData.is_remind }" @click="remindOnOff(0)">关闭</span>
 							</p>
 							<em>注 : 开启提醒后即可进行相关设置。</em>
 						</div>
 						<div class="dataCircle">
 							<label for="mobile">联系电话</label>
-							<input id="mobile" type="text" class="textInput" v-model="deviceData.mobile" datasrc="deviceData.mobile" v-bind:disabled="!deviceData.is_remind" v-bind:empty="deviceData.is_remind===1&&!deviceData.mobile&&deviceData.mobile!==0 ? true : false" placeholder="此号码用于接收掉线提醒"/>
+							<input id="mobile" type="text" class="textInput" v-model="deviceData.mobile" datasrc="deviceData.mobile" v-bind:disabled="!deviceData.is_remind" v-bind:empty="deviceData.is_remind===1&&!deviceData.mobile&&deviceData.mobile!==0 ? true : false" warning="请输入手机号码" placeholder="此号码用于接收掉线提醒"/>
 						</div>
 						<div class="dataCircle">
 							<label for="remind_interval">提醒间隔</label>
-							<input id="remind_interval" type="text" class="textInput" v-model="deviceData.remind_interval" datasrc="deviceData.remind_interval" v-bind:disabled="!deviceData.is_remind" v-bind:empty="deviceData.is_remind===1&&!deviceData.remind_interval&&deviceData.remind_interval!==0 ? true : false" placeholder="掉线提醒的间隔时间，单位分钟"/>
+							<input id="remind_interval" type="text" class="textInput" v-model="deviceData.remind_interval" datasrc="deviceData.remind_interval" v-bind:disabled="!deviceData.is_remind" v-bind:empty="deviceData.is_remind===1&&!deviceData.remind_interval&&deviceData.remind_interval!==0 ? true : false" warning="请输入间隔时间" placeholder="掉线提醒的间隔时间，单位分钟"/>
 						</div>
 						<div class="dataCircle">
 							<label for="remind_delay">延长时间</label>
-							<input id="remind_delay" type="text" class="textInput" v-model="deviceData.remind_delay" datasrc="deviceData.remind_delay" v-bind:disabled="!deviceData.is_remind" v-bind:empty="deviceData.is_remind===1&&!deviceData.remind_delay&&deviceData.remind_delay!==0 ? true : false" placeholder="掉线后提醒的延迟时间，单位分钟"/>
+							<input id="remind_delay" type="text" class="textInput" v-model="deviceData.remind_delay" datasrc="deviceData.remind_delay" v-bind:disabled="!deviceData.is_remind" v-bind:empty="deviceData.is_remind===1&&!deviceData.remind_delay&&deviceData.remind_delay!==0 ? true : false" warning="请输入延迟时间" placeholder="掉线后提醒的延迟时间，单位分钟"/>
 						</div>
 					</div>
 					<div class="boxContent clearfix">
@@ -72,6 +72,7 @@
 						<div class="dataCircle">
 							<label>采集周期</label>
 							<select v-model="deviceData.communication.collect_interval">
+								<option value="120">120</option>
 								<option value="180">180</option>
 								<option value="240">240</option>
 								<option value="300">300</option>
@@ -80,14 +81,14 @@
 						</div>
 						<div class="dataCircle">
 							<label for="collector_id">采集器ID</label>
-							<input id="collector_id" type="text" num-limit="limit" class="textInput" v-model="deviceData.communication.collector_id" datasrc="deviceData.communication.collector_id" v-bind:empty="!deviceData.communication.collector_id&&!deviceData.communication.collector_id!==0 ? true : false" placeholder="请输入采集器ID" @keyup="requestCollectorList($event)" @focus="toggleList($event)" @blur="toggleList($event,true)"/>
+							<input id="collector_id" type="text" num-limit="limit" class="textInput" v-model="deviceData.communication.collector_id" datasrc="deviceData.communication.collector_id" v-bind:empty="!deviceData.communication.collector_id&&!deviceData.communication.collector_id!==0 ? true : false" warning="请输入采集器ID" placeholder="请输入采集器ID" @keyup="requestCollectorList($event)" @focus="toggleList($event)" @blur="toggleList($event,true)"/>
 							<ul id="collector_id_list" class="hidden">
 								<li v-for="id in collectorData" @mousedown="confirmId($event)">{{ id.collector_id }}</li>
 							</ul>
 						</div>
 						<div class="dataCircle">
 							<label for="plc_id">通讯地址</label>
-							<input id="plc_id" type="text" num-limit="limit" class="textInput" v-model="deviceData.communication.plc_id" datasrc="deviceData.communication.plc_id" v-bind:empty="!deviceData.communication.plc_id&&!deviceData.communication.plc_id!==0 ? true : false" placeholder="请输入通讯地址"/>
+							<input id="plc_id" type="text" num-limit="limit" class="textInput" v-model="deviceData.communication.plc_id" datasrc="deviceData.communication.plc_id" v-bind:empty="!deviceData.communication.plc_id&&!deviceData.communication.plc_id!==0 ? true : false" warning="请输入通讯地址" placeholder="请输入通讯地址"/>
 						</div>
 						<div class="dataCircle">
 							<label>CRC校验</label>
@@ -111,7 +112,7 @@
 						</div>
 						<div class="dataCircle">
 							<label for="data_addr">起始位置</label>
-							<input id="data_addr" type="text" num-limit="limit" class="textInput" v-model="deviceData.communication.data_addr" datasrc="deviceData.communication.data_addr" v-bind:empty="!deviceData.communication.data_addr&&deviceData.communication.data_addr!==0 ? true : false" placeholder="请输入起始位置"/>
+							<input id="data_addr" type="text" num-limit="limit" class="textInput" v-model="deviceData.communication.data_addr" datasrc="deviceData.communication.data_addr" v-bind:empty="!deviceData.communication.data_addr&&deviceData.communication.data_addr!==0 ? true : false" warning="请输入起始位置" placeholder="请输入起始位置"/>
 						</div>
 						<div class="dataCircle">
 							<label>校验位</label>
@@ -123,7 +124,7 @@
 						</div>
 						<div class="dataCircle">
 							<label for="data_length">数据长度</label>
-							<input id="data_length" type="text" num-limit="limit" class="textInput" v-model="deviceData.communication.data_length" datasrc="deviceData.communication.data_length" v-bind:empty="!deviceData.communication.data_length&&deviceData.communication.data_length!==0 ? true : false" placeholder="请输入数据长度"/>
+							<input id="data_length" type="text" num-limit="limit" class="textInput" v-model="deviceData.communication.data_length" datasrc="deviceData.communication.data_length" v-bind:empty="!deviceData.communication.data_length&&deviceData.communication.data_length!==0 ? true : false" warning="请输入数据长度" placeholder="请输入数据长度"/>
 						</div>
 						<div class="dataCircle">
 							<label>停止位</label>
@@ -226,7 +227,7 @@
 				<dl class="pop-main">
 					<dd class="clearfix dataEdit">
 						<label for="new_data_name">数据名称</label>
-						<input id="new_data_name" type="text" v-model="newPort.data_name" datasrc="newPort.data_name" v-bind:empty="!newPort.data_name&&newPort.data_name!==0 ? true : false" placeholder="请输入数据名称"/>
+						<input id="new_data_name" type="text" v-model="newPort.data_name" datasrc="newPort.data_name" v-bind:empty="!newPort.data_name&&newPort.data_name!==0 ? true : false" warning="请输入数据名称" placeholder="请输入数据名称"/>
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label>读写状态</label>
@@ -237,7 +238,7 @@
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label for="new_data_unit">数据单位</label>
-						<input id="new_data_unit" type="text" v-model="newPort.data_unit" datasrc="newPort.data_unit" v-bind:empty="!newPort.data_unit&&newPort.data_unit!==0 ? true : false" placeholder="请输入数据单位"/>
+						<input id="new_data_unit" type="text" v-model="newPort.data_unit" datasrc="newPort.data_unit" v-bind:empty="!newPort.data_unit&&newPort.data_unit!==0 ? true : false" warning="请输入数据单位" placeholder="请输入数据单位"/>
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label>数据类型</label>
@@ -249,19 +250,19 @@
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label for="new_data_precision">数据精度</label>
-						<input id="new_data_precision" type="text" v-model="newPort.data_precision" datasrc="newPort.data_precision" v-bind:empty="!newPort.data_precision&&newPort.data_precision!==0 ? true : false" num-limit="limit" placeholder="请输入数据精度"/>
+						<input id="new_data_precision" type="text" v-model="newPort.data_precision" datasrc="newPort.data_precision" v-bind:empty="!newPort.data_precision&&newPort.data_precision!==0 ? true : false" num-limit="limit" warning="请输入数据精度" placeholder="请输入数据精度"/>
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label for="new_data_addr">数据地址</label>
-						<input id="new_data_addr" type="text" v-model="newPort.data_addr" datasrc="newPort.data_addr" v-bind:empty="!newPort.data_addr&&newPort.data_addr!==0 ? true : false" num-limit="limit" placeholder="请输入数据地址"/>
+						<input id="new_data_addr" type="text" v-model="newPort.data_addr" datasrc="newPort.data_addr" v-bind:empty="!newPort.data_addr&&newPort.data_addr!==0 ? true : false" num-limit="limit" warning="请输入数据地址" placeholder="请输入数据地址"/>
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label for="new_real_range_low">实际量程低</label>
-						<input id="new_real_range_low" type="text" v-model="newPort.real_range_low" datasrc="newPort.real_range_low" v-bind:empty="!newPort.real_range_low&&newPort.real_range_low!==0 ? true : false" num-limit="limit" placeholder="请输入实际量程低"/>
+						<input id="new_real_range_low" type="text" v-model="newPort.real_range_low" datasrc="newPort.real_range_low" v-bind:empty="!newPort.real_range_low&&newPort.real_range_low!==0 ? true : false" num-limit="limit" warning="请输入实际量程低" placeholder="请输入实际量程低"/>
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label for="new_real_range_high">实际量程高</label>
-						<input id="new_real_range_high" type="text" v-model="newPort.real_range_high" datasrc="newPort.real_range_high" v-bind:empty="!newPort.real_range_high&&newPort.real_range_high!==0 ? true : false" num-limit="limit" placeholder="请输入实际量程高"/>
+						<input id="new_real_range_high" type="text" v-model="newPort.real_range_high" datasrc="newPort.real_range_high" v-bind:empty="!newPort.real_range_high&&newPort.real_range_high!==0 ? true : false" num-limit="limit" warning="请输入实际量程高" placeholder="请输入实际量程高"/>
 					</dd>
 					<dt>
 						<button @click="saveNewPort($event)">保存</button>
@@ -277,7 +278,7 @@
 				<dl class="pop-main">
 					<dd class="clearfix dataEdit">
 						<label for="edit_data_name">数据名称</label>
-						<input id="edit_data_name" type="text" v-model="newPort.data_name" datasrc="newPort.data_name" v-bind:empty="!newPort.data_name&&newPort.data_name!==0 ? true : false" placeholder="请输入数据名称"/>
+						<input id="edit_data_name" type="text" v-model="newPort.data_name" datasrc="newPort.data_name" v-bind:empty="!newPort.data_name&&newPort.data_name!==0 ? true : false" warning="请输入数据名称" placeholder="请输入数据名称"/>
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label>读写状态</label>
@@ -288,7 +289,7 @@
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label for="edit_data_unit">数据单位</label>
-						<input id="edit_data_unit" type="text" v-model="newPort.data_unit" datasrc="newPort.data_unit" v-bind:empty="!newPort.data_unit&&newPort.data_unit!==0 ? true : false" placeholder="请输入数据单位"/>
+						<input id="edit_data_unit" type="text" v-model="newPort.data_unit" datasrc="newPort.data_unit" v-bind:empty="!newPort.data_unit&&newPort.data_unit!==0 ? true : false" warning="请输入数据单位" placeholder="请输入数据单位"/>
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label>数据类型</label>
@@ -300,19 +301,19 @@
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label for="edit_data_precision">数据精度</label>
-						<input id="edit_data_precision" type="text" v-model="newPort.data_precision" datasrc="newPort.data_precision" v-bind:empty="!newPort.data_precision&&newPort.data_precision!==0 ? true : false" num-limit="limit" placeholder="请输入数据精度"/>
+						<input id="edit_data_precision" type="text" v-model="newPort.data_precision" datasrc="newPort.data_precision" v-bind:empty="!newPort.data_precision&&newPort.data_precision!==0 ? true : false" num-limit="limit" warning="请输入数据精度" placeholder="请输入数据精度"/>
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label for="edit_data_addr">数据地址</label>
-						<input id="edit_data_addr" type="text" v-model="newPort.data_addr" datasrc="newPort.data_addr" v-bind:empty="!newPort.data_addr&&newPort.data_addr!==0 ? true : false" num-limit="limit" placeholder="请输入数据地址"/>
+						<input id="edit_data_addr" type="text" v-model="newPort.data_addr" datasrc="newPort.data_addr" v-bind:empty="!newPort.data_addr&&newPort.data_addr!==0 ? true : false" num-limit="limit" warning="请输入数据地址" placeholder="请输入数据地址"/>
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label for="edit_real_range_low">实际量程低</label>
-						<input id="edit_real_range_low" type="text" v-model="newPort.real_range_low" datasrc="newPort.real_range_low" v-bind:empty="!newPort.real_range_low&&newPort.real_range_low!==0 ? true : false" num-limit="limit" placeholder="请输入实际量程低"/>
+						<input id="edit_real_range_low" type="text" v-model="newPort.real_range_low" datasrc="newPort.real_range_low" v-bind:empty="!newPort.real_range_low&&newPort.real_range_low!==0 ? true : false" num-limit="limit" warning="请输入实际量程低" placeholder="请输入实际量程低"/>
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label for="edit_real_range_high">实际量程高</label>
-						<input id="edit_real_range_high" type="text" v-model="newPort.real_range_high" datasrc="newPort.real_range_high" v-bind:empty="!newPort.real_range_high&&newPort.real_range_high!==0 ? true : false" num-limit="limit" placeholder="请输入实际量程高"/>
+						<input id="edit_real_range_high" type="text" v-model="newPort.real_range_high" datasrc="newPort.real_range_high" v-bind:empty="!newPort.real_range_high&&newPort.real_range_high!==0 ? true : false" num-limit="limit" warning="请输入实际量程高" placeholder="请输入实际量程高"/>
 					</dd>
 					<dt>
 						<button @click="saveEditPort($event)">保存</button>
@@ -324,7 +325,7 @@
 		<script src="/finfosoft-water/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js"></script>
 		<script src="/finfosoft-water/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/finfosoft-water/js/public_resources.js"></script>
-		<script src="/finfosoft-water/js/box_plc_add.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/public_resources.js?1.0"></script>
+		<script src="/finfosoft-water/js/box_plc_add.js?1.01" type="text/javascript" charset="utf-8"></script>
 	</body>
 </html>

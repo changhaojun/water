@@ -171,6 +171,7 @@ $.fn.extend({
 			dataType: "json",
 			url: globalurl + "/authorize/authorize",
 			async: true,
+			crossDomain: true == !(document.all),
 			data: $.userInfo,
 			success: function(data) {
 				if(data.code == 200) {
@@ -275,6 +276,7 @@ $.extend({
 				dataType: "json",
 				url: globalurl + "/v1/mails",
 				async: true,
+				crossDomain: true == !(document.all),
 				data: {
 					filter: JSON.stringify({username: $.userInfo.username})
 				}
@@ -292,6 +294,7 @@ $.extend({
 			url: '/finfosoft-water/login',
 			type: 'post',
 			dataType: 'json',
+			crossDomain: true == !(document.all),
 			data: { 
 				data: JSON.stringify(data)
 			},
@@ -364,6 +367,7 @@ $.extend({
 				dataType: "json",
 				url: globalurl + "/v1/mails",
 				async: true,
+				crossDomain: true == !(document.all),
 				data: {
 					email: $('.pop-username').val()
 				},

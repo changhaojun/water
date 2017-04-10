@@ -140,6 +140,7 @@ input:disabled{
 #collector_id_list>li{
 	cursor: pointer;
 }
+#collector_id_list .active,
 #collector_id_list>li:hover{
 	color: #fff;
 	background: #1e90ff;

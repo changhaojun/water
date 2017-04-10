@@ -1,10 +1,12 @@
-
 //Vue页面总数据流
 var initData = {
 	//令牌
 	access_token: "",
+	//页面状态选择器
+	pageStatus: "window",
+	//设备ID
 	deviceId: $('#deviceId').val(),
-//	//采集器ID
+	//采集器ID
 	collectorData: [],
 	//{ 设备信息, { 通讯参数 } }
 	deviceData: {
@@ -17,8 +19,8 @@ var initData = {
 		communication: {
 			collect_interval: 120,
 			collector_id: "",
-			plc_id: 0,
-			CRC_check: 0,
+			plc_id: 1,
+			CRC_check: 16,
 			baud_rate: 0,
 			data_addr: 0,
 			check_bit: 0,
@@ -34,7 +36,7 @@ var initData = {
 	//新增端口接口
 	newPort: {
 		data_name: "",
-		oper_type: 0,
+		oper_type: 1,
 		data_unit: "",
 		data_type: 0,
 		data_precision: "",
@@ -58,6 +60,17 @@ var $extend = $.fn.extend({
 		$(this).blur(function() {
 			$(this).css('borderColor', '#e5e6e7');
 		});
+		return $(this);
+	},
+	//回车键响应
+	enterKey: function(callBack) {
+		$(this).keyup(function(ev) {
+			if(ev.which === 13) {
+				$(this).blur();
+				callBack && callBack.call($(this));
+			}
+			return false;
+		});
 	},
 	//空格限制输入
 	limitSpacing: function() {
@@ -70,7 +83,7 @@ var $extend = $.fn.extend({
 	numOnly: function() {
 		$(this).keyup(function() {
 			$(this).val($(this).val().replace(/[^0-9-]/g, ''));
-			eval('initData.'+$(this).attr('datasrc')+'=$(this).val()');
+			eval('initData.'+$(this).attr('datasrc')+'=Number($(this).val())');
 		});
 	},
 	//居中位置计算
@@ -91,6 +104,7 @@ var $extend = $.fn.extend({
 		$.each(el, function() {
 			$(this).addClass('hidden');
 		});
+		initData.pageStatus = 'window';
 		callBack && callBack();
 	},
 	//打开窗口
@@ -108,46 +122,53 @@ var $extend = $.fn.extend({
 	//新增端口
 	createPort: function(event) {
 		//将原生DOM转化为jQueryDOM
-		var $This = $(event.currentTarget);
-		$This.openWindow([$('.newPort'), $('.pop-mask')], true);
+		var $This = event ? $(event.currentTarget) : $(this);
+		$This.openWindow([$('.newPort'), $('.pop-mask')], true, function() {
+			initData.pageStatus = 'newPort';
+		});
 		$.initNewPort();
 	},
 	//编辑端口
 	editPort: function(index,event) {
 		//将原生DOM转化为jQueryDOM
-		var $This = $(event.currentTarget);
+		var $This = event ? $(event.currentTarget) : $(this);
 		this.portIndex = index;
 		for (var key in this.portData[index]) {
 			this.newPort[key] = this.portData[index][key];
 		}
-		$This.openWindow([$('.editPort'), $('.pop-mask')], true);
+		$This.openWindow([$('.editPort'), $('.pop-mask')], true, function() {
+			initData.pageStatus = 'editPort';
+		});
 	},
 	//新端口信息保存
 	saveNewPort: function(event) {
 		//将原生DOM转化为jQueryDOM
-		var $This = $(event.currentTarget);
+		var $This = event ? $(event.currentTarget) : $(this);
 		$This.attr('isright','false');
 		$.isEmpty($('.newPort'),$This);
-		if ($This.attr('isright')==='false') return;
+		if ($This.attr('isright')==='false') {
+			return;
+		}
 		$This.closeWindow([$('.pop'), $('.pop-mask')]);
-		this.portData.unshift(this.newPort);
+		initData.portData.unshift(initData.newPort);
 		$.initNewPort();
 	},
 	//编辑端口信息保存
 	saveEditPort: function(event) {
 		//将原生DOM转化为jQueryDOM
-		var $This = $(event.currentTarget);
+		var $This = event ? $(event.currentTarget) : $(this);
 		$This.attr('isright','false');
 		$.isEmpty($('.editPort'),$This);
-		if ($This.attr('isright')==='false') return;
+		if ($This.attr('isright')==='false') {
+			return;
+		}
 		$This.closeWindow([$('.pop'), $('.pop-mask')]);
-		for (var key in this.newPort) {
-			this.portData[this.portIndex][key] = this.newPort[key];
+		for (var key in initData.newPort) {
+			initData.portData[initData.portIndex][key] = initData.newPort[key];
 		}
 	},
 	//删除端口信息
-	deletePort: function(index,event) {
-		var $This = $(event.currentTarget);
+	deletePort: function(index) {
 		this.portIndex = index;
 		this.portData.splice(this.portIndex, 1);
 	},
@@ -183,6 +204,7 @@ var $extend = $.fn.extend({
 			dataType: "json",
 			url: globalurl+"/v1/collectors",
 			async:true,
+			crossDomain: true == !(document.all),
 			data: {
 				access_token: initData.access_token,
 				conditions: $This.val()
@@ -205,18 +227,16 @@ var $extend = $.fn.extend({
 	},
 	//数据提交
 	mainSubmit: function() {
-		$(this).click(function (){
-			$(this).attr('isright','false');
-			$.isEmpty($('.dataInfo'),$(this));
-			if ($(this).attr('isright')==='false') {
-				return;
-			} else {
-				$(this).attr('disabled',true);
-			};
-			$(this).changeTip('正在保存，请稍后...');
-			$.doDeviceAjax();
-			$.doPortAjax();
-		});
+		$(this).attr('isright','false');
+		$.isEmpty($('.dataInfo'),$(this));
+		if ($(this).attr('isright')==='false') {
+			return;
+		} else {
+			$(this).attr('disabled',true);
+		};
+		$(this).changeTip('正在保存，请稍后...');
+		$.doDeviceAjax();
+		$.doPortAjax();
 	}
 });
 
@@ -228,17 +248,23 @@ $.extend({
 			data: initData,
 			methods: $extend
 		});
-		getToken($.getInitData);
 		//获取令牌
-//		$.getInitData();
-		$('input').changeBorderColor();
+		getToken($.getInitData);
+		$(window).enterKey(function() {
+			$.judgePageStatus();
+		});
+		$('input').changeBorderColor().enterKey(function() {
+			$.judgePageStatus();
+		});
 		$('input').limitSpacing();
 		$('input').filter('[num-limit=limit]').numOnly();
 		$('select').changeBorderColor();
 		$('.pop-close').click(function() {
 			$(this).closeWindow([$('.pop'), $('.pop-mask')]);
 		});
-		$('#main-submit').mainSubmit();
+		$('#main-submit').click(function() {
+			$(this).mainSubmit();
+		});
 	},
 	//新增端口信息初始化
 	initNewPort: function() {
@@ -260,11 +286,34 @@ $.extend({
 			if ($(this).attr('empty')) {
 				$(this).focus();
 				$(this).css('borderColor','#ff787b');
+				$.layerTip($(this),$(this).attr('warning'));
 				target.attr('isright','false');
 				return false;
 			} else {
 				target.attr('isright','true');
 			}
+		});
+	},
+	//页面状态判断
+	judgePageStatus: function() {
+		switch (initData.pageStatus) {
+			case 'window':
+				$('#main-submit').mainSubmit();
+				break;
+			case 'newPort':
+				$('.newPort').find('button').saveNewPort();
+				break;
+			case 'editPort':
+				$('.editPort').find('button').saveEditPort();
+				break;
+		}
+	},
+	//工具类->layer提示
+	layerTip: function(focusElem, message) {
+		layer.tips(message, focusElem, {
+			tips: [1, '#ff787b'],
+			time: 3000,
+			tipsMore: true
 		});
 	},
 	//保存设备请求
@@ -274,6 +323,7 @@ $.extend({
 			dataType: "json",
 			url: globalurl+"/v1/devices/"+initData.deviceId,
 			async: true,
+			crossDomain: true == !(document.all),
 			data: {
 				access_token: initData.access_token,
 				data: JSON.stringify(initData.deviceData)
@@ -296,12 +346,12 @@ $.extend({
 			dataType: "json",
 			url: globalurl+"/v1/devices/"+initData.deviceId+"/dataConfigs",
 			async: true,
+			crossDomain: true == !(document.all),
 			data: {
 				access_token: initData.access_token,
 				data: JSON.stringify(initData.portData)
 			},
 			success: function(data) {
-				console.log('dataConfig',data);
 				switch (data.code) {
 					case 200:
 						layer.msg('保存成功！',{
@@ -328,6 +378,7 @@ $.extend({
 			dataType: "json",
 			url: globalurl+"/v1/devices/"+initData.deviceId,
 			async: true,
+			crossDomain: true == !(document.all),
 			data: {
 				access_token: initData.access_token
 			},                                                                                                                                                                                                                                                                                
@@ -341,6 +392,7 @@ $.extend({
 			dataType: "json",
 			url: globalurl+"/v1/devices/"+initData.deviceId+"/dataConfigs",
 			async: true,
+			crossDomain: true == !(document.all),
 			data: {
 				access_token: initData.access_token,
 				filter: JSON.stringify({device_id: initData.deviceId})
