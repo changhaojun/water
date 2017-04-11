@@ -374,18 +374,24 @@ $.extend({
 				success: function(data) {
 					if (data.code==200) {
 						$.popSecondShow();
+					} else if(data.code==400016){
+						$.layerTip($('.pop-username'),data.error,1,function (){
+							$(this).css('borderColor','#ff787b')
+						});
+						return;
 					}
 				}
 			});
 		}
 	},
 	//工具类->layer提示
-	layerTip: function(focusElem, message) {
+	layerTip: function(focusElem, message, pos, callBack) {
 		layer.tips(message, focusElem, {
-			tips: [2, '#ff787b'],
+			tips: [!pos ? 2 : pos, '#ff787b'],
 			time: 3000,
 			tipsMore: true
 		});
+		callBack && callBack.call(focusElem);
 	},
 	//工具类->判断是否为可提交状态
 	couldSubmit: function(elems) {
