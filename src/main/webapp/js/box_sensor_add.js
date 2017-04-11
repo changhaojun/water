@@ -661,16 +661,13 @@ $.fn.extend({
 	
 
 	//采集器获取焦点的时候
-	$(".collector input").focus(function(event){
-		onOff=0;
-	    $('.collector ul').empty();
+	$(".collector input").click(function(event){
 		var value=$(this).val().split(0,1).join("");
 		console.log(value)
 	    if(value==""){
 	    	$('.collector ul').hide();
 	    	return;
 	    }
-		//var collector='{"collector_id":"'+value+'"}';
 		$.ajax({
 			type:"get",
 			dataType:'json',
@@ -692,12 +689,8 @@ $.fn.extend({
 				}
 			} 
 		});
-		$(".collector input").blur(function(){
-			onOff=-1
-			if(onOff==-1){
-				$(".collector ul").delay(5000).fadeOut();
-			}
-		});
+		return false;
 	});
-	
-	
+	$(document).click(function(){
+		$('.collector ul').hide();
+	});

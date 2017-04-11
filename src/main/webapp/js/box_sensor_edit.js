@@ -693,16 +693,13 @@ $.fn.extend({
 		
 	}
 	//采集器获取焦点的时候
-	$(".collector input").focus(function(event){
-		onOff=0;
-	    $('.collector ul').empty();
+	$(".collector input").click(function(){
 		var value=$(this).val().split(0,1).join("");
 		console.log(value)
 	    if(value==""){
 	    	$('.collector ul').hide();
 	    	return;
 	    }
-		//var collector='{"collector_id":"'+value+'"}';
 		$.ajax({
 			type:"get",
 			dataType:'json',
@@ -724,15 +721,12 @@ $.fn.extend({
 				}
 			} 
 		});
-		$(".collector input").blur(function(){
-			onOff=-1
-			if(onOff==-1){
-				$(".collector ul").delay(5000).fadeOut();
-			}
-		});
+		return false;
 	});
-	var dataInfo="",info=[],infoJson="",dataConfigJson="",dataConfig=[];
-	var optionValue="",deviceId="";
+	$(document).click(function(){
+		$('.collector ul').hide();
+	});
+	var dataInfo="";
 	function serchItem(i){
 		$('.collector input').val($('.list ul li').eq(i).text());
 		$('.collector ul').hide();
@@ -750,7 +744,6 @@ $.fn.extend({
 			},
 			success:function(data) {
 				
-//				console.log(data);
 				$(".detialData tbody").empty();
 				pngName=(data.collector_model.split("-"))[1].toLowerCase();
 				imgName="dtu_"+pngName+".png";
@@ -772,12 +765,6 @@ $.fn.extend({
 								+'<td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>4-20</td><td>'
 								+'50-100</td><td></td><td></td><td></td><td></td><td ><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>'										
 					$(".detialData tbody").append(dataTr);	
-					
-					infoJson='{"dataType":"'+dataInfo[i].data_type+'","operType":"'+dataInfo[i].oper_type+'","portName":"'+dataInfo[i].port_name+'"}';
-					infoJson=JSON.parse(infoJson)
-					//console.log(infoJson);
-					info.push(infoJson)
-				
 				}
 				
 			}
