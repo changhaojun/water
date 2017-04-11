@@ -8,8 +8,12 @@ var flag=0;
 $.fn.extend({
 	//智能input
 	'smartInput': function (callback){
-		//模拟placeholder
-		
+		$(this).focus(function (){
+			$(this).css('borderColor','#1ab394');
+		});
+		$(this).blur(function (){
+			$(this).css('borderColor','#ccc');
+		});
 		//限制空格
 		$(this).keyup(function (){
 			$(this).val($(this).val().replace(/\s/g,''));
@@ -53,6 +57,32 @@ $.fn.extend({
 		$(".contactPhone").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
 		$(".warningSpace").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
 		$(".delayTime").attr("disabled",false).css({"border":"1px solid #e5e6e7","background":"#fff"});
+		$(".warningSpace").focus(function(){
+			$(this).val("");
+		});
+		$(".warningSpace").blur(function(){
+			if($(this).val()==''){
+				$(this).val($(this).attr('data-info'));
+			}
+			
+		});
+		$(".contactPhone").focus(function(){
+			$(this).val("");
+		});
+		$(".contactPhone").blur(function(){
+			if($(this).val()==''){
+				$(this).val($(this).attr('data-info'));
+			}
+		});
+		$(".delayTime").focus(function(){
+			$(this).val("");
+		});
+		$(".delayTime").blur(function(){
+			if($(this).val()==''){
+				$(this).val($(this).attr('data-info'));
+			}
+		});
+	
 		onOff=0;
 	});   
 	$(".controlBtn span").eq(1).click(function(){
@@ -128,6 +158,7 @@ $.fn.extend({
 	var dataTypeStr="",operTypeStr="";
 	var IdArr=[];
 	function modelCollector(){
+		
 		optionValue=$(".collector").val();
 		var data="{'collector_id':'"+optionValue+"'}";
 		$.ajax({
@@ -366,6 +397,7 @@ $.fn.extend({
 		}			
 		$(".detialData tbody").find("tr").eq(j).html(dataTr);	
 	}
+	
 	//保存设备
 	function saveDevice(){
 		var deviceName = $(".deviceName").val();
@@ -490,6 +522,7 @@ $.fn.extend({
 			nullInput5=0;
 		}
 		if(isRemind==1 && nullInput1==0 && nullInput2==0 && nullInput3==0 && nullInput4==0&& nullInput5==0){
+			
 			device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
 					+  "','mobile':'" + mobile +"','status': 1 ,'communication':" + communication 
 					+",'is_remind':1,'remind_interval':"+warningSpace+",'protocal':'A','remind_delay':"+delayTime+"}";
@@ -659,3 +692,82 @@ $.fn.extend({
 		});
 		
 	}
+	//采集器获取焦点的时候
+	$(".collector input").click(function(){
+		var value=$(this).val().split(0,1).join("");
+		console.log(value)
+	    if(value==""){
+	    	$('.collector ul').hide();
+	    	return;
+	    }
+		$.ajax({
+			type:"get",
+			dataType:'json',
+			crossDomain: true == !(document.all),
+			url:globalurl+"/v1/collectors",
+			data:{
+				access_token:accesstoken,
+				conditions:value
+			},
+			success:function(data){
+				//console.log(data)
+				$('.collector ul').show();
+				$('.collector ul').empty();
+				var item=0;
+				for(var  i in data.rows){
+					var strLi='<li onclick="serchItem('+i+')">'+data.rows[i].collector_id+'</li>';
+					$('.collector ul').append(strLi);
+					//collectorArr.push(data.rows[i].collector_id)
+				}
+			} 
+		});
+		return false;
+	});
+	$(document).click(function(){
+		$('.collector ul').hide();
+	});
+	var dataInfo="";
+	function serchItem(i){
+		$('.collector input').val($('.list ul li').eq(i).text());
+		$('.collector ul').hide();
+		$('.collector input').css("border","1px solid #1ab394");
+		optionValue=$(".collector input").val();
+		var data="{'collector_id':'"+optionValue+"'}";
+		$.ajax({
+			type:"post",
+			dataType:"JSON",
+			crossDomain: true == !(document.all),
+			url:globalurl+"/v1/collectorModels",
+			data:{
+				access_token:accesstoken,
+				data:data
+			},
+			success:function(data) {
+				
+				$(".detialData tbody").empty();
+				pngName=(data.collector_model.split("-"))[1].toLowerCase();
+				imgName="dtu_"+pngName+".png";
+				//console.log(imgName)
+				dataInfo=data.collector_port;
+				
+				for(var i in dataInfo){
+					switch(dataInfo[i].data_type){
+						case 0:dataTypeStr="电流"; break;
+						case 1:dataTypeStr="电压"; break;
+						case 2:dataTypeStr="输入IO"; break;
+						case 3:dataTypeStr="输出IO";break;
+					}
+					switch(dataInfo[i].oper_type){
+						case 1:operTypeStr="读取"; break;
+						case 2:operTypeStr="写入"; break;
+					}
+					var dataTr='<tr><td><input type="checkbox" disabled="disabled"/></td><td>'+dataInfo[i].port_name+'</td>'
+								+'<td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>4-20</td><td>'
+								+'50-100</td><td></td><td></td><td></td><td></td><td ><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>'										
+					$(".detialData tbody").append(dataTr);	
+				}
+				
+			}
+			
+		});
+	}	
