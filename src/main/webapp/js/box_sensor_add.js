@@ -8,7 +8,7 @@ $.fn.extend({
 	//智能input
 	'smartInput': function (callback){
 		//模拟placeholder
-		$(this).attr('tips',$(this).val());
+		$(this).attr('tips',$(this).attr('data-info'));
 		$(this).focus(function (){
 			$(this).css('borderColor','#1ab394');
 			if ($(this).val()===$(this).attr('tips')) {
@@ -100,6 +100,7 @@ $.fn.extend({
 	function collectorSelect(){
 		$('.collector input').on('keyup', function () {
 		    $('.collector ul').empty();
+		    collectorArr=[];
 			var value=$.trim($(this).val())
 			//var collector='{"collector_id":"'+value+'"}';
 			$.ajax({
@@ -113,6 +114,7 @@ $.fn.extend({
 				},
 				success:function(data){
 //					console.log(data);
+					
 					if(data.code==400005){
 						getNewToken();
 						collectorSelect();
@@ -256,8 +258,8 @@ $.fn.extend({
 			+'<input type="text" class="collectorLow number" value="'+rangeLow+'" data-info="请输入采集量程" /><span>-</span><input type="text" class="number collectorHigh" data-info="请输入采集量程" value="'+rangeHigh+'"/></div>'
 			+'</div><div class="dataRow realRange"><label>实际量程</label><div class="rangeData ">'
 			+'<input type="text" class="number realLow" value="'+realLow+'" data-info="请输入实际量程"/><span>-</span><input type="text"  class="realHigh number" value="'+realHigh+'" data-info="请输入实际量程"/></div>'
-			+'</div><div class="dataRow dataUnit"><label>数据单位</label><input type="text" value="'+dataUnit+'" data-info="请填写数据单位"/></div>'
-			+'<div class="dataRow dataName"><label>数据名称</label><input type="text" value="'+dataName+'" data-info="请填写数据名称"></div>';
+			+'</div><div class="dataRow dataName"><label>数据名称</label><input type="text" value="'+dataName+'" data-info="请填写数据名称"/></div>'
+			+'<div class="dataRow dataUnit"><label>数据单位</label><input type="text" value="'+dataUnit+'" data-info="请填写数据单位"/></div>';
 			$(".changeData").append(aStr);
 		}else{
 			$(".changeData").empty();
@@ -318,20 +320,6 @@ $.fn.extend({
 				openClose=-1;
 			}else{
 				$(this).css("border","1px solid #ccc");
-				/*$(this).blur(function(){
-					if($(this).val()==$(this).attr("data-info") ||$(this).val()==""){
-						$(this).css("border","1px solid #f00");
-						$(this).val($(this).attr("data-info"));
-						layer.tips($(this).attr("data-info"),$(this),{
-							tips:1
-						});
-						openClose1=-1
-					}else{
-						$(this).css("border","1px solid #ccc");
-						openClose1=0;
-						//editContent(j);
-					}
-				});*/
 				
 			}
 			
@@ -469,6 +457,10 @@ $.fn.extend({
 				layer.tips('请输入正确的电话号码',$(".contactPhone"),{
 					tips:1
 				});
+				//console.log($(".contactPhone").offset().top)
+				$("body,html").animate({
+					scrollTop:$(".contactPhone").offset().top-150
+				},300);
 				nullInput4=-1;
 			}else if(warningSpace=="" ||warningSpace==$(".warningSpace").attr("data-info")){
 				$(".warningSpace").css("border","1px solid #e11818");
@@ -485,6 +477,9 @@ $.fn.extend({
 				layer.tips('掉线提醒的间隔为数字',$(".warningSpace"),{
 					tips:1
 				});
+				$("body,html").animate({
+					scrollTop:$(".contactPhone").offset().top-100
+				},300);
 				nullInput5=-1;
 			}else if(delayTime=="" ||delayTime==$(".delayTime").attr("data-info")){
 				$(".delayTime").css("border","1px solid #e11818");
@@ -501,6 +496,9 @@ $.fn.extend({
 				layer.tips('掉线后提醒的延迟时间为数字',$(".delayTime"),{
 					tips:1
 				});
+				$("body,html").animate({
+					scrollTop:$(".contactPhone").offset().top-100
+				},300);
 				nullInput5=-1;
 			}else{
 				nullInput4=0;
@@ -527,7 +525,8 @@ $.fn.extend({
 					data:device
 				},
 				success:function(data){
-					//console.log(collectorArr)
+					console.log(collectorArr)
+					
 					dataId=data._id;
 					for(var j=0;j<collectorArr.length;j++){
 						if($(".list input").val()==collectorArr[j]){
@@ -535,10 +534,11 @@ $.fn.extend({
 							return;
 						}else{
 							
-							layer.tips('请重新选择采集器ID！',$(".list input"),{
+							layer.tips('请重新rr选择采集器ID！',$(".list input"),{
 								tips: 1,
 								time:2000
 							});
+							return;
 						}
 					}
 				}
@@ -558,19 +558,21 @@ $.fn.extend({
 					data:device
 				},
 				success:function(data){
-					//console.log(collectorArr)
+					console.log(collectorArr)
 					dataId=data._id;
-					//console.log($(".list input").val())
+					console.log($(".list input").val())
+					console.log(collectorArr.length)
 					for(var j=0;j<collectorArr.length;j++){
 						if($(".list input").val()==collectorArr[j]){
 							save();
-							return;
+							return true;
 						}else{
-							
 							layer.tips('请重新选择采集器ID！',$(".list input"),{
 								tips: 1,
 								time:2000
 							});
+							return false;
+							
 						}
 					}
 				}
@@ -580,11 +582,11 @@ $.fn.extend({
 	function save(){
 		var dataConfig=[];
 		//console.log(info.length);
-//		console.log(dataId)
+		console.log(dataInfo)
 		var data={};
 		var status = "";
 
-		for (var i = 0; i < info.length; i++) {
+		for (var i = 0; i < dataInfo.length; i++) {
 			status=$("#dataTable").find(" tr").eq(i).find("input").attr('checked')==="checked" ? 1 : 0;
 			rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
 			//console.log(rangeLow)
@@ -668,6 +670,7 @@ $.fn.extend({
 	    	$('.collector ul').hide();
 	    	return;
 	    }
+	    //collectorArr=[];
 		$.ajax({
 			type:"get",
 			dataType:'json',
@@ -679,13 +682,14 @@ $.fn.extend({
 			},
 			success:function(data){
 				//console.log(data)
+				
 				$('.collector ul').show();
 				$('.collector ul').empty();
 				var item=0;
 				for(var  i in data.rows){
 					var strLi='<li onclick="serchItem('+i+')">'+data.rows[i].collector_id+'</li>';
 					$('.collector ul').append(strLi);
-					collectorArr.push(data.rows[i].collector_id)
+					//collectorArr.push(data.rows[i].collector_id)
 				}
 			} 
 		});

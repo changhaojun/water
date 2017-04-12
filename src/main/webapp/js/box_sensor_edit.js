@@ -3,7 +3,7 @@ getToken();
 var onOff=0;
 var pngName="",imgName="";
 var j=0;
-var dataId=[];
+var dataId=[],collectorArr=[];
 var flag=0;
 $.fn.extend({
 	//智能input
@@ -101,7 +101,7 @@ $.fn.extend({
 	});
 	//数据配置处鼠标滑上的信息提示
 	$("[data-toggle='tooltip']").tooltip();
-	//选择采集器ID触发的事件
+	//将数据读取到页面中
 	var editId=$("#deviceId").val();
 	var collector_id="",deviceId="";
 	var dataTypeStr,operTypeStr;
@@ -279,8 +279,8 @@ $.fn.extend({
 			+'<input type="text" class="collectorLow number" value="'+rangeLow+'" data-info="请输入采集量程" /><span>-</span><input type="text" class="number collectorHigh" data-info="请输入采集量程" value="'+rangeHigh+'"/></div>'
 			+'</div><div class="dataRow realRange"><label>实际量程</label><div class="rangeData ">'
 			+'<input type="text" class="number realLow" value="'+realLow+'" data-info="请输入实际量程"/><span>-</span><input type="text"  class="realHigh number" value="'+realHigh+'" data-info="请输入实际量程"/></div>'
-			+'</div><div class="dataRow dataUnit"><label>数据单位</label><input type="text" value="'+dataUnit+'" data-info="请填写数据单位"/></div>'
-			+'<div class="dataRow dataName"><label>数据名称</label><input type="text" value="'+dataName+'" data-info="请填写数据名称"></div>';
+			+'</div><div class="dataRow dataName"><label>数据名称</label><input type="text" value="'+dataName+'" data-info="请填写数据名称"/></div>'
+			+'<div class="dataRow dataUnit"><label>数据单位</label><input type="text" value="'+dataUnit+'" data-info="请填写数据单位"/></div>';
 			$(".changeData").append(aStr);
 		}else{
 			$(".changeData").empty();
@@ -562,6 +562,7 @@ $.fn.extend({
 					data:device
 				},
 				success:function(data){
+					console.log(collector_id)
 					if($(".collector input").val() !=collector_id){
 						layer.tips('请重新选择采集器ID！',$(".collector input"),{
 							tips: 1,
@@ -693,9 +694,21 @@ $.fn.extend({
 		
 	}
 	//采集器获取焦点的时候
-	$(".collector input").click(function(){
-		var value=$(this).val().split(0,1).join("");
-		console.log(value)
+	$(".collector input").on({
+		"click":function(){
+			focusAjax();
+			return false;
+		},
+		"keyup":function(){
+			focusAjax();
+		},
+		"blur":function(){
+			$(this).css("border-color","#ccc")
+		}
+	});
+	function focusAjax(){
+		var value=$(".collector input").val().split(0,1).join("");
+			//console.log(value)
 	    if(value==""){
 	    	$('.collector ul').hide();
 	    	return;
@@ -710,19 +723,18 @@ $.fn.extend({
 				conditions:value
 			},
 			success:function(data){
-				//console.log(data)
+				console.log(data)
 				$('.collector ul').show();
 				$('.collector ul').empty();
 				var item=0;
 				for(var  i in data.rows){
 					var strLi='<li onclick="serchItem('+i+')">'+data.rows[i].collector_id+'</li>';
 					$('.collector ul').append(strLi);
-					//collectorArr.push(data.rows[i].collector_id)
+					collectorArr.push(data.rows[i].collector_id)
 				}
 			} 
 		});
-		return false;
-	});
+	}
 	$(document).click(function(){
 		$('.collector ul').hide();
 	});
@@ -730,7 +742,6 @@ $.fn.extend({
 	function serchItem(i){
 		$('.collector input').val($('.list ul li').eq(i).text());
 		$('.collector ul').hide();
-		$('.collector input').css("border","1px solid #1ab394");
 		optionValue=$(".collector input").val();
 		var data="{'collector_id':'"+optionValue+"'}";
 		$.ajax({
