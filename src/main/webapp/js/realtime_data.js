@@ -3,13 +3,13 @@ var deviceId=$("#deviceId").val()//设备Id
 var startTime;
 var endTime;
 var arrLi=[];
-//console.log(dataId);
+console.log(dataId);
 
 $(function(){
 	toolTip();
 	getToken();	//刷新令牌
 	chartDivArr.push(parseInt(dataId));//push当前的dataId;
-//	console.log(chartDivArr)
+	console.log(chartDivArr)
 	currentChart(dataId);//初始化第一次图表;
 	contrastData();//初始化对比数据项列表;
 })
@@ -42,7 +42,7 @@ var chartDivArr =new Array();
 startTime=year+"$"+p(month)+"$"+(p(date-date+1))+"$"+(p(h-h))+":"+(p(m-m))+":"+(p(s-s));
 endTime=year+"$"+p(month)+"$"+(p(date))+"$"+(p(h))+":"+(p(m))+":"+(p(s));
 initstartTime=year+'-'+p(month)+"-"+p(date)+" AM "+p(h-h)+':'+p(m-m);
-initendTime=year+'-'+p(month)+"-"+p(date)+ flag +p(h)+':'+p(m);
+initendTime=year+'-'+p(month)+"-"+p(date)+" "+flag+" "+p(h)+':'+p(m);
 $("#reservationtime").val(initstartTime+" - "+initendTime);
 
 //console.log(myDate);
@@ -50,9 +50,8 @@ $("#reservationtime").val(initstartTime+" - "+initendTime);
 function toolTip(){
 	$('[data-toggle="tooltip"]').tooltip();
 }
-
 //当前dataId的图表；
-function currentChart(dataId){	
+function currentChart(dataId){		
 	var data="{data_id:'"+dataId+"',start_time:'"+startTime+"',end_time:'"+endTime+"'}";
 	$.ajax({
 		type: "post",
@@ -65,7 +64,7 @@ function currentChart(dataId){
 			data:data
 		},
 		success: function(data) {
-			
+			console.log(dataId)
 			var chartType="";
 			if(data.code==400005){
 				getNewToken();
@@ -78,7 +77,7 @@ function currentChart(dataId){
 				}				
 				initChart(data,chartType)
 			}		
-		}
+		}		
 	})
 }
 //点击时间获取图表；
@@ -125,29 +124,25 @@ function contrastData(){
 					if(arrLi[i].status==1&&arrLi.length==1){							
 						$(".contrastList .listOul").html("<span>暂无对比数据</span>");
 					}else{
-						if(arrLi[i].data_id!=dataId&&arrLi[i].status==1&&arrLi.length>1&&arrLi[i].data_name!=""){	
-			
+						if(arrLi[i].data_id!=dataId&&arrLi[i].status==1&&arrLi.length>1&&arrLi[i].data_name!=""){			
 							Ili="<li onclick='currentChart("+arrLi[i].data_id+")'>"+arrLi[i].data_name+"</li>"
-							$(".contrastList .listOul").append(Ili)
-							
+							$(".contrastList .listOul").append(Ili)							
 						}
 					}
 				}
 			}					
-		}	
-					
+		}						
 	})
 }
 //获取除本身外的图表
 function getChart(dataId){
-//	console.log(dataId)
 	currentChart(dataId);
 }
 // 指定图表的配置项和数据
 function initChart(data,chartType){	
+	console.log(data);
 	var legendData=[];
 	var chartSeries=[];
-//	console.log(data)
 	for(var i=0;i<chartDivArr.length;i++){						
 			var divId='chart'+data.data_id;
 			if(chartDivArr.indexOf(data.data_id)==-1){
@@ -182,8 +177,7 @@ function initChart(data,chartType){
 			"type":chartType,
 			"areaStyle": {normal: {}},
 			"data":data.min_values		
-		}]
-		
+		}]		
 	}else{
 		legendData=["实时数据"];
 		chartSeries=[{ 
@@ -234,7 +228,6 @@ function initChart(data,chartType){
 	myChart.setOption(option);
 	chartArr.push(myChart);
 } 
-
 //删除图表
 function closeChart(closeId){
 	chartDivArr.splice(chartDivArr.indexOf(closeId),1);
