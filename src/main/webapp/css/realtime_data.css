@@ -148,7 +148,13 @@ float:right;
 	line-height:300px;
 }
 .hourselect,.minuteselect,.ampmselect{
-	text-align:center !important;
+	padding-left:12px !important;
+	text-align: left !important;
+	
+}
+.hourselect option,.minuteselect option,.ampmselect option{
+	padding-left:12px !important;
+	width:50px !important;
 }
 .daterangepicker td.active{
 	background: #1ab394;
@@ -161,9 +167,7 @@ float:right;
 option:hover{
 	background:#1ab394 !important;
 }
-option{
-	text-align:center;
-}
+
 .layui-layer{
 	box-shadow: 8px 8px rgba(0,0,0,.5) !important;
 }

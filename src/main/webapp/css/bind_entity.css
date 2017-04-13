@@ -1,0 +1,89 @@
+html{
+	background:#f3f3f4 !important;
+	}
+.bindEntity{
+	width:100%;		
+	background:#f3f3f4;
+	float:left;
+	position: relative;	
+}
+/*账户top区域*/
+.bindEntity .bindTop{
+	
+	height:65px;
+	margin-right:20px;	
+}
+.bindEntity .bindTop span{
+	font-size:22px;
+	padding-top:25px;
+	display: inline-block;
+}
+.bindEntity .bindTop span:nth-child(1){	
+	margin-left:20px;
+	color:#5d5d5d;	
+}
+.bindEntity .bindTop span:nth-child(2){
+	margin-left:5px;
+	margin-right:5px;
+}
+.bindEntity .bindTop span:nth-child(3){
+	color:#1ab394;
+		
+}
+.bindEntity hr{
+	width:98%;
+	margin-left:20px;
+	height:4px;
+	background:#e0e0e0;
+	border:0;
+	display: inline-block;
+}
+.selectedList{
+	float:left;
+	width:98%;
+	background:#fff;
+	margin-left:20px;
+	margin-right:20px;
+}
+.selTop {
+	margin-left:20px;
+	height:30px;
+	line-height:50px;
+}
+.selectedList .selTop .fa-check-square-o,.selectedList .selTop span{
+	color:#1db495;
+}
+#secHr{
+	height:1px ;
+	margin:0;
+	padding:0;
+	background:#1db495;
+	margin-left:10px;
+	margin-right:10px;
+}
+.selectLi{
+	padding-bottom:20px;
+	float:left;
+}
+.selectLi li{
+	width:150px;
+	height:30px;
+	line-height:30px;
+	padding-left:10px;
+	margin-left:20px;
+	margin-top:20px;
+	margin-right:20px;
+	background: #1db495;
+	color:#fff;
+	font-size:16px;
+	float:left;
+}
+.selectLi li span{
+	color:#fff;
+	cursor: pointer;
+	font-size:25px;
+	float:right;
+	margin-right:15px;
+}
+
+

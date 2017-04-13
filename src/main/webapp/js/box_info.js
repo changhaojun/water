@@ -1,6 +1,5 @@
 var companyCode=$("#companyCode").val();	//公司编号，获取用户列表时使用
 var companyId=$("#companyId").val();		//公司ID
-var isSearch=false;
 $(function(){
 	getToken();
 	toolTip();
