@@ -408,7 +408,6 @@ $.fn.extend({
 		var device="";
 		var phoneReg=/^1[34578]\d{9}$/;
 		var remindReg=/^[0-9]*$/;
-		var nullInput1=0,nullInput2=0,nullInput3=0,nullInput4=0,nullInput5=0;
 		for(var i=0;i<controlBtn.length;i++){
 			if(controlBtn.eq(i).hasClass("activeBtn")){
 				isRemind = controlBtn.eq(i).attr("value");
@@ -418,7 +417,7 @@ $.fn.extend({
 			$("input").css("border","1px solid #ccc");
 		});
 		if(deviceCode=="" ||deviceCode==$(".deviceCode").attr("data-info")){
-			//alert(45)
+		
 			$(".deviceCode").css("border","1px solid #e11818");
 			$(".deviceCode").val($(".deviceCode").attr("data-info"));
 			layer.tips($(".deviceCode").attr("data-info"),$(".deviceCode"),{
@@ -428,7 +427,6 @@ $.fn.extend({
 				$(this).css("border","1px solid #1ab394");
 			});
 		}else{
-			//alert(45656)
 			if(deviceName=="" ||deviceName==$(".deviceName").attr("data-info")){
 				$(".deviceName").css("border","1px solid #e11818");
 				$(".deviceName").val($(".deviceName").attr("data-info"));
@@ -542,188 +540,12 @@ $.fn.extend({
 									time:2000
 								});
 							}
-							
 						}
 					});
 				}
 				
 			}
 		}
-		/*if(deviceCode=="" ||deviceCode==$(".deviceCode").attr("data-info")){
-			$(".deviceCode").css("border","1px solid #e11818");
-			$(".deviceCode").val($(".deviceCode").attr("data-info"));
-			layer.tips($(".deviceCode").attr("data-info"),$(".deviceCode"),{
-				tips:1
-			});
-			$(".deviceCode").focus(function(){
-				$(this).css("border","1px solid #1ab394");
-			});
-			nullInput1=-1;
-		}else if(deviceName=="" ||deviceName==$(".deviceName").attr("data-info")){
-			$(".deviceName").css("border","1px solid #e11818");
-			$(".deviceName").val($(".deviceName").attr("data-info"));
-			layer.tips($(".deviceName").attr("data-info"),$(".deviceName"),{
-				tips:1,
-			});
-			$(".deviceName").focus(function(){
-				$(this).css("border","1px solid #1ab394");
-			});
-			nullInput2=-1;
-		}else if(collectorId=="" ||collectorId==$(".collector input").attr("data-info")){
-			$(".collector input").css("border","1px solid #e11818");
-			$(".collector input").val($(".collector input").attr("data-info"));
-			layer.tips("请选择采集器ID",$(".collector input"),{
-				tips:1
-			});
-			$(".collector input").focus(function(){
-				$(this).css("border","1px solid #1ab394");
-			});
-			nullInput3=-1;
-		}else {
-			nullInput1=0;
-			nullInput2=0
-			nullInput3=0
-			$("input").css("border","1px solid #ccc");
-			
-		}
-		if(isRemind==1){
-			if(mobile=="" ||mobile==$(".contactPhone").attr("data-info")){
-				$(".contactPhone").css("border","1px solid #e11818");
-				$(".contactPhone").val($(".contactPhone").attr("data-info"));
-				layer.tips("请输入联系电话",$(".contactPhone"),{
-					tips:1
-				});
-				$(".contactPhone").focus(function(){
-					$(this).css("border","1px solid #1ab394");
-				});
-				nullInput4=-1;
-			}else if(phoneReg.test(mobile)==false){
-				$(".contactPhone").css("border","1px solid #e11818");
-				layer.tips('请输入正确的电话号码',$(".contactPhone"),{
-					tips:1
-				});
-				//console.log($(".contactPhone").offset().top)
-				$("body,html").animate({
-					scrollTop:$(".contactPhone").offset().top-150
-				},300);
-				nullInput4=-1;
-			}else if(warningSpace=="" ||warningSpace==$(".warningSpace").attr("data-info")){
-				$(".warningSpace").css("border","1px solid #e11818");
-				$(".warningSpace").val($(".warningSpace").attr("data-info"));
-				layer.tips("请输入联系提醒间隔",$(".warningSpace"),{
-					tips:1
-				});
-				$(".warningSpace").focus(function(){
-					$(this).css("border","1px solid #1ab394");
-				});
-				nullInput5=-1;
-			}else if(remindReg.test(warningSpace)==false){
-				$(".warningSpace").css("border","1px solid #e11818");
-				layer.tips('掉线提醒的间隔为数字',$(".warningSpace"),{
-					tips:1
-				});
-				$("body,html").animate({
-					scrollTop:$(".contactPhone").offset().top-100
-				},300);
-				nullInput5=-1;
-			}else if(delayTime=="" ||delayTime==$(".delayTime").attr("data-info")){
-				$(".delayTime").css("border","1px solid #e11818");
-				$(".delayTime").val($(".delayTime").attr("data-info"));
-				layer.tips("请输入延迟时间",$(".delayTime"),{
-					tips:1
-				});
-				$(".warningSpace").focus(function(){
-					$(this).css("border","1px solid #1ab394");
-				});
-				nullInput5=-1;
-			}else if(remindReg.test(delayTime)==false ){
-				$(".delayTime").css("border","1px solid #e11818");
-				layer.tips('掉线后提醒的延迟时间为数字',$(".delayTime"),{
-					tips:1
-				});
-				$("body,html").animate({
-					scrollTop:$(".contactPhone").offset().top-100
-				},300);
-				nullInput5=-1;
-			}else{
-				nullInput4=0;
-				nullInput5=0;
-				$("input").blur(function(){
-					$("input").css("border","1px solid #ccc");
-				});
-				
-			}
-		}else{
-			nullInput4=0;
-			nullInput5=0;
-		}
-		if(isRemind==1 && nullInput1==0 && nullInput2==0&& nullInput3==0 && nullInput4==0&& nullInput5==0){
-			device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
-					+  "','mobile':'" + mobile +"','status': 1 ,'communication':" + communication 
-					+",'is_remind':1,'remind_interval':"+warningSpace+",'protocal':'A','remind_delay':"+delayTime+"}";
-			$.ajax({
-				type:"post",
-				datatype:"json",
-				crossDomain: true == !(document.all),
-				url:globalurl+"/v1/devices?access_token="+accesstoken,
-				data:{
-					data:device
-				},
-				success:function(data){
-					dataId=data._id;
-					save();
-					var collectorOff=0;
-					for(var j=0;j<collectorArr.length;j++){
-						//console.log(j)
-						if($(".list input").val()==collectorArr[j]){
-							collectorOff=1;
-						}
-					}
-					if(collectorOff==1){
-						save();
-					}else{
-						layer.tips('请重新选择采集器ID！',$(".list input"),{
-							tips: 1,
-							time:2000
-						});
-					}
-				}
-			});
-		}
-		if(isRemind==0 && nullInput1==0 && nullInput2==0&& nullInput3==0 && nullInput4==0&& nullInput5==0){
-			
-			device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
-					+  "','communication':" + communication +",'status': 1 "
-					+",'is_remind':0,'protocal':'A'}";	
-			$.ajax({
-				type:"post",
-				datatype:"json",
-				crossDomain: true == !(document.all),
-				url:globalurl+"/v1/devices?access_token="+accesstoken,
-				data:{
-					data:device
-				},
-				success:function(data){
-					dataId=data._id;
-					//var collectorOff=0;
-					save();
-					/*for(var j=0;j<collectorArr.length;j++){
-						//console.log(j)
-						if($(".list input").val()==collectorArr[j]){
-							collectorOff=1;
-						}
-					}
-					if(collectorOff==1){
-						save();
-					}else{
-						layer.tips('请重新选择采集器ID！',$(".list input"),{
-							tips: 1,
-							time:2000
-						});
-					}
-				}
-			});
-		}*/
 	}
 	function save(){
 		var dataConfig=[];
@@ -803,17 +625,7 @@ $.fn.extend({
 	
 	//点击保存新增
 	$(".saveSettings button").click(function(){
-		
 		saveDevice();
-		/*else{
-			layer.tips('请重新选择采集器ID！',$(".list input"),{
-				tips: 1,
-				time:2000
-			});
-		}*/
-		
-		
-		
 	});
 	
 
