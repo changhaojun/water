@@ -95,6 +95,11 @@ function setRole() {
 $(".btn-primary").on("click", function() {
 		$(".addAccountMask").fadeIn(200);
 		$(".addRole ul li").removeClass("cheacked").addClass("disabled");
+		$("#addText").val("请输入邮箱");
+		$("#addUsername").val("请输入姓名");
+		$("#addPassword").val("请输入密码(由6到16位字母数字下划线组成)");
+		$("#addPhone").val("请输入手机号");
+		$(".accountNum span").css("display","none");
 })
 //点击添加账户的保存
 function addUser(){
@@ -332,7 +337,7 @@ function event(obj, str) {
 			obj.val("");
 		}
 	},"keyup":function(event){
-		console.log(123);
+//		console.log(123);
 		if(event.keyCode==32){
 			obj.val("");
 		}
@@ -418,7 +423,10 @@ $("#searchId").on("keyup", function(event) {
 function ajaxRequest() {
 	var search = "";
 	if($("#searchId").val()==""||$("#searchId").val()=="请输入姓名查找"){
-		allList();
+		$(".accountContent").html("");
+		setTimeout(function(){			
+			allList();
+		},100)		
 	}else{
 		var okey = '{"fullname":"' + $("#searchId").val() + '"}';
 		$(".accountContent").html("");

@@ -87,73 +87,6 @@ html{
 	margin-right:20px;
 	padding-right:10px;
 }
-.boxList .listTop{
-	height:40px;
-	width:100%;
-	line-height:40px;
-	font-size:14px;
-	font-weight: 900;
-}
-.boxList .listTop span:nth-child(1){
-	margin-left:20px;
-	display: inline-block;
-	width:358px;	
-}
-.boxList .listTop span:nth-child(2){
-	display: inline-block;
-	width:547px;	
-}
-.boxList .listTop span:nth-child(3){
-	display: inline-block;
-	width:197px;	
-}
-.boxList .listUl{
-	margin-left:10px;
-/*	display:none;	*/
-}
-.boxList .active{
-	display:block;
-}
-.boxList .listUl li{
-	border-top:1px solid #dddddd;
-	height:40px;
-	line-height:40px;
-	color:#A3A3A3;
-	padding-left:10px;
-}
-.boxList .listUl .onlineStatus{
-	color:#2cb7c8;
-}
-.boxList .listUl .nolineStatus{
-	color:#a3a3a3;
-}
-.boxList .listUl li span:nth-child(1){
-	display: inline-block;
-	width:358px;
-}
-.boxList .listUl li span:nth-child(2){
-	display: inline-block;
-	width:547px;
-}
-.boxList .listUl li span:nth-child(3){
-	display: inline-block;
-	width:197px;
-}
-.boxList .listUl li span:nth-child(3) i{
-	margin-right:25px;
-}
-.boxList .listUl li span:nth-child(3) i:nth-child(1){
-	color:#1ab394 !important;
-}
-.boxList .listUl li span:nth-child(3) i:nth-child(2){
-	color:#1ab394 !important;
-}
-.boxList .listUl li span:nth-child(3) i:nth-child(3){
-	color:#ffb400 !important;
-}
-.boxList .listUl li span:nth-child(3) i:nth-child(4){
-	color:#ff787b !important;
-}
 .boxList #dtuList{
 	width:100%;
 	border:0;
@@ -226,7 +159,9 @@ html{
 .layui-layer{
 	box-shadow: 8px 8px rgba(0,0,0,.5) !important;
 }
-
+.layui-layer-tips {
+	box-shadow: none !important;
+}
 
 
 
