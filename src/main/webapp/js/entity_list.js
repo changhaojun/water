@@ -1,7 +1,8 @@
 //var companyCode=$("#companyCode").val();	//公司编号，获取用户列表时使用
 //var companyId=$("#companyId").val();		//公司ID
 companyId="58c20d5f9aa7a32554f770de";
-var globalurl="http://rapapi.org/mockjsdata/15031";
+window.accesstoken="58ee2254d19b145b6d2c051b";
+var globalurl="http://192.168.1.114";
 $(function(){
 	toolTip();
 	getEntityList();
@@ -114,9 +115,7 @@ function alarm(value){
 }
 //添加数据事件
 function addEntity(){
-	var guid=guidGenerator();
-	layer.confirm('<input type="text" id="addentityName" placeholder="请输入实体名称"/>', function(index){
-			
+	layer.confirm('<input type="text" id="addentityName" placeholder="请输入实体名称"/>', function(index){			
 		if($("#addentityName").val()==""){
 			layer.tips('实体名称不能为空', $("#addentityName"), {
 				  tips: [1, '#ff787c'],
@@ -124,7 +123,8 @@ function addEntity(){
 			});
 		}else{
 			layer.close(index);
-			 data="{'things_name':'"+$("#addentityName").val()+"','guid':'"+guid+"'}";
+			 data="{'things_name':'"+$("#addentityName").val()+"'}";
+			 data={"data":data,"access_token":window.accesstoken}
 			$.ajax({
 				url:globalurl+"/v1/things",
 				data:data,
@@ -132,22 +132,23 @@ function addEntity(){
 				type: 'POST',
 				crossDomain: true == !(document.all),
 				success: function(data) {
+					console.log(data);
 					if(data.code==400005){
 						  window.getNewToken()
 						  addEntity(value);
-					 }else if(data.result==1){
-						layer.msg('添加成功', {
+					 }else if(data.code==200){
+						layer.msg(data.success, {
 							icon : 1
 						});
 	//					window.top.MQTTconnect(guid);
 					}else{
-						layer.msg('添加失败', {
+						layer.msg(data.success, {
 							icon : 2
 						});
 					}
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
-					layer.msg('添加失败', {
+					layer.msg(data.error, {
 						icon : 2
 					});
 			    }
@@ -184,7 +185,7 @@ function modify(value){
 	var guid=guidGenerator();
 	$(".layui-layer-title").html("修改实体");
 	$.ajax({
-			url:"http://rapapi.org/mockjsdata/15031/v1/things/{_id}",
+			url:globalurl+'/v1/things/'+value,
 			dataType: 'JSON',
 			type: 'get',
 			crossDomain: true == !(document.all),
@@ -208,19 +209,19 @@ function modify(value){
 								if(data.code==400005){
 									  window.getNewToken()
 									  addEntity(value);
-								 }else if(data.result==1){
-									layer.msg('修改成功', {
+								 }else if(data.code==200){
+									layer.msg(data.success, {
 										icon : 1
 									});
 				//					window.top.MQTTconnect(guid);
 								}else{
-									layer.msg('修改失败', {
+									layer.msg(data.success, {
 										icon : 2
 									});
 								}
 							},
 							error: function(XMLHttpRequest, textStatus, errorThrown) {
-								layer.msg('修改失败', {
+								layer.msg(data.error, {
 									icon : 2
 								});
 						    }

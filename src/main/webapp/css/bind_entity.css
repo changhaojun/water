@@ -53,22 +53,22 @@ html{
 .selectedList .selTop .fa-check-square-o,.selectedList .selTop span{
 	color:#1db495;
 }
-#secHr{
+#secHr,#threeHr,#fourHr{
 	height:1px ;
 	margin:0;
 	padding:0;
+	width:98.5%;
 	background:#1db495;
 	margin-left:10px;
 	margin-right:10px;
 }
-.selectLi{
+.selectedUl{
 	padding-bottom:20px;
 	float:left;
 }
-.selectLi li{
-	width:150px;
-	height:30px;
-	line-height:30px;
+.selectedUl li{
+	height:35px;
+	line-height:35px;
 	padding-left:10px;
 	margin-left:20px;
 	margin-top:20px;
@@ -78,12 +78,156 @@ html{
 	font-size:16px;
 	float:left;
 }
-.selectLi li span{
+.selectedUl li span{
 	color:#fff;
 	cursor: pointer;
 	font-size:25px;
 	float:right;
 	margin-right:15px;
+	margin-left:20px;
 }
-
-
+.optionalEntity{
+	float:left;
+	width:98%;
+	background:#fff;
+	margin-left:20px;
+	margin-right:20px;
+	margin-top:20px
+}
+.optionalEntity .optionalTop{
+	float:left;
+	width:97%;
+	margin-left:20px;
+	height:35px;
+	line-height: 55px;
+}
+.optionalEntity .optionalTop .fa-th-large,.optionalEntity .optionalTop span{
+	color:#1AB394;
+}
+.optionalEntity .optionalTop .secEntity{
+	float:right;
+	width:360px;
+	border:1px solid #c1c1c1;
+	height:32px;
+	line-height:32px;
+	border-radius: 5px 5px;
+	margin-top:10px;
+}
+.optionalEntity .optionalTop .secEntity input{
+	width:92%;
+	padding-left:10px;
+}
+.optionalEntity .optionalTop .secEntity .fa-search{
+	color:#1AB394;
+	cursor: pointer;
+}
+.infoWay{
+	width:98%;
+	height:50px;
+	line-height：50px;
+	padding-left:20%;
+	text-align:center;
+}
+.infoWay .infoList{
+	float:left;
+	line-height:50px;
+	margin-left:30px;
+	margin-bottom:0;
+}
+.infoWay .infoList .fa-circle-o{
+	color:#e2e1dd;
+	font-size:18px;
+	cursor: pointer;
+}
+.infoWay .infoList span{
+	color:#1ab394;
+	font-size:16px;
+}
+.infoWay .infoList .fa-check-circle{
+	color:#1ab394;
+	font-size:18px;
+	cursor: pointer;
+}
+#saveDevice{
+	width:150px;
+	background:#1AB394;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	color:#fff;
+	border-radius: 4px 4px;
+	margin-left:45%;
+	margin-bottom:20px;
+	margin-top:20px;
+}
+.optionalList{
+	float:left;
+	width:98%;
+	border-top:1px solid #e7e7e7;
+	border-bottom:1px solid #e7e7e7;
+	margin-bottom:20px;
+	margin-left:20px;
+	padding-bottom:20px;
+}
+.optionalList .disabledLi{
+	width:154px;
+	height:35px;
+	margin-top:20px;
+	margin-left:20px;
+	color:#1AB394;
+	border:1px solid #1AB394;
+	line-height:32px;
+	float:left;
+	border-radius: 2px 2px ;
+}
+.optionalList .disabledLi .disabledFont{
+	width:120px;
+	height:32px;
+	overflow:hidden;
+	float:left;
+	padding-left:5px;
+	font-size:16px;
+}
+.optionalList .disabledLi .disabledIcon{
+	width:30px;
+	height:33px;
+	float:right;
+	background:#1AB394;
+	color:#fff;
+	text-align:center;
+	font-size:30px;
+	cursor: pointer;
+	line-height:32px;
+}
+.optionalList .selectdLi{
+	float:left;
+	width:154px;
+	height:35px;
+	margin-top:20px;
+	margin-left:20px;
+	color:#b3b3b3;
+	border:1px solid #b3b3b3;
+	line-height:32px;
+	cursor: not-allowed;
+	border-radius: 2px 2px ;
+}
+.optionalList .selectdLi .selectdFont{
+	width:120px;
+	height:32px;
+	overflow:hidden;
+	float:left;
+	padding-left:5px;
+	font-size:16px;
+	line-height:32px;
+}
+.optionalList .selectdLi .selectdIcon{
+	width:30px;
+	height:33px;
+	float:right;
+	background:#b3b3b3;
+	color:#fff;
+	text-align:center;
+	font-size:12px;
+	cursor: not-allowed;
+	line-height:33px;
+}
