@@ -26,6 +26,7 @@ var initData = {
 			stop_bit: 1,
 			byte_oder: 0
 		},
+		device_kind:1,
 		protocal: "P", //无渲染
 		status: 1, //无渲染
 		company_id: $('#companyId').val(), //无渲染

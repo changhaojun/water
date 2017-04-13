@@ -490,7 +490,7 @@ $.fn.extend({
 								}else{
 									device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
 											+  "','mobile':'" + mobile +"','status': 1 ,'communication':" + communication 
-											+",'is_remind':1,'remind_interval':"+warningSpace+",'protocal':'A','remind_delay':"+delayTime+"}";
+											+",'is_remind':1,'remind_interval':"+warningSpace+",'protocal':'A','remind_delay':"+delayTime+",'device_kind':1}";
 									$.ajax({
 										type:"post",
 										datatype:"json",
@@ -523,7 +523,7 @@ $.fn.extend({
 				}else{
 					device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
 					+  "','communication':" + communication +",'status': 1 "
-					+",'is_remind':0,'protocal':'A'}";
+					+",'is_remind':0,'protocal':'A','device_kind':1}";
 					$.ajax({
 						type:"post",
 						datatype:"json",
