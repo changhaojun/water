@@ -138,6 +138,7 @@ function getNavData(){
 		//console.log(22);
 		$('.pop').filter('.step1').removeClass('hidden');
 		$('.pop-mask').removeClass('hidden');
+		
 	})
 	
 	//关闭弹窗
@@ -145,9 +146,10 @@ function getNavData(){
 		$('.pop').addClass('hidden');
 		$('.pop-mask').addClass('hidden');
 		$(".pop-username").val("");
+		$(".pop-main").find("span").hide();
+		$(".pop-main .pop-username").css("border","1px solid #ccc");
 	});
 	//修改时确认密码
-	/*var dataPass="{'old_password':'"+$(".oldPassword").val()+",'new_password':"+$(".newPassword").val()+",'confirm_password':"+$(".confirmPassword").val()+"}";*/
 	//旧密码
 	$(".passwordOld").focus(function(){
 		$(".oldPassword span").hide();
@@ -255,4 +257,5 @@ function getNavData(){
 	
 $(".popMsg_content button,.popMsg .pop-close").click(function(){
 	$(".popMsg").hide();
+	
 });

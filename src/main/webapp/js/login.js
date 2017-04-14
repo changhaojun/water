@@ -298,7 +298,7 @@ $.extend({
 			data: { 
 				data: JSON.stringify(data)
 			},
-			success: function() {
+			success: function(data) {
 				self.location.href = "/finfosoft-water/frame";
 			}
 		});
