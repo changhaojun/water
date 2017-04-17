@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/alarm_entity.css"/>
+	</head>
+	<body>
+		<div class="alarmEntity">
+			<div class="alarmTop">
+					<span>实体列表</span>
+					<span style="font-size:14px;">/&nbsp;当前位置:实体列表&nbsp;></span>
+					<span style="font-size:14px;">告警设置</span>
+					<span class="search">
+						<input v-model="searchEntityId" type="text" placeholder="请输入关键字查找" id="searchId" onkeypress="if(event.keyCode==13) {searchEntity();return false;}"/>
+						<i class="fa fa-search" onclick="searchEntity()"></i>
+						
+					</span>	
+					<hr>
+			</div>
+			<div class="alarmList">
+				
+			</div>
+		</div>
+	</body>
+</html>
