@@ -114,12 +114,14 @@ $.fn.extend({
 			crossDomain: true == !(document.all),
 			url:globalurl+"/v1/devices/"+editId+"?access_token="+accesstoken,
 			success:function(data){
-//				console.log(data)
+				console.log(data)
 				if(data.code==400005){
 						getNewToken();
 						getEquipment();
 				}else{
 					//deviceId=data._id;
+					pngName=(data.collector_model.split("-"))[1].toLowerCase();
+					imgName="dtu_"+pngName+".png";
 					collector_id=data.communication.collector_id;
 					collectorArr.push(collector_id);
 					$(".deviceCode").val(data.device_code);
@@ -174,7 +176,7 @@ $.fn.extend({
 			},
 			success:function(data) {
 				$(".detialData tbody").empty();
-				console.log(data);
+				//console.log(data);
 				//dataInfo=[];
 				info=[];
 				dataInfo=data.rows;
@@ -588,7 +590,7 @@ $.fn.extend({
 									device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName +
 											+  "','mobile':'" + mobile +"','status': 1 ,'communication':" + communication 
 											+",'is_remind':1,'remind_interval':"+warningSpace+",'protocal':'A','remind_delay':"+delayTime+"}";
-										console.log(editId)	
+										//console.log(editId)	
 									$.ajax({
 										type:"put",
 										datatype:"json",
@@ -598,7 +600,7 @@ $.fn.extend({
 											data:device
 										},
 										success:function(data){
-											console.log(data)
+											//console.log(data)
 											for(var i=0;i<collectorArr.length;i++){
 												if($(".list input").val()==collectorArr[i]){
 													idOnOff=1;
@@ -631,7 +633,7 @@ $.fn.extend({
 							data:device
 						},
 						success:function(data){
-							console.log(data)
+							//console.log(data)
 							//dataId=data._id;
 							for(var i=0;i<collectorArr.length;i++){
 								if($(".list input").val()==collectorArr[i]){
@@ -680,13 +682,9 @@ $.fn.extend({
 			if(realLow=="-"){
 				realLow=""
 			}
-			var changeId=true;	
-			console.log(collector_id)
 			//判断采集器id是否发生更改
 			if($(".collector input").val()!=collector_id){
 				//发生更改
-				console.log(323)
-				changeId=true;
 				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
 				'"oper_type":'+dataInfo[i].oper_type+','+
 				'"port_name":"'+dataInfo[i].port_name+'",'+
@@ -704,8 +702,6 @@ $.fn.extend({
 				data=JSON.stringify(dataConfig);
 			}else{
 				//未发生更改
-				console.log(326563)
-				changeId=false;
 				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
 				'"oper_type":'+dataInfo[i].oper_type+','+
 				'"port_name":"'+dataInfo[i].port_name+'",'+
@@ -736,7 +732,6 @@ $.fn.extend({
 					data:data,
 				},
 				success:function(data){
-					console.log(data)
 					if (data.code===200) {
 						layer.msg('保存成功！', {
 							icon: 1,
