@@ -37,6 +37,7 @@ html{
 	background:#e0e0e0;
 	border:0;
 	display: inline-block;
+	float:left;
 }
 
 .alarmEntity .alarmTop .search{
@@ -64,6 +65,100 @@ html{
 	font-size:14px;
 	cursor: pointer;
 }
+.alarmList{
+	width:250px;
+	height:240px;
+	background:#1AB394;
+	color:#fff;
+	margin-left:20px;
+	margin-top:15px;
+	float:left;
+	border-radius: 5px 5px;
+	padding-left:17px;
+	padding-right:17px;
+}
+.alarmList .alarmTop{
+	width:100%;
+	height:44px;
+	line-height:44px;
+	
+}
+.alarmList .alarmContent{
+	width:100%;
+	height:114px;
+	border-top:1px solid #5dc9b2;
+	text-align:center;	
+}
+.alarmList .alarmContent span:nth-child(1){
+	font-size:26px;
+	display: block;
+	margin:25px 0;
+}
+.alarmList .alarmContent span:nth-child(2){
+	color:#78cbb7;
+}
+.alarmFooter{
+	width:100%;	
+}
+.alarmFooter ul{
+	width:100%;
+	float:left;
+}
+.alarmFooter li{
+	float:left;
+	width:100%;
+	line-height:39px;
+	border-top:.5px solid #5dc9b2;
+	padding-left:5px;
+}
+.alarmFooter li .dataLeft{
+	float:left;
+}
+.alarmFooter li .dataRight{
+	float:right;
+}
+.alarmFooter li .dataRight .fa{
+	margin:0 7px;
+	cursor: pointer;
+}
+.layui-layer-dialog{
+	min-width:400px !important;
+}
+.layui-layer-dialog
+.layui-layer-dialog .layui-layer-content{
+	color:#ccc !important;
+}
+#dataMin,#dataMax{
+	width:165px;
+	height:38px;
+	border:1px solid #cccccc;
+	padding-left:14px;
+	color:#ccc;
+}
+.layui-layer-btn{
+	text-align:center !important;
+}
+.layui-layer-btn .layui-layer-btn0{
+	padding:5px 75px !important;
+	border-radius: 10px 10px ;
+	
+}
+.layui-layer-btn a{
+   line-height:20px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

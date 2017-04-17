@@ -1,4 +1,4 @@
-window.accesstoken="58f03d134077312358b70973";
+window.accesstoken="58f433a2cadd44751040b8aa";
 var globalurl="http://192.168.1.114";
 $(function(){
 	toolTip();
@@ -179,7 +179,7 @@ window.deleteCol=function(value){
 }
 //修改设备名
 function modify(value){
-	$(".layui-layer-title").html("修改实体");
+	
 	$.ajax({
 			url:globalurl+'/v1/things/'+value,
 			dataType: 'JSON',
@@ -194,6 +194,7 @@ function modify(value){
 					modify(value);
 				}else{
 					layer.confirm('<input type="text" id="modifyentityName" value="'+data.thing_name+'"/>', function(index){
+					$(".layui-layer-title").html("修改实体");
 					console.log($("#modifyentityName").val())
 					if($("#modifyentityName").val()==""){
 						layer.tips('实体名称不能为空', $("#modifyentityName"), {
