@@ -119,7 +119,6 @@ $.fn.extend({
 						getNewToken();
 						getEquipment();
 				}else{
-					//deviceId=data._id;
 					pngName=(data.collector_model.split("-"))[1].toLowerCase();
 					imgName="dtu_"+pngName+".png";
 					collector_id=data.communication.collector_id;
@@ -176,8 +175,6 @@ $.fn.extend({
 			},
 			success:function(data) {
 				$(".detialData tbody").empty();
-				//console.log(data);
-				//dataInfo=[];
 				info=[];
 				dataInfo=data.rows;
 				for(var i in dataInfo){
@@ -282,7 +279,6 @@ $.fn.extend({
 				}
 			} 
 		});
-		//collectorArr.push(collectorArr1)
 	}
 	$(document).click(function(){
 		$('.collector ul').hide();
@@ -292,7 +288,6 @@ $.fn.extend({
 		if($(".collector input").val()!=""){
 			layer.confirm('<font size="2">更换采集器ID会导致当前设备的数据全部清空！是否继续？</font>', function(index){
   					layer.close(index);
-  					//console.log(2424)
   					$('.collector input').val($('.list ul li').eq(i).text());
   					
 					$('.collector ul').hide();
