@@ -303,7 +303,7 @@ $.fn.extend({
 							data:data
 						},
 						success:function(data) {
-							console.log(data)
+							//console.log(data)
 							$(".detialData tbody").empty();
 							pngName=(data.collector_model.split("-"))[1].toLowerCase();
 							imgName="dtu_"+pngName+".png";
@@ -749,141 +749,23 @@ $.fn.extend({
 	
 //点击问号的事件
 	function devicePNG(){
-		/*optionValue=$(".collector input").val();
-		var data="{'collector_id':'"+optionValue+"'}";
-		$.ajax({
-			type:"post",
-			dataType:"JSON",
-			url:globalurl+"/v1/collectorModels",
-			data:{
-				access_token:accesstoken,
-				data:data
-			},
-			success:function(data) {
-				pngName=(data.collector_model.split("-"))[1].toLowerCase();
-				imgName="dtu_"+pngName+".png";*/
-				if(pngName==""){
-					layer.msg('请先选择采集器ID，在获取设备型号', {
-						icon : 2,
-						time:1000
-					});
-				}else{
-				 	layer.open({
-						type: 1,
-						title: false,
-						area: '500px',
-						shade:[0.1, '#000', false],
-						closeBtn: 0,//不显示关闭按钮
-						skin: 'layui-layer-demo', //样式类名
-						anim: 2,
-						shadeClose: true, //开启遮罩关闭
-						content: "<img class='imgName' src='/finfosoft-water/img/box_sensor/"+imgName+"'/>"
-					});
-				}
-					
-		/*	}
-		});*/
-		
-	}
-	//更换采集器ID
-/*	$(".collector input").on({
-		"click":function(){
-			focusAjax();
-			return false;
-		},
-		"keyup":function(){
-			focusAjax();
-		},
-		"blur":function(){
-			$(this).css("border-color","#ccc")
-		}
-	});
-	function focusAjax(){
-		var value=$(".collector input").val().split(0,1).join("");
-			//console.log(value)
-	    if(value==""){
-	    	$('.collector ul').hide();
-	    	return;
-	    }
-//	    console.log(collectorArr)
-		$.ajax({
-			type:"get",
-			dataType:'json',
-			crossDomain: true == !(document.all),
-			url:globalurl+"/v1/collectors",
-			data:{
-				access_token:accesstoken,
-				conditions:value
-			},
-			success:function(data){
-				//console.log(data)
-				collectorArr=[];
-				collectorArr.unshift(collector_id)
-				$('.collector ul').show();
-				$('.collector ul').empty();
-				var item=0;
-				for(var  i in data.rows){
-					var strLi='<li onclick="serchItem('+i+')">'+data.rows[i].collector_id+'</li>';
-					$('.collector ul').append(strLi);
-					collectorArr.push(data.rows[i].collector_id);
-				}
-			} 
-		});
-		//collectorArr.push(collectorArr1)
-	}
-	$(document).click(function(){
-		$('.collector ul').hide();
-	});
-	var dataInfo="";
-	function serchItem(i){
-		if($(".collector input").val()!=""){
-			layer.confirm('更换采集器ID会导致当前设备的数据全部清空！是否继续？', {
-  				btn: ['确定','取消'], function(index){
-  					layer.close(index);
-  					$('.collector input').val($('.list ul li').eq(i).text());
-					$('.collector ul').hide();
-					optionValue=$(".collector input").val();
-					var data="{'collector_id':'"+optionValue+"'}";
-					$.ajax({
-						type:"post",
-						dataType:"JSON",
-						crossDomain: true == !(document.all),
-						url:globalurl+"/v1/collectorModels",
-						data:{
-							access_token:accesstoken,
-							data:data
-						},
-						success:function(data) {
-							
-							$(".detialData tbody").empty();
-							pngName=(data.collector_model.split("-"))[1].toLowerCase();
-							imgName="dtu_"+pngName+".png";
-							//console.log(imgName)
-							dataInfo=data.collector_port;
-							
-							for(var i in dataInfo){
-								switch(dataInfo[i].data_type){
-									case 0:dataTypeStr="电流"; break;
-									case 1:dataTypeStr="电压"; break;
-									case 2:dataTypeStr="输入IO"; break;
-									case 3:dataTypeStr="输出IO";break;
-								}
-								switch(dataInfo[i].oper_type){
-									case 1:operTypeStr="读取"; break;
-									case 2:operTypeStr="写入"; break;
-								}
-								var dataTr='<tr><td><input type="checkbox" disabled="disabled"/></td><td>'+dataInfo[i].port_name+'</td>'
-											+'<td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>4-20</td><td>'
-											+'50-100</td><td></td><td></td><td></td><td></td><td ><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>'										
-								$(".detialData tbody").append(dataTr);	
-							}
-							
-						}
-						
-					});
-  				}
+		if(pngName==""){
+			layer.msg('请先选择采集器ID，在获取设备型号', {
+				icon : 2,
+				time:1000
+			});
+		}else{
+		 	layer.open({
+				type: 1,
+				title: false,
+				area: '500px',
+				shade:[0.1, '#000', false],
+				closeBtn: 0,//不显示关闭按钮
+				skin: 'layui-layer-demo', //样式类名
+				anim: 2,
+				shadeClose: true, //开启遮罩关闭
+				content: "<img class='imgName' src='/finfosoft-water/img/box_sensor/"+imgName+"'/>"
 			});
 		}
-		
-		
-	}	*/
+	}
+	
