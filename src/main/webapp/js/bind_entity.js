@@ -1,10 +1,9 @@
-//var thingId=$("#thingId").val();
-var thingId="58734ea511b69c22b0afa990";
+var thingId=$("#thingId").val();
+//var thingId="58734ea511b69c22b0afa990";
 var globalurl="http://192.168.1.114";
-window.accesstoken="58f433a2cadd44751040b8aa";
 var selectedId=[];
 $(function(){
-//	getToken();
+	getToken();
 	DevList()
 	addClass();
 	screenDev();
@@ -128,51 +127,62 @@ function saveDevice(){
 //外部数据 device_kkind==5
 //设备筛选
 function screenDev(){
+	$(".optionalList").html("")
 	var DevKind="";
 	for(var i=0;i<$(".infoList").length;i++){
 		if($(".infoList").eq(i).find("i").attr("class")=="fa fa-check-circle"){			
 			DevKind+=(i+1)+",";			
 		}
 	}
-
-	data={"device_kind":DevKind,"access_token":window.accesstoken}
-	$.ajax({
-		url:globalurl+"/v1/devices",
-		type:"get",
-		dataType:"JSON",
-		data:data,
-		async:false,
-		crossDomain: true == !(document.all),
-		success:function(data){
-			if(data.code==400005){
-				window.getNewToken()
-				screenDev();
-			}else{
-				var screenList="";
-			
-				for(var i=0;i<data.rows.length;i++){
-//						console.log(data.rows[i]._id+","+selectedId[i])
-					if(selectedId.indexOf(data.rows[i]._id)!=-1){					
-						screenList='<div class="selectdLi">'+
-						'<div class="selectdFont">'+data.rows[i].device_name+'</div>'+
-						'<div class="selectdIcon" onclick="selectDev(&apos;'+data.rows[i]._id+'&apos;)" id="'+data.rows[i]._id+'">已选</div>'+
-						'</div>';
-						$(".optionalList").append(screenList);
-					}else{
-						screenList='<div class="disabledLi">'+
-						'<div class="disabledFont">'+data.rows[i].device_name+'</div>'+
-						'<div class="disabledIcon" onclick="selectDev(&apos;'+data.rows[i]._id+'&apos;)" id="'+data.rows[i]._id+'">+</div>'+
-						'</div>';
-						$(".optionalList").append(screenList);
-					}
-					
-				}
-				
-			}
-		}
-	})
+	if($("#searchDevice").val()==""){	
+		data={"device_kind":DevKind,"access_token":window.accesstoken}
+		doAjax(data);
+		console.log(123)
+	}else{		
+		data={
+			'like':'{"device_name":"'+$("#searchDevice").val()+'"}',
+			"device_kind":DevKind,
+			"access_token":window.accesstoken
+		}	
+		doAjax(data);
+	}	
 }
-
-
+function doAjax(data){
+	$.ajax({
+				url:globalurl+"/v1/devices",
+				type:"get",
+				dataType:"JSON",
+				data:data,
+				async:false,
+				crossDomain: true == !(document.all),
+				success:function(data){
+					console.log(data)
+					if(data.code==400005){
+						window.getNewToken()
+						screenDev();
+					}else{
+						var screenList="";			
+						for(var i=0;i<data.rows.length;i++){
+		//						console.log(data.rows[i]._id+","+selectedId[i])
+							if(selectedId.indexOf(data.rows[i]._id)!=-1){					
+								screenList='<div class="selectdLi">'+
+								'<div class="selectdFont">'+data.rows[i].device_name+'</div>'+
+								'<div class="selectdIcon" onclick="selectDev(&apos;'+data.rows[i]._id+'&apos;)" id="'+data.rows[i]._id+'">已选</div>'+
+								'</div>';
+								$(".optionalList").append(screenList);
+							}else{
+								screenList='<div class="disabledLi">'+
+								'<div class="disabledFont">'+data.rows[i].device_name+'</div>'+
+								'<div class="disabledIcon" onclick="selectDev(&apos;'+data.rows[i]._id+'&apos;)" id="'+data.rows[i]._id+'">+</div>'+
+								'</div>';
+								$(".optionalList").append(screenList);
+							}
+							
+						}
+						
+					}
+				}
+			})
+}
 
 

@@ -20,8 +20,7 @@
 .layui-layer-btn a{
 	margin:0px 36px !important;
 	padding:0 20px !important;
-	border:1px solid #1cb392;
-	
+	border:1px solid #1cb392;	
 }
 #addentityName,#modifyentityName{
 	border:1px solid #cccccc;

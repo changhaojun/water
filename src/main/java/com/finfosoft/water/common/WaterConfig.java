@@ -4,6 +4,7 @@ import com.finfosoft.db.mongo.MongodbPlugin;
 import com.finfosoft.water.dataTag.DataTagController;
 import com.finfosoft.water.frame.FrameController;
 import com.finfosoft.water.login.LoginController;
+import com.finfosoft.water.thing.ThingController;
 import com.finfosoft.water.user.UserController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -11,6 +12,7 @@ import com.jfinal.config.Interceptors;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
+import com.jfinal.core.Controller;
 import com.jfinal.core.JFinal;
 import com.jfinal.kit.PropKit;
 import com.jfinal.render.ViewType;
@@ -31,7 +33,8 @@ public class WaterConfig extends JFinalConfig{
 		me.add("/frame",FrameController.class,"/");                //框架页面
 		me.add("/user",UserController.class,"/");                //框架页面
 		me.add("/dataTag",DataTagController.class,"/");			//设备相关
-		
+		me.add("/thing",ThingController.class,"/");             //实体相关的页面
+	
 	}
 
 	@Override

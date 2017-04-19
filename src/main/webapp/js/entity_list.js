@@ -1,9 +1,10 @@
-window.accesstoken="58f433a2cadd44751040b8aa";
+
 var globalurl="http://192.168.1.114";
 $(function(){
+	getToken();//刷新令牌
 	toolTip();
 	getEntityList();
-	getToken();//刷新令牌
+
 })
 var isSearch=false;
 //搜索功能
@@ -37,7 +38,7 @@ window.getEntityList=function(){
 		    queryParams: queryParams,
 		    striped: true,//条纹
 		    onLoadSuccess:function(value){
-			console.log(value)		
+				console.log(value)
 		    	if(value.code==400005){
 		    		window.getNewToken();
 		    		getEntityList();		    	
@@ -62,6 +63,7 @@ window.getEntityList=function(){
 }
 //操作列的格式化
 function editFormatter(value,row,index){
+	console.log(value);
 	return "<span data-toggle='tooltip' data-placement='top' title='绑定' style='color:#18b393;cursor: pointer;' class='fa fa-chain' onclick=bind('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='告警' style='color:#7cc1c8;margin-left:15px;cursor: pointer;' class='fa fa-bell' onclick=alarm('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='改名' style='color:#ffb400;margin-left:15px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:15px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol('"+value+"')></span>"
 }
 
@@ -103,16 +105,15 @@ function topColor(obj,color){
 
 //绑定实体事件
 function bind(value){
-	self.location.href="/finfosoft-water/dataTag/getDatas/"+value+"-A";
+	self.location.href="/finfosoft-water/thing/bindDatas/"+value;
 }
 //警告实体事件
 function alarm(value){
-	self.location.href="/finfosoft-water/dataTag/editSensor/"+value;
+	self.location.href="/finfosoft-water/thing/alarmDatas/"+value;
 }
 //添加数据事件
 function addEntity(){
-	layer.confirm('<input type="text" id="addentityName" placeholder="请输入实体名称"/>', function(index){	
-		
+	layer.confirm('<input type="text" id="addentityName" placeholder="请输入实体名称"/>',{title:"添加实体"}, function(index){			
 		if($("#addentityName").val()==""){
 			layer.tips('实体名称不能为空', $("#addentityName"), {
 				  tips: [1, '#ff787c'],
@@ -193,8 +194,7 @@ function modify(value){
 					window.getNewToken()
 					modify(value);
 				}else{
-					layer.confirm('<input type="text" id="modifyentityName" value="'+data.thing_name+'"/>', function(index){
-					$(".layui-layer-title").html("修改实体");
+					layer.confirm('<input type="text" id="modifyentityName" value="'+data.thing_name+'"/>',{title:"修改实体"}, function(index){
 					console.log($("#modifyentityName").val())
 					if($("#modifyentityName").val()==""){
 						layer.tips('实体名称不能为空', $("#modifyentityName"), {
