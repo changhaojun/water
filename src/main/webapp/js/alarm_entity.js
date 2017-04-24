@@ -1,10 +1,11 @@
 var thingId=$("#thingId").val();
-//var globalurl="http://192.168.1.114";
+var globalurl="http://192.168.1.114";
 
 $(function(){
 	getToken();
 	toolTips();
 	alarmList();
+	var realTime;
 })
 var searchBox=new Vue({
 	el:'.search',
@@ -12,6 +13,7 @@ var searchBox=new Vue({
 		searchId:''
 	} 
 })
+
 //获取警告列表
 function alarmList(){
 	$(".IContent").html("");
@@ -29,22 +31,25 @@ function doajax(data){
 		dataType: 'JSON',
 		type: 'get',
 		data:data,
+		async:false,
 		crossDomain: true == !(document.all),
 		success: function(data) {
 			console.log(data)
 			if(data.code==400005){
-				window.getNewToken()
+				window.getNewToken();
 				alarmList();
 				toolTips();				  
 			}else{
+				
 				var str="";
+				
 				for(var i=0;i<data.length;i++){
 					var oLi="";
-					str='<div class="alarmList">'+
+					str='<div class="alarmList" id="'+data[i].data_id+'">'+
 							'<div class="alarmTop">'+data[i].device_name+"-"+data[i].data_name+'</div>'+
 							'<div class="alarmContent">'+
-								'<span>'+data[i].data_value+data[i].data_unit+'</span>'+
-								'<span>'+data[i].data_time+'</span>'+
+								'<span class="dataValue">'+data[i].data_value+data[i].data_unit+'</span>'+
+								'<span class="dataTime">'+data[i].data_time+'</span>'+
 							'</div>'+
 							'<div class="alarmFooter">'+
 								'<ul>'+						
@@ -54,7 +59,7 @@ function doajax(data){
 					$(".IContent").append(str);			
 						var oLi="";
 						for(var j=0;j<2;j++){
-							if(data[i].threshold==undefined||data[i].threshold[j]==undefined||(data[i].threshold[j].upper_value=="+∞"&&data[i].threshold[j].lower_value=="-∞")){
+							if(data[i].threshold==undefined||data[i].threshold[j]==undefined||(data[i].threshold[j].upper_value=="+∞"&&data[i].threshold[j].lower_value=="-∞")||(data[i].threshold[j].upper_value==""&&data[i].threshold[j].lower_value=="")){
 								
 								oLi='<li>'+
 										'<div class="dataLeft">未配置'+								
@@ -73,8 +78,8 @@ function doajax(data){
 								}
 										oLi='<li>'+
 										'<div class="dataLeft">'+
-											'<span>'+data[i].threshold[j].lower_value+'</span>~'+
-											'<span>'+data[i].threshold[j].upper_value+'</span>'+
+											'<span>'+(data[i].threshold[j].lower_value)+'</span>  ~  '+
+											'<span>'+(data[i].threshold[j].upper_value)+'</span>'+
 										'</div>'+
 										'<div class="dataRight">'+
 											'<i class="fa fa-cog " data-toggle="tooltip" data-placement="top" title="修改" onclick="modify('+data[i].data_id+","+data[i].threshold[j].lower_value+","+data[i].threshold[j].upper_value+","+j+","+i+')"></i>'+
@@ -86,7 +91,10 @@ function doajax(data){
 						}	
 					colorBg(data[i].status,i);
 			}
-			toolTips();		
+				
+			toolTips();	
+			MQTTconnect();
+			
 			}	
 		},
 		error:function(data){
@@ -94,6 +102,7 @@ function doajax(data){
 		}
 	});
 }
+//告警颜色设置
 function colorBg(data,index){
 	if(data==1){
 		$(".alarmList").eq(index).addClass("greenBg");
@@ -120,66 +129,81 @@ function addData(_id,Iindex,dataIndex){
 	var dataIndex=dataIndex;
 	layer.alert('<input type="text" id="dataMin" placeholder="请输入最小值" onkeyup="if(event.keyCode==32){space($(this))}"/>  ~ '+
 	'<input type="text" id="dataMax" placeholder="请输入最大值" onkeyup="if(event.keyCode==32){space($(this))}"/>',{title: '添加警告',btn:"保存",area: ['400px'],skin:'demo-class'}, function(index){
-		var text=/\D/;
+		var text=/^[-+]?[0-9]+(\.[0-9]+)?$/;
 		if($("#dataMin").val()==""&&$("#dataMax").val()==""){
 			layer.tips('最大值或者最小值不能同时为空', $("#dataMax"), {
 				  tips: [1, '#ff787c'],
 				  time: 2000
 			});
-		}else if(text.test($("#dataMin").val())||text.test($("#dataMax").val())){
+		}else if(text.test($("#dataMin").val())||text.test($("#dataMax").val())){ 
+			console.log(indexData(Iindex,dataIndex))
+			var data="{'threshold':"+indexData(Iindex,dataIndex)+",'data_id':"+_id+"}"
+			var data={"data":data,"access_token":window.accesstoken};
+			ajax(data);
+		}else{
+			console.log(111)
 			layer.tips('最大值或者最小值格式不正确', $("#dataMax"), {
 				  tips: [1, '#ff787c'],
 				  time: 2000
-			});
-		}else{
-			if($("#dataMax").val()==""){
-				var dataMax=JSON.stringify("");
-			}else{
-				dataMax=$("#dataMax").val();
-			}
-			if($("#dataMin").val()==""){
-				var dataMin=JSON.stringify("");
-			}else{
-				dataMin=$("#dataMin").val()
-			}
-			if($(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft").html()!="未配置"){
-				var IdataMin=$(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft span").eq(0).html();
-				var IdataMax=$(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft span").eq(1).html();
-			}else{
-				IdataMin=JSON.stringify("");
-				IdataMax=JSON.stringify("");
-			}
-			if(Iindex==1){
-				var othreshold = "["+
-				"{"+
-					"lower_value: "+IdataMin+","+
-					"upper_value: "+IdataMax+
-				"},"+
-				"{"+
-					"lower_value: "+dataMin+","+
-					"upper_value: "+dataMax+
-				"}"+
-				"]";
-			}else{
-				var othreshold = "["+
-				"{"+
-					"lower_value: "+dataMin+","+
-					"upper_value: "+dataMax+
-					
-				"},"+
-				"{"+
-					"lower_value:"+IdataMin+","+
-					"upper_value:"+IdataMax+
-				"}"+
-				"]";
-			}				
-			var data="{'threshold':"+othreshold+",'data_id':"+_id+"}"
-			var data={"data":data,"access_token":window.accesstoken};
-			ajax(data);
+			});				
+			
 		}
 		
 	
 	})
+}
+//判定最大值最小值是否为空
+function  spaceData(){
+	if($("#dataMax").val()==""){
+		var dataMax=JSON.stringify("");
+	}else{
+		dataMax=$("#dataMax").val();
+	}
+	if($("#dataMin").val()==""){
+		var dataMin=JSON.stringify("");
+	}else{
+		dataMin=$("#dataMin").val()
+	}
+	return [dataMin,dataMax]
+}
+//判定最大值最小值是否为未配置
+function setData(Iindex,dataIndex){
+	if($(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft").html()!="未配置"){
+		var IdataMin=$(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft span").eq(0).html();
+		var IdataMax=$(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft span").eq(1).html();
+	}else{
+		IdataMin=JSON.stringify("");
+		IdataMax=JSON.stringify("");
+	}
+	return [IdataMin,IdataMax]
+}
+//当前数据的第几个下标
+function indexData(Iindex,dataIndex){
+	if(Iindex==1){
+				var othreshold = "["+
+				"{"+
+					"lower_value: "+setData(Iindex,dataIndex)[0]+","+
+					"upper_value: "+setData(Iindex,dataIndex)[1]+
+				"},"+
+				"{"+
+					"lower_value: "+spaceData()[0]+","+
+					"upper_value: "+spaceData()[1]+
+				"}"+
+				"]";
+			}else{
+				var othreshold = "["+
+				"{"+
+					"lower_value: "+spaceData()[0]+","+
+					"upper_value: "+spaceData()[1]+
+					
+				"},"+
+				"{"+
+					"lower_value:"+setData(Iindex,dataIndex)[0]+","+
+					"upper_value:"+setData(Iindex,dataIndex)[1]+
+				"}"+
+				"]";
+			}
+		return othreshold;
 }
 //修改数据
 
@@ -188,57 +212,22 @@ function modify(_id,min,max,Iindex,dataIndex){
 	var dataIndex=dataIndex;
 layer.alert('<input type="text" id="dataMin" value="'+min+'" onkeyup="if(event.keyCode==32){space($(this))}"/>  ~ '+ 
 	'<input type="text" id="dataMax" value="'+max+'"  onkeyup="if(event.keyCode==32){space($(this))}"/>',{title: '修改警告',btn:"保存",area: ['400px'],btnAlign: 'c',skin:'demo-class'}, function(index){
+	var text=/^[-+]?[0-9]+(\.[0-9]+)?$/;
 		if($("#dataMin").val()==""&&$("#dataMax").val()==""){
 			layer.tips('最大值或者最小值不能同时为空', $("#dataMax"), {
 				  tips: [1, '#ff787c'],
 				  time: 2000
 			});
-		}else{	
-			if($("#dataMax").val()==""){
-				var dataMax=JSON.stringify("");
-			}else{
-				dataMax=$("#dataMax").val();
-			}
-			if($("#dataMin").val()==""){
-				var dataMin=JSON.stringify("");
-			}else{
-				dataMin=$("#dataMin").val()
-			}
-			if($(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft").html()!="未配置"){
-				var IdataMin=$(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft span").eq(0).html();
-				var IdataMax=$(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft span").eq(1).html();
-			}else{
-				IdataMin=JSON.stringify("");
-				IdataMax=JSON.stringify("");
-			}
-			if(Iindex==1){
-				var othreshold = "["+
-				"{"+
-					"lower_value: "+IdataMin+","+
-					"upper_value: "+IdataMax+
-				"},"+
-				"{"+
-					"lower_value: "+dataMin+","+
-					"upper_value: "+dataMax+
-				"}"+
-				"]";
-			}else{
-				var othreshold = "["+
-				"{"+
-					"lower_value: "+dataMin+","+
-					"upper_value: "+dataMax+
-					
-				"},"+
-				"{"+
-					"lower_value:"+IdataMin+","+
-					"upper_value:"+IdataMax+
-				"}"+
-				"]";
-			}				
-			var data="{'threshold':"+othreshold+",'data_id':"+_id+"}"
+		}else if(text.test($("#dataMin").val())||text.test($("#dataMax").val())){
+			var data="{'threshold':"+indexData(Iindex,dataIndex)+",'data_id':"+_id+"}"
 			var data={"data":data,"access_token":window.accesstoken};
 			console.log(data)
 			ajax(data);
+		}else{						
+			layer.tips('最大值或者最小值格式不正确', $("#dataMax"), {
+				  tips: [1, '#ff787c'],
+				  time: 2000
+			});
 		}
 		
 	
@@ -330,32 +319,67 @@ function ajax(data){
 function space(obj){
 	obj.val("")
 }
- (function ($) {
-            $.fn.watch = function (callback) {
-                return this.each(function () {
-                    //缓存以前的值  
-                    $.data(this, 'originVal', $(this).val());
+//订阅
+var client; 
+var topic;
+function MQTTconnect(dataId) {
+  console.log("订阅程序开始执行");
+  var mqttHost = '192.168.1.114';
+  var username="admin";
+  var password="password";
+	 topic="alarm";
+//	  console.log(topic);
+	  client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
+	  
+	  var options = {
+			  timeout: 1000,
+			  onSuccess: onConnect,
+			  onFailure: function (message) {
+				  setTimeout(MQTTconnect, 10000000);
+			  }
+	  };
+	  
+	  // set callback handlers
+	  client.onConnectionLost = onConnectionLost;
+	  client.onMessageArrived = onMessageArrived;
+	  
+	  if (username != null) {
+		  options.userName = username;
+		  options.password = password;
+	  }
+	  client.connect(options);  
+	  // connect the client
+	  client.connect({ onSuccess: onConnect });
+	
+}
 
-                    //event  
-                    $(this).on('keyup paste', function () {
-                        var originVal = $.data(this, 'originVal');
-                        var currentVal = $(this).val();
+// called when the client connects
+function onConnect() {
+  console.log("onConnect");
+  client.subscribe(topic);
+}
 
-                        if (originVal !== currentVal) {
-                            $.data(this, 'originVal', $(this).val());
-                            callback(currentVal);
-                        }
-                    });
-                });
-            }
-        })(jQuery);
+// called when the client loses its connection
+function onConnectionLost(responseObject) {
+  if (responseObject.errorCode !== 0) {
+    console.log("onConnectionLost:" + responseObject.errorMessage);
+  }
+}
 
- function letter(obj){
- 	var text=/\D/;
- 	if(text.test(obj.val())){
- 		obj.val("")
- 	}
- }
+// called when a message arrives
+function onMessageArrived(message) {
+  var topic = message.destinationName;
+  var payload = message.payloadString;
+  console.log(payload)
+  var dataId=JSON.parse(message.payloadString)
+  for(var i=0;i<$(".alarmList").length;i++){	
+  		if(dataId.data_id==$(".alarmList").eq(i).attr("id")){
+  			$("#"+dataId.data_id+"").find(".alarmContent .dataTime").html(dataId.data_time);
+  			$("#"+dataId.data_id+"").find(".alarmContent .dataValue").html(dataId.data_value);
+  			colorBg(dataId.status,i);
+  		}
+  }
+}
 
 
 

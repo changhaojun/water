@@ -84,6 +84,7 @@ html{
 }
 .IContent .greenBg .alarmFooter li{
 	border-top:1px solid #5dc9b2;
+	
 }
 .IContent .grayBg{
 	background:#9a9a9a;
@@ -91,9 +92,14 @@ html{
 }
 .IContent .grayBg .alarmContent{
 	border-top:1px solid #bbb;
+
+}
+.IContent .grayBg .alarmContent .dataTime{
+		color:#fff;
 }
 .IContent .grayBg .alarmFooter li{
 	border-top:1px solid #bbb;
+	
 }
 .IContent .redBg{
 	background:#f27779;
@@ -101,9 +107,13 @@ html{
 }
 .IContent .redBg .alarmContent{
 	border-top:1px solid #bbb;
+	color:#fff;
+}
+.IContent .redBg .alarmContent .dataTime{
+	color:#fff;
 }
 .IContent .redBg .alarmFooter li{
-	border-top:1px solid #bbb;
+	border-top:1px solid #bbb;	
 }
 .alarmList .alarmTop{
 	width:100%;
@@ -140,6 +150,10 @@ html{
 }
 .alarmFooter li .dataLeft{
 	float:left;
+}
+.alarmFooter li .dataLeft span{
+	/*display: inline-block;*/
+	overflow: hidden;
 }
 .alarmFooter li .dataRight{
 	float:right;

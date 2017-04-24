@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../css/account.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="../plugins/bootstarp/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../plugins/layer/skin/layer.css"/>
+	</head>
+	<body>
+		<input type="text" id="companyCode" hidden="hidden" value=${companyCode} />
+		<input type="text" id="companyId" hidden="hidden" value=${companyId} />
+		<!--权限主页-->
+		<div class="accountBox">
+			<!--权限top-->
+			<div class="accountTop">
+				<span>权限管理</span>
+				<span>/</span>
+				<span>Account</span>
+				<span class="search">
+					<input type="text" value="请输入职称查找" id="searchId"/>
+					<i class="fa fa-search"></i>					
+				</span>
+				<input type="button" value="添加权限" class="btn btn-primary"/>
+				
+			</div>
+			<hr>
+			<div class="noneData">
+					暂无用户...
+			</div>
+			<!--权限内容-->
+			<div class="accountContent">
+			</div>
+			<!--添加权限-->
+			<div class="accountMask addManageMask">
+				<div class="addAccount addManagenum">
+					<div class="addAccountTop">
+						<span>添加权限</span>
+						<span class="closeAdd">&times;</span>
+					</div>
+					<div class="addManageContent">
+						<div class="accountNum" style="margin-top:20px;">
+							
+							<label for="addText">账号：</label>
+							<input type="text" value="请输入邮箱" id="addText"/>
+							<span class=" error addaccountError"></span>
+						</div>
+						<div class="accountNum accountState addState">
+							
+							<label>状态：</label>
+							<div class="status">
+								<input type="button" value="有效" id="addValid" class="stats"/>
+								<input type="button" value="无效" id="addInvalid" />
+							</div>
+						</div> 
+					</div>
+					<div class="selectRole">
+						<span>选择角色</span>
+						<span>请选择需要添加的权限</span>
+					</div>
+					<div class="accountRole addRole">
+						<ul>
+							
+						</ul>
+					</div>
+					<button type="submit" class="sureBtn addBtn" onclick="addUser()">
+						确定
+					</button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/public_resources.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/manage.js" type="text/javascript" charset="utf-8"></script>
+	
+</html>
