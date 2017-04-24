@@ -34,11 +34,12 @@
 	width: 85% !important;
 }
 .fixed-table-body #dtuList thead  tr th:nth-child(2){
-	width:299px !important;}
+	width:15% !important;
+}
 .layui-layer-tips {
 	box-shadow: none !important;
 	/*left:882px !important;*/
 }
 #dtuList tbody tr td:nth-child(2){
 	text-align:left !important;
-	}
+}

@@ -1,5 +1,6 @@
 
-var globalurl="http://192.168.1.114";
+//var globalurl="http://192.168.1.114";
+
 $(function(){
 	getToken();//刷新令牌
 	toolTip();
@@ -30,11 +31,11 @@ window.getEntityList=function(){
 		    pagination: true, //是否分页
 		    search: false, //显示搜索框
 		    pageSize: 10,//每页的行数 
-		    pageNumber:1,
+		    pageNumber:1,//初始化第一页
 		    showRefresh: false,
 		    showToggle: false,
 		    showColumns: false,
-		    pageList:[10,15,20, 25],
+		    pageList:[10,15,20,25],//是否显示分页
 		    queryParams: queryParams,
 		    striped: true,//条纹
 		    onLoadSuccess:function(value){
@@ -55,7 +56,7 @@ window.getEntityList=function(){
 	                        field: "_id",
 	                        title: "操作",
 	                        valign:"middle",
-	                        align:"center",
+	                        align:"left",
 	                        formatter: editFormatter//对本列数据做格式化
 	                    }
 	                ],
@@ -63,13 +64,12 @@ window.getEntityList=function(){
 }
 //操作列的格式化
 function editFormatter(value,row,index){
-	console.log(value);
 	return "<span data-toggle='tooltip' data-placement='top' title='绑定' style='color:#18b393;cursor: pointer;' class='fa fa-chain' onclick=bind('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='告警' style='color:#7cc1c8;margin-left:15px;cursor: pointer;' class='fa fa-bell' onclick=alarm('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='改名' style='color:#ffb400;margin-left:15px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:15px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol('"+value+"')></span>"
 }
 
 //表格数据获取的参数
 function queryParams(params) {	
-	if(	isSearch==false){
+	if(	isSearch==false){//是否为搜索的状态
 		return {
 			pageNumber:params.offset,//第几页
 			pageSize:params.limit,//每页的条数
@@ -78,7 +78,6 @@ function queryParams(params) {
 			
 		};
 	}else{
-		console.log(searchEntity.searchEntityId)
 	    return {
 	    	pageNumber:0,
 	    	pageSize:params.limit,
@@ -102,7 +101,6 @@ function topColor(obj,color){
 		$(".tooltip.top .tooltip-arrow").css("border-top-color",color);
 	})
 }
-
 //绑定实体事件
 function bind(value){
 	self.location.href="/finfosoft-water/thing/bindDatas/"+value;

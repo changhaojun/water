@@ -67,15 +67,43 @@ html{
 }
 .alarmList{
 	width:250px;
-	height:240px;
-	background:#1AB394;
-	color:#fff;
+	height:240px;	
 	margin-left:20px;
 	margin-top:15px;
 	float:left;
 	border-radius: 5px 5px;
 	padding-left:17px;
 	padding-right:17px;
+}
+.IContent .greenBg{
+	background:#1AB394;
+	color:#fff;
+}
+.IContent .greenBg .alarmContent{
+	border-top:1px solid #5dc9b2;
+}
+.IContent .greenBg .alarmFooter li{
+	border-top:1px solid #5dc9b2;
+}
+.IContent .grayBg{
+	background:#9a9a9a;
+	color:#fff;
+}
+.IContent .grayBg .alarmContent{
+	border-top:1px solid #bbb;
+}
+.IContent .grayBg .alarmFooter li{
+	border-top:1px solid #bbb;
+}
+.IContent .redBg{
+	background:#f27779;
+	color:#fff;
+}
+.IContent .redBg .alarmContent{
+	border-top:1px solid #bbb;
+}
+.IContent .redBg .alarmFooter li{
+	border-top:1px solid #bbb;
 }
 .alarmList .alarmTop{
 	width:100%;
@@ -86,7 +114,7 @@ html{
 .alarmList .alarmContent{
 	width:100%;
 	height:114px;
-	border-top:1px solid #5dc9b2;
+	
 	text-align:center;	
 }
 .alarmList .alarmContent span:nth-child(1){
@@ -108,7 +136,6 @@ html{
 	float:left;
 	width:100%;
 	line-height:39px;
-	border-top:.5px solid #5dc9b2;
 	padding-left:5px;
 }
 .alarmFooter li .dataLeft{
@@ -121,9 +148,7 @@ html{
 	margin:0 7px;
 	cursor: pointer;
 }
-.layui-layer-dialog{
-	min-width:400px !important;
-}
+
 .layui-layer-dialog
 .layui-layer-dialog .layui-layer-content{
 	color:#ccc !important;
@@ -135,19 +160,35 @@ html{
 	padding-left:14px;
 	color:#ccc;
 }
-.layui-layer-btn{
-	text-align:center !important;
+body .demo-class .layui-layer-btn{
+	text-align:center;
 }
-.layui-layer-btn .layui-layer-btn0{
-	padding:5px 75px !important;
+body .demo-class .layui-layer-btn a{
+	padding:5px 75px ;
 	border-radius: 10px 10px ;
-	
+	 line-height:20px !important;
 }
-.layui-layer-btn a{
-   line-height:20px !important;
+body .del-class .layui-layer-btn{
+	text-align:center;
 }
-
-
+body .del-class .layui-layer-content{
+	color:#FFB579;
+	text-align:center;
+}
+ body .del-class .layui-layer-content .layui-layer-ico{
+ 	left:55px;
+ }
+#dtuList thead tr th:nth-child(1) {
+    box-sizing: border-box;
+    width:35%
+}
+#dtuList thead  tr th:nth-child(2){
+    box-sizing: border-box;
+    width:50%
+}
+.IContent{
+	float:left;
+}
 
 
 

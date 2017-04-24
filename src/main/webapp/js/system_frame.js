@@ -23,6 +23,7 @@ function getNavData(){
 		url:globalurl+"/v1/resources?access_token="+accesstoken,
 		datatype:'json',
 		success:function(data){
+			
 			if(data.code==400005){
 				getNewToken()
 				getNavData()
@@ -50,14 +51,17 @@ function getNavData(){
 						'<span class="fa arrow"></span></a><div class="nav-second-box"><ul class="nav nav-second-level nav_list"></ul></div></li>');
 						$('#side-menu ').append(strNav);
 						if(data[i].children_resource.length){
+							
 							var childStr="";
-							for(var j=0;j<data[i].children_resource.length;j++){
+							for(var j=0;j<data[i].children_resource.length;j++){							
 								if(data[i].children_resource[j].is_navigation>0){
 									var childData=data[i].children_resource[j];
 									childStr+='<li><a class="J_menuItem" href="/finfosoft-water'+childData.resource_url+'" data-index="0" target="iframe0">'+childData.resource_name+'</a></li>';
+										console.log(childStr);
 								}
+							
 							}
-							$(".changeLi .nav_list").eq(i).append(childStr);
+							$(".changeLi .nav-second-box .nav_list").eq(i-1).append(childStr);
 						}	
 					}
 					
