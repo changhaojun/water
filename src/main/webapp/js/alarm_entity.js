@@ -19,7 +19,9 @@ function alarmList(){
 	$(".IContent").html("");
 	if(searchBox.searchId==""){
 		var data={access_token:window.accesstoken};
-		doajax(data);
+		
+			doajax(data);
+		
 	}else{
 		var data={access_token:window.accesstoken,like:"{'data_name':'"+searchBox.searchId+"'}"};
 		doajax(data);
@@ -72,6 +74,7 @@ function doajax(data){
 							}else{	
 								if(data[i].threshold[j].lower_value=="-∞"){
 									data[i].threshold[j].lower_value="'-∞'";
+									
 								}
 								if(data[i].threshold[j].upper_value=="+∞"){
 									data[i].threshold[j].upper_value="'+∞'";
@@ -130,21 +133,30 @@ function addData(_id,Iindex,dataIndex){
 	layer.alert('<input type="text" id="dataMin" placeholder="请输入最小值" onkeyup="if(event.keyCode==32){space($(this))}"/>  ~ '+
 	'<input type="text" id="dataMax" placeholder="请输入最大值" onkeyup="if(event.keyCode==32){space($(this))}"/>',{title: '添加警告',btn:"保存",area: ['400px'],skin:'demo-class'}, function(index){
 		var text=/^[-+]?[0-9]+(\.[0-9]+)?$/;
-		if($("#dataMin").val()==""&&$("#dataMax").val()==""){
+		var sign=$("#dataMin").val().split("-")[1];
+		 if($("#dataMin").val()==""&&$("#dataMax").val()==""){
 			layer.tips('最大值或者最小值不能同时为空', $("#dataMax"), {
 				  tips: [1, '#ff787c'],
 				  time: 2000
 			});
 		}else if(text.test($("#dataMin").val())||text.test($("#dataMax").val())){ 
-			console.log(indexData(Iindex,dataIndex))
-			var data="{'threshold':"+indexData(Iindex,dataIndex)+",'data_id':"+_id+"}"
-			var data={"data":data,"access_token":window.accesstoken};
-			ajax(data);
+			if(($("#dataMin").val().indexOf("-")==-1&&$("#dataMax").val().indexOf("-")==-1&&Number($("#dataMin").val())>Number($("#dataMax").val())&&$("#dataMax").val()!="")||($("#dataMin").val().indexOf("-")==0&&$("#dataMax").val().indexOf("-")==0&&Number($("#dataMin").val().split("-")[1])<Number($("#dataMax").val().split("-")[1])&&$("#dataMax").val()!="")||($("#dataMin").val().indexOf("-")==-1&&$("#dataMax").val().indexOf("-")==0&&$("#dataMax").val()!=""&&$("#dataMin").val()!="")){
+				console.log($("#dataMin").val()+$("#dataMax").val())
+				layer.tips('最大值不能比最小值小', $("#dataMax"), {
+				  tips: [1, '#ff787c'],
+				  time: 2000
+				});
+			}else{
+				var data="{'threshold':"+indexData(Iindex,dataIndex)+",'data_id':"+_id+"}"
+				var data={"data":data,"access_token":window.accesstoken};
+				ajax(data);
+			}
+			
 		}else{
 			console.log(111)
 			layer.tips('最大值或者最小值格式不正确', $("#dataMax"), {
 				  tips: [1, '#ff787c'],
-				  time: 2000
+				  time: 200
 			});				
 			
 		}
@@ -156,13 +168,19 @@ function addData(_id,Iindex,dataIndex){
 function  spaceData(){
 	if($("#dataMax").val()==""){
 		var dataMax=JSON.stringify("");
-	}else{
+	}else{		
 		dataMax=$("#dataMax").val();
 	}
 	if($("#dataMin").val()==""){
 		var dataMin=JSON.stringify("");
 	}else{
-		dataMin=$("#dataMin").val()
+		dataMin=$("#dataMin").val()		
+	}
+	if(dataMax=="+∞"){
+		dataMax="'+∞'";
+	}
+	if(dataMin=="-∞"){
+		dataMin="'-∞'"
 	}
 	return [dataMin,dataMax]
 }
@@ -171,6 +189,7 @@ function setData(Iindex,dataIndex){
 	if($(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft").html()!="未配置"){
 		var IdataMin=$(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft span").eq(0).html();
 		var IdataMax=$(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft span").eq(1).html();
+		
 	}else{
 		IdataMin=JSON.stringify("");
 		IdataMax=JSON.stringify("");
@@ -210,6 +229,7 @@ function indexData(Iindex,dataIndex){
 function modify(_id,min,max,Iindex,dataIndex){
 	var Iindex=Iindex;
 	var dataIndex=dataIndex;
+	
 layer.alert('<input type="text" id="dataMin" value="'+min+'" onkeyup="if(event.keyCode==32){space($(this))}"/>  ~ '+ 
 	'<input type="text" id="dataMax" value="'+max+'"  onkeyup="if(event.keyCode==32){space($(this))}"/>',{title: '修改警告',btn:"保存",area: ['400px'],btnAlign: 'c',skin:'demo-class'}, function(index){
 	var text=/^[-+]?[0-9]+(\.[0-9]+)?$/;
@@ -219,10 +239,18 @@ layer.alert('<input type="text" id="dataMin" value="'+min+'" onkeyup="if(event.k
 				  time: 2000
 			});
 		}else if(text.test($("#dataMin").val())||text.test($("#dataMax").val())){
-			var data="{'threshold':"+indexData(Iindex,dataIndex)+",'data_id':"+_id+"}"
-			var data={"data":data,"access_token":window.accesstoken};
-			console.log(data)
-			ajax(data);
+			if(($("#dataMin").val().indexOf("-")==-1&&$("#dataMax").val().indexOf("-")==-1&&Number($("#dataMin").val())>Number($("#dataMax").val())&&$("#dataMax").val()!="")||($("#dataMin").val().indexOf("-")==0&&$("#dataMax").val().indexOf("-")==0&&Number($("#dataMin").val().split("-")[1])<Number($("#dataMax").val().split("-")[1])&&$("#dataMax").val()!="")||($("#dataMin").val().indexOf("-")==-1&&$("#dataMax").val().indexOf("-")==0&&$("#dataMax").val()!=""&&$("#dataMin").val()!="")){
+				console.log($("#dataMin").val()+$("#dataMax").val())
+				layer.tips('最大值不能比最小值小', $("#dataMax"), {
+				  tips: [1, '#ff787c'],
+				  time: 2000
+				});
+			}else{
+				var data="{'threshold':"+indexData(Iindex,dataIndex)+",'data_id':"+_id+"}"
+				console.log(data)
+				var data={"data":data,"access_token":window.accesstoken};
+				ajax(data);
+			}
 		}else{						
 			layer.tips('最大值或者最小值格式不正确', $("#dataMax"), {
 				  tips: [1, '#ff787c'],
@@ -279,6 +307,7 @@ function alarmDel(_id,min,max,Iindex,dataIndex){
 	
 }
 function ajax(data){
+	console.log(data)
 	$.ajax({
 				url:globalurl+"/v1/alarms",
 				data:data,
@@ -306,6 +335,7 @@ function ajax(data){
 					}
 				},
 				error: function(data) {
+					console.log(data)
 					layer.msg("添加失败", {
 						icon : 2,
 						time:1000
@@ -324,11 +354,10 @@ var client;
 var topic;
 function MQTTconnect(dataId) {
   console.log("订阅程序开始执行");
-  var mqttHost = '192.168.1.114';
+  var mqttHost = '139.129.231.31';
   var username="admin";
-  var password="password";
-	 topic="alarm";
-//	  console.log(topic);
+  var password="finfosoft123";
+	 topic="mqtt_alarm_currentdata";
 	  client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
 	  
 	  var options = {
@@ -337,8 +366,7 @@ function MQTTconnect(dataId) {
 			  onFailure: function (message) {
 				  setTimeout(MQTTconnect, 10000000);
 			  }
-	  };
-	  
+	  };	  
 	  // set callback handlers
 	  client.onConnectionLost = onConnectionLost;
 	  client.onMessageArrived = onMessageArrived;

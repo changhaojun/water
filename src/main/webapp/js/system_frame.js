@@ -61,7 +61,7 @@ function getNavData(){
 								}
 							
 							}
-							$(".changeLi .nav-second-box .nav_list").eq(i-1).append(childStr);
+							$(".changeLi .nav-second-box .nav_list").eq(i).append(childStr);
 						}	
 					}
 					

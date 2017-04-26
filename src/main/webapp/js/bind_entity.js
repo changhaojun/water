@@ -51,8 +51,7 @@ function colseDev(id){
 //选择设备角色
 function addClass(){
 		$(".infoList .fa").click(function(){
-			if($(this).attr("class")=="fa fa-circle-o"){
-				
+			if($(this).attr("class")=="fa fa-circle-o"){				
 				$(this).removeClass("fa-circle-o").addClass("fa-check-circle");
 			}else{
 				$(this).removeClass("fa-check-circle").addClass("fa-circle-o");
@@ -64,19 +63,20 @@ function addClass(){
 //选择设备
 function selectDev(id){
 	console.log($("#"+id+"").html())
-	if($("#"+id+"").html()=="+"){
+	
+		if($("#"+id+"").html()=="+"){
 		$("#"+id+"").prev().removeClass("disabledFont").addClass("selectdFont");
 		$("#"+id+"").removeClass("disabledIcon").addClass("selectdIcon");
 		$("#"+id+"").parent("div").removeClass("disabledLi").addClass("selectdLi");
-		$("#"+id+"").html("已选");
-		str1="<li id='"+id+"'>"+$(".selectdFont").html()+"<span onclick='colseDev(&apos;"+id+"&apos;)'>&times;</span></li>"
+		$("#"+id+"").html("已选");		
+		str1="<li id='"+id+"'>"+$("#"+id+"").parent(".selectdLi").find(".selectdFont").html()+"<span onclick='colseDev(&apos;"+id+"&apos;)'>&times;</span></li>"
 		$("#selectedUl").append(str1);
 		
 	}else{		
 		layer.msg('抱歉该设备已添加过', {
 			icon : 7
 		});
-	}	
+	}		
 }
 //绑定设备
 function saveDevice(){
@@ -104,7 +104,10 @@ function saveDevice(){
 				saveDevice();
 			}else if(data.code==200){
 				layer.msg(data.success, {
-					icon : 1
+					icon : 1,
+					end: function() {
+						self.location.href='/finfosoft-water/thing/'
+					}
 				});
 			}else{
 				layer.msg(data.success, {
@@ -136,8 +139,9 @@ function screenDev(){
 	}
 	if($("#searchDevice").val()==""){	
 		data={"device_kind":DevKind,"access_token":window.accesstoken}
-		doAjax(data);
-		console.log(123)
+		setTimeout(function(){
+			doAjax(data);
+		},200);
 	}else{		
 		data={
 			'like':'{"device_name":"'+$("#searchDevice").val()+'"}',
@@ -160,6 +164,8 @@ function doAjax(data){
 					if(data.code==400005){
 						window.getNewToken()
 						screenDev();
+					}else if(data.rows.length==0){
+						$(".optionalList").html("<span class='nonedata'>暂无数据</span>");
 					}else{
 						var screenList="";			
 						for(var i=0;i<data.rows.length;i++){
@@ -184,5 +190,8 @@ function doAjax(data){
 				}
 			})
 }
-
+//input禁止输入字母空格
+function space(obj){
+	obj.val("")
+}
 

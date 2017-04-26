@@ -35,7 +35,7 @@
 					<i class="fa fa-th-large"></i>
 					<span>可选设备</span>
 					<div class="secEntity">
-						<input type="text" placeholder="请输入关键字来查找设备" id="searchDevice" onkeypress="if(event.keyCode==13) {screenDev();return false;}"/>
+						<input type="text" placeholder="请输入关键字来查找设备" id="searchDevice" onkeypress="if(event.keyCode==13) {screenDev();return false;}" onkeyup="if(event.keyCode==32){space($(this))}"/>
 						<i class="fa fa-search" onclick="screenDev()"></i>
 					</div>
 				</div>

@@ -19,44 +19,13 @@
 					<span class="search">
 						<input v-model="searchId" type="text" placeholder="请输入关键字查找" id="searchId" onkeypress="if(event.keyCode==13) {alarmList();return false;}" onkeyup="if(event.keyCode==32){space($(this))}"/>
 						<i class="fa fa-search" onclick="alarmList()"></i>
-					</span>	
+					</span>	 
 					<hr>
 			</div>
 			<div class="IContent">
 				
 			</div>
-			<!--<div class="alarmList">
-				<div class="alarmTop">以往公文</div>
-				<div class="alarmContent">
-					<span>100%</span>
-					<span>2016-04-17 10:12</span>
-				</div>
-				<div class="alarmFooter">
-					<ul>
-						<li>
-							<div class="dataLeft">
-								<span class="dataMin">800</span>
-								~
-								<span class="dataMax">900</span>
-								
-							</div>
-							<div class="dataRight">
-								<i class="fa fa-cog" data-toggle='tooltip' data-placement='top' title='修改' onclick="modify()"></i>
-								<i class="fa fa-trash" data-toggle='tooltip' data-placement='top' title='清空' onclick="clear()"></i>
-							</div>							
-						</li>
-						<li>
-							<div class="dataLeft">
-								未配置
-								
-							</div>
-							<div class="dataRight">
-								<i class="fa fa-plus-square-o " data-toggle='tooltip' data-placement='top' title='添加' onclick="addData(111)"></i>
-							</div>							
-						</li>						
-					</ul>
-				</div>
-			</div>-->
+			
 		</div>
 	</body>
 	<script src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>

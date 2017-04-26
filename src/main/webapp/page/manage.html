@@ -8,6 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.css"/>
 		<link rel="stylesheet" type="text/css" href="../plugins/bootstarp/css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="../plugins/layer/skin/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/manage.css"/>
 	</head>
 	<body>
 		<input type="text" id="companyCode" hidden="hidden" value=${companyCode} />
@@ -43,26 +44,25 @@
 					<div class="addManageContent">
 						<div class="accountNum" style="margin-top:20px;">
 							
-							<label for="addText">账号：</label>
+							<label for="addText">职称名：</label>
 							<input type="text" value="请输入邮箱" id="addText"/>
 							<span class=" error addaccountError"></span>
 						</div>
 						<div class="accountNum accountState addState">
 							
 							<label>状态：</label>
-							<div class="status">
+							<div class="status addManage">
 								<input type="button" value="有效" id="addValid" class="stats"/>
 								<input type="button" value="无效" id="addInvalid" />
 							</div>
 						</div> 
 					</div>
 					<div class="selectRole">
-						<span>选择角色</span>
+						<span>选择权限</span>
 						<span>请选择需要添加的权限</span>
 					</div>
 					<div class="accountRole addRole">
-						<ul>
-							
+						<ul>							
 						</ul>
 					</div>
 					<button type="submit" class="sureBtn addBtn" onclick="addUser()">

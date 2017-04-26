@@ -111,7 +111,7 @@ function alarm(value){
 }
 //添加数据事件
 function addEntity(){
-	layer.confirm('<input type="text" id="addentityName" placeholder="请输入实体名称"/>',{title:"添加实体"}, function(index){			
+	layer.confirm('<input type="text" id="addentityName" placeholder="请输入实体名称" onkeyup="if(event.keyCode==32){space($(this))}"/>',{title:"添加实体"}, function(index){			
 		if($("#addentityName").val()==""){
 			layer.tips('实体名称不能为空', $("#addentityName"), {
 				  tips: [1, '#ff787c'],
@@ -192,7 +192,7 @@ function modify(value){
 					window.getNewToken()
 					modify(value);
 				}else{
-					layer.confirm('<input type="text" id="modifyentityName" value="'+data.thing_name+'"/>',{title:"修改实体"}, function(index){
+					layer.confirm('<input type="text" id="modifyentityName" value="'+data.thing_name+'" onkeyup="if(event.keyCode==32){space($(this))}"/>',{title:"修改实体"}, function(index){
 					console.log($("#modifyentityName").val())
 					if($("#modifyentityName").val()==""){
 						layer.tips('实体名称不能为空', $("#modifyentityName"), {
@@ -240,4 +240,7 @@ function modify(value){
 		}			
 	});
 }
-
+//input禁止输入字母空格
+function space(obj){
+	obj.val("")
+}

@@ -99,7 +99,14 @@ function setRole() {
 		})
 	})
 };
-
+//选择状态
+setStatus($(".addManage input"));
+function setStatus(obj) {
+	obj.on("click", function() {
+		obj.removeClass("stats");
+		$(this).addClass("stats");
+	})
+}
 
 
 
