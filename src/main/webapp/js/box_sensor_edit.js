@@ -3,7 +3,7 @@ getToken();
 var onOff=0;
 var pngName="",imgName="";
 var j=0;
-var dataId=[],collectorArr=[];
+var dataId=[],collectorArr=[],collectorArr1=[];
 var flag=0;
 var idOnOff=0;//判断采集器id是否乱写
 $.fn.extend({
@@ -114,13 +114,15 @@ $.fn.extend({
 			crossDomain: true == !(document.all),
 			url:globalurl+"/v1/devices/"+editId+"?access_token="+accesstoken,
 			success:function(data){
-//				console.log(data)
+				console.log(data)
 				if(data.code==400005){
 						getNewToken();
 						getEquipment();
 				}else{
-					deviceId=data._id;
-					collector_id=data.communication.collector_id
+					pngName=(data.collector_model.split("-"))[1].toLowerCase();
+					imgName="dtu_"+pngName+".png";
+					collector_id=data.communication.collector_id;
+					collectorArr.push(collector_id);
 					$(".deviceCode").val(data.device_code);
 					$(".deviceName").val(data.device_name);
 					$(".collectInterval").val(data.communication.collect_interval);
@@ -131,9 +133,9 @@ $.fn.extend({
 						$(".contactPhone").val("此号码用于接收掉线提醒，如有多个号码请用逗号分隔");
 						$(".warningSpace").val("掉线提醒的间隔时间，单位分钟");
 						$(".delayTime").val("掉线后提醒的延迟时间，单位分钟");
-						$(".contactPhone").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
-						$(".warningSpace").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
-						$(".delayTime").attr("disabled",true).css({"border":"0","background":"#f1f1f1"});
+						$(".contactPhone").attr("disabled",true).css({"border":"1px solid #e5e6e7","background":"#f1f1f1"});
+						$(".warningSpace").attr("disabled",true).css({"border":"1px solid #e5e6e7","background":"#f1f1f1"});
+						$(".delayTime").attr("disabled",true).css({"border":"1px solid #e5e6e7","background":"#f1f1f1"});
 					}else{
 						$(".controlBtn span").eq(0).addClass('activeBtn');
 						$(".controlBtn span").eq(1).removeClass('activeBtn');
@@ -166,18 +168,16 @@ $.fn.extend({
 			type:"get",
 			dataType:"JSON",
 			crossDomain: true == !(document.all),
-			url:globalurl+"/v1/devices/"+deviceId+"/dataConfigs",
+			url:globalurl+"/v1/devices/"+editId+"/dataConfigs",
 			data:{
 				access_token:accesstoken,
-				filter:'{"device_id":"'+deviceId+'"}'
+				filter:'{"device_id":"'+editId+'"}'
 			},
 			success:function(data) {
 				$(".detialData tbody").empty();
-				
+				info=[];
 				dataInfo=data.rows;
-				
 				for(var i in dataInfo){
-				//console.log(dataInfo[i].data_type)
 					if(dataInfo[i].data_type==0){
 						dataTypeStr="电流";
 					}else if(dataInfo[i].data_type==1){
@@ -224,21 +224,118 @@ $.fn.extend({
 						+'</td><td>'+dataInfo[i].low_battery+'<td>-</td><td>'+dataInfo[i].data_name
 						+'</td><td><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>';
 					};
-					//console.log(dataTr)
 					$("#dataTable").append(dataTr);	
 					j=i;
 					infoJson='{"dataType":"'+dataInfo[i].data_type+'","operType":"'+dataInfo[i].oper_type+'","portName":"'+dataInfo[i].port_name+'"}';
 					infoJson=JSON.parse(infoJson)
-					//console.log(infoJson);
 					info.push(infoJson)
-				
+					
 				}
-				
 			}
 			
 		});
 	}	
-	
+	//更换采集器ID
+	$(".collector input").on({
+		"click":function(){
+			focusAjax();
+			return false;
+		},
+		"keyup":function(){
+			focusAjax();
+		},
+		"blur":function(){
+			$(this).css("border-color","#ccc")
+		}
+	});
+	function focusAjax(){
+		var value=$(".collector input").val().split(0,1).join("");
+			//console.log(value)
+	    if(value==""){
+	    	$('.collector ul').hide();
+	    	return;
+	    }
+	   // console.log(collectorArr)
+		$.ajax({
+			type:"get",
+			dataType:'json',
+			crossDomain: true == !(document.all),
+			url:globalurl+"/v1/collectors",
+			data:{
+				access_token:accesstoken,
+				conditions:value
+			},
+			success:function(data){
+//				console.log(data)
+				collectorArr=[];
+				collectorArr.unshift(collector_id)
+				$('.collector ul').show();
+				$('.collector ul').empty();
+				var item=0;
+				for(var  i in data.rows){
+					var strLi='<li onclick="serchItem('+i+')">'+data.rows[i].collector_id+'</li>';
+					$('.collector ul').append(strLi);
+					collectorArr.push(data.rows[i].collector_id);
+				}
+			} 
+		});
+	}
+	$(document).click(function(){
+		$('.collector ul').hide();
+	});
+	var dataInfo="";
+	function serchItem(i){
+		if($(".collector input").val()!=""){
+			layer.confirm('<font size="2">更换采集器ID会导致当前设备的数据全部清空！是否继续？</font>', function(index){
+  					layer.close(index);
+  					$('.collector input').val($('.list ul li').eq(i).text());
+  					
+					$('.collector ul').hide();
+					optionValue=$(".collector input").val();
+					var data="{'collector_id':'"+optionValue+"'}";
+					$.ajax({
+						type:"post",
+						dataType:"JSON",
+						crossDomain: true == !(document.all),
+						url:globalurl+"/v1/collectorModels",
+						data:{
+							access_token:accesstoken,
+							data:data
+						},
+						success:function(data) {
+							//console.log(data)
+							$(".detialData tbody").empty();
+							pngName=(data.collector_model.split("-"))[1].toLowerCase();
+							imgName="dtu_"+pngName+".png";
+							//console.log(imgName)
+							dataInfo=data.collector_port;
+							info=[]; 
+							for(var i in dataInfo){
+								switch(dataInfo[i].data_type){
+									case 0:dataTypeStr="电流"; break;
+									case 1:dataTypeStr="电压"; break;
+									case 2:dataTypeStr="输入IO"; break;
+									case 3:dataTypeStr="输出IO";break;
+								}
+								switch(dataInfo[i].oper_type){
+									case 1:operTypeStr="读取"; break;
+									case 2:operTypeStr="写入"; break;
+								}
+								var dataTr='<tr><td><input type="checkbox" disabled="disabled"/></td><td>'+dataInfo[i].port_name+'</td>'
+											+'<td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>4-20</td><td>'
+											+'50-100</td><td></td><td></td><td></td><td></td><td ><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>'										
+								$(".detialData tbody").append(dataTr);
+								infoJson='{"dataType":"'+dataInfo[i].data_type+'","operType":"'+dataInfo[i].oper_type+'","portName":"'+dataInfo[i].port_name+'"}';
+								infoJson=JSON.parse(infoJson)
+								//console.log(infoJson);
+								info.push(infoJson)
+							}
+						}
+					});
+  				
+			});
+		}
+	}	
 	//点击编辑数据同步到弹窗
 	function editClick(i){
 		$('.pop').filter('.step1').removeClass('hidden');
@@ -408,7 +505,7 @@ $.fn.extend({
 		var warningSpace=$(".warningSpace").val();
 		var delayTime=$(".delayTime").val();
 		var collectInterval = $(".collectInterval").val();
-		var communication = "{'collect_interval':" + collectInterval+ ",'collector_id': '"+ collector_id+ "'}";
+		var communication = "{'collect_interval':" + collectInterval+ ",'collector_id': '"+ collectorId+ "'}";
 		var controlBtn=$(".controlBtn span");
 		var status="";
 		var isRemind="";
@@ -464,7 +561,6 @@ $.fn.extend({
 							$(".warningSpace").focus(function(){
 								$(this).css("border","1px solid #1ab394");
 							});
-							nullInput5=-1;
 						}else{
 							if(delayTime=="" ||delayTime==$(".delayTime").attr("data-info")){
 								$(".delayTime").css("border","1px solid #e11818");
@@ -475,7 +571,6 @@ $.fn.extend({
 								$(".warningSpace").focus(function(){
 									$(this).css("border","1px solid #1ab394");
 								});
-								nullInput5=-1;
 							}else{
 								if(collectorId=="" ||collectorId==$(".collector input").attr("data-info")){
 									$(".collector input").css("border","1px solid #e11818");
@@ -486,21 +581,20 @@ $.fn.extend({
 									$(".collector input").focus(function(){
 										$(this).css("border","1px solid #1ab394");
 									});
-									nullInput3=-1;
 								}else{
-									device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
+									device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName +
 											+  "','mobile':'" + mobile +"','status': 1 ,'communication':" + communication 
 											+",'is_remind':1,'remind_interval':"+warningSpace+",'protocal':'A','remind_delay':"+delayTime+",'device_kind':1}";
 									$.ajax({
-										type:"post",
+										type:"put",
 										datatype:"json",
 										crossDomain: true == !(document.all),
-										url:globalurl+"/v1/devices?access_token="+accesstoken,
+										url:globalurl+"/v1/devices/"+editId+"/?access_token="+accesstoken,
 										data:{
 											data:device
 										},
 										success:function(data){
-											dataId=data._id;
+											//console.log(data)
 											for(var i=0;i<collectorArr.length;i++){
 												if($(".list input").val()==collectorArr[i]){
 													idOnOff=1;
@@ -525,15 +619,16 @@ $.fn.extend({
 					+  "','communication':" + communication +",'status': 1 "
 					+",'is_remind':0,'protocal':'A','device_kind':1}";
 					$.ajax({
-						type:"post",
+						type:"put",
 						datatype:"json",
 						crossDomain: true == !(document.all),
-						url:globalurl+"/v1/devices?access_token="+accesstoken,
+						url:globalurl+"/v1/devices/"+editId+"/?access_token="+accesstoken,
 						data:{
 							data:device
 						},
 						success:function(data){
-							dataId=data._id;
+							//console.log(data)
+							//dataId=data._id;
 							for(var i=0;i<collectorArr.length;i++){
 								if($(".list input").val()==collectorArr[i]){
 									idOnOff=1;
@@ -579,53 +674,71 @@ $.fn.extend({
 				realHigh=""
 			}
 			if(realLow=="-"){
-				realLow="-"
+				realLow=""
 			}
-			
-			
-			dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
-			'"oper_type":'+dataInfo[i].oper_type+','+
-			'"port_name":"'+dataInfo[i].port_name+'",'+
-			'"collect_range_high":"'+rangeHigh+'",'+
-			'"collect_range_low":"'+rangeLow+'",'+
-			'"real_range_high":"'+realHigh+'",'+
-			'"real_range_low":"'+realLow+'",'+
-			'"low_battery":"'+lowBattery+'",'+
-			'"high_battery":"'+highBattery+'",'+
-			'"status":"'+status+'",'+
-			'"_id":"'+IdArr[i]+'",'+
-			'"data_id":"'+dataId[i]+'",'+
-			'"data_unit":"'+dataUnit+'",'+
-			'"data_name":"'+dataName+'"}';
-			//console.log(dataConfigJson)
-			dataConfigJson=JSON.parse(dataConfigJson);
-			//console.log(dataConfigJson);
-			dataConfig.push(dataConfigJson);
-			//console.log(dataConfig)
-		
-			data=JSON.stringify(dataConfig);
+			//判断采集器id是否发生更改
+			if($(".collector input").val()!=collector_id){
+				//发生更改
+				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
+				'"oper_type":'+dataInfo[i].oper_type+','+
+				'"port_name":"'+dataInfo[i].port_name+'",'+
+				'"collect_range_high":"'+rangeHigh+'",'+
+				'"collect_range_low":"'+rangeLow+'",'+
+				'"real_range_high":"'+realHigh+'",'+
+				'"real_range_low":"'+realLow+'",'+
+				'"low_battery":"'+lowBattery+'",'+
+				'"high_battery":"'+highBattery+'",'+
+				'"status":'+status+','+
+				'"data_unit":"'+dataUnit+'",'+
+				'"data_name":"'+dataName+'"}';
+				dataConfigJson=JSON.parse(dataConfigJson);
+				dataConfig.push(dataConfigJson);
+				data=JSON.stringify(dataConfig);
+			}else{
+				//未发生更改
+				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
+				'"oper_type":'+dataInfo[i].oper_type+','+
+				'"port_name":"'+dataInfo[i].port_name+'",'+
+				'"collect_range_high":"'+rangeHigh+'",'+
+				'"collect_range_low":"'+rangeLow+'",'+
+				'"real_range_high":"'+realHigh+'",'+
+				'"real_range_low":"'+realLow+'",'+
+				'"low_battery":"'+lowBattery+'",'+
+				'"high_battery":"'+highBattery+'",'+
+				'"status":"'+status+'",'+
+				'"_id":"'+IdArr[i]+'",'+
+				'"data_id":"'+dataInfo[i].data_id+'",'+	
+				'"data_unit":"'+dataUnit+'",'+
+				'"data_name":"'+dataName+'"}';
+				dataConfigJson=JSON.parse(dataConfigJson);
+				dataConfig.push(dataConfigJson);
+				data=JSON.stringify(dataConfig);
+			}
 		}
-		$.ajax({
-			type:"put",
-			datatype:"json",
-			crossDomain: true == !(document.all),
-			url:globalurl+"/v1/devices/"+deviceId+"/dataConfigs",
-			data:{
-				access_token:accesstoken,
-				data:data
-			},
-			success:function(data){
-				if (data.code===200) {
-					layer.msg('保存成功！', {
-						icon: 1,
-						time:3000,
-						end:function(){
-							self.location.href='/finfosoft-water/dataTag/box/'
-						}
-					});
+		
+			$.ajax({
+				type:"put",
+				datatype:"json",
+				crossDomain: true == !(document.all),
+				url:globalurl+"/v1/devices/"+editId+"/dataConfigs",
+				data:{
+					access_token:accesstoken,
+					data:data,
+				},
+				success:function(data){
+					if (data.code===200) {
+						layer.msg('保存成功！', {
+							icon: 1,
+							time:3000,
+							end:function(){
+								self.location.href='/finfosoft-water/dataTag/box/'
+							}
+						});
+					}
 				}
-			}
-		});
+			});
+		
+		
 	}
 	
 	//点击保存新增
@@ -635,128 +748,23 @@ $.fn.extend({
 	
 //点击问号的事件
 	function devicePNG(){
-		optionValue=$(".collector input").val();
-		var data="{'collector_id':'"+optionValue+"'}";
-		$.ajax({
-			type:"post",
-			dataType:"JSON",
-			url:globalurl+"/v1/collectorModels",
-			data:{
-				access_token:accesstoken,
-				data:data
-			},
-			success:function(data) {
-				pngName=(data.collector_model.split("-"))[1].toLowerCase();
-				imgName="dtu_"+pngName+".png";
-				if(pngName==""){
-					layer.msg('请先选择采集器ID，在获取设备型号', {
-						icon : 2,
-						time:1000
-					});
-				}else{
-				 	layer.open({
-						type: 1,
-						title: false,
-						area: '500px',
-						shade:[0.1, '#000', false],
-						closeBtn: 0,//不显示关闭按钮
-						skin: 'layui-layer-demo', //样式类名
-						anim: 2,
-						shadeClose: true, //开启遮罩关闭
-						content: "<img class='imgName' src='/finfosoft-water/img/box_sensor/"+imgName+"'/>"
-					});
-				}
-					
-			}
-		});
-		
-	}
-	//采集器获取焦点的时候
-	$(".collector input").on({
-		"click":function(){
-			focusAjax();
-			return false;
-		},
-		"keyup":function(){
-			focusAjax();
-		},
-		"blur":function(){
-			$(this).css("border-color","#ccc")
+		if(pngName==""){
+			layer.msg('请先选择采集器ID，在获取设备型号', {
+				icon : 2,
+				time:1000
+			});
+		}else{
+		 	layer.open({
+				type: 1,
+				title: false,
+				area: '500px',
+				shade:[0.1, '#000', false],
+				closeBtn: 0,//不显示关闭按钮
+				skin: 'layui-layer-demo', //样式类名
+				anim: 2,
+				shadeClose: true, //开启遮罩关闭
+				content: "<img class='imgName' src='/finfosoft-water/img/box_sensor/"+imgName+"'/>"
+			});
 		}
-	});
-	function focusAjax(){
-		var value=$(".collector input").val().split(0,1).join("");
-			//console.log(value)
-	    if(value==""){
-	    	$('.collector ul').hide();
-	    	return;
-	    }
-		$.ajax({
-			type:"get",
-			dataType:'json',
-			crossDomain: true == !(document.all),
-			url:globalurl+"/v1/collectors",
-			data:{
-				access_token:accesstoken,
-				conditions:value
-			},
-			success:function(data){
-				console.log(data)
-				$('.collector ul').show();
-				$('.collector ul').empty();
-				var item=0;
-				for(var  i in data.rows){
-					var strLi='<li onclick="serchItem('+i+')">'+data.rows[i].collector_id+'</li>';
-					$('.collector ul').append(strLi);
-					collectorArr.push(data.rows[i].collector_id)
-				}
-			} 
-		});
 	}
-	$(document).click(function(){
-		$('.collector ul').hide();
-	});
-	var dataInfo="";
-	function serchItem(i){
-		$('.collector input').val($('.list ul li').eq(i).text());
-		$('.collector ul').hide();
-		optionValue=$(".collector input").val();
-		var data="{'collector_id':'"+optionValue+"'}";
-		$.ajax({
-			type:"post",
-			dataType:"JSON",
-			crossDomain: true == !(document.all),
-			url:globalurl+"/v1/collectorModels",
-			data:{
-				access_token:accesstoken,
-				data:data
-			},
-			success:function(data) {
-				
-				$(".detialData tbody").empty();
-				pngName=(data.collector_model.split("-"))[1].toLowerCase();
-				imgName="dtu_"+pngName+".png";
-				//console.log(imgName)
-				dataInfo=data.collector_port;
-				
-				for(var i in dataInfo){
-					switch(dataInfo[i].data_type){
-						case 0:dataTypeStr="电流"; break;
-						case 1:dataTypeStr="电压"; break;
-						case 2:dataTypeStr="输入IO"; break;
-						case 3:dataTypeStr="输出IO";break;
-					}
-					switch(dataInfo[i].oper_type){
-						case 1:operTypeStr="读取"; break;
-						case 2:operTypeStr="写入"; break;
-					}
-					var dataTr='<tr><td><input type="checkbox" disabled="disabled"/></td><td>'+dataInfo[i].port_name+'</td>'
-								+'<td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>4-20</td><td>'
-								+'50-100</td><td></td><td></td><td></td><td></td><td ><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>'										
-					$(".detialData tbody").append(dataTr);	
-				}
-				
-			}
-			
-		});
-	}	
+	

@@ -382,9 +382,11 @@ $.fn.extend({
 	
 	//保存设备
 	var phoneReg=/^1(3|4|5|7|8)\d{9}$/;
+	var remindReg=/^[0-9]*$/;
+	var warningSpace=$(".warningSpace").val();
+	var delayTime=$(".delayTime").val();
 	$(".contactPhone").blur(function(){
-	var mobile = $(".contactPhone").val();
-		console.log($(".contactPhone").val())
+		var mobile = $(".contactPhone").val();
 		if(phoneReg.test(mobile)==false){
 			//$(".contactPhone").css("border","1px solid #e11818");
 			layer.tips('请输入正确的电话号码',$(".contactPhone"),{
@@ -392,7 +394,25 @@ $.fn.extend({
 				time:4000
 			});
 		}
-	})
+	});
+	$(".warningSpace").blur(function(){
+		if(remindReg.test(warningSpace)==false){
+			//$(".contactPhone").css("border","1px solid #e11818");
+			layer.tips('请填写数字',$(".contactPhone"),{
+				tips:1,
+				time:4000
+			});
+		}
+	});
+	$(".delayTime").blur(function(){
+		if(remindReg.test(delayTime)==false){
+			//$(".contactPhone").css("border","1px solid #e11818");
+			layer.tips('请填写数字',$(".contactPhone"),{
+				tips:1,
+				time:4000
+			});
+		}
+	});
 	function saveDevice(){
 		var deviceName = $(".deviceName").val();
 		var deviceCode = $(".deviceCode").val();
@@ -407,7 +427,7 @@ $.fn.extend({
 		var isRemind="";
 		var device="";
 		var phoneReg=/^1[34578]\d{9}$/;
-		var remindReg=/^[0-9]*$/;
+		
 		for(var i=0;i<controlBtn.length;i++){
 			if(controlBtn.eq(i).hasClass("activeBtn")){
 				isRemind = controlBtn.eq(i).attr("value");
@@ -549,7 +569,6 @@ $.fn.extend({
 	}
 	function save(){
 		var dataConfig=[];
-		console.log(dataInfo)
 		var data={};
 		var status = "";
 
@@ -632,7 +651,6 @@ $.fn.extend({
 	//采集器获取焦点的时候
 	$(".collector input").click(function(event){
 		var value=$(this).val().split(0,1).join("");
-		console.log(value)
 	    if(value==""){
 	    	$('.collector ul').hide();
 	    	return;

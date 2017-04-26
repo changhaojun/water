@@ -25,7 +25,7 @@ var flag=-1;
 	})
 		
 	
-		
+	var dataNav=[],childData=[];	
 	//导航的数据交互
 function getNavData(){
 	$.ajax({
@@ -34,45 +34,57 @@ function getNavData(){
 		url:globalurl+"/v1/resources?access_token="+accesstoken,
 		datatype:'json',
 		success:function(data){
+			//console.log(data)
 			if(data.code==400005){
 				getNewToken()
 				getNavData()
 			}else if(data.length>0){
 				var strNav="";
+				var iIcon="";
 				for(var i=0 ;i<data.length;i++){
-					var iIcon="";
-					switch (data[i].resource_name) {
-					case "账号管理": iIcon = 'fa-user-circle';break;
-					case "数据标签配置":iIcon = 'fa-edit';break;
-					case "框架页":iIcon = 'fa-microchip';break;
-					case "组态":iIcon = 'fa-sitemap';break;
-					case "操作日志":iIcon = 'fa-file-text-o';break;
-					default :break;
-					}
-					
 					if(data[i].is_navigation>0){
 						var navURL="javascript:;"
-							if(data[i].is_navigation==1){
-								navURL="/finfosoft-water"+data[i].resource_url;
-							}
-						strNav=$('<li class="changeLi" data-type="" data-toggle="tooltip" data-placement="right"'+
-								' title="'+data[i].resource_name+'"><a class="J_menuItem slideToggle" href="'+navURL+'" target="iframe0">'+
-								'<i class="fa '+iIcon+'"></i><span class="nav-label">'+data[i].resource_name+'</span>'+
-						'<span class="fa arrow"></span></a><div class="nav-second-box"><ul class="nav nav-second-level nav_list"></ul></div></li>');
-						$('#side-menu ').append(strNav);
-						if(data[i].children_resource.length){
-							var childStr="";
-							for(var j=0;j<data[i].children_resource.length;j++){
-								if(data[i].children_resource[j].is_navigation>0){
-									var childData=data[i].children_resource[j];
-									childStr+='<li><a class="J_menuItem" href="/finfosoft-water'+childData.resource_url+'" data-index="0" target="iframe0">'+childData.resource_name+'</a></li>';
-								}
-							}
-							$(".changeLi .nav_list").eq(i).append(childStr);
-						}	
+						if(data[i].is_navigation==1){
+							navURL="/finfosoft-water"+data[i].resource_url;
+						}
+						var dataJson='{"resourceName":"'+data[i].resource_name+'","resourceUrl":"'+navURL+'","dataNum":"'+i+'"}';
+						dataJson=JSON.parse(dataJson);
+						dataNav.push(dataJson);
+						//console.log(dataNav)
+						
 					}
 					
 				}
+				for(var j in dataNav){
+					switch (dataNav[j].resourceName) {
+						case "账号管理": iIcon = 'fa-user-circle';break;
+						case "数据标签配置":iIcon = 'fa-edit';break;
+						case "组态":iIcon = 'fa-microchip';break;
+						case "实体":iIcon = 'fa-sitemap';break;
+						case "操作日志":iIcon = 'fa-file-text-o';break;
+						case "任务配置":iIcon = 'fa-calendar';break;
+						default :break;
+					}
+					strNav=$('<li class="changeLi" data-type="" data-toggle="tooltip" data-placement="right"'+
+								' title="'+dataNav[j].resourceName+'"><a class="J_menuItem slideToggle" href="'+dataNav[j].resourceUrl+'" target="iframe0">'+
+								'<i class="fa '+iIcon+'"></i><span class="nav-label">'+dataNav[j].resourceName+'</span>'+
+						'<span class="fa arrow"></span></a><div class="nav-second-box"><ul class="nav nav-second-level nav_list"></ul></div></li>');
+					$('#side-menu ').append(strNav);
+					var m=dataNav[j].dataNum;
+					//console.log(m)
+					if(data[m].children_resource.length){
+						//console.log(data[m].children_resource)
+						var childStr="";
+						for(var t=0;t<data[m].children_resource.length;t++){
+							if(data[m].children_resource[t].is_navigation>0){
+								var childData=data[m].children_resource[t];
+								childStr+='<li><a class="J_menuItem" href="/finfosoft-water'+childData.resource_url+'" data-index="0" target="iframe0">'+childData.resource_name+'</a></li>';
+							}
+						}
+						$(".changeLi .nav_list").eq(j).append(childStr);
+					}
+				}
+				
 				//左侧边栏的伸缩
 				$(".onOff").click(function(){
 					$("body").toggleClass("mini-navbar");
@@ -138,6 +150,7 @@ function getNavData(){
 		//console.log(22);
 		$('.pop').filter('.step1').removeClass('hidden');
 		$('.pop-mask').removeClass('hidden');
+		
 	})
 	
 	//关闭弹窗
@@ -145,9 +158,10 @@ function getNavData(){
 		$('.pop').addClass('hidden');
 		$('.pop-mask').addClass('hidden');
 		$(".pop-username").val("");
+		$(".pop-main").find("span").hide();
+		$(".pop-main .pop-username").css("border","1px solid #ccc");
 	});
 	//修改时确认密码
-	/*var dataPass="{'old_password':'"+$(".oldPassword").val()+",'new_password':"+$(".newPassword").val()+",'confirm_password':"+$(".confirmPassword").val()+"}";*/
 	//旧密码
 	$(".passwordOld").focus(function(){
 		$(".oldPassword span").hide();
@@ -255,4 +269,5 @@ function getNavData(){
 	
 $(".popMsg_content button,.popMsg .pop-close").click(function(){
 	$(".popMsg").hide();
+	
 });
