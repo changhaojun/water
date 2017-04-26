@@ -73,7 +73,6 @@ function editFormatter(value,row,index){
 }
 //box状态列的格式化
 function statusFormatter(value,row,index){
-//	console.log(value+row+index)
 	if(value==1){
 		return "<span style='color:#2cb7c8;background:url(/finfosoft-water/img/box_info.png)no-repeat -20px 0px;padding-left:25px;'>在线</span>"
 	}else{
@@ -91,7 +90,6 @@ function queryParams(params) {
 			filter:'{"protocal":"A","company_id":"'+companyId+'"}'
 		};
 	}else{
-		console.log(searchBox.searchCollectorId)
 	    return {
 	    	pageNumber:0,
 	    	pageSize:params.limit,
