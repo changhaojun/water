@@ -4,6 +4,7 @@ import com.finfosoft.db.mongo.MongodbPlugin;
 import com.finfosoft.water.dataTag.DataTagController;
 import com.finfosoft.water.frame.FrameController;
 import com.finfosoft.water.login.LoginController;
+import com.finfosoft.water.task.TaskController;
 import com.finfosoft.water.user.UserController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -27,10 +28,11 @@ public class WaterConfig extends JFinalConfig{
 	@Override
 	public void configRoute(Routes me) {
 		// TODO Auto-generated method stub
-		me.add("/", LoginController.class);                        //登录页面
-		me.add("/frame",FrameController.class,"/");                //框架页面
-		me.add("/user",UserController.class,"/");                //框架页面
+		me.add("/", LoginController.class);                     //登录页面
+		me.add("/frame",FrameController.class,"/");             //框架页面
+		me.add("/user",UserController.class,"/");               //框架页面
 		me.add("/dataTag",DataTagController.class,"/");			//设备相关
+		me.add("/task",TaskController.class,"/");				//任务相关
 		
 	}
 

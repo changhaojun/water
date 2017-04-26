@@ -1,0 +1,364 @@
+html{
+	background:#f3f3f4 !important;
+	height: 100% !important;
+}
+body{
+	height: 100% !important;
+	font-family: microsoft yahei !important;
+}
+.taskBox{	
+	width:100%;
+	height: 100%;
+	background:#f3f3f4;
+	float:left;
+	position: relative;	
+	/*min-width:1366px;*/
+	overflow-y: hidden;
+	overflow-x: hidden;
+}
+/*账户top区域*/
+.taskBox .taskTop{
+	width:100%;
+	height:65px;
+	
+}
+.taskBox .taskTop span{
+	font-size:22px;
+	padding-top:25px;
+	display: inline-block;
+}
+.taskBox .taskTop span:nth-child(1){	
+	margin-left:20px;
+	color:#5d5d5d;	
+}
+.taskBox .taskTop span:nth-child(2){
+	margin-left:5px;
+	margin-right:5px;
+}
+.taskBox .taskTop span:nth-child(3){
+	color:#1ab394;	
+}
+.taskBox hr{
+	margin:0 20px;
+	width:calc(100% - 40px);
+	height:4px;
+	background:#e0e0e0;
+	border:0;
+	display: inline-block;
+}
+.taskBox > .taskContent{
+	background: #ffffff;
+	height: calc(100% - 110px);
+	margin:10px 20px 20px 20px;
+	overflow: auto;
+	position: relative;
+}
+.taskContent > .taskTree{
+	min-width: 383px;
+	padding-left: 50px;
+	padding-top: 20px;
+	float: left;
+	height: calc(100% - 110px);
+}
+.taskContent > .taskTree > .taskTree-cir{
+	height: 30px;
+	width: 30px;
+	border-radius: 45px;
+	background: #758499;
+}
+.taskContent > .taskTree >.taskTree-cir:last-child{
+	margin-bottom: 20px;
+}
+.taskContent > .taskTree > .taskTree-line{
+	width:6px;
+	margin-left: 12px;
+	padding:55px 0 55px 0;
+	background: #758499;
+}
+.taskContent > .taskTree > .taskTree-line > .taskTree-add{
+	height: 30px;
+	width: 30px;
+	text-align: center;
+	line-height: 22px;
+	font-size: 22px;
+	font-weight: bold;
+	margin-left: -13px;
+	border-radius: 45px;
+	border: 3px #FFFFFF solid;
+	background: #F1F1F1;
+	cursor: pointer;
+	color: #758499;
+}
+.taskContent > .taskTree >.taskTree-line > .stepBox{
+	width: 321px;
+	height: 110px;
+	
+}
+.taskContent > .taskTree >.taskTree-line >.stepBox> .taskTree-greenNode> .stepText{
+	height: 53px;
+    margin-left: 60px;
+    margin-top: -53px;
+    font-size: 22px;
+    color: #D3D3D3;
+}
+.taskContent > .taskTree >.taskTree-line >.stepBox> .taskTree-greenNode> .technologyName{
+	width: 250px;
+	height: 54px;
+	border-radius: 20px;
+	background: #F1F1F1;
+	margin-top: -18px;
+	margin-left: 45px;
+	border:#E7E7E7 1px solid;
+	/*position: absolute;*/
+}
+.taskContent > .taskTree >.taskTree-line >.stepBox> .taskTree-greenNode >.technologyName:hover{
+	cursor: pointer;
+	filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.7; /*Firefox私有，透明度50%*/
+	opacity:0.7;/*其他，透明度50%*/
+}
+.taskContent > .taskTree >.taskTree-line >.stepBox> .taskTree-greenNode> .technologyName>.technologyName-greenBorder{
+	width: 250px;
+	height: 54px;
+	left: -14px;
+    top: -1px;
+	padding-left: 50px;
+	line-height: 50px;
+	background: url(/finfosoft-water/img/shuiwu_renwu_img_02.png) no-repeat;
+	position: relative;
+}
+.taskContent > .taskTree >.taskTree-line >.stepBox> .taskTree-greenNode> .technologyName>.technologyName-line{
+	width: 33px;
+	height:4px;
+	background: #758499;
+	position: absolute;
+	margin-left:250px;
+	margin-top: -30px;
+	display: none;
+}
+.taskContent > .taskTree >.taskTree-line >.stepBox>.taskTree-greenNode>.technologyName>.technologyTools{
+	width:85px;
+	height:54px;
+    margin-right: -25px;
+    margin-top: -55px;
+	line-height: 50px;
+	float: right;
+	display: none;
+	position: relative;
+}
+.tooltip.right .tooltip-arrow{
+    border-right-color: #1AB394 !important;
+}
+.tooltip.top .tooltip-arrow{
+	bottom: 0;
+    margin-left: -5px;
+    border-width: 5px 5px 0;
+    border-top-color: #1AB394 !important;
+}
+.tooltip-inner{
+	max-width: 200px;
+    padding: 3px 8px;
+    color: #fff;
+    text-align: center;
+    background-color: #1AB394 !important;
+    border-radius: 4px;
+}
+.fa{
+	padding:7px;
+}
+.taskContent > .taskTree >.taskTree-line > .stepBox> .taskTree-greenNode{
+	height: 25px;
+	width: 25px;
+	margin-left: -9px;
+	margin-bottom: 85px;
+	border-radius: 50%;
+	border: 3px #FFFFFF solid;
+	background: #1AB394;
+	/*position: relative;*/
+}
+.layui-layer-btn0{
+	width: 100%;
+	margin:0 !important;
+	height: 35px !important;
+	font-size: 18px;
+	line-height: 30px !important;
+	text-align: center;
+	border-radius: 20px !important;
+}
+#addTechnologyName{
+	width: 100%;
+	border:#CCCCCC 1px solid;
+}
+
+.taskContent > .taskRule{
+	width: calc(100% - 423px);
+	min-height: 150px;
+	margin-top: 30px;
+	float: left;
+	padding: 20px 10px;
+	border-radius:35px;
+	background: #F1F1F1;
+	border:#E7E7E7 1px solid;
+	display: none;
+}
+.taskContent > .taskRule> .addRule{
+	width:99%;
+	margin:auto;
+	height:50px;
+	text-align: center;
+	line-height: 50px;
+	font-size: 22px;
+	border:#657284 1px solid ;
+	color: #748398;
+	background-color: #FFFFFF;
+	border-radius: 45px;
+	cursor: pointer;
+}
+.taskContent > .taskRule>.ruleMain >.missionBox{
+	/*display: flex;
+	display: -webkit-flex;*/
+	width:99%;
+	margin:auto;
+	margin-bottom: 20px;
+	height:50px;
+	text-align: left;
+	padding: 0 20px;
+	line-height: 50px;
+	font-size: 14px;
+	border:#657284 1px solid ;
+	color: #FFFFFF;
+	background-color: #758499;
+	border-radius: 45px;
+	cursor: pointer;
+}
+.missionBox > .content1,
+.missionBox > .content2,
+.missionBox > .content3,
+.missionBox > .content4,
+.missionBox > .content5
+{
+	height: 50px;
+	float: left;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.missionBox > .content1{
+	width: 13%;
+}
+.missionBox > .content2{
+	width: 30%;
+}
+.missionBox > .content3{
+	width: 17%;
+}
+.missionBox > .content4{
+	width: 30%;
+}
+.missionBox > .content5{
+	width: 10%;
+}
+
+.taskContent > .taskRule >.ruleMain>.missionBox:hover{
+	filter:alpha(opacity=80); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.8; /*Firefox私有，透明度50%*/
+	opacity:0.8;/*其他，透明度50%*/
+}
+.taskContent > .taskRule> .addRule:hover{
+		filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.7; /*Firefox私有，透明度50%*/
+	opacity:0.7;/*其他，透明度50%*/
+}
+.addRuleContent{
+	padding:20px;
+	background: #ffffff;
+}
+.eventBox ,.controlBox,.timingBox{
+	padding: 0 20px;
+}
+.controls{
+	width:215px;
+	height: 30px;
+	margin-bottom: 25px;
+	margin-top: -5px;
+	float:right;
+}
+ul{
+	width:215px;
+	margin-left: 85px;
+	max-height: 150px;
+	overflow: auto;
+	padding: 0;
+	z-index: 999;
+	position: absolute;
+	background: #fff;
+	top:25px;
+	border:#E7E7E7 1px solid;
+}
+li{
+	list-style: none;
+}
+li:hover{
+	background: #F1F1F1;
+}
+.control-group{
+	width: calc(100% - 84px);
+	float: right;
+	margin-top: -5px;
+}
+.ioAction{
+		display: none;
+}
+.control-group-input{
+	width: calc(100% - 30px);
+    height: 30px;
+}
+.control-group-addon{
+	width:30px;
+	height: 30px;
+	float: right;
+	padding: 3px 8px;
+	background: #f1f1f1;
+	border: #A9A9A9 1px solid;
+	border-left: hidden;
+}
+.portAction{
+	margin-top: -24px;
+}
+.saveBtnRow{
+	padding: 0 40px;
+}
+.saveRuleBtn{
+	color: #ffffff;
+	background: #1AB394;
+}
+.missionTools{
+	width: 77px;
+	height: 50px;
+	display: none;
+	float: left;
+    font-size: 14px;
+    position: absolute;
+    right: 54px;
+    padding-left: 10px;
+    /*padding-left: 10px;
+    margin-left: 474px;*/
+    z-index: 99;
+}
+@media screen and (max-width: 1475px) {
+    .missionBox{
+        font-size: 12px !important;
+    }
+    .timeTitle{
+    	display: none;
+    }
+    .missionTools{
+    	color: #FFFFFF;
+	    border-radius: 0 40px 40px 0;
+	    background: #13202F;
+	    position: absolute;
+	    /*margin-top: -1px;
+	    margin-left: 558px;*/
+	    opacity: 0.7;
+    }
+}
