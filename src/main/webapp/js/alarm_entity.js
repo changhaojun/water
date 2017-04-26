@@ -18,10 +18,8 @@ var searchBox=new Vue({
 function alarmList(){
 	$(".IContent").html("");
 	if(searchBox.searchId==""){
-		var data={access_token:window.accesstoken};
-		
-			doajax(data);
-		
+		var data={access_token:window.accesstoken};	
+			doajax(data);		
 	}else{
 		var data={access_token:window.accesstoken,like:"{'data_name':'"+searchBox.searchId+"'}"};
 		doajax(data);
@@ -42,9 +40,7 @@ function doajax(data){
 				alarmList();
 				toolTips();				  
 			}else{
-				
-				var str="";
-				
+				var str=""	;		
 				for(var i=0;i<data.length;i++){
 					var oLi="";
 					str='<div class="alarmList" id="'+data[i].data_id+'">'+
