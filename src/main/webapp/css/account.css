@@ -210,6 +210,7 @@ html{
 	background:rgba(157,157,157,.5);
 	position: fixed;
 	display: none;
+	top:0;
 }
 .accountMask .addAccount{
 	width:503px;
@@ -239,7 +240,7 @@ html{
 .accountMask .accountState #addInvalid,.accountMask .modifyState #modifyInvalid{
 	float:right;
 }
-.accountMask .addAccountContent .addState .stats,.accountMask .modifyAccountContent .modifyState .stats{
+.accountMask  .addState .stats,.accountMask .modifyState .stats{
 	background:#1AB394;
 	color:#fff !important;
 }
@@ -264,12 +265,12 @@ html{
 	width:100%;
 	margin-top:20px;	
 }
-.addAccount .addAccountContent .accountNum{
+.addAccount .accountNum{
 	color:#9e9e9e;
 	position: relative;
 	height:55px;
 }
-.addAccount .addAccountContent .accountNum .error {
+.addAccount  .accountNum .error {
 	position: absolute;
 	padding: 3px 6px;
 	background: #ff787b;
@@ -279,7 +280,7 @@ html{
 	right:12%;
 	display: none;
 }
-.addAccount .addAccountContent .accountNum .error:before{
+.addAccount  .accountNum .error:before{
 	content: "";
 	position: absolute;
 	top:100%;
@@ -287,11 +288,11 @@ html{
 	left:10%;
 	border-top-color:#ff787b;
 }
-.addAccount .addAccountContent .accountNum>label{
+.addAccount  .accountNum>label{
 	width:92px;
 	text-align:right;
 }
-.addAccount .addAccountContent .accountNum>input{
+.addAccount  .accountNum>input{
 	height:40px;
 	width:354px;
 	border:1px solid #cccccc;

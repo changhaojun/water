@@ -162,9 +162,22 @@ html{
 .layui-layer-tips {
 	box-shadow: none !important;
 }
-
-
-
+#dtuList thead tr th:nth-child(1) {
+    box-sizing: border-box;
+    width:35%
+}
+#dtuList thead  tr th:nth-child(2){
+    box-sizing: border-box;
+    width:50%
+}
+#dtuList thead  tr th:nth-child(3){
+    box-sizing: border-box;
+    width:15%;
+}
+#dtuList tbody  tr td:nth-child(3){
+    box-sizing: border-box;
+	text-align: left !important; 
+}
 
 
 

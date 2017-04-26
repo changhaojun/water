@@ -1,5 +1,6 @@
 var companyCode=$("#companyCode").val();	//公司编号，获取用户列表时使用
 var companyId=$("#companyId").val();		//公司ID
+var globalurl="http://192.168.1.114";
 $(function(){
 	getToken();
 	toolTip();
@@ -61,7 +62,7 @@ window.getDTUList=function(){
 	                        field: "_id",
 	                        title: "操作",
 	                        valign:"middle",
-	                        align:"center",
+	                        align:"left",
 	                        formatter: editFormatter//对本列数据做格式化
 	                    }
 	                ],
@@ -69,7 +70,7 @@ window.getDTUList=function(){
 }
 //操作列的格式化
 function editFormatter(value,row,index){
-	return "<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#1cb295;cursor: pointer;' class='fa fa-laptop' onclick=look('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='下发' style='color:#48c2a9;margin-left:12px;cursor: pointer;' class='fa fa-arrow-circle-down' onclick=give('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='修改' style='color:#ffb400;margin-left:12px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:12px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol('"+value+"')></span>"
+	return "<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#1cb295;cursor: pointer;' class='fa fa-laptop' onclick=look('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='下发' style='color:#48c2a9;margin-left:15px;cursor: pointer;' class='fa fa-arrow-circle-down' onclick=give('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='修改' style='color:#ffb400;margin-left:15px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:15px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol('"+value+"')></span>"
 }
 //box状态列的格式化
 function statusFormatter(value,row,index){

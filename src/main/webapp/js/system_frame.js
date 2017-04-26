@@ -34,7 +34,6 @@ function getNavData(){
 		url:globalurl+"/v1/resources?access_token="+accesstoken,
 		datatype:'json',
 		success:function(data){
-			//console.log(data)
 			if(data.code==400005){
 				getNewToken()
 				getNavData()
@@ -50,10 +49,7 @@ function getNavData(){
 						var dataJson='{"resourceName":"'+data[i].resource_name+'","resourceUrl":"'+navURL+'","dataNum":"'+i+'"}';
 						dataJson=JSON.parse(dataJson);
 						dataNav.push(dataJson);
-						//console.log(dataNav)
-						
 					}
-					
 				}
 				for(var j in dataNav){
 					switch (dataNav[j].resourceName) {
