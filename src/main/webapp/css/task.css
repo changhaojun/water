@@ -126,6 +126,9 @@ body{
 	line-height: 50px;
 	background: url(/finfosoft-water/img/shuiwu_renwu_img_02.png) no-repeat;
 	position: relative;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .taskContent > .taskTree >.taskTree-line >.stepBox> .taskTree-greenNode> .technologyName>.technologyName-line{
 	width: 33px;
