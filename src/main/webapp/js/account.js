@@ -339,7 +339,7 @@ function event(obj, str) {
 	},"keyup":function(event){
 //		console.log(123);
 		if(event.keyCode==32){
-			obj.val("");
+			obj.val(obj.val().replace(/\s/g, ''))
 		}
 	}})
 	obj.on("blur", function() {
@@ -370,7 +370,7 @@ function blank(obj1, obj2, str1, str2, Var) {
 	},"keyup":function(event){
 		console.log(123);
 		if(event.keyCode==32){
-			obj1.val("");
+			obj1.val(obj1.val().replace(/\s/g, ''));
 		}
 	}})
 	obj1.on("blur", function() {

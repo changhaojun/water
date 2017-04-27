@@ -38,14 +38,24 @@ window.getEntityList=function(){
 		    pageList:[10,15,20,25],//是否显示分页
 		    queryParams: queryParams,
 		    striped: true,//条纹
+		    classes: 'table-no-bordered' ,
 		    onLoadSuccess:function(value){
 				console.log(value)
 		    	if(value.code==400005){
 		    		window.getNewToken();
 		    		getEntityList();		    	
 		    		$('#dtuList').bootstrapTable("refresh",queryParams)
+		    		
 		    	}
 		    	toolTip();//顶部提示框
+		    	$("#dtuList tbody>tr").each(function(i,ele){
+								$(this).mouseover(function(){
+									$(this).addClass("borderColor").siblings().removeClass("borderColor");
+								});
+								$(this).mouseout(function(){
+									$(this).removeClass("borderColor");
+								});
+				});
 		    },
 		    columns: [
 	                    {
@@ -64,7 +74,8 @@ window.getEntityList=function(){
 }
 //操作列的格式化
 function editFormatter(value,row,index){
-	return "<span data-toggle='tooltip' data-placement='top' title='绑定' style='color:#18b393;cursor: pointer;' class='fa fa-chain' onclick=bind('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='告警' style='color:#7cc1c8;margin-left:15px;cursor: pointer;' class='fa fa-bell' onclick=alarm('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='改名' style='color:#ffb400;margin-left:15px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:15px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteThing('"+value+"')></span>"
+	console.log()
+	return "<span data-toggle='tooltip' data-placement='top' title='绑定' style='color:#18b393;cursor: pointer;' class='fa fa-chain' onclick=bind('"+value+"','"+row.thing_name+"')></span><span data-toggle='tooltip' data-placement='top' title='告警' style='color:#7cc1c8;margin-left:15px;cursor: pointer;' class='fa fa-bell' onclick=alarm('"+value+"','"+row.thing_name+"')></span><span data-toggle='tooltip' data-placement='top' title='改名' style='color:#ffb400;margin-left:15px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:15px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteThing('"+value+"')></span>"
 }
 
 //表格数据获取的参数
@@ -102,12 +113,12 @@ function topColor(obj,color){
 	})
 }
 //绑定实体事件
-function bind(value){
-	self.location.href="/finfosoft-water/thing/bindDatas/"+value;
+function bind(value,thingName){
+	self.location.href="/finfosoft-water/thing/bindDatas/"+value+"-"+thingName;
 }
 //警告实体事件
-function alarm(value){
-	self.location.href="/finfosoft-water/thing/alarmDatas/"+value;
+function alarm(value,thingName){
+	self.location.href="/finfosoft-water/thing/alarmDatas/"+value+"-"+thingName;
 }
 //添加数据事件
 function addEntity(){
@@ -177,6 +188,7 @@ window.deleteThing=function(value){
 			  }
 		  })
 		});
+		
 }
 //修改设备名
 function modify(value){
@@ -244,5 +256,5 @@ function modify(value){
 }
 //input禁止输入字母空格
 function space(obj){
-	obj.val("")
+	obj.val(obj.val().replace(/\s/g, ''))
 }

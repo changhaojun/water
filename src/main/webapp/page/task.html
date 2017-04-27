@@ -3,147 +3,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.min.css"/>
-		<link rel="stylesheet" href="/finfosoft-water/plugins/bootstarp/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="/finfosoft-water/plugins/bootstrap-datetimepicker/css/datetimepicker.css" />
-		<link rel="stylesheet" href="/finfosoft-water/css/task.css?1.39" />
+
 	</head>
-	<body>
-		<input type="text" id="companyId" value="${companyId}" hidden="hidden"/>
-		<div class="taskBox">
-			<!--账户top-->
-			<div class="taskTop">
-				<span>任务管理</span>
-				<span>/</span>
-				<span>Task</span>	
-			</div>
-			<hr>
-			<!--账户内容-->
-			<div class="taskContent row">
-				<div class="taskTree">
-					<div class="taskTree-cir"></div>
-					<div class="taskTree-line">
-						<div class="taskTree-add"  data-toggle="tooltip" data-placement="right" title="添加工艺">+</div>
-					</div>
-					<div class="taskTree-cir"></div>
-				</div>
-				<div class="taskRule">
-					<div class="ruleMain">
-						
-					</div>
-					<div class="addRule" data-toggle="tooltip" data-placement="top" title="添加新任务">
-						添加新任务
-					</div>
-				</div>
-			</div>
-		</div>
+	<script type="text/javascript">
+		var str = "ABCDECDF"; 
+		console.log(str)
+		str.search(/CD/i);
+	</script>
 		
-		<div class="addRuleBox" hidden="hidden">
-			<div class="addRuleContent">
-				<div class="row">
-					<div class="col-xs-6">
-						任务名称：
-						<input type="text" id="ruleName" class="controls" placeholder="请输入任务名称" />
-					</div>
-					<div class="col-xs-6">
-						触发类型：
-						<select id="triggerType" class="controls">
-						</select>
-					</div>
-				</div>
-				<hr>
-				<div class="row addRuleMain">
-					<div class="eventBox">
-						<div class="row">
-							<div class="col-xs-6">
-								实体名称：<input class="controls" id="conditionThing" placeholder="请输入触发条件的实体名" />
-								<ul id="conditionThingList" hidden="hidden">
-								</ul>
-							</div>
-							<div class="col-xs-6">
-								采集端口：
-								<select class="controls" id="conditionTag">	
-								</select>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-6">
-								比较符：&nbsp;&nbsp;
-								<select class="controls" id="compareOper">
-									<option value='gt'>></option>
-									<option value='lt'><</option>
-									<option value='eq'>=</option>
-								</select>
-							</div>
-							<div class="col-xs-6">
-								基准值：&nbsp;&nbsp;
-								<input class="controls" num-limit="limit" id="compareValue" placeholder="请输入基准值"/>
-							</div>
-						</div>
-						<hr />
-					</div>
-					<div class="timingBox" hidden="hidden">
-						<div class="row">
-							<div class="col-xs-6">
-								开始时间：
-								<input class="controls" placeholder="请输入开始时间" id="datetimepicker" type="text" value="" readonly class="form_datetime" isCheck="false">
-							</div>
-							<div class="col-xs-6">
-								时间间隔：
-<!--								<input type="text" placeholder="请输入时间间隔" class="controls" id="timeInterval" isCheck="false"/>-->
-								<div class="control-group">
-									<input id="timeInterval" num-limit="limit" placeholder="请输入时间间隔" type="text" class="control-group-input" isCheck="false">
-									<div class="control-group-addon">分</div>
-								</div>
-							</div>
-						</div>
-						<hr />
-					</div>
-					<div class="controlBox">
-						<div class="row">
-							<div class="col-xs-6">
-								实体名称：<input class="controls" id="controlThing" placeholder="请输入下发控制的实体名" />
-								<ul id="controlThingList" hidden="hidden">
-								</ul>
-							</div>
-							<div class="col-xs-6">
-								控制端口：
-								<select class="controls" id="controlTag">	
-									<option value=0>请选择控制端口</option>
-								</select>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-6">
-								执行动作：
-								<div class="control-group ioAction">
-									<input id="inputAction" num-limit="limit" placeholder="请输入执行动作" type="text" class="control-group-input">
-									<div class="control-group-addon">%</div>
-								</div>
-								<div class="selectAction">
-									<select class="controls portAction">	
-									</select>
-								</div>
-							</div>
-							<div class="col-xs-6">
-								执行次数：
-								<input type="text" num-limit="limit" placeholder="请输入执行次数" class="actionTimes controls"  value=1 />
-							</div>
-						</div>
-						<hr />
-						<div class="row saveBtnRow">
-							<button class="saveRuleBtn btn btn-block">保存动作</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<script type="text/javascript" src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="/finfosoft-water/plugins/bootstarp/js/bootstrap.min.js" ></script>
-		<script type="text/javascript" src="/finfosoft-water/plugins/layer/layer.min.js"></script>
-		<script type="text/javascript" src="/finfosoft-water/js/public_resources.js" ></script>
-		<script type="text/javascript" src="/finfosoft-water/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-		<script type="text/javascript" src="/finfosoft-water/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
-		<script type="text/javascript" src="/finfosoft-water/js/task.js?1.43" ></script>
+	
+	
 	</body>
 </html>

@@ -192,6 +192,6 @@ function doAjax(data){
 }
 //input禁止输入字母空格
 function space(obj){
-	obj.val("")
+	obj.val(obj.val().replace(/\s/g, ''))
 }
 

@@ -1,5 +1,8 @@
 package com.finfosoft.water.thing;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import com.finfosoft.water.common.Constants;
 import com.jfinal.core.Controller;
 import com.jfinal.log.Logger;
@@ -18,23 +21,29 @@ public class ThingController  extends  Controller{
 		setAttr("companyId", companyId);
 		render("entity_list.html");
 	}
-	public void bindDatas(){
+	public void bindDatas() throws UnsupportedEncodingException{
 		Record company=getSessionAttr(Constants.SESSION_COMPANY);
 		String companyCode=company.get("companyCode");
 		String companyId=company.get("companyId");
+		
+		String thingId=getPara(0);
+		String thingName=URLDecoder.decode(getPara(1), "UTF-8");
 		setAttr("companyCode", companyCode);
 		setAttr("companyId", companyId);
-		String thingId=getPara(0);
+		setAttr("thingName", thingName);
 		setAttr("thingId", thingId);
 		render("bind_entity.html");
 	}
-	public void alarmDatas(){
+	public void alarmDatas() throws UnsupportedEncodingException{
 		Record company=getSessionAttr(Constants.SESSION_COMPANY);
 		String companyCode=company.get("companyCode");
 		String companyId=company.get("companyId");
+		
+		String thingId=getPara(0);
+		String thingName=URLDecoder.decode(getPara(1), "UTF-8");
 		setAttr("companyCode", companyCode);
 		setAttr("companyId", companyId);
-		String thingId=getPara(0);
+		setAttr("thingName", thingName);
 		setAttr("thingId", thingId);
 		render("alarm_entity.html");
 	}

@@ -14,11 +14,11 @@
 		<div class="alarmEntity">
 			<div class="alarmTop">
 					<span>实体列表</span>
-					<span style="font-size:14px;">/&nbsp;当前位置:实体列表&nbsp;></span>
+					<span style="font-size:14px;">/&nbsp;当前位置:&nbsp;${thingName}&nbsp;></span>
 					<span style="font-size:14px;">告警设置</span>
 					<span class="search">
-						<input v-model="searchId" type="text" placeholder="请输入关键字查找" id="searchId" onkeypress="if(event.keyCode==13) {alarmList();return false;}" onkeyup="if(event.keyCode==32){space($(this))}"/>
-						<i class="fa fa-search" onclick="alarmList()"></i>
+						<input v-model="searchId" type="text" placeholder="请输入关键字查找" id="searchId" onkeypress="if(event.keyCode==13) {searchThing($(this));return false;}" onkeyup="if(event.keyCode==32){space($(this))}"/>
+						<i class="fa fa-search" onclick="searchThing($('#searchId'))"></i>
 					</span>	 
 					<hr>
 			</div>
