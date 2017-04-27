@@ -187,7 +187,7 @@ $.fn.extend({
 					}else{
 						dataTypeStr="输出IO";
 					}
-					if(dataInfo[i].oper_type){
+					if(dataInfo[i].oper_type==1){
 						operTypeStr="读取";
 					}else{
 						operTypeStr="写入";

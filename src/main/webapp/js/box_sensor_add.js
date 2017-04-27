@@ -398,7 +398,7 @@ $.fn.extend({
 	$(".warningSpace").blur(function(){
 		if(remindReg.test(warningSpace)==false){
 			//$(".contactPhone").css("border","1px solid #e11818");
-			layer.tips('请填写数字',$(".contactPhone"),{
+			layer.tips('请填写数字',$(".warningSpace"),{
 				tips:1,
 				time:4000
 			});
@@ -407,7 +407,7 @@ $.fn.extend({
 	$(".delayTime").blur(function(){
 		if(remindReg.test(delayTime)==false){
 			//$(".contactPhone").css("border","1px solid #e11818");
-			layer.tips('请填写数字',$(".contactPhone"),{
+			layer.tips('请填写数字',$(".delayTime"),{
 				tips:1,
 				time:4000
 			});
