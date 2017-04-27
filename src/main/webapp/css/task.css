@@ -348,6 +348,9 @@ li:hover{
     margin-left: 474px;*/
     z-index: 99;
 }
+.layui-layer{
+    box-shadow: 8px 8px rgba(0,0,0,.5) !important;
+}
 @media screen and (max-width: 1475px) {
     .missionBox{
         font-size: 12px !important;

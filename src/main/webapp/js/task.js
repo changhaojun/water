@@ -216,6 +216,9 @@ $.fn.extend({
 	changeTriggerType:function(){	//选择触发类型
 		var selectType=$(this).find("option:selected").text();
 		$(this).changeTriggerTypeAction(selectType);
+		console.info($(this).parent().parent().parent().parent().height())
+		var contentHeight=$(this).parent().parent().parent().parent().height()+42;
+		$('.layui-layer').css('height',contentHeight+'px');
 	},
 	changeTriggerTypeAction:function(selectType){	//选择触发类型后执行
 		$.taskData.trigger_type=$(this).val();
@@ -577,7 +580,7 @@ $.extend({
 			$.taskData.selectControlTag=$(this).val();
 			var thisId=$(this).val()
 			if($(this).val()!=0&&$(this).val()!=''){
-				if($.taskData.controlTagList[thisId].low_battery==''){
+				if($.taskData.controlTagList[thisId].low_battery==''||$.taskData.controlTagList[thisId].low_battery==undefined){
 					$('.ioAction').show();
 					if($.taskData.ruleBox.target_data_id!=''){
 						$('#inputAction').val($.taskData.ruleBox.action)
