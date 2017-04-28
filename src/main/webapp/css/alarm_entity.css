@@ -17,6 +17,7 @@ html{
 	font-size:22px;
 	padding-top:25px;
 	display: inline-block;
+	float:left;
 }
 .alarmEntity .alarmTop span:nth-child(1){	
 	margin-left:20px;
@@ -25,10 +26,11 @@ html{
 .alarmEntity .alarmTop span:nth-child(2){
 	margin-left:5px;
 	margin-right:5px;
+	margin-top:10px;
 }
 .alarmEntity .alarmTop span:nth-child(3){
 	color:#1ab394;
-		
+	margin-top:10px;	
 }
 .alarmEntity hr{
 	width:98%;

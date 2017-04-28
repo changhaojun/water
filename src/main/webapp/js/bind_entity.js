@@ -1,12 +1,15 @@
 var thingId=$("#thingId").val();
 //var thingId="58734ea511b69c22b0afa990";
-var globalurl="http://192.168.1.114";
+//var globalurl="http://192.168.1.114";
 var selectedId=[];
 $(function(){
 	getToken();
 	DevList()
 	addClass();
 	screenDev();
+	omission($(".bindEntity .bindTop span:nth-child(2)"));
+	
+
 })
 //获取已选设备的列表
 function DevList(){
@@ -25,7 +28,7 @@ function DevList(){
 			if(data.code==400005){
 				window.getNewToken()
 				DevList();
-			}else if(data.rows.length==0){
+			}else if(!data.rows||data.rows.length==0){
 				$(".selectedUl").html("");
 			}else{
 				var str="";
@@ -194,4 +197,15 @@ function doAjax(data){
 function space(obj){
 	obj.val(obj.val().replace(/\s/g, ''))
 }
-
+//超出一行省略
+function omission(obj){
+	if(obj.html().length>20){
+		obj.css({
+			"width":"140px",
+			"overflow": "hidden",
+			"white-space": "nowrap",
+			"text-overflow": "ellipsis"
+		})
+	}
+	
+}

@@ -11,12 +11,15 @@ html{
 .bindEntity .bindTop{
 	
 	height:65px;
-	margin-right:20px;	
+	margin-right:20px;
+		
 }
 .bindEntity .bindTop span{
 	font-size:22px;
 	padding-top:25px;
 	display: inline-block;
+	float:left;
+	text-align:center;
 }
 .bindEntity .bindTop span:nth-child(1){	
 	margin-left:20px;
@@ -25,10 +28,12 @@ html{
 .bindEntity .bindTop span:nth-child(2){
 	margin-left:5px;
 	margin-right:5px;
+	margin-top:10px;
+	
 }
 .bindEntity .bindTop span:nth-child(3){
 	color:#1ab394;
-		
+	margin-top:10px;	
 }
 .bindEntity hr{
 	width:98%;

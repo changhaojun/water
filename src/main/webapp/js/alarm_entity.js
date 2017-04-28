@@ -1,10 +1,11 @@
 var thingId=$("#thingId").val();
-var globalurl="http://192.168.1.114";
+//var globalurl="http://192.168.1.114";
 
 $(function(){
 	getToken();
 	toolTips();
 	alarmList();
+	Omission($(".alarmEntity .alarmTop .thingName"));
 	var dataLike;
 })
 var searchBox=new Vue({
@@ -458,7 +459,18 @@ function onMessageArrived(message) {
   		}
   }
 }
-
+//超出一行省略
+function Omission(obj){
+	if(obj.html().length>40){
+		obj.css({
+			"width":"140px",
+			"overflow": "hidden",
+			"white-space": "nowrap",
+			"text-overflow": "ellipsis"
+		})
+	}
+	
+}
 
 
 
