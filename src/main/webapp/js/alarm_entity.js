@@ -5,7 +5,7 @@ $(function(){
 	getToken();
 	toolTips();
 	alarmList();
-	Omission($(".alarmEntity .alarmTop .thingName"));
+	
 	var dataLike;
 })
 var searchBox=new Vue({
@@ -16,7 +16,7 @@ var searchBox=new Vue({
 })
 //获取警告列表
 function alarmList(){
-		
+		Omission($(".alarmEntity .alarmTop .thingName"));
 		var data={access_token:window.accesstoken};	
 			doajax(data);
 		if($("#searchId").val()==""){
