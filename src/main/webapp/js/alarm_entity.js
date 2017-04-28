@@ -5,7 +5,7 @@ $(function(){
 	getToken();
 	toolTips();
 	alarmList();
-	var realTime;
+	var dataLike;
 })
 var searchBox=new Vue({
 	el:'.search',
@@ -13,19 +13,20 @@ var searchBox=new Vue({
 		searchId:''
 	} 
 })
-
 //获取警告列表
 function alarmList(){
-	$(".IContent").html("");
-	if(searchBox.searchId==""){
+		
 		var data={access_token:window.accesstoken};	
-			doajax(data);		
-	}else{
-		var data={access_token:window.accesstoken,like:"{'data_name':'"+searchBox.searchId+"'}"};
-		doajax(data);
-	}
+			doajax(data);
+		if($("#searchId").val()==""){
+			setTimeout(function(){
+				alarmList()
+			},200)
+			
+		}
 };
 function doajax(data){
+	$(".IContent").html("");
 	$.ajax({
 		url:globalurl+"/v1/things/"+thingId+"/alarms",
 		dataType: 'JSON',
@@ -40,57 +41,16 @@ function doajax(data){
 				alarmList();
 				toolTips();				  
 			}else{
-				var str=""	;		
+				var str=""	;	
 				for(var i=0;i<data.length;i++){
-					var oLi="";
-					str='<div class="alarmList" id="'+data[i].data_id+'">'+
-							'<div class="alarmTop">'+data[i].device_name+"-"+data[i].data_name+'</div>'+
-							'<div class="alarmContent">'+
-								'<span class="dataValue">'+data[i].data_value+data[i].data_unit+'</span>'+
-								'<span class="dataTime">'+data[i].data_time+'</span>'+
-							'</div>'+
-							'<div class="alarmFooter">'+
-								'<ul>'+						
-								'</ul>'+
-							'</div>'+
-						'</div>'
-					$(".IContent").append(str);			
-						var oLi="";
-						for(var j=0;j<2;j++){
-							if(data[i].threshold==undefined||data[i].threshold[j]==undefined||(data[i].threshold[j].upper_value=="+∞"&&data[i].threshold[j].lower_value=="-∞")||(data[i].threshold[j].upper_value==""&&data[i].threshold[j].lower_value=="")){
-								
-								oLi='<li>'+
-										'<div class="dataLeft">未配置'+								
-										'</div>'+
-										'<div class="dataRight">'+
-											'<i class="fa fa-plus-square-o " data-toggle="tooltip" data-placement="top" title="添加" onclick="addData('+data[i].data_id+','+j+","+i+')"></i>'+
-										'</div>'+							
-									'</li>'
-									
-							}else{	
-								if(data[i].threshold[j].lower_value=="-∞"){
-									data[i].threshold[j].lower_value="'-∞'";
-									
-								}
-								if(data[i].threshold[j].upper_value=="+∞"){
-									data[i].threshold[j].upper_value="'+∞'";
-								}
-										oLi='<li>'+
-										'<div class="dataLeft">'+
-											'<span>'+(data[i].threshold[j].lower_value)+'</span>  ~  '+
-											'<span>'+(data[i].threshold[j].upper_value)+'</span>'+
-										'</div>'+
-										'<div class="dataRight">'+
-											'<i class="fa fa-cog " data-toggle="tooltip" data-placement="top" title="修改" onclick="modify('+data[i].data_id+","+data[i].threshold[j].lower_value+","+data[i].threshold[j].upper_value+","+j+","+i+')"></i>'+
-											'<i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="清空" onclick="alarmDel('+data[i].data_id+","+data[i].threshold[j].lower_value+","+data[i].threshold[j].upper_value+","+j+","+i+')"></i>'+
-										'</div>'+							
-									'</li>'
-							}
-							$(".alarmFooter ul").eq(i).append(oLi);						
-						}	
+					data[i].title=data[i].device_name+"-"+data[i].data_name					
+					Dom(data[i],i);//创建动态Dom	
 					colorBg(data[i].status,i);
 			}
-				
+			dataLike=data;
+			if($("#searchId").val()!=""){
+				searchThing($("#searchId"))
+			}
 			toolTips();	
 			MQTTconnect();
 			
@@ -101,14 +61,85 @@ function doajax(data){
 		}
 	});
 }
+//模糊查询
+function searchThing(obj){
+	$(".IContent").html("");
+	var q=0;
+	for(var i=0;i<dataLike.length;i++){
+		if(dataLike[i].title.search(obj.val())!=-1){
+			Dom(dataLike[i],q);		
+			q++;
+			colorBg1(dataLike[i].status);						
+		}	
+	}
+	MQTTconnect();
+}
+//动态创建DOM拼接
+function Dom(data,i){
+	var oLi="";
+					str='<div class="alarmList" id="'+data.data_id+'">'+
+							'<div class="alarmTop">'+data.device_name+"-"+data.data_name+'</div>'+
+							'<div class="alarmContent">'+
+								'<span class="dataValue">'+data.data_value+data.data_unit+'</span>'+
+								'<span class="dataTime">'+data.data_time+'</span>'+
+							'</div>'+
+							'<div class="alarmFooter">'+
+								'<ul>'+						
+								'</ul>'+
+							'</div>'+
+						'</div>'
+					$(".IContent").append(str);			
+						var oLi="";
+						for(var j=0;j<2;j++){
+							if(data.threshold==undefined||data.threshold[j]==undefined||(data.threshold[j].upper_value=="+∞"&&data.threshold[j].lower_value=="-∞")||(data.threshold[j].upper_value==""&&data.threshold[j].lower_value=="")){
+								
+								oLi='<li>'+
+										'<div class="dataLeft">未配置'+								
+										'</div>'+
+										'<div class="dataRight">'+
+											'<i class="fa fa-plus-square-o " data-toggle="tooltip" data-placement="top" title="添加" onclick="addData('+data.data_id+','+j+","+i+')"></i>'+
+										'</div>'+							
+									'</li>'
+									
+							}else{	
+								if(data.threshold[j].lower_value=="-∞"){
+									data.threshold[j].lower_value="'-∞'";
+									
+								}
+								if(data.threshold[j].upper_value=="+∞"){
+									data.threshold[j].upper_value="'+∞'";
+								}
+										oLi='<li>'+
+										'<div class="dataLeft">'+
+											'<span>'+(data.threshold[j].lower_value)+'</span>  ~  '+
+											'<span>'+(data.threshold[j].upper_value)+'</span>'+
+										'</div>'+
+										'<div class="dataRight">'+
+											'<i class="fa fa-cog " data-toggle="tooltip" data-placement="top" title="修改" onclick="modify('+data.data_id+","+data.threshold[j].lower_value+","+data.threshold[j].upper_value+","+j+","+i+')"></i>'+
+											'<i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="清空" onclick="alarmDel('+data.data_id+","+data.threshold[j].lower_value+","+data.threshold[j].upper_value+","+j+","+i+')"></i>'+
+										'</div>'+							
+									'</li>'
+							}
+							$(".alarmFooter ul").eq(i).append(oLi);						
+						}
+}
 //告警颜色设置
-function colorBg(data,index){
+function colorBg(data,index){	
 	if(data==1){
 		$(".alarmList").eq(index).addClass("greenBg");
 	}else if(data==0){
 		$(".alarmList").eq(index).addClass("grayBg");
 	}else{
 		$(".alarmList").eq(index).addClass("redBg");
+	}
+}
+function colorBg1(data){	
+	if(data==1){
+		$(".alarmList").addClass("greenBg");
+	}else if(data==0){
+		$(".alarmList").addClass("grayBg");
+	}else{
+		$(".alarmList").addClass("redBg");
 	}
 }
 //初始化提示框
@@ -146,19 +177,32 @@ function addData(_id,Iindex,dataIndex){
 				var data="{'threshold':"+indexData(Iindex,dataIndex)+",'data_id':"+_id+"}"
 				var data={"data":data,"access_token":window.accesstoken};
 				ajax(data);
+				varLike(_id,$("#dataMin").val(),$("#dataMax").val(),Iindex,dataIndex)
 			}
 			
 		}else{
 			console.log(111)
 			layer.tips('最大值或者最小值格式不正确', $("#dataMax"), {
 				  tips: [1, '#ff787c'],
-				  time: 200
-			});				
-			
+				  time: 2000
+			});							
 		}
-		
-	
 	})
+}
+//点击添加或者修改设置Dom节点
+function varLike(_id,min,max,Iindex,dataIndex){
+	var dataLine=$(
+				'<div class="dataLeft">'+
+					'<span>'+min+'</span>  ~  '+
+					'<span>'+max+'</span>'+
+				'</div>'+
+				'<div class="dataRight">'+
+					'<i class="fa fa-cog " data-toggle="tooltip" data-placement="top" title="修改" onclick="modify('+_id+","+min+","+max+","+Iindex+","+dataIndex+')"></i>'+
+					'<i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="清空" onclick="alarmDel('+_id+","+min+","+max+","+Iindex+","+dataIndex+')"></i>'+
+				'</div>'					
+			)
+	$('#'+_id).find('li').eq(Iindex).empty();
+	$('#'+_id).find('li').eq(Iindex).append(dataLine)
 }
 //判定最大值最小值是否为空
 function  spaceData(){
@@ -243,18 +287,16 @@ layer.alert('<input type="text" id="dataMin" value="'+min+'" onkeyup="if(event.k
 				});
 			}else{
 				var data="{'threshold':"+indexData(Iindex,dataIndex)+",'data_id':"+_id+"}"
-				console.log(data)
 				var data={"data":data,"access_token":window.accesstoken};
 				ajax(data);
+				varLike(_id,$("#dataMin").val(),$("#dataMax").val(),Iindex,dataIndex)
 			}
 		}else{						
 			layer.tips('最大值或者最小值格式不正确', $("#dataMax"), {
 				  tips: [1, '#ff787c'],
 				  time: 2000
 			});
-		}
-		
-	
+		}	
 })
 }
 //清除数据
@@ -270,8 +312,7 @@ function alarmDel(_id,min,max,Iindex,dataIndex){
 			}else{
 				var IdataMin=$(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft span").eq(0).html();
 				var IdataMax=$(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft span").eq(1).html();
-			}
-		
+			}		
 			if(Iindex==1){
 				var othreshold = "["+
 				"{"+
@@ -299,11 +340,20 @@ function alarmDel(_id,min,max,Iindex,dataIndex){
 			var data="{'threshold':"+othreshold+",'data_id':"+_id+"}"
 			var data={"data":data,"access_token":window.accesstoken};
 			ajax(data);
+			var dataLine=$(
+							'<div class="dataLeft">未配置'+								
+							'</div>'+
+							'<div class="dataRight">'+
+								'<i class="fa fa-plus-square-o " data-toggle="tooltip" data-placement="top" title="添加" onclick="addData('+_id+','+Iindex+","+dataIndex+')"></i>'+
+							'</div>'					
+							)
+				$('#'+_id).find('li').eq(Iindex).empty();
+				$('#'+_id).find('li').eq(Iindex).append(dataLine)
 		});
 	
 }
+//ajax函数的调用
 function ajax(data){
-	console.log(data)
 	$.ajax({
 				url:globalurl+"/v1/alarms",
 				data:data,
@@ -320,6 +370,7 @@ function ajax(data){
 							time:1000
 						},function(){
 							alarmList();
+						
 						});						
 					}else{
 						layer.msg(data.success, {
@@ -327,6 +378,7 @@ function ajax(data){
 							time:1000
 						},function(){
 							alarmList();
+							
 						});
 					}
 				},
@@ -337,14 +389,16 @@ function ajax(data){
 						time:1000
 					},function(){
 							alarmList();
+							
 						});
 			    }
 			});
 }
 //input禁止输入字母空格
 function space(obj){
-	obj.val("")
+	obj.val(obj.val().replace(/\s/g, ''))
 }
+
 //订阅
 var client; 
 var topic;

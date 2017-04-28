@@ -64,7 +64,7 @@ window.getEntityList=function(){
 }
 //操作列的格式化
 function editFormatter(value,row,index){
-	return "<span data-toggle='tooltip' data-placement='top' title='绑定' style='color:#18b393;cursor: pointer;' class='fa fa-chain' onclick=bind('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='告警' style='color:#7cc1c8;margin-left:15px;cursor: pointer;' class='fa fa-bell' onclick=alarm('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='改名' style='color:#ffb400;margin-left:15px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:15px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteThing('"+value+"')></span>"
+	return "<span data-toggle='tooltip' data-placement='top' title='绑定' style='color:#18b393;cursor: pointer;' class='fa fa-chain' onclick=bind('"+value+"','"+row.thing_name+"')></span><span data-toggle='tooltip' data-placement='top' title='告警' style='color:#7cc1c8;margin-left:15px;cursor: pointer;' class='fa fa-bell' onclick=alarm('"+value+"','"+row.thing_name+"')></span><span data-toggle='tooltip' data-placement='top' title='改名' style='color:#ffb400;margin-left:15px;cursor: pointer;' class='fa fa-cog' onclick=modify('"+value+"')></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:15px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteThing('"+value+"')></span>"
 }
 
 //表格数据获取的参数
@@ -244,5 +244,5 @@ function modify(value){
 }
 //input禁止输入字母空格
 function space(obj){
-	obj.val("")
+	obj.val(obj.val().replace(/\s/g, ''))
 }

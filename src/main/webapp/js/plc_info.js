@@ -44,7 +44,15 @@ window.getDTUList=function(){
 		    		$('#dtuList').bootstrapTable("refresh",queryParams)
 		    	}
 		    	toolTip();//顶部提示框
-		    	
+		    	$("#dtuList tbody>tr").each(function(i,ele){
+						console.log(1)
+								$(this).mouseover(function(){
+									$(this).addClass("borderColor").siblings().removeClass("borderColor");
+								});
+								$(this).mouseout(function(){
+									$(this).removeClass("borderColor");
+								});
+				});
 		    },
 		    columns: [
 	                    {
@@ -194,7 +202,9 @@ function guidGenerator() {
 	};
 	return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 }
-
+function space(obj){
+	obj.val(obj.val().replace(/\s/g, ''))
+}
 
 
 
