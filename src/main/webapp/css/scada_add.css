@@ -1,0 +1,247 @@
+html,
+body{
+	height: 100%;
+	overflow: hidden;
+}
+body{
+	min-width: 1106px;
+	padding: 20px;
+	background: #f3f3f4;
+}
+body *{
+	font-size: 14px;
+}
+
+#vue{
+	height: calc(100% - 40px);
+}
+
+.title{
+	margin-bottom: 6px;
+	height: 46px;
+	border-bottom: 3px solid #e0e0e0;
+}
+.title>div{
+	line-height: 34px;
+}
+.title span:nth-of-type(1){
+	font-size: 19px;
+}
+.title span:nth-last-of-type(1){
+	color: #1ab394;
+}
+
+.main{
+	width: 100%;
+	height: calc(100% - 46px);
+	overflow: hidden;
+	border: 1px solid #ccc;
+	position: relative;
+}
+.main>ul{
+	width: 100%;
+	height: 54px;
+	padding-top: 11px;
+	background: rgba(255, 255, 255, 0.63);
+	border-bottom: 1px solid rgba(204, 204, 204, 0.63);
+	position: absolute;
+	left: 0;
+	z-index: 1;
+}
+.main>.headBar{
+	top: 0;
+}
+.main>.footBar{
+	bottom: -55px;
+	/*bottom: 0;*/
+	transition: 0.5s;
+	/*display: none;*/
+}
+.main>ul>li{
+	margin: 0 5px;
+	position: relative;
+	opacity: 0.63;
+	transition: 0.5s;
+}
+
+.main>ul>li:hover{
+	opacity: 1;
+}
+.main>ul>li:hover button{
+	background: #1AB394;
+	color: #fff;
+}
+.main>ul>li:hover span{
+	color: #fff;
+}
+.main>ul>.name:hover span{
+	color: #1AB394;
+}
+
+.main>.headBar>li>input{
+	width: 200px;
+	height: 30px;
+	line-height: 28px;
+	border-radius: 15px;
+	border: 1px solid #ccc;
+	text-align: left;
+	background: rgba(255, 255, 255, 0.63);
+	text-indent: 30px;
+}
+.main>ul>li>button{
+	width: 100px;
+	height: 30px;
+	line-height: 28px;
+	border-radius: 15px;
+	border: 1px solid #1ab394;
+	background: rgba(255, 255, 255, 0.63);
+	color: #1ab394;
+	text-align: left;
+	text-indent: 30px;
+	cursor: pointer;
+	transition: 0.5s;
+}
+.main>.footBar>li>button{
+	text-indent: 40px;
+}
+.main>ul>li>span{
+	position: absolute;
+	top: 8px;
+	left: 12px;
+	color: #1ab394;
+	transition: 0.5s;
+}
+.main>.headBar>.link>p{
+	width: 200px;
+	height: 30px;
+	padding-right: 12px;
+	background: #fff;
+	border-radius: 15px 0 0 15px;
+	line-height: 28px;
+	text-indent: 12px;
+	border: 1px solid #ccc;
+	border-right: none;
+	color: #ccc;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.main>.headBar>.link>button{
+	border-radius: 0 15px 15px 0;
+}
+.main>.headBar>.link>span{
+	border-radius: 0 15px 15px 0;
+	left: 210px;
+}
+
+#canv{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.selector{
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 2;
+}
+
+.selector-body{
+	width: 300px;
+	height: 430px;
+	background: #fff;
+	box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.38);
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.selector-title{
+	height: 40px;
+	background: #1ab394;
+}
+.selector-title>p{
+	line-height: 40px;
+	text-indent: 22px;
+	color: #fff;
+}
+.selector-close{
+	width: 40px;
+	height: 100%;
+	background: url(../img/login/login_layer_close.png) no-repeat 10px 10px;
+	transition: 0.5s;
+}
+.selector-close:hover{
+	background-color: #24c5a4;
+}
+.selector-main{
+	height: 390px;
+	padding: 0 10px;
+	position: relative;
+	overflow: hidden;
+}
+.selector-search{
+	height: 44px;
+	padding-top: 4px;
+	background: #fff;
+	border-bottom: 1px solid #f0f0f0;
+	position: relative;
+	left: 0;
+	top: 0;
+	z-index: 1;
+}
+.selector-search>input{
+	width: 258px;
+	line-height: 40px;
+	text-indent: 12px;
+	color: #1ab394;
+}
+.selector-search>span{
+	line-height: 40px;
+	color: #1ab394;
+}
+.selector-list{
+	position: relative;
+	left: 0;
+	top: 0;
+}
+.selector-list>li{
+	border-bottom: 1px solid #f0f0f0;
+	line-height: 42px;
+	text-indent: 12px;
+	color: #b0b0b0;
+	transition: 0.5s;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: pointer;
+}
+.selector-list>li:hover{
+	color: #1ab394;
+	background: #f0f0f0;
+}
+.selector-scroll{
+	width: 2px;
+	height: 382px;
+	background: #e2e2e2;
+	position: absolute;
+	top: 4px;
+	right: 6px;
+}
+.selector-scroll>.scrollBar{
+	width: 4px;
+	height: 382px;
+	background: #1ab394;
+	position: absolute;
+	border-radius: 2px;
+	top: 0;
+	left: -1px;
+	cursor: move;
+}

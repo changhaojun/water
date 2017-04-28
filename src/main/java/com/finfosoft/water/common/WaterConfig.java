@@ -4,6 +4,7 @@ import com.finfosoft.db.mongo.MongodbPlugin;
 import com.finfosoft.water.dataTag.DataTagController;
 import com.finfosoft.water.frame.FrameController;
 import com.finfosoft.water.login.LoginController;
+import com.finfosoft.water.scada.ScadaController;
 import com.finfosoft.water.user.UserController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -31,7 +32,7 @@ public class WaterConfig extends JFinalConfig{
 		me.add("/frame",FrameController.class,"/");                //框架页面
 		me.add("/user",UserController.class,"/");                //框架页面
 		me.add("/dataTag",DataTagController.class,"/");			//设备相关
-		
+		me.add("/scada",ScadaController.class,"/");			//组态相关
 	}
 
 	@Override

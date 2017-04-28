@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/scada_add.css?1.1"/>
+	</head>
+	<body>
+		<input type="text" id="modelId" hidden="hidden" value=${modelId} />
+		<div id="vue">
+			<div class="title clearfix">
+				<div class="pull-left">
+					<span>新增情景 /</span>
+					<span>当前位置:</span>
+					<span>情景列表 ></span>
+					<span>新增情景 ></span>
+					<span>选择模板 ></span>
+					<span>编辑情景</span>
+				</div>
+			</div>
+			<div class="main">
+				<ul class="clearfix headBar">
+					<li class="clearfix pull-left link">
+						<p class="pull-left">请绑定实体</p>
+						<button class="pull-left">对应实体</button>
+						<span class="fa fa-chain"></span>
+					</li>
+					<li class="pull-left add">
+						<button>添加数据</button>
+						<span class="fa fa-plus"></span>
+					</li>
+					<li class="pull-left public">
+						<button>公共数据</button>
+						<span class="fa fa-cloud"></span>
+					</li>
+					<li class="pull-right save">
+						<button>保存情景</button>
+						<span class="fa fa-save"></span>
+					</li>
+					<li class="pull-right name">
+						<input type="text" placeholder="请输入情景名称"/>
+						<span class="fa fa-pencil"></span>
+					</li>
+				</ul>
+				<canvas id="canv"></canvas>
+				<ul class="clearfix footBar">
+					<li class="pull-right confirm">
+						<button>确定</button>
+						<span class="fa fa-check"></span>
+					</li>
+					<li class="pull-right delete">
+						<button>删除</button>
+						<span class="fa fa-close"></span>
+					</li>
+				</ul>
+				<div class="selector selectThing">
+					<div class="selector-body">
+						<div class="clearfix selector-title">
+							<p class="pull-left">选择对应实体</p>
+							<a href="javascript:;" class="pull-right selector-close"></a>
+						</div>
+						<div class="selector-main">
+							<div class="selector-search">
+								<input type="text" placeholder="输入关键字查找"/>
+								<span class="fa fa-search"></span>
+							</div>
+							<ul class="selector-list"></ul>
+							<div class="selector-scroll">
+								<div class="scrollBar"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="selector selectData">
+					<div class="selector-body">
+						<div class="clearfix selector-title">
+							<p class="pull-left">选择数据标签</p>
+							<a href="javascript:;" class="pull-right selector-close"></a>
+						</div>
+						<div class="selector-main">
+							<div class="selector-search">
+								<input type="text" placeholder="输入关键字查找"/>
+								<span class="fa fa-search"></span>
+							</div>
+							<ul class="selector-list"></ul>
+							<div class="selector-scroll">
+								<div class="scrollBar"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/three/three.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/three/ThreeCSG.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/three/OrbitControls.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/three/TransformControls.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/three/OBJLoader.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/scada_three.js?1.2" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/scada_add.js?1.5" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

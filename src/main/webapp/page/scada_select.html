@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/scada_select.css?1.0"/>
+	</head>
+	<body>
+		<div id="vue">
+			<div class="title clearfix">
+				<div class="pull-left">
+					<span>新增情景 /</span>
+					<span>当前位置:</span>
+					<span>情景列表 ></span>
+					<span>新增情景 ></span>
+					<span>选择模板</span>
+				</div>
+				<div class="pos-rel pull-right search">
+					<input type="text" placeholder="请输入关键字查找" id="searchId"/>
+					<i class="fa fa-search pos-abs"></i>
+				</div>
+			</div>
+			<div class="main">
+				<ul>
+					<li v-cloak v-for="info in infoMap" class="pull-left" v-on:click="confirmModel(info._id)">
+						<img v-bind:src="info.modelImg" alt="" />
+						<p>{{ info.modelName }}</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/scada_select.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>
