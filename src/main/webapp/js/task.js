@@ -359,13 +359,13 @@ $.fn.extend({
 		});
 	},
 	formCheckFoo:function(){
-		inputCheck=true
+		$.taskData.inputCheck=true
 		if($(this).val()==''){
 			var This=$(this)
 			layer.tips(This.attr("placeholder"),This,{tips: [1,'#FE777A']})
-			inputCheck=false
+			$.taskData.inputCheck=false
 		}
-		return inputCheck;
+		return $.taskData.inputCheck;
 	},
 	showTools:function(){	//显示工具栏
 		$(this).find(".tools").css("display","block");
@@ -665,6 +665,7 @@ $.extend({
 					}
 				}
 			})
+			console.info($.taskData.inputCheck)
 	if($.taskData.inputCheck){
 				var sendeData={};
 				sendeData.mission_name=$('#ruleName').val();
