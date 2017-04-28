@@ -19,7 +19,7 @@ var getToken=function(callBack){
 	})
 }
 //获取新的token
-var getNewToken=function(){
+var getNewToken=function(callBack){
 	$.ajax({
 		url:globalurl+'/authorize/refresh_token',
 		type:'GET',
@@ -35,6 +35,7 @@ var getNewToken=function(){
 			if(data.code==200){
 				accesstoken=data.access_token;
 				refreshToken=data.refresh_token;
+				callBack && callBack();
 				$.ajax({
 					url:itemName+"/frame/saveToken",
 					data:data,

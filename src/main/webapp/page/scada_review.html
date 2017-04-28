@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/scada_add.css"/>
+	</head>
+	<body>
+		<input type="text" id="scadaId" hidden="hidden" value=${scadaId} />
+		<div id="vue">
+			<div class="title clearfix">
+				<div class="pull-left">
+					<span>查看情景 /</span>
+					<span>当前位置:</span>
+					<span>情景列表 ></span>
+					<span>查看情景</span>
+				</div>
+			</div>
+			<div class="main">
+				<canvas id="canv"></canvas>
+				<ul class="clearfix footBar">
+					<li class="pull-right confirm">
+						<button>确定</button>
+						<span class="fa fa-check"></span>
+					</li>
+					<li class="pull-right delete">
+						<button>删除</button>
+						<span class="fa fa-close"></span>
+					</li>
+				</ul>
+				<div class="selector selectThing">
+					<div class="selector-body">
+						<div class="clearfix selector-title">
+							<p class="pull-left">选择对应实体</p>
+							<a href="javascript:;" class="pull-right selector-close"></a>
+						</div>
+						<div class="selector-main">
+							<div class="selector-search">
+								<input type="text" placeholder="输入关键字查找"/>
+								<span class="fa fa-search"></span>
+							</div>
+							<ul class="selector-list"></ul>
+							<div class="selector-scroll">
+								<div class="scrollBar"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="selector selectData">
+					<div class="selector-body">
+						<div class="clearfix selector-title">
+							<p class="pull-left">选择数据标签</p>
+							<a href="javascript:;" class="pull-right selector-close"></a>
+						</div>
+						<div class="selector-main">
+							<div class="selector-search">
+								<input type="text" placeholder="输入关键字查找"/>
+								<span class="fa fa-search"></span>
+							</div>
+							<ul class="selector-list"></ul>
+							<div class="selector-scroll">
+								<div class="scrollBar"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/three/three.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/three/ThreeCSG.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/three/OrbitControls.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/three/TransformControls.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/three/OBJLoader.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/scada_three.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/scada_review.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

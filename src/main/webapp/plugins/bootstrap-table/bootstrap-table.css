@@ -137,13 +137,8 @@
   width:100%;
 }
 
-.fixed-table-container tbody tr:first-child td {
+.fixed-table-container tbody tr td {
     border-top: none;
-
-}
-
-.fixed-table-container tbody td:first-child {
-    border-left: none;
 }
 
 /* the same color with .active */
