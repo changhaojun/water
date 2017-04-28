@@ -1,5 +1,5 @@
 var thingId=$("#thingId").val();
-var globalurl="http://192.168.1.114";
+//var globalurl="http://192.168.1.114";
 
 $(function(){
 	getToken();

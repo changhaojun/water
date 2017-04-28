@@ -1,6 +1,6 @@
 var thingId=$("#thingId").val();
 //var thingId="58734ea511b69c22b0afa990";
-var globalurl="http://192.168.1.114";
+//var globalurl="http://192.168.1.114";
 var selectedId=[];
 $(function(){
 	getToken();
