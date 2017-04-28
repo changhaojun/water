@@ -151,8 +151,8 @@ $.fn.extend({
 	},
 	saveTechnologyName:function(isEdit,name,technologyId){		//保存工艺名称
 		$('input').limitSpacing();		//输入框去除空格
-		var overEach=$('#addTechnologyName').formCheckFoo()
-		if(overEach){
+		$('#addTechnologyName').formCheckFoo()
+		if($.taskData.inputCheck){
 			var sendData={};
 				sendData.process_name=name
 				sendData.company_id=$.taskData.companyId;
@@ -183,7 +183,26 @@ $.fn.extend({
 				}
 			});
 		}
-		return overEach;
+		return $.taskData.inputCheck;
+	},
+	editTechnology:function(){
+			$.taskData.isEditTechnology=true;
+			var This=$(this)
+			var technologyId=$(this).parent().parent().attr('id')
+			var technologyName=$(this).parent().prev().prev().text()
+			$.layerConfirm=layer.confirm('<input type="text" value='+technologyName+' id="addTechnologyName" placeholder="请输入工艺名称"/>', {
+					title:"修改工艺名称",
+			  		btn: ['保存'] //按钮
+				},function(){
+					$.taskData.process_name=$("#addTechnologyName").val();
+					var isOk=This.saveTechnologyName($.taskData.isEditTechnology,$.taskData.process_name,technologyId);
+					if(isOk){
+						This.parent().prev().prev().html($("#addTechnologyName").val())
+						layer.close($.layerConfirm);
+					}
+				}
+			);
+			event.stopPropagation();
 	},
 	setTriggerType:function(triggerType){		//设置触发类型
 		$.taskData.trigger_type=triggerType[0]._id;
@@ -373,25 +392,33 @@ $.fn.extend({
 	hideTools:function(){	//隐藏工具栏
 		$(this).find(".tools").css("display","none");
 	},
-	deleteTechnology:function(technologyId){
-		//var sendData={process_id:technologyId};
-		$.ajax({
-			type:"delete",
-			url:globalurl+"/v1/processes?access_token="+$.taskData.access_token+"&process_id="+technologyId,
-			async:true,
-			//data:sendData,
-			success:function(data){
-				if(data.code==200){
-					layer.close($.layerConfirm)
-					layer.msg(data.success,{
-						icon:1,
-						time:2000
-					},function(){
-						location.reload();
-					})
-				}
+	deleteTechnology:function(){
+		var This=$(this)
+			$.layerConfirm=layer.confirm('删除工艺同时会删除该工艺下所有的任务，是否删除？', {
+					title:"删除工艺",
+			  		btn: ['删除'] //按钮
+			},function(){
+				var technologyId=This.parent().parent().attr('id')
+				$.ajax({
+					type:"delete",
+					url:globalurl+"/v1/processes?access_token="+$.taskData.access_token+"&process_id="+technologyId,
+					async:true,
+					//data:sendData,
+					success:function(data){
+						if(data.code==200){
+							layer.close($.layerConfirm)
+							layer.msg(data.success,{
+								icon:1,
+								time:2000
+							},function(){
+								location.reload();
+							})
+						}
+					}
+				});
 			}
-		});
+			);
+			event.stopPropagation();
 		
 	},
 	deleteMission:function(){
@@ -470,7 +497,6 @@ $.extend({
 		$.saveRule();		//保存规则
 		$('input').limitSpacing();		//输入框去除空格
 		$('input').filter('[num-limit=limit]').numOnly();		//数字限制输入
-//		$.formCheck();
  		$('[data-toggle="tooltip"]').tooltip();
  		$('#datetimepicker').datetimepicker({
  			language:'zh-CN',
@@ -503,6 +529,18 @@ $.extend({
 			$(".taskTree-add").before(stepBox);
 			stepText.html("step"+$.taskData.stepNum);
 			technologyName.find(".technologyName-greenBorder").html(receiveData.process_name);
+			$(".technologyName").hover(function(){
+				$(this).showTools();
+			},function(){
+				$(this).hideTools();
+			});
+			$('[data-toggle="tooltip"]').tooltip();
+			$(".toolsEdit").click(function(){	//修改工艺名称
+				$(this).editTechnology();
+			});
+			$('.toolsDelete').click(function(){
+				$(this).deleteTechnology();
+			})
 			$.taskData.stepNum++;		//step 数字自增
 	},
 	getProcess:function(){
@@ -579,7 +617,7 @@ $.extend({
 			$.taskData.selectControlTag=$(this).val();
 			var thisId=$(this).val();
 			if($(this).val()!=0&&$(this).val()!=''){
-				if($.taskData.controlTagList[thisId].low_battery==''||$.taskData.controlTagList[thisId].low_battery==undefined){
+				if(($.taskData.controlTagList[thisId].low_battery==undefined)||($.taskData.controlTagList[thisId].low_battery=='')){
 					$('.ioAction').show();
 					if($.taskData.ruleBox.target_data_id!=''){
 						$('#inputAction').val($.taskData.ruleBox.action);
@@ -616,33 +654,10 @@ $.extend({
 		});
 		
 		$(".toolsEdit").click(function(){	//修改工艺名称
-			$.taskData.isEditTechnology=true;
-			var This=$(this)
-			var technologyId=$(this).parent().parent().attr('id')
-			var technologyName=$(this).parent().prev().prev().text()
-			$.layerConfirm=layer.confirm('<input type="text" value='+technologyName+' id="addTechnologyName" placeholder="请输入工艺名称"/>', {
-					title:"修改工艺名称",
-			  		btn: ['保存'] //按钮
-				},function(){
-					$.taskData.process_name=$("#addTechnologyName").val();
-					This.saveTechnologyName($.taskData.isEditTechnology,$.taskData.process_name,technologyId);
-					This.parent().prev().prev().html($("#addTechnologyName").val())
-					layer.close($.layerConfirm);
-				}
-			);
-			event.stopPropagation();
+			$(this).editTechnology();
 		});
 		$('.toolsDelete').click(function(){
-			var This=$(this)
-			$.layerConfirm=layer.confirm('删除工艺同时会删除该工艺下所有的任务，是否删除？', {
-					title:"删除工艺",
-			  		btn: ['删除'] //按钮
-			},function(){
-					var technologyId=This.parent().parent().attr('id')
-					This.deleteTechnology(technologyId);
-				}
-			);
-			event.stopPropagation();
+			$(this).deleteTechnology();
 		})
 	},
 	clickTingLi:function(){	//点击触发条件实体名
@@ -665,7 +680,6 @@ $.extend({
 					}
 				}
 			})
-			console.info($.taskData.inputCheck)
 	if($.taskData.inputCheck){
 				var sendeData={};
 				sendeData.mission_name=$('#ruleName').val();
