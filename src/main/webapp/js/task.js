@@ -65,7 +65,7 @@ $.fn.extend({
 		);
 	},
 	showStepLine:function(){	//模拟点击工艺
-		$.taskData.processDom=$(this)
+		$.taskData.processDom=$(this);
 		$.taskData.process_name=$(this).text();
 		$(".technologyName").children("div.technologyName-line").css("display","none");
 		$(this).children("div.technologyName-line").css("display","block");
@@ -94,9 +94,9 @@ $.fn.extend({
 						This.showMissionsDom(data[i]);
 					}
 					$('.missionBox').hover(function(){
-						$(this).showTools()
+						$(this).showTools();
 					},function(){
-						$(this).hideTools()
+						$(this).hideTools();
 					})
 					
 					$('[data-toggle="tooltip"]').tooltip();
@@ -127,26 +127,26 @@ $.fn.extend({
 				break;
 		}
 		if(thisMIssion.action_str!=undefined){
-			action_str=thisMIssion.action_str
+			action_str=thisMIssion.action_str;
 		}else{
-			action_str=thisMIssion.action
+			action_str=thisMIssion.action;
 		}
 		var missionBox=$($.taskData.domString.missionBox)
-		$(this).append(missionBox)
+		$(this).append(missionBox);
 		missionBox.attr('id',thisMIssion._id);
-		missionBox.append('<div class="content1">'+thisMIssion.trigger_name+'</div>')
+		missionBox.append('<div class="content1">'+thisMIssion.trigger_name+'</div>');
 		if(thisMIssion.trigger_name=='事件触发'){
-			missionBox.append('<div class="content2">'+thisMIssion.thing_name+'：'+thisMIssion.data_name+'</div>')
-			missionBox.append('<div class="content3">'+compare_oper_str+thisMIssion.compare_value+'</div>')	
+			missionBox.append('<div class="content2">'+thisMIssion.thing_name+'：'+thisMIssion.data_name+'</div>');
+			missionBox.append('<div class="content3">'+compare_oper_str+thisMIssion.compare_value+'</div>');
 		}else if(thisMIssion.trigger_name=='时间周期触发'){
-			missionBox.append('<div class="content2"><span class="timeTitle">开始时间：</span>'+thisMIssion.start_time+'</div>')
-			missionBox.append('<div class="content3"><span class="timeTitle">时间间隔：</span>'+thisMIssion.time_interval+'分钟</div>')	
+			missionBox.append('<div class="content2"><span class="timeTitle">开始时间：</span>'+thisMIssion.start_time+'</div>');
+			missionBox.append('<div class="content3"><span class="timeTitle">时间间隔：</span>'+thisMIssion.time_interval+'分钟</div>')	;
 		}else{
-			missionBox.append('<div class="content2">        </div>')
-			missionBox.append('<div class="content3">        </div>')	
+			missionBox.append('<div class="content2">        </div>');
+			missionBox.append('<div class="content3">        </div>');
 		}
-		missionBox.append('<div class="content4">'+thisMIssion.target_thing_name+'：'+thisMIssion.target_data_name+'  '+action_str+'</div>')
-		missionBox.append('<div class="content5">执行'+thisMIssion.action_times+'次</div>')
+		missionBox.append('<div class="content4">'+thisMIssion.target_thing_name+'：'+thisMIssion.target_data_name+'  '+action_str+'</div>');
+		missionBox.append('<div class="content5">执行'+thisMIssion.action_times+'次</div>');
 		missionBox.append($($.taskData.domString.missionTools));
 	},
 	saveTechnologyName:function(isEdit,name,technologyId){		//保存工艺名称
@@ -159,11 +159,11 @@ $.fn.extend({
 			var sendType;
 			var sendUrl;
 			if(isEdit){
-				sendType="PUT"
+				sendType="PUT";
 				sendData={data:JSON.stringify(sendData),process_id:technologyId};
 			}
 			else{
-				sendType="POST"
+				sendType="POST";
 				sendData={data:JSON.stringify(sendData)};
 			}
 			$.ajax({
@@ -176,8 +176,8 @@ $.fn.extend({
 						var process={};
 						process.process_name=$.taskData.process_name;
 						process._id=data.process_id;
-						$.taskData.selectTaskId=data.process_id
-						$.creatStepBox(process)
+						$.taskData.selectTaskId=data.process_id;
+						$.creatStepBox(process);
 						$.taskData.task.push(process);
 					}
 				}
@@ -186,24 +186,24 @@ $.fn.extend({
 		return overEach;
 	},
 	setTriggerType:function(triggerType){		//设置触发类型
-		$.taskData.trigger_type=triggerType[0]._id
+		$.taskData.trigger_type=triggerType[0]._id;
 		for(var i=0;i<triggerType.length;i++){
-			$(this).append('<option value='+triggerType[i]._id+'>'+triggerType[i].trigger_name+'</option>')
+			$(this).append('<option value='+triggerType[i]._id+'>'+triggerType[i].trigger_name+'</option>');
 		}
 	},
 	openAddRuleBox:function(ruleBoxData,titleMsg){		//打开添加动作的窗口
-		$("#ruleName").val(ruleBoxData.mission_name)
+		$("#ruleName").val(ruleBoxData.mission_name);
 		$('#triggerType').val(ruleBoxData.trigger_type);
-		$('#conditionThing').val(ruleBoxData.thing_name)
+		$('#conditionThing').val(ruleBoxData.thing_name);
 		$('#conditionTag').val(ruleBoxData.data_id);
 		$('#compareOper').val(ruleBoxData.compare_oper);
 		$('#compareValue').val(ruleBoxData.compare_value);
-		$('#controlThing').val(ruleBoxData.target_thing_name)
+		$('#controlThing').val(ruleBoxData.target_thing_name);
 		$('#controlTag').val(ruleBoxData.target_data_id);
 		$('.actionTimes').val(ruleBoxData.action_times);
 		$('#datetimepicker').val(ruleBoxData.start_time);
 		$('#timeInterval').val(ruleBoxData.time_interval);
-		$("#triggerType").changeTriggerType()
+		$("#triggerType").changeTriggerType();
 		$.lyAddRuleBox=layer.open({
 			  type: 1,
 			  title: titleMsg,
@@ -216,7 +216,6 @@ $.fn.extend({
 	changeTriggerType:function(){	//选择触发类型
 		var selectType=$(this).find("option:selected").text();
 		$(this).changeTriggerTypeAction(selectType);
-		console.info($(this).parent().parent().parent().parent().height())
 		var contentHeight=$(this).parent().parent().parent().parent().height()+42;
 		$('.layui-layer').css('height',contentHeight+'px');
 	},
@@ -224,7 +223,7 @@ $.fn.extend({
 		$.taskData.trigger_type=$(this).val();
 		$(".addRuleMain").show();
 		if(selectType=="事件触发"){
-			$(".eventBox").show()
+			$(".eventBox").show();
 			$('.timingBox').hide();
 			$('.timingBox').addCustomAttr();
 			$(".eventBox").removeCustomAttr();
@@ -235,21 +234,21 @@ $.fn.extend({
 			$(".eventBox").addCustomAttr();
 			$('.timingBox').removeCustomAttr();
 		}else if(selectType=="人工触发"){
-			$(".eventBox").hide()
+			$(".eventBox").hide();
 			$('.timingBox').hide();
 			$(".eventBox").addCustomAttr();
 			$('.timingBox').addCustomAttr();
 		}
-		layer.iframeAuto($.lyAddRuleBox)
+		layer.iframeAuto($.lyAddRuleBox);
 	},
 	addCustomAttr:function(){
 		$(this).find('input').each(function(){
-			$(this).attr("isCheck","false")
+			$(this).attr("isCheck","false");
 		})
 	},
 	removeCustomAttr:function(){
 		$(this).find('input').each(function(){
-			$(this).attr("isCheck","true")
+			$(this).attr("isCheck","true");
 		})
 	},
 	getThing:function(){		//获取触发条件的实体列表
@@ -266,7 +265,7 @@ $.fn.extend({
 				selectUl.empty();
 				if(data.rows.length>0){
 					for(var i=0;i<data.rows.length;i++){
-						selectUl.append($('<li class="thingLi" value="'+data.rows[i]._id+'">'+data.rows[i].thing_name+'</li>'))
+						selectUl.append($('<li class="thingLi" value="'+data.rows[i]._id+'">'+data.rows[i].thing_name+'</li>'));
 					}
 					selectUl.css("border-color","#E7E7E7");
 				}else{
@@ -303,11 +302,11 @@ $.fn.extend({
 		}
 		var thingId,operType;
 		if(tagSelect.attr("id")=="conditionTag"){
-			thingId=$.taskData.selectEventThing
+			thingId=$.taskData.selectEventThing;
 			operType=1;
 		}else if(tagSelect.attr("id")=="controlTag"){
-			thingId=$.taskData.selectControlThing
-			operType=2
+			thingId=$.taskData.selectControlThing;
+			operType=2;
 		}
 		$.ajax({
 			type:"get",
@@ -320,25 +319,25 @@ $.fn.extend({
 				tagSelect.empty();
 				if(data.length>0){
 					for(var i=0;i<data.length;i++){
-						tagSelect.append($('<option class="tagLi" value="'+data[i].data_id+'">'+data[i].data_name+'</option>'))
+						tagSelect.append($('<option class="tagLi" value="'+data[i].data_id+'">'+data[i].data_name+'</option>'));
 						if(tagSelect.attr("id")=="controlTag"){
-							var thisId=data[i].data_id
-							$.taskData.controlTagList[thisId]=data[i]
+							var thisId=data[i].data_id;
+							$.taskData.controlTagList[thisId]=data[i];
 						}
 					}
 					if(tagSelect.attr("id")=="conditionTag"){
 						if($.taskData.ruleBox.data_id==''){
-							$.taskData.selectEventTag=parseInt(data[0].data_id)
+							$.taskData.selectEventTag=parseInt(data[0].data_id);
 						}else{
-							$.taskData.selectEventTag=$.taskData.ruleBox.data_id
+							$.taskData.selectEventTag=$.taskData.ruleBox.data_id;
 						}
 					}else if(tagSelect.attr("id")=="controlTag"){
 						if($.taskData.ruleBox.target_data_id==''){
-							$.taskData.selectControlTag=parseInt(data[0].data_id)
+							$.taskData.selectControlTag=parseInt(data[0].data_id);
 							$("#controlTag").change();
 						}else{
-							$.taskData.selectControlTag=$.taskData.ruleBox.target_data_id
-							$("#controlTag").val($.taskData.selectControlTag)
+							$.taskData.selectControlTag=$.taskData.ruleBox.target_data_id;
+							$("#controlTag").val($.taskData.selectControlTag);
 						}
 					}
 				}else{
@@ -388,7 +387,7 @@ $.fn.extend({
 						icon:1,
 						time:2000
 					},function(){
-						location.reload() 
+						location.reload();
 					})
 				}
 			}
@@ -439,8 +438,8 @@ $.fn.extend({
 				$.taskData.ruleBox.trigger_type=data.trigger_type;
 				$.taskData.ruleBox.target_thing_id=data.target_thing_id;
 				$.taskData.ruleBox.target_data_id=data.target_data_id;
-				$.taskData.selectControlThing=data.target_thing_id
-				$.taskData.ruleBox.target_thing_name=data.target_thing_name
+				$.taskData.selectControlThing=data.target_thing_id;
+				$.taskData.ruleBox.target_thing_name=data.target_thing_name;
 				$.taskData.ruleBox.start_time=data.start_time;
 				$.taskData.ruleBox.time_interval=data.time_interval;
 				$('#controlThingList').getConditionTagList();
@@ -483,20 +482,20 @@ $.extend({
 	},
 	addNode:function(){
 		$(".taskTree-add").click(function(){
-			$(this).addTechnology()
+			$(this).addTechnology();
 		});
 	},
 	creatStepBox:function(receiveData) {	//创建工艺DOM节点
 			$.taskData.process_name = receiveData.process_name;
-			var stepBox=$($.taskData.domString.stepBox)
-			var ruleNode=$($.taskData.domString.ruleNode)
-			var stepText=$($.taskData.domString.stepText)
-			var technologyName=$($.taskData.domString.technologyName)
-			var technologyTools=$($.taskData.domString.technologyTools)
-			technologyName.append(technologyTools)
-			technologyName.attr("id",receiveData._id)
+			var stepBox=$($.taskData.domString.stepBox);
+			var ruleNode=$($.taskData.domString.ruleNode);
+			var stepText=$($.taskData.domString.stepText);
+			var technologyName=$($.taskData.domString.technologyName);
+			var technologyTools=$($.taskData.domString.technologyTools);
+			technologyName.append(technologyTools);
+			technologyName.attr("id",receiveData._id);
 			technologyName.click(function(){	//绑定点击事件
-				$(this).showStepLine()
+				$(this).showStepLine();
 			})
 			ruleNode.append(stepText);
 			ruleNode.append(technologyName);
@@ -512,7 +511,7 @@ $.extend({
 			url:globalurl+"/v1/processes?access_token="+$.taskData.access_token,
 			async:false,
 			success:function(data){
-				$.taskData.task=data.rows
+				$.taskData.task=data.rows;
 				for(var i=0;i<$.taskData.task.length;i++){
 					$.creatStepBox($.taskData.task[i]);
 				}
@@ -578,12 +577,12 @@ $.extend({
 		
 		$("#controlTag").change(function(){
 			$.taskData.selectControlTag=$(this).val();
-			var thisId=$(this).val()
+			var thisId=$(this).val();
 			if($(this).val()!=0&&$(this).val()!=''){
 				if($.taskData.controlTagList[thisId].low_battery==''||$.taskData.controlTagList[thisId].low_battery==undefined){
 					$('.ioAction').show();
 					if($.taskData.ruleBox.target_data_id!=''){
-						$('#inputAction').val($.taskData.ruleBox.action)
+						$('#inputAction').val($.taskData.ruleBox.action);
 					}
 					$('.selectAction').hide();
 					$('.selectAction').addCustomAttr();
@@ -592,10 +591,10 @@ $.extend({
 					$('.portAction').empty();
 					
 					$('.selectAction').show();
-						$('.portAction').append('<option value=0>'+$.taskData.controlTagList[thisId].low_battery+'</option>')
-						$('.portAction').append('<option value=1>'+$.taskData.controlTagList[thisId].high_battery+'</option>')
+						$('.portAction').append('<option value=0>'+$.taskData.controlTagList[thisId].low_battery+'</option>');
+						$('.portAction').append('<option value=1>'+$.taskData.controlTagList[thisId].high_battery+'</option>');
 						if($.taskData.ruleBox.target_data_id!=''){
-							$('.portAction').val($.taskData.ruleBox.action)
+							$('.portAction').val($.taskData.ruleBox.action);
 						}
 					$('.ioAction').hide();
 					$('.ioAction').addCustomAttr();
@@ -666,7 +665,6 @@ $.extend({
 					}
 				}
 			})
-//			if($.taskData.inputCheck && $.taskData.selectControlThing!='' && $.taskData.selectControlThing!=0 && $.taskData.selectEventThing!='' && $.taskData.selectEventThing!=0){
 	if($.taskData.inputCheck){
 				var sendeData={};
 				sendeData.mission_name=$('#ruleName').val();
@@ -693,12 +691,11 @@ $.extend({
 				
 				var sendType;
 				if($.taskData.ruleBox.mission_id==''){
-					sendType='post'
-					sendeData={data:JSON.stringify(sendeData)}
+					sendType='post';
+					sendeData={data:JSON.stringify(sendeData)};
 				}else{
-					sendType='put'
-					//sendeData._id=$.taskData.ruleBox.mission_id;
-					sendeData={data:JSON.stringify(sendeData),mission_id:$.taskData.ruleBox.mission_id}
+					sendType='put';
+					sendeData={data:JSON.stringify(sendeData),mission_id:$.taskData.ruleBox.mission_id};
 				}
 				$.ajax({
 					type:sendType,
