@@ -1,6 +1,6 @@
 var companyCode=$("#companyCode").val();	//公司编号，获取用户列表时使用
 var companyId=$("#companyId").val();		//公司ID
-var globalurl="http://192.168.1.114";
+//var globalurl="http://192.168.1.114";
 $(function(){
 	getToken();
 	toolTip();
