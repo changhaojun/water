@@ -500,7 +500,7 @@ $.extend({
  		$('[data-toggle="tooltip"]').tooltip();
  		$('#datetimepicker').datetimepicker({
  			language:'zh-CN',
- 			format: "yyyy-M-dd  hh:ii",
+ 			format: "yyyy-MM-dd  hh:ii",
 	        autoclose: true,
 	        todayBtn: true,
 	        pickerPosition: "bottom-left"
