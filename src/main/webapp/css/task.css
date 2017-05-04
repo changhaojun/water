@@ -213,6 +213,19 @@ body{
 	border-radius: 45px;
 	cursor: pointer;
 }
+.ruleTitle{
+	width:99%;
+	margin:auto;
+	height:50px;
+	text-align: center;
+	margin-bottom: 20px;
+	line-height: 50px;
+	font-size: 22px;
+	border:#1AB394 1px solid ;
+	color: #748398;
+	background-color: #FFFFFF;
+	border-radius: 45px;
+}
 .missionBox{
 	/*display: flex;
 	display: -webkit-flex;*/
@@ -234,28 +247,39 @@ body{
 .missionBox > .content2,
 .missionBox > .content3,
 .missionBox > .content4,
-.missionBox > .content5
+.missionBox > .content5,
+.ruleTitle > .content1,
+.ruleTitle > .content2
 {
 	height: 50px;
 	float: left;
+	text-align: center;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 .missionBox > .content1{
-	width: 13%;
-}
-.missionBox > .content2{
 	width: 30%;
 }
+.missionBox > .content2{
+	width: 50%;
+}
 .missionBox > .content3{
-	width: 17%;
+	width: 20%;
 }
 .missionBox > .content4{
 	width: 30%;
 }
 .missionBox > .content5{
 	width: 10%;
+}
+.ruleTitle > .content1{
+	font-size: 14px;
+	width: 85%;
+}
+.ruleTitle > .content2{
+	font-size: 14px;
+	width: 15%;
 }
 
 .taskContent > .taskRule >.ruleMain>.missionBox:hover{
@@ -388,6 +412,13 @@ li:hover{
 	width: 545px;
 	height: 30px;
     margin-top: -4px;
+	float: right;
+}
+.fullcontrols{
+	width: 545px;
+	height: 30px;
+    margin-top: -4px;
+    margin-right: 5px;
 	float: right;
 }
 .closeBox{
