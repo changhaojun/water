@@ -291,7 +291,9 @@ body{
 	font-size: 14px;
 	width: 15%;
 }
-
+.ruleMain{
+	position: relative;
+}
 .taskContent > .taskRule >.ruleMain>.missionBox:hover{
 	filter:alpha(opacity=80); /*IE滤镜，透明度50%*/
 	-moz-opacity:0.8; /*Firefox私有，透明度50%*/

@@ -135,6 +135,7 @@ $.fn.extend({
 					for(var i=0;i<data.rows.length;i++){
 						This.showMissionsDom(data.rows[i]);
 					}
+					$.dragMission();//拖动任务
 					$('.missionBox').hover(function(){
 						$(this).showTools();
 					},function(){
@@ -493,6 +494,7 @@ $.fn.extend({
 	},
 	saveProcessData:function(){
 		$.taskData.processBox.process_name=$('#addTechnologyName').val();
+		$.taskData.processBox.action_times=Number($('.actionTimes').val());
 		var conditionData={};
 		$.taskData.processBox.trigger_conditions=[];
 		if($('.eventBox').css('display')=='block'){
@@ -500,7 +502,6 @@ $.fn.extend({
 			conditionData.data_id=Number($('.eventBox').find('.conditionTag').val());
 			conditionData.compare_oper=$('.eventBox').find('.compareOper').val();
 			conditionData.compare_value=Number($('.eventBox').find('.compareValue').val());
-			conditionData.action_times=Number($('.actionTimes').val());
 			$.taskData.processBox.trigger_conditions.push(conditionData);
 			$('.addConditionBox .addEventBox').each(function(){
 				conditionData={};
@@ -541,6 +542,9 @@ $.fn.extend({
 				})
 			}
 		});
+	},
+	dragMissionFn:function(){
+		$(this).gridly();
 	}
 });
 
@@ -701,6 +705,9 @@ $.extend({
 		$("#triggerType").change(function(){
 			$(this).changeTriggerType();
 		});
+	},
+	dragMission:function(){
+		$('.ruleMain').dragMissionFn();
 	},
 	setConditionThing:function(){		//任务列表的绑定事件
 		$("#controlTag").change(function(){
