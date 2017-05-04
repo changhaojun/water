@@ -12,7 +12,8 @@ $.taskData = {
 		technologyName: '<div class="technologyName"><div class="technologyName-greenBorder"></div><div class="technologyName-line"></div></div>',
 		technologyTools:'<div class="technologyTools tools"><span class="fa fa-wrench toolsEdit" data-toggle="tooltip" data-placement="top" title="修改工艺名称"></span><span class="fa fa-trash-o toolsDelete" data-toggle="tooltip" data-placement="top" title="删除工艺"></span></div>',
 		missionBox:'<div class="missionBox row"></div>',
-		missionTools:'<span class="missionTools tools"><span class="fa fa-wrench missionToolsEdit" data-toggle="tooltip" data-placement="top" title="修改"></span><span class="fa fa-trash-o missionToolsDelete" data-toggle="tooltip" data-placement="top" title="删除"></span></span>'
+		missionTools:'<span class="missionTools tools"><span class="fa fa-wrench missionToolsEdit" data-toggle="tooltip" data-placement="top" title="修改"></span><span class="fa fa-trash-o missionToolsDelete" data-toggle="tooltip" data-placement="top" title="删除"></span></span>',
+		addConditionBox:'<div class="addEventBox"><div class="row"><div class="col-xs-6">实体名称：<input class="controls conditionThing" placeholder="请输入触发条件的实体名" /><ul class="conditionThingList" hidden="hidden"></ul></div><div class="col-xs-6">采集端口：<select class="controls conditionTag" ></select></div><span class="closeBox" data-toggle="tooltip" data-placement="top" title="删除">x</span></div><div class="row"><div class="col-xs-6">比较符：&nbsp;&nbsp;<select class="controls compareOper"><option value="gt">></option><option value="lt"><</option><option value="eq">=</option></select></div><div class="col-xs-6">基准值：&nbsp;&nbsp;<input class="controls compareValue" num-limit="limit" placeholder="请输入基准值"/></div></div><hr /></div>'
 	},
 	selectTaskId:'',		//点击工艺后获取该工艺的ID
 	stepNum:'1',			//工艺名称上自增的数字
@@ -20,7 +21,8 @@ $.taskData = {
 	selectEventTag:'',		//选择事件触发的端口
 	compare_oper:'gt',		//比较符初始化
 	compare_value:'',		//基准值
-	trigger_type:'',		//事件类型
+	trigger_type:'58ef46b543929a10708f2b08',		//事件类型
+	trigger_typeStr:'',
 	selectControlThing:'',	//选择控制的实体
 	selectControlTag:'',	//选择控制的端口
 	controlTagList:{},		//控制端口的集合
@@ -32,37 +34,36 @@ $.taskData = {
 		mission_id:'',
 		mission_name:'',
 		trigger_type:'58ef46b543929a10708f2b08',
-		thing_id:'',
-		thing_name:'',
-		data_id:'',
-		data_name:'',
-		compare_oper:'gt',
-		compare_value:'',
 		target_thing_id:'',
 		target_thing_name:'',
 		target_data_id:'',
 		target_data_name:'',
-		action:'',
-		action_times:''
+	},
+	processBox:{
+		process_name:'',
+		trigger_type:'58ef46b543929a10708f2b08',
+		company_id:$("#companyId").val(),
+		status:1,
+		trigger_conditions:[],
+		action_times:1,
+		mobile:''
 	}
 };
 
 $.fn.extend({
 	addTechnology:function(){	//添加工艺
+		$.taskData.processBox.process_name='';
+		$.taskData.processBox.trigger_type='58ef46b543929a10708f2b08';
+		$.taskData.processBox.status=1;
+		$.taskData.processBox.trigger_conditions=[];
+		$.taskData.processBox.action_times=1;
+		$.taskData.processBox.mobile='';
 		var This = $(this);
-		$.taskData.isEditTechnology=false
-		$.layerConfirm=layer.confirm($.taskData.domString.layerInput, {
-				title:"添加工艺",
-			  	btn: ['保存'] //按钮
-			},function(){
-				$.taskData.process_name=$("#addTechnologyName").val();
-				var isOk=This.saveTechnologyName($.taskData.isEditTechnology,$.taskData.process_name);
-				if(isOk){
-					layer.close($.layerConfirm);
-					$(".technologyName:last").showStepLine();	//添加工艺后模拟点击
-				}
-			}
-		);
+		$('.addConditionBox').empty();
+		$.taskData.isEditTechnology=false;
+		var titleMsg='添加工艺'
+		$.showAddProcessBox($.taskData.processBox,titleMsg)
+		
 	},
 	showStepLine:function(){	//模拟点击工艺
 		$.taskData.processDom=$(this);
@@ -117,13 +118,13 @@ $.fn.extend({
 		var action_str;
 		switch (thisMIssion.compare_oper){
 			case 'gt':
-				compare_oper_str='>'
+				compare_oper_str='大于'
 				break;
 			case 'lt':
-				compare_oper_str='<'
+				compare_oper_str='小于'
 				break;
 			default:
-				compare_oper_str='='
+				compare_oper_str='等于'
 				break;
 		}
 		if(thisMIssion.action_str!=undefined){
@@ -189,19 +190,30 @@ $.fn.extend({
 			$.taskData.isEditTechnology=true;
 			var This=$(this)
 			var technologyId=$(this).parent().parent().attr('id')
-			var technologyName=$(this).parent().prev().prev().text()
-			$.layerConfirm=layer.confirm('<input type="text" value='+technologyName+' id="addTechnologyName" placeholder="请输入工艺名称"/>', {
-					title:"修改工艺名称",
-			  		btn: ['保存'] //按钮
-				},function(){
-					$.taskData.process_name=$("#addTechnologyName").val();
-					var isOk=This.saveTechnologyName($.taskData.isEditTechnology,$.taskData.process_name,technologyId);
-					if(isOk){
-						This.parent().prev().prev().html($("#addTechnologyName").val())
-						layer.close($.layerConfirm);
-					}
+			$.ajax({
+				type:"get",
+				url:globalurl+"/v1/processes?access_token="+$.taskData.access_token+"&process_id="+technologyId,
+				async:false,
+				success:function(data){
+					console.info(data);
+					var titleMsg='修改工艺';
+					$.taskData.processBox=data;
+					$.showAddProcessBox(data,titleMsg);
 				}
-			);
+			});
+//			var technologyName=$(this).parent().prev().prev().text()
+//			$.layerConfirm=layer.confirm('<input type="text" value='+technologyName+' id="addTechnologyName" placeholder="请输入工艺名称"/>', {
+//					title:"修改工艺名称",
+//			  		btn: ['保存'] //按钮
+//				},function(){
+//					$.taskData.process_name=$("#addTechnologyName").val();
+//					var isOk=This.saveTechnologyName($.taskData.isEditTechnology,$.taskData.process_name,technologyId);
+//					if(isOk){
+//						This.parent().prev().prev().html($("#addTechnologyName").val())
+//						layer.close($.layerConfirm);
+//					}
+//				}
+//			);
 			event.stopPropagation();
 	},
 	setTriggerType:function(triggerType){		//设置触发类型
@@ -212,17 +224,11 @@ $.fn.extend({
 	},
 	openAddRuleBox:function(ruleBoxData,titleMsg){		//打开添加动作的窗口
 		$("#ruleName").val(ruleBoxData.mission_name);
-		$('#triggerType').val(ruleBoxData.trigger_type);
-		$('#conditionThing').val(ruleBoxData.thing_name);
-		$('#conditionTag').val(ruleBoxData.data_id);
-		$('#compareOper').val(ruleBoxData.compare_oper);
-		$('#compareValue').val(ruleBoxData.compare_value);
 		$('#controlThing').val(ruleBoxData.target_thing_name);
 		$('#controlTag').val(ruleBoxData.target_data_id);
 		$('.actionTimes').val(ruleBoxData.action_times);
 		$('#datetimepicker').val(ruleBoxData.start_time);
 		$('#timeInterval').val(ruleBoxData.time_interval);
-		$("#triggerType").changeTriggerType();
 		$.lyAddRuleBox=layer.open({
 			  type: 1,
 			  title: titleMsg,
@@ -240,22 +246,34 @@ $.fn.extend({
 	},
 	changeTriggerTypeAction:function(selectType){	//选择触发类型后执行
 		$.taskData.trigger_type=$(this).val();
+		$.taskData.processBox.trigger_type=$(this).val();
 		$(".addRuleMain").show();
 		if(selectType=="事件触发"){
 			$(".eventBox").show();
+			$(".addEventBox").show();
 			$('.timingBox').hide();
+			$('.triggerText').show();
+			$('.addConditionBtn').show();
 			$('.timingBox').addCustomAttr();
 			$(".eventBox").removeCustomAttr();
-			//$('.layui-layer-content').height('450px');
+			$('.addConditionBox').removeCustomAttr();
 		}else if(selectType=="时间周期触发"){
 			$('.timingBox').show();
+			$(".addEventBox").hide();
 			$(".eventBox").hide();
+			$('.triggerText').show();
+			$('.addConditionBtn').hide();
 			$(".eventBox").addCustomAttr();
+			$('.addConditionBox').addCustomAttr();
 			$('.timingBox').removeCustomAttr();
 		}else if(selectType=="人工触发"){
 			$(".eventBox").hide();
+			$(".addEventBox").hide();
 			$('.timingBox').hide();
+			$('.triggerText').hide();
+			$('.addConditionBtn').hide();
 			$(".eventBox").addCustomAttr();
+			$('.addConditionBox').addCustomAttr();
 			$('.timingBox').addCustomAttr();
 		}
 		layer.iframeAuto($.lyAddRuleBox);
@@ -299,20 +317,21 @@ $.fn.extend({
 		var parentInput=parent.prev();
 		var classType=$(this).attr('class');
 		if(classType=="thingLi"){
-			if(parent.attr("id")=="conditionThingList"){
+			if(parent.attr("class")=="conditionThingList"){
 				$.taskData.selectEventThing=$(this).attr("value");
+				parent.attr('thing_id',$(this).attr("value"));
 			}else if(parent.attr("id")=="controlThingList"){
 				$.taskData.selectControlThing=$(this).attr("value");
 			}
 			if($(this).attr("value")!=0){
-				$(this).getConditionTagList();
+				parent.getConditionTagList();
 				parentInput.val($(this).text());
 				parent.empty();
 				parent.hide();
 			}
 		}
 	},
-	getConditionTagList:function(){		//选择实体后获取该实体下标签的列表
+	getConditionTagList:function(triggerCondition){		//选择实体后获取该实体下标签的列表
 		var tagSelect;
 		if($(this).is('UL')){
 			tagSelect=$(this).parent().next().find("select");
@@ -320,8 +339,9 @@ $.fn.extend({
 			tagSelect=$(this).parent().parent().next().find("select");
 		}
 		var thingId,operType;
-		if(tagSelect.attr("id")=="conditionTag"){
-			thingId=$.taskData.selectEventThing;
+		console.info($(this))
+		if(tagSelect.attr("class")=="controls conditionTag"){
+			thingId=$(this).attr('thing_id');
 			operType=1;
 		}else if(tagSelect.attr("id")=="controlTag"){
 			thingId=$.taskData.selectControlThing;
@@ -329,11 +349,10 @@ $.fn.extend({
 		}
 		$.ajax({
 			type:"get",
-			url:globalurl+"/v1/missionDataTags?access_token="+$.taskData.access_token,
+			url:globalurl+"/v1/missionDataTags?access_token="+$.taskData.access_token+"&thing_id="+thingId,
 			async:false,
 			data:{
-				filter:'{"oper_type":'+operType+'}',
-				thing_id:thingId
+				filter:'{"oper_type":'+operType+'}'
 			},success:function(data){
 				tagSelect.empty();
 				if(data.length>0){
@@ -344,13 +363,7 @@ $.fn.extend({
 							$.taskData.controlTagList[thisId]=data[i];
 						}
 					}
-					if(tagSelect.attr("id")=="conditionTag"){
-						if($.taskData.ruleBox.data_id==''){
-							$.taskData.selectEventTag=parseInt(data[0].data_id);
-						}else{
-							$.taskData.selectEventTag=$.taskData.ruleBox.data_id;
-						}
-					}else if(tagSelect.attr("id")=="controlTag"){
+					if(tagSelect.attr("id")=="controlTag"){
 						if($.taskData.ruleBox.target_data_id==''){
 							$.taskData.selectControlTag=parseInt(data[0].data_id);
 							$("#controlTag").change();
@@ -453,22 +466,12 @@ $.fn.extend({
 			async:true,
 			success:function(data){
 				$.taskData.ruleBox.action=data.action;
-				$.taskData.ruleBox.action_times=data.action_times;
-				$.taskData.ruleBox.compare_oper=data.compare_oper;
-				$.taskData.ruleBox.compare_value=data.compare_value;
-				$.taskData.ruleBox.thing_id=data.thing_id;
-				$.taskData.ruleBox.data_id=data.data_id;
-				$.taskData.selectEventThing=data.thing_id;
-				$('#conditionThingList').getConditionTagList();
-				$.taskData.ruleBox.thing_name=data.thing_name;
 				$.taskData.ruleBox.mission_name=data.mission_name;
 				$.taskData.ruleBox.trigger_type=data.trigger_type;
 				$.taskData.ruleBox.target_thing_id=data.target_thing_id;
 				$.taskData.ruleBox.target_data_id=data.target_data_id;
 				$.taskData.selectControlThing=data.target_thing_id;
 				$.taskData.ruleBox.target_thing_name=data.target_thing_name;
-				$.taskData.ruleBox.start_time=data.start_time;
-				$.taskData.ruleBox.time_interval=data.time_interval;
 				$('#controlThingList').getConditionTagList();
 				$(this).openAddRuleBox($.taskData.ruleBox,titleMsg);
 				$("#controlTag").change();
@@ -478,6 +481,62 @@ $.fn.extend({
 			}
 		});
 		event.stopPropagation();
+	},
+	addCondition:function(){
+		$('.addConditionBox').append($($.taskData.domString.addConditionBox));
+		$('.layui-layer-content').height($('.addProcessContent').height()+42);
+		$.conditionBox();
+	},
+	saveProcessData:function(){
+		$.taskData.processBox.process_name=$('#addTechnologyName').val();
+		var conditionData={};
+		$.taskData.processBox.trigger_conditions=[];
+		if($('.eventBox').css('display')=='block'){
+			conditionData.thing_id=$('.eventBox').find('.conditionThingList').attr('thing_id');
+			conditionData.data_id=Number($('.eventBox').find('.conditionTag').val());
+			conditionData.compare_oper=$('.eventBox').find('.compareOper').val();
+			conditionData.compare_value=Number($('.eventBox').find('.compareValue').val());
+			conditionData.action_times=Number($('.actionTimes').val());
+			$.taskData.processBox.trigger_conditions.push(conditionData);
+			$('.addConditionBox .addEventBox').each(function(){
+				conditionData={};
+				conditionData.thing_id=$(this).find('.conditionThingList').attr('thing_id');
+				conditionData.data_id=Number($(this).find('.conditionTag').val());
+				conditionData.compare_oper=$(this).find('.compareOper').val();
+				conditionData.compare_value=Number($(this).find('.compareValue').val());
+				$.taskData.processBox.trigger_conditions.push(conditionData);
+			})
+		}else if($('.timingBox').css('display')=='block'){
+			conditionData={};
+			conditionData.begin_time=$('#datetimepicker').val();
+			conditionData.cycle_time=Number($('#timeInterval').val());
+			$.taskData.processBox.trigger_conditions.push(conditionData);
+		}
+		var sendData,sendType;
+		if($.taskData.isEditTechnology){
+			var processId=$.taskData.processBox._id
+			delete $.taskData.processBox._id;
+			sendType='PUT'
+			sendData={data:JSON.stringify($.taskData.processBox),process_id:processId}
+		}else{
+			sendType='post'
+			sendData={data:JSON.stringify($.taskData.processBox)}
+		}
+		$.ajax({
+			type:sendType,
+			url:globalurl+"/v1/processes?access_token="+$.taskData.access_token,
+			async:false,
+			data:sendData,
+			success:function(data){
+				console.info(data)
+				layer.msg(data.success,{
+					icon:1,
+					time:2000
+				},function(){
+					location.reload();
+				})
+			}
+		});
 	}
 });
 
@@ -492,12 +551,11 @@ $.extend({
 		$.addRule();		//添加规则
 		$.selectTriggerType();	//选择触发类型
 		$.setConditionThing();	//输入条件实体名称，模糊查询
-		$.clickTingLi();		//列表中选择实体
-		$.changeCompareOper();	//变更比较符
 		$.saveRule();		//保存规则
 		$('input').limitSpacing();		//输入框去除空格
 		$('input').filter('[num-limit=limit]').numOnly();		//数字限制输入
  		$('[data-toggle="tooltip"]').tooltip();
+ 		$.saveProcess();
  		$('#datetimepicker').datetimepicker({
  			language:'zh-CN',
  			format: "yyyy-MM-dd  hh:ii",
@@ -505,6 +563,7 @@ $.extend({
 	        todayBtn: true,
 	        pickerPosition: "bottom-left"
  		});
+ 		$.conditionBox();	//控制条件BOX
 	},
 	addNode:function(){
 		$(".taskTree-add").click(function(){
@@ -528,19 +587,12 @@ $.extend({
 			stepBox.append(ruleNode);
 			$(".taskTree-add").before(stepBox);
 			stepText.html("step"+$.taskData.stepNum);
-			technologyName.find(".technologyName-greenBorder").html(receiveData.process_name);
+			technologyName.find(".technologyName-greenBorder").html(receiveData.process_name+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+receiveData.trigger_name);
 			$(".technologyName").hover(function(){
 				$(this).showTools();
 			},function(){
 				$(this).hideTools();
 			});
-			$('[data-toggle="tooltip"]').tooltip();
-			$(".toolsEdit").click(function(){	//修改工艺名称
-				$(this).editTechnology();
-			});
-			$('.toolsDelete').click(function(){
-				$(this).deleteTechnology();
-			})
 			$.taskData.stepNum++;		//step 数字自增
 	},
 	getProcess:function(){
@@ -549,11 +601,21 @@ $.extend({
 			url:globalurl+"/v1/processes?access_token="+$.taskData.access_token,
 			async:false,
 			success:function(data){
-				$.taskData.task=data.rows;
-				for(var i=0;i<$.taskData.task.length;i++){
-					$.creatStepBox($.taskData.task[i]);
+				console.info(data)
+				if(data.rows.length>0){
+					$.taskData.task=data.rows;
+					for(var i=0;i<$.taskData.task.length;i++){
+						$.creatStepBox($.taskData.task[i]);
+					}
+					$(".toolsEdit").click(function(){	//修改工艺名称
+						$(this).editTechnology();
+					});
+					$('.toolsDelete').click(function(){
+						$(this).deleteTechnology();
+					})
+					$('[data-toggle="tooltip"]').tooltip();
+					$(".technologyName").eq(0).showStepLine();	//页面初始化时模拟点击第一个工艺
 				}
-				$(".technologyName").eq(0).showStepLine();	//页面初始化时模拟点击第一个工艺
 			}
 		})
 	},
@@ -565,6 +627,45 @@ $.extend({
 			success:function(data){
 				$("#triggerType").setTriggerType(data);
 			}
+		})
+	},
+	showAddProcessBox:function(processData,titleMsg){
+		console.info(processData)
+		$('#addTechnologyName').val(processData.process_name);
+		$('#triggerType').val(processData.trigger_type);
+		if(processData.trigger_name=="事件触发"){
+			if(processData.trigger_conditions.length>0){
+				var thing_name=processData.trigger_conditions[0].thing_name
+				$('.eventBox').find('.conditionThing').val(thing_name)
+				$('.eventBox').find('.conditionThingList').attr('thing_id',processData.trigger_conditions[0].thing_id);
+				$('.eventBox').find('.conditionThingList').getConditionTagList(processData.trigger_conditions[0]);
+				$('.eventBox').find('.conditionTag').val(processData.trigger_conditions[0].data_id);
+				$('.eventBox').find('.compareOper').val(processData.trigger_conditions[0].compare_oper);
+				$('.eventBox').find('.compareValue').val(processData.trigger_conditions[0].compare_value);
+				for(var i=1;i<processData.trigger_conditions.length;i++){
+					$('.addConditionBtn').click();
+					var thing_name=processData.trigger_conditions[1].thing_name
+					$('.addEventBox').find('.conditionThing').val(thing_name)
+					$('.addEventBox').find('.conditionThingList').attr('thing_id',processData.trigger_conditions[i].thing_id);
+					$('.addEventBox').find('.conditionThingList').getConditionTagList(processData.trigger_conditions[i]);
+					$('.addEventBox').find('.conditionTag').val(processData.trigger_conditions[i].data_id);
+					$('.addEventBox').find('.compareOper').val(processData.trigger_conditions[i].compare_oper);
+					$('.addEventBox').find('.compareValue').val(processData.trigger_conditions[i].compare_value);
+				}
+			}
+		}else if(processData.trigger_name=="时间周期触发"){
+			if(processData.trigger_conditions.length>0){
+				$('#datetimepicker').val(processData.trigger_conditions[0].begin_time);
+				$('#timeInterval').val(processData.trigger_conditions[0].cycle_time);
+			}
+		}
+		$.addProcessBox=layer.open({
+			type: 1,
+			title: titleMsg,
+			shadeClose: false,
+			shade: 0.8,
+			area: ['680px'],
+			content: $('.addProcess') //iframe的url
 		})
 	},
 	addRule:function(){	//点击添加动作时弹窗
@@ -597,23 +698,7 @@ $.extend({
 		})
 	},
 	setConditionThing:function(){		//设置实体
-		$("#conditionThing").keyup(function(){
-			$.taskData.selectEventThing=0;
-			$(this).getThing();
-		});
-		
-		$("#conditionThing").blur(function(){
-			if($.taskData.selectEventThing!=0&&$(this).val()==""){
-				$("#conditionThingList").empty();
-				$("#conditionThingList").hide();
-			}
-		});
-		
-		$("#conditionTag").change(function(){
-			$.taskData.selectEventTag=$(this).val();
-		});
-		
-		$("#controlTag").change(function(){
+		$(".controlTag").change(function(){
 			$.taskData.selectControlTag=$(this).val();
 			var thisId=$(this).val();
 			if($(this).val()!=0&&$(this).val()!=''){
@@ -640,7 +725,9 @@ $.extend({
 				}
 			}
 		});
-		
+		$('.addConditionBtn ').click(function(){
+			$(this).addCondition();
+		});
 		$("#controlThing").keyup(function(){	//实体名称输入框keyUp
 			$.taskData.selectControlThing=0;
 			$.taskData.ruleBox.target_data_id=''
@@ -652,23 +739,53 @@ $.extend({
 		},function(){
 			$(this).hideTools();
 		});
-		
-		$(".toolsEdit").click(function(){	//修改工艺名称
-			$(this).editTechnology();
-		});
 		$('.toolsDelete').click(function(){
 			$(this).deleteTechnology();
 		})
 	},
-	clickTingLi:function(){	//点击触发条件实体名
+	saveProcess:function(){
+		$('.saveProcessBtn').click(function(){
+			$('.addProcessContent input').each(function(){
+				if($(this).attr("isCheck")!="false"){
+					var overEach=$(this).formCheckFoo();
+					if(overEach==false){
+						return false;
+					}
+				}
+			})
+			if($.taskData.inputCheck){
+				$(this).saveProcessData();
+			}
+		})
+	},
+	conditionBox:function(){
+		$(".conditionThing").keyup(function(){
+			$.taskData.selectEventThing=0;
+			$(this).getThing();
+		});
+		
+		$(".conditionThing").blur(function(){
+			if($.taskData.selectEventThing!=0&&$(this).val()==""){
+				$(this).next().empty();
+				$(this).next().hide();
+			}
+		});
+		
+		$(".conditionTag").change(function(){
+			$.taskData.selectEventTag=$(this).val();
+		});
+		
 		$("ul").delegate("li","click",function(){
 			$(this).changeConditionThing();
 		});
-	},
-	changeCompareOper:function(){	//切换比较符
 		$("#compareOper").change(function(){
 			$.taskData.compare_oper=$(this).val();
+		});
+		$('.closeBox').click(function(){
+			$(this).parent().parent().remove();
+			$('.layui-layer-content').height($('.addProcessContent').height()+42)
 		})
+		$('[data-toggle="tooltip"]').tooltip();
 	},
 	saveRule:function(){		//点击保存规则
 		$(".saveRuleBtn").click(function(){

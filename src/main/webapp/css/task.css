@@ -46,36 +46,36 @@ body{
 	border:0;
 	display: inline-block;
 }
-.taskBox > .taskContent{
+.taskContent{
 	background: #ffffff;
 	height: calc(100% - 110px);
 	margin:10px 20px 20px 20px;
 	overflow: auto;
 	position: relative;
 }
-.taskContent > .taskTree{
+.taskTree{
 	min-width: 383px;
 	padding-left: 50px;
 	padding-top: 20px;
 	float: left;
 	height: calc(100% - 110px);
 }
-.taskContent > .taskTree > .taskTree-cir{
+.taskTree-cir{
 	height: 30px;
 	width: 30px;
 	border-radius: 45px;
 	background: #758499;
 }
-.taskContent > .taskTree >.taskTree-cir:last-child{
+.taskTree-cir:last-child{
 	margin-bottom: 20px;
 }
-.taskContent > .taskTree > .taskTree-line{
+ .taskTree-line{
 	width:6px;
 	margin-left: 12px;
 	padding:55px 0 55px 0;
 	background: #758499;
 }
-.taskContent > .taskTree > .taskTree-line > .taskTree-add{
+.taskTree-add{
 	height: 30px;
 	width: 30px;
 	text-align: center;
@@ -89,19 +89,19 @@ body{
 	cursor: pointer;
 	color: #758499;
 }
-.taskContent > .taskTree >.taskTree-line > .stepBox{
+.stepBox{
 	width: 321px;
 	height: 110px;
 	
 }
-.taskContent > .taskTree >.taskTree-line >.stepBox> .taskTree-greenNode> .stepText{
+ .stepText{
 	height: 53px;
     margin-left: 60px;
     margin-top: -53px;
     font-size: 22px;
     color: #D3D3D3;
 }
-.taskContent > .taskTree >.taskTree-line >.stepBox> .taskTree-greenNode> .technologyName{
+.technologyName{
 	width: 250px;
 	height: 54px;
 	border-radius: 20px;
@@ -111,13 +111,13 @@ body{
 	border:#E7E7E7 1px solid;
 	/*position: absolute;*/
 }
-.taskContent > .taskTree >.taskTree-line >.stepBox> .taskTree-greenNode >.technologyName:hover{
+.technologyName:hover{
 	cursor: pointer;
 	filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
 	-moz-opacity:0.7; /*Firefox私有，透明度50%*/
 	opacity:0.7;/*其他，透明度50%*/
 }
-.taskContent > .taskTree >.taskTree-line >.stepBox> .taskTree-greenNode> .technologyName>.technologyName-greenBorder{
+.technologyName-greenBorder{
 	width: 250px;
 	height: 54px;
 	left: -14px;
@@ -130,7 +130,7 @@ body{
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-.taskContent > .taskTree >.taskTree-line >.stepBox> .taskTree-greenNode> .technologyName>.technologyName-line{
+.technologyName-line{
 	width: 33px;
 	height:4px;
 	background: #758499;
@@ -139,7 +139,7 @@ body{
 	margin-top: -30px;
 	display: none;
 }
-.taskContent > .taskTree >.taskTree-line >.stepBox>.taskTree-greenNode>.technologyName>.technologyTools{
+.technologyTools{
 	width:85px;
 	height:54px;
     margin-right: -25px;
@@ -169,7 +169,7 @@ body{
 .fa{
 	padding:7px;
 }
-.taskContent > .taskTree >.taskTree-line > .stepBox> .taskTree-greenNode{
+.taskTree-greenNode{
 	height: 25px;
 	width: 25px;
 	margin-left: -9px;
@@ -188,12 +188,8 @@ body{
 	text-align: center;
 	border-radius: 20px !important;
 }
-#addTechnologyName{
-	width: 100%;
-	border:#CCCCCC 1px solid;
-}
 
-.taskContent > .taskRule{
+.taskRule{
 	width: calc(100% - 423px);
 	min-height: 150px;
 	margin-top: 30px;
@@ -204,7 +200,7 @@ body{
 	border:#E7E7E7 1px solid;
 	display: none;
 }
-.taskContent > .taskRule> .addRule{
+.addRule{
 	width:99%;
 	margin:auto;
 	height:50px;
@@ -217,7 +213,7 @@ body{
 	border-radius: 45px;
 	cursor: pointer;
 }
-.taskContent > .taskRule>.ruleMain >.missionBox{
+.missionBox{
 	/*display: flex;
 	display: -webkit-flex;*/
 	width:99%;
@@ -272,11 +268,12 @@ body{
 	-moz-opacity:0.7; /*Firefox私有，透明度50%*/
 	opacity:0.7;/*其他，透明度50%*/
 }
-.addRuleContent{
+.addRuleContent ,.addProcessContent{
 	padding:20px;
 	background: #ffffff;
+	overflow-x: hidden;
 }
-.eventBox ,.controlBox,.timingBox{
+.eventBox ,.controlBox,.timingBox,.addEventBox{
 	padding: 0 20px;
 }
 .controls{
@@ -284,6 +281,14 @@ body{
 	height: 30px;
 	margin-bottom: 25px;
 	margin-top: -5px;
+	float:right;
+}
+.selectControls{
+	width:215px;
+	height: 30px;
+	margin-bottom: 25px;
+	margin-top: -5px;
+	margin-right: 5px;
 	float:right;
 }
 ul{
@@ -300,6 +305,9 @@ ul{
 }
 li{
 	list-style: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 li:hover{
 	background: #F1F1F1;
@@ -328,12 +336,71 @@ li:hover{
 .portAction{
 	margin-top: -24px;
 }
-.saveBtnRow{
-	padding: 0 40px;
+.saveBtnRow,.addCondition{
+	padding: 0 34px;
 }
-.saveRuleBtn{
+.saveRuleBtn,.saveProcessBtn{
+    border: 1px solid #1AB394;
+    color: #ffffff;
+    background: rgb(26, 179, 148);
+    outline: none;
+}
+.saveRuleBtn:hover,.saveProcessBtn:hover{
 	color: #ffffff;
-	background: #1AB394;
+   	filter:alpha(opacity=80); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.8; /*Firefox私有，透明度50%*/
+	opacity:0.8;/*其他，透明度50%*/
+}
+.addConditionBtn{
+	position: absolute;
+    z-index: 9;
+    margin-top: -36px;
+    right: 24px;
+    font-size: 12px;
+    padding: 2px 10px;
+    background: #ffffff;
+    cursor: pointer;
+    border: 1px solid #1AB394;
+    color: #1AB394;
+    border-radius: 4px;
+    outline: none;
+}
+.addConditionBtn:hover{
+	color: #1AB394;
+	filter:alpha(opacity=60); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.6; /*Firefox私有，透明度50%*/
+	opacity:0.6;/*其他，透明度50%*/
+}
+.triggerText{
+	position: absolute;
+    z-index: 9;
+    margin-top: -35px;
+    left: 33px;
+    padding: 5px;
+    font-size: 12px;
+    color:#1AB394;
+    background: #ffffff;
+}
+.actionTimesBox{
+	padding: 0px 35px;
+}
+.actionTimes{
+	width: 545px;
+	height: 30px;
+    margin-top: -4px;
+	float: right;
+}
+.closeBox{
+    position: absolute;
+    z-index: 9;
+    margin-top: -37px;
+    right: 20px;
+    padding: 5px;
+    background: #ffffff;
+    cursor: pointer;
+}
+.layui-layer-content{
+	max-height: 590px;
 }
 .missionTools{
 	width: 77px;
@@ -351,6 +418,23 @@ li:hover{
 .layui-layer{
     box-shadow: 8px 8px rgba(0,0,0,.5) !important;
 }
+::-webkit-scrollbar {
+	width: 5px;
+}
+::-webkit-scrollbar-track {
+	width: 2px;
+	background-color: #f1f1f1;
+} /* 滚动条的滑轨背景颜色 */
+::-webkit-scrollbar-thumb {
+	width:5px;
+	background-color: #1AB394; 
+} /* 滑块颜色 */
+
+/*::-webkit-scrollbar-button {
+	background-color: #f1f1f1;
+}  滑轨两头的监听按钮颜色 */
+
+
 @media screen and (max-width: 1475px) {
     .missionBox{
         font-size: 12px !important;
