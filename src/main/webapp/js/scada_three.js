@@ -21,7 +21,7 @@ $.three = {
 		},
 		hex: 0xffffff,
 		intensity: 1,
-		distance: 2000,
+		distance: 1600,
 		scrope: 500,
 		height: 500
 	},
@@ -34,7 +34,8 @@ $.three = {
 		transparent: true
 	},
 	model: {
-		loader: null,
+		tmlLoader: null,
+		objLoader: null,
 		path: '/finfosoft-water/modelResource/',
 		count: 0,
 		material: {
@@ -44,16 +45,13 @@ $.three = {
 	},
 	font: {
 		loader: null,
-//		src: '/finfosoft-water/plugins/three/font/FZLanTingHei-M-GBK_Regular.json',
 		src: '/finfosoft-water/plugins/three/font/FZLanTingHeiS-UL-GB_Regular.json',
-//		src: '/finfosoft-water/plugins/three/font/font.json',
 		size: 10,
 		depth: 4,
 		color: 0xffffff,
 		opacity: 0.9
 	},
 	labelPlane: {
-		color: 0x00aeff,
 		opacity: 0.8
 	},
 	labelGroup: new THREE.Object3D(),
@@ -166,34 +164,29 @@ $.initThree = {
 		$.three.light.el.northLight = northLight;
 	},
 	initObjects: function(models) {
-		$.three.model.loader = new THREE.OBJLoader();
 		var model = models[$.three.model.count];
 		var objModelUrl = model.fileName;
 		var objMaterial = model.material;
 		var objPosition = model.objPosition;
 		var objRotation = model.objRotation;
-		$.three.model.loader.load($.three.model.path+objModelUrl+'.obj', function(object) {
-			object.traverse(function(child) {
-				if (child instanceof THREE.Mesh) {
-					child.material = new THREE.MeshPhongMaterial({
-						color: Number(objMaterial),
-						specular: $.three.model.material.specular,
-						shininess: $.three.model.material.shininess,
-						side: THREE.DoubleSide
-					});
-				}
+		$.three.model.mtlLoader = new THREE.MTLLoader();
+		$.three.model.mtlLoader.setTexturePath($.three.model.path+'img/');
+		$.three.model.mtlLoader.load($.three.model.path+objModelUrl+'.mtl', function(material) {
+			$.three.model.objLoader = new THREE.OBJLoader();
+			$.three.model.objLoader.setMaterials( material );
+			$.three.model.objLoader.load($.three.model.path+objModelUrl+'.obj', function(object) {
+				object.scale.set(0.1,0.1,0.1)
+				object.position.set(objPosition.x, objPosition.y, objPosition.z);
+				object.rotation.set(objRotation._x, objRotation._y, objRotation._z);
+				$.three.scene.el.add(object);
 			});
-			object.scale.set(0.1,0.1,0.1)
-			object.position.set(objPosition.x, objPosition.y, objPosition.z);
-			object.rotation.set(objRotation._x, objRotation._y, objRotation._z);
-			$.three.scene.el.add(object);
-			if ($.three.model.count===models.length-1) {
-				return;
-			} else {
-				$.three.model.count++;
-				$.initThree.initObjects(models);
-			}
 		});
+		if ($.three.model.count===models.length-1) {
+			return;
+		} else {
+			$.three.model.count++;
+			$.initThree.initObjects(models);
+		}
 	},
 	initGround: function() {
 		var size = $.three.ground.size;
@@ -219,7 +212,8 @@ $.initThree = {
 		var dataName = data.dataName ? data.dataName : 'noName';
 		var dataValue = data.dataValue==='null' || !data.dataValue ? 'noVal' : data.dataValue;
 		var dataUnit = data.dataUnit ? data.dataUnit : 'noUnit';
-		var message = dataName+':'+dataValue+' '+dataUnit;
+		var dataStatus = data.dataStatus ? data.dataStatus : 1;
+		var message = dataName+':'+dataValue+dataUnit;
 		$.three.font.loader = new THREE.FontLoader();
 		$.three.font.loader.load($.three.font.src, function(font) {
 			//text
@@ -249,6 +243,16 @@ $.initThree = {
 			var labelPlaneLength = textLength+10;
 			var labelPlaneHeight = textHeight*1.2;
 			var labelPlaneDepth = textDepth*0.6;
+			var labelPlaneColor = (function() {
+				switch (dataStatus) {
+					case 0:
+						return 0xcccccc;
+					case 1:
+						return 0x00aeff;
+					case 2:
+						return 0xff0000;
+				}
+			})();
 			var labelPlaneGeo = new THREE.ExtrudeGeometry(
 				$.initThree.createLabelShape(0, 0, labelPlaneLength, labelPlaneHeight, labelPlaneHeight/5, labelPlaneHeight/4),
 				{
@@ -257,7 +261,7 @@ $.initThree = {
 				}
 			);
 			var labelPlaneMtl = new THREE.MeshPhongMaterial({
-				color: $.three.labelPlane.color,
+				color: labelPlaneColor,
 				transparent: true,
 				opacity: $.three.labelPlane.opacity
 			});
@@ -284,6 +288,7 @@ $.initThree = {
 			label.labelUnit = dataUnit;
 			$.three.labelGroup.add(label);
 			$.three.scene.el.add($.three.labelGroup);
+			$.initThree.rendererUpdata();
 		});
 	},
 	initRenderer: function() {
@@ -402,6 +407,21 @@ $.initThree = {
 		}
 		return index;
 	},
+//	createText: function(text) {
+//		var width=512, height=256; 
+//		var canvas = document.createElement('canvas');
+//		canvas.width = width;
+//		canvas.height = height;
+//		var ctx = canvas.getContext('2d');
+//		ctx.fillStyle = '#C3C3C3';
+//		ctx.fillRect(0, 0, width, height);
+//		ctx.font = 50+'px " bold';
+//		ctx.fillStyle = '#2891FF';
+//		ctx.textAlign = 'center';
+//		ctx.textBaseline = 'middle';
+//		ctx.fillText(text, width/2,height/2); 
+//		return canvas;
+//	},
 	createLabelData: function() {
 		var labels = [];
 		for (var i=0; i<$.three.labelGroup.children.length; i++) {
