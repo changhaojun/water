@@ -88,28 +88,33 @@ $.fn.extend({
 				url:globalurl+"/v1/processes?access_token="+$.taskData.access_token+"&process_id="+processId,
 				async:false,
 				success:function(data){
-					$('.ruleTitle').showTriger(data.trigger_conditions,data.action_times);
+					console.info(data)
+					$('.ruleTitle').showTriger(data.trigger_conditions,data.action_times,data.trigger_name);
 				}
 			})
 	},
-	showTriger:function(conditions,times){
+	showTriger:function(conditions,times,typeName){
 		$(this).find('.content1').empty();
 		$(this).find('.content2').empty();
-		if(conditions.length>0){
-			for(var i=0;i<conditions.length;i++){
-				var operStr;
-				switch(conditions[i].compare_oper){
-					case 'gt':
-						operStr='大于';
-						break;
-					case 'lt':
-						operStr='小于';
-						break;
-					default:
-						operStr='等于';
+		if(typeName=='事件触发'){
+			if(conditions.length>0){
+				for(var i=0;i<conditions.length;i++){
+					var operStr;
+					switch(conditions[i].compare_oper){
+						case 'gt':
+							operStr='大于';
+							break;
+						case 'lt':
+							operStr='小于';
+							break;
+						default:
+							operStr='等于';
+					}
+					$(this).find('.content1').append(conditions[i].thing_name+':'+conditions[i].data_name+'&nbsp;'+operStr+'&nbsp;'+conditions[i].compare_value+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
 				}
-				$(this).find('.content1').append(conditions[i].thing_name+':'+conditions[i].data_name+'&nbsp;'+operStr+'&nbsp;'+conditions[i].compare_value+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
 			}
+		}else if(typeName=='时间周期触发'){
+			$(this).find('.content1').append('开始时间:'+conditions[0].begin_time+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间间隔:'+conditions[0].cycle_time)
 		}else{
 			$(this).find('.content1').append('人工触发没有触发条件')
 		}
