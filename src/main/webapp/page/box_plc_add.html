@@ -166,6 +166,7 @@
 								<thead>
 									<tr>
 										<th>数据名称</th>
+										<th>端口类型</th>
 										<th>读写状态</th>
 										<th>数据单位</th>
 										<th>数据类型</th>
@@ -173,6 +174,8 @@
 										<th>数据地址</th>
 										<th>实际量程低</th>
 										<th>实际量程高</th>
+										<th>低电平</th>
+										<th>高电平</th>
 										<th>编辑</th>
 										<th>删除</th>
 									</tr>
@@ -180,6 +183,14 @@
 								<tbody>
 									<tr v-for="(port, index) in portData">
 										<td>{{ port.data_name }}</td>
+										<td>
+											<div class="fixIeSelect">
+												<select disabled="disabled" v-model="port.port_type">
+													<option value="A">数字量</option>
+													<option value="D">模拟量</option>
+												</select>
+											</div>
+										</td>
 										<td>
 											<div class="fixIeSelect">
 												<select disabled="disabled" v-model="port.oper_type">
@@ -200,8 +211,10 @@
 										</td>
 										<td>{{ port.data_precision }}</td>
 										<td>{{ port.data_addr }}</td>
-										<td>{{ port.real_range_low }}</td>
-										<td>{{ port.real_range_high }}</td>
+										<td>{{ port.port_type=='A' ? port.real_range_low : '' }}</td>
+										<td>{{ port.port_type=='A' ? port.real_range_high : '' }}</td>
+										<td>{{ port.port_type=='D' ? port.low_battery : '' }}</td>
+										<td>{{ port.port_type=='D' ? port.high_battery : '' }}</td>
 										<td>
 											<i class="fa fa-edit" @click="editPort(index,$event)"></i>
 										</td>
@@ -230,6 +243,13 @@
 						<input id="new_data_name" type="text" v-model="newPort.data_name" datasrc="newPort.data_name" v-bind:empty="!newPort.data_name&&newPort.data_name!==0 ? true : false" warning="请输入数据名称" placeholder="请输入数据名称"/>
 					</dd>
 					<dd class="clearfix dataEdit">
+						<label>端口类型</label>
+						<select v-model="newPort.port_type">
+							<option value="A">数字量</option>
+							<option value="D">模拟量</option>
+						</select>
+					</dd>
+					<dd class="clearfix dataEdit">
 						<label>读写状态</label>
 						<select v-model="newPort.oper_type">
 							<option value="1">读取</option>
@@ -238,7 +258,7 @@
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label for="new_data_unit">数据单位</label>
-						<input id="new_data_unit" type="text" v-model="newPort.data_unit" datasrc="newPort.data_unit" v-bind:empty="!newPort.data_unit&&newPort.data_unit!==0 ? true : false" warning="请输入数据单位" placeholder="请输入数据单位"/>
+						<input id="new_data_unit" type="text" v-model="newPort.data_unit" datasrc="newPort.data_unit" warning="请输入数据单位" placeholder="请输入数据单位"/>
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label>数据类型</label>
@@ -256,13 +276,21 @@
 						<label for="new_data_addr">数据地址</label>
 						<input id="new_data_addr" type="text" v-model="newPort.data_addr" datasrc="newPort.data_addr" v-bind:empty="!newPort.data_addr&&newPort.data_addr!==0 ? true : false" num-limit="limit" warning="请输入数据地址" placeholder="请输入数据地址"/>
 					</dd>
-					<dd class="clearfix dataEdit">
+					<dd class="clearfix dataEdit" v-if="newPort.port_type=='A'">
 						<label for="new_real_range_low">实际量程低</label>
 						<input id="new_real_range_low" type="text" v-model="newPort.real_range_low" datasrc="newPort.real_range_low" v-bind:empty="!newPort.real_range_low&&newPort.real_range_low!==0 ? true : false" num-limit="limit" warning="请输入实际量程低" placeholder="请输入实际量程低"/>
 					</dd>
-					<dd class="clearfix dataEdit">
+					<dd class="clearfix dataEdit" v-if="newPort.port_type=='A'">
 						<label for="new_real_range_high">实际量程高</label>
 						<input id="new_real_range_high" type="text" v-model="newPort.real_range_high" datasrc="newPort.real_range_high" v-bind:empty="!newPort.real_range_high&&newPort.real_range_high!==0 ? true : false" num-limit="limit" warning="请输入实际量程高" placeholder="请输入实际量程高"/>
+					</dd>
+					<dd class="clearfix dataEdit" v-if="newPort.port_type=='D'">
+						<label for="new_low_battery">低电平</label>
+						<input id="new_low_battery" type="text" v-model="newPort.low_battery" datasrc="newPort.low_battery" v-bind:empty="!newPort.low_battery&&newPort.low_battery!==0 ? true : false" num-limit="limit" warning="请输入低电平" placeholder="请输入低电平"/>
+					</dd>
+					<dd class="clearfix dataEdit" v-if="newPort.port_type=='D'">
+						<label for="new_high_battery">高电平</label>
+						<input id="new_high_battery" type="text" v-model="newPort.high_battery" datasrc="newPort.high_battery" v-bind:empty="!newPort.high_battery&&newPort.high_battery!==0 ? true : false" num-limit="limit" warning="请输入高电平" placeholder="请输入高电平"/>
 					</dd>
 					<dt>
 						<button @click="saveNewPort($event)">保存</button>
@@ -281,6 +309,13 @@
 						<input id="edit_data_name" type="text" v-model="newPort.data_name" datasrc="newPort.data_name" v-bind:empty="!newPort.data_name&&newPort.data_name!==0 ? true : false" warning="请输入数据名称" placeholder="请输入数据名称"/>
 					</dd>
 					<dd class="clearfix dataEdit">
+						<label>端口类型</label>
+						<select v-model="newPort.port_type">
+							<option value="A">数字量</option>
+							<option value="D">模拟量</option>
+						</select>
+					</dd>
+					<dd class="clearfix dataEdit">
 						<label>读写状态</label>
 						<select v-model="newPort.oper_type">
 							<option value="1">读取</option>
@@ -289,7 +324,7 @@
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label for="edit_data_unit">数据单位</label>
-						<input id="edit_data_unit" type="text" v-model="newPort.data_unit" datasrc="newPort.data_unit" v-bind:empty="!newPort.data_unit&&newPort.data_unit!==0 ? true : false" warning="请输入数据单位" placeholder="请输入数据单位"/>
+						<input id="edit_data_unit" type="text" v-model="newPort.data_unit" datasrc="newPort.data_unit" warning="请输入数据单位" placeholder="请输入数据单位"/>
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label>数据类型</label>
@@ -307,13 +342,21 @@
 						<label for="edit_data_addr">数据地址</label>
 						<input id="edit_data_addr" type="text" v-model="newPort.data_addr" datasrc="newPort.data_addr" v-bind:empty="!newPort.data_addr&&newPort.data_addr!==0 ? true : false" num-limit="limit" warning="请输入数据地址" placeholder="请输入数据地址"/>
 					</dd>
-					<dd class="clearfix dataEdit">
+					<dd class="clearfix dataEdit" v-if="newPort.port_type=='A'">
 						<label for="edit_real_range_low">实际量程低</label>
 						<input id="edit_real_range_low" type="text" v-model="newPort.real_range_low" datasrc="newPort.real_range_low" v-bind:empty="!newPort.real_range_low&&newPort.real_range_low!==0 ? true : false" num-limit="limit" warning="请输入实际量程低" placeholder="请输入实际量程低"/>
 					</dd>
-					<dd class="clearfix dataEdit">
+					<dd class="clearfix dataEdit" v-if="newPort.port_type=='A'">
 						<label for="edit_real_range_high">实际量程高</label>
 						<input id="edit_real_range_high" type="text" v-model="newPort.real_range_high" datasrc="newPort.real_range_high" v-bind:empty="!newPort.real_range_high&&newPort.real_range_high!==0 ? true : false" num-limit="limit" warning="请输入实际量程高" placeholder="请输入实际量程高"/>
+					</dd>
+					<dd class="clearfix dataEdit" v-if="newPort.port_type=='D'">
+						<label for="edit_low_battery">低电平</label>
+						<input id="edit_low_battery" type="text" v-model="newPort.low_battery" datasrc="newPort.low_battery" v-bind:empty="!newPort.low_battery&&newPort.low_battery!==0 ? true : false" num-limit="limit" warning="请输入低电平" placeholder="请输入低电平"/>
+					</dd>
+					<dd class="clearfix dataEdit" v-if="newPort.port_type=='D'">
+						<label for="edit_high_battery">高电平</label>
+						<input id="edit_high_battery" type="text" v-model="newPort.high_battery" datasrc="newPort.high_battery" v-bind:empty="!newPort.high_battery&&newPort.high_battery!==0 ? true : false" num-limit="limit" warning="请输入高电平" placeholder="请输入高电平"/>
 					</dd>
 					<dt>
 						<button @click="saveEditPort($event)">保存</button>
@@ -326,6 +369,6 @@
 		<script type="text/javascript" src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js"></script>
 		<script src="/finfosoft-water/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/finfosoft-water/js/public_resources.js?1.0"></script>
-		<script src="/finfosoft-water/js/box_plc_add.js?1.01" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/box_plc_add.js?1.03" type="text/javascript" charset="utf-8"></script>
 	</body>
 </html>

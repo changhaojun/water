@@ -35,6 +35,7 @@ var initData = {
 	//新增端口接口
 	newPort: {
 		data_name: "",
+		port_type: "A",
 		oper_type: 1,
 		data_unit: "",
 		data_type: 0,
@@ -42,6 +43,8 @@ var initData = {
 		data_addr: "",
 		real_range_low: "",
 		real_range_high: "",
+		high_battery: "",
+		low_battery: "",
 		status: 1 //无渲染
 	},
 	//当前选中端口索引值
@@ -269,6 +272,7 @@ $.extend({
 	initNewPort: function() {
 		initData.newPort = {
 			data_name: "",
+			port_type: "A",
 			oper_type: 1,
 			data_unit: "",
 			data_type: 0,
@@ -276,6 +280,8 @@ $.extend({
 			data_addr: "",
 			real_range_low: "",
 			real_range_high: "",
+			high_battery: "",
+			low_battery: "",
 			status: 1 //无渲染
 		}
 	},
