@@ -96,6 +96,7 @@ $.fn.extend({
 	showTriger:function(conditions,times,typeName){
 		$(this).find('.content1').empty();
 		$(this).find('.content2').empty();
+		$(this).find('.content1').append('触发条件:&nbsp;&nbsp;&nbsp;&nbsp;')
 		if(typeName=='事件触发'){
 			if(conditions.length>0){
 				for(var i=0;i<conditions.length;i++){

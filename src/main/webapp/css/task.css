@@ -122,6 +122,7 @@ body{
 	height: 54px;
 	left: -14px;
     top: -1px;
+    color:#767676;
 	padding-left: 50px;
 	line-height: 50px;
 	background: url(/finfosoft-water/img/shuiwu_renwu_img_02.png) no-repeat;
@@ -253,31 +254,41 @@ body{
 {
 	height: 50px;
 	float: left;
-	text-align: center;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 .missionBox > .content1{
+	text-align: center;
 	width: 30%;
 }
 .missionBox > .content2{
+	text-align: center;
 	width: 50%;
 }
 .missionBox > .content3{
+	text-align: center;
 	width: 20%;
 }
 .missionBox > .content4{
+	text-align: center;
 	width: 30%;
 }
 .missionBox > .content5{
+	text-align: center;
 	width: 10%;
 }
 .ruleTitle > .content1{
+	color: #1AB394;
+	padding-left: 20px;
+	text-align: left;
 	font-size: 14px;
 	width: 85%;
 }
 .ruleTitle > .content2{
+	color: #1AB394;
+	text-align: left;
+	padding-left: 6px;
 	font-size: 14px;
 	width: 15%;
 }
