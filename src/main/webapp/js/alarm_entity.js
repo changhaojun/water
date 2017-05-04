@@ -48,7 +48,6 @@ function doajax(data){
 				searchThing($("#searchId"))
 			}
 			toolTips();
-			dataId=["7777","2608"];//测试用
 			MQTTconnect(dataId);
 			
 			}	
@@ -71,7 +70,6 @@ function searchThing(obj){
 		dataId.push(dataLike[i].data_id)
 		
 	}
-	dataId=["7777","2608"];//测试用
 	MQTTconnect(dataId);
 }
 //动态创建DOM拼接
