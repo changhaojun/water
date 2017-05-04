@@ -101,7 +101,7 @@ $.fn.extend({
 	smartInput: function(type,callBack) {
 		$(this).val($(this).attr('fakePlaceholder'));
 		$(this).focus(function() {
-			if($(this).val() === $(this).attr('fakePlaceholder')) {
+			if($(this).val() === $(this).attr('fakePlaceholder')){
 				$(this).val('');
 			}
 			$(this).css('borderColor', '#1ab394');

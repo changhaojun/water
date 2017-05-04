@@ -138,7 +138,10 @@ function screenDev(){
 	for(var i=0;i<$(".infoList").length;i++){
 		if($(".infoList").eq(i).find("i").attr("class")=="fa fa-check-circle"){			
 			DevKind+=(i+1)+",";			
-		}
+		}		
+	}
+	if($(".infoList").find("i").attr("class")!="fa fa-check-circle"){
+			DevKind=0+",";	
 	}
 	if($("#searchDevice").val()==""){	
 		data={"device_kind":DevKind,"access_token":window.accesstoken}
@@ -163,7 +166,7 @@ function doAjax(data){
 				async:false,
 				crossDomain: true == !(document.all),
 				success:function(data){
-					console.log(data)
+//					console.log(data)
 					if(data.code==400005){
 						window.getNewToken()
 						screenDev();
