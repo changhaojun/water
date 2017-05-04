@@ -6,7 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.min.css"/>
 		<link rel="stylesheet" href="/finfosoft-water/plugins/bootstarp/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="/finfosoft-water/plugins/bootstrap-datetimepicker/css/datetimepicker.css" />
-		<link rel="stylesheet" href="/finfosoft-water/css/task.css?1.43" />
+		<link rel="stylesheet" href="/finfosoft-water/css/task.css?1.44" />
 	</head>
 	<body>
 		<input type="text" id="companyId" value="${companyId}" hidden="hidden"/>
@@ -28,6 +28,10 @@
 					<div class="taskTree-cir"></div>
 				</div>
 				<div class="taskRule">
+					<div class="ruleTitle" data-toggle="tooltip" data-placement="top" title="触发条件">
+						<div class="content1"></div>
+						<div class="content2"></div>
+					</div>
 					<div class="ruleMain">
 						
 					</div>
@@ -124,16 +128,9 @@
 		<div class="addRuleBox" hidden="hidden">
 			<div class="addRuleContent">
 				<div class="row">
-					<div class="col-xs-6">
+					<div class="col-xs-12">
 						任务名称：
-						<input type="text" id="ruleName" class="controls" placeholder="请输入任务名称" />
-					</div>
-					<div class="col-xs-6">
-						等待时间：
-						<div class="control-group">
-							<input id="waitTime" num-limit="limit" placeholder="请输入等待时间" type="text" class="control-group-input" isCheck="false">
-							<div class="control-group-addon">分</div>
-						</div>
+						<input type="text" id="ruleName" class="fullcontrols " placeholder="请输入任务名称" />
 					</div>
 				</div>
 				<hr>
@@ -165,8 +162,11 @@
 								</div>
 							</div>
 							<div class="col-xs-6">
-								执行次数：
-								<input type="text" num-limit="limit" placeholder="请输入执行次数" class="actionTimes controls"  value=1 />
+								等待时间：
+								<div class="control-group">
+									<input id="waitTime" num-limit="limit" placeholder="请输入等待时间" type="text" class="control-group-input">
+									<div class="control-group-addon">分</div>
+								</div>
 							</div>
 						</div>
 						<hr />

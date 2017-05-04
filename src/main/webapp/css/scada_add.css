@@ -77,6 +77,9 @@ body *{
 .main>ul>.name:hover span{
 	color: #1AB394;
 }
+.main>ul>.description:hover span{
+	color: #1AB394;
+}
 
 .main>.headBar>li>input{
 	width: 200px;

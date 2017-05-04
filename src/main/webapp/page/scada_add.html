@@ -6,7 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/common.css"/>
 		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.css"/>
-		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/scada_add.css?1.1"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/scada_add.css"/>
 	</head>
 	<body>
 		<input type="text" id="modelId" hidden="hidden" value=${modelId} />
@@ -42,6 +42,10 @@
 					</li>
 					<li class="pull-right name">
 						<input type="text" placeholder="请输入情景名称"/>
+						<span class="fa fa-pencil"></span>
+					</li>
+					<li class="pull-right description">
+						<input type="text" placeholder="请输入情景说明"/>
 						<span class="fa fa-pencil"></span>
 					</li>
 				</ul>
@@ -101,9 +105,10 @@
 		<script src="/finfosoft-water/plugins/three/ThreeCSG.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/finfosoft-water/plugins/three/OrbitControls.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/finfosoft-water/plugins/three/TransformControls.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/three/MTLLoader.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/finfosoft-water/plugins/three/OBJLoader.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/finfosoft-water/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/finfosoft-water/js/scada_three.js?1.2" type="text/javascript" charset="utf-8"></script>
-		<script src="/finfosoft-water/js/scada_add.js?1.5" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/scada_three.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/scada_add.js?1.9" type="text/javascript" charset="utf-8"></script>
 	</body>
 </html>
