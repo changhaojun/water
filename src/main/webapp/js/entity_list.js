@@ -5,7 +5,7 @@ $(function(){
 	getToken();//刷新令牌
 	toolTip();
 	getEntityList();
-
+	
 })
 var isSearch=false;
 //搜索功能
@@ -46,11 +46,21 @@ window.getEntityList=function(){
 		    		$('#dtuList').bootstrapTable("refresh",queryParams)
 		    	}
 		    	toolTip();//顶部提示框
+		    	$("#dtuList tbody>tr").each(function(i,ele){
+								$(this).mouseover(function(){
+									$(this).addClass("borderColor").siblings().removeClass("borderColor");
+								});
+								$(this).mouseout(function(){
+									$(this).removeClass("borderColor");
+								});
+				omission($(this).find("td:nth-child(1)>span"));
+				});
 		    },
 		    columns: [
 	                    {
 	                        title: "名称",
-	                        field: "thing_name"
+	                        field: "thing_name",
+	                        formatter: textThing
 	                    },
 						{
 	                        field: "_id",
@@ -61,6 +71,9 @@ window.getEntityList=function(){
 	                    }
 	                ],
 		});
+}
+function textThing(value,row,index){
+	return "<span>"+value+"</span>";
 }
 //操作列的格式化
 function editFormatter(value,row,index){
@@ -245,4 +258,17 @@ function modify(value){
 //input禁止输入字母空格
 function space(obj){
 	obj.val(obj.val().replace(/\s/g, ''))
+}
+//超出一行省略
+function omission(obj){
+	if(obj.html().length>40){
+		obj.css({
+			"display":"inline-block",
+			"width":"140px",
+			"overflow": "hidden",
+			"white-space": "nowrap",
+			"text-overflow": "ellipsis"
+		})
+	}
+	
 }
