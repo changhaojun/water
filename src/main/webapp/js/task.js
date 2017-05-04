@@ -172,7 +172,7 @@ $.fn.extend({
 	},
 	saveTechnologyName:function(isEdit,name,technologyId){		//保存工艺名称
 		$('input').limitSpacing();		//输入框去除空格
-		$('#addTechnologyName').formCheckFoo()
+		$('#addTechnologyName').formCheckFoo();
 		if($.taskData.inputCheck){
 			var sendData={};
 				sendData.process_name=name
@@ -399,6 +399,7 @@ $.fn.extend({
 		$.taskData.inputCheck=true
 		if($(this).val()==''){
 			var This=$(this)
+			$(this).focus();
 			layer.tips(This.attr("placeholder"),This,{tips: [1,'#FE777A']})
 			$.taskData.inputCheck=false
 		}
@@ -489,7 +490,7 @@ $.fn.extend({
 	},
 	addCondition:function(){
 		$('.addConditionBox').append($($.taskData.domString.addConditionBox));
-		$('.layui-layer-content').height($('.addProcessContent').height()+42);
+		$('.layui-layer-content').css('height','inherit');
 		$.conditionBox();
 	},
 	saveProcessData:function(){
@@ -637,6 +638,7 @@ $.extend({
 		})
 	},
 	showAddProcessBox:function(processData,titleMsg){
+		console.info(processData)
 		$('#addTechnologyName').val(processData.process_name);
 		$('#triggerType').val(processData.trigger_type);
 		if(processData.trigger_name=="事件触发"){
@@ -795,7 +797,7 @@ $.extend({
 		});
 		$('.closeBox').click(function(){
 			$(this).parent().parent().remove();
-			$('.layui-layer-content').height($('.addProcessContent').height()+42);
+			$('.layui-layer-content').css('height','inherit');
 		});
 		$('[data-toggle="tooltip"]').tooltip();
 	},
