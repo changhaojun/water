@@ -88,7 +88,6 @@ $.fn.extend({
 				url:globalurl+"/v1/processes?access_token="+$.taskData.access_token+"&process_id="+processId,
 				async:false,
 				success:function(data){
-					console.info(data)
 					$('.ruleTitle').showTriger(data.trigger_conditions,data.action_times,data.trigger_name);
 				}
 			})
@@ -230,7 +229,6 @@ $.fn.extend({
 		}
 	},
 	openAddRuleBox:function(ruleBoxData,titleMsg){		//打开添加动作的窗口
-		console.info(ruleBoxData)
 		$("#ruleName").val(ruleBoxData.mission_name);
 		$('#controlThing').val(ruleBoxData.target_thing_name);
 		$('#controlTag').val(ruleBoxData.target_data_id);
@@ -471,7 +469,6 @@ $.fn.extend({
 			url:globalurl+"/v1/missions?access_token="+$.taskData.access_token+"&mission_id="+missionId,
 			async:true,
 			success:function(data){
-				console.info(data)
 				$.taskData.ruleBox.action=data.action;
 				$.taskData.ruleBox.mission_name=data.mission_name;
 				$.taskData.ruleBox.target_thing_id=data.target_thing_id;
@@ -536,7 +533,6 @@ $.fn.extend({
 			async:false,
 			data:sendData,
 			success:function(data){
-				console.info(data)
 				layer.msg(data.success,{
 					icon:1,
 					time:2000
@@ -609,7 +605,6 @@ $.extend({
 			url:globalurl+"/v1/processes?access_token="+$.taskData.access_token,
 			async:false,
 			success:function(data){
-				console.info(data)
 				if(data.rows.length>0){
 					$.taskData.task=data.rows;
 					for(var i=0;i<$.taskData.task.length;i++){
@@ -642,8 +637,8 @@ $.extend({
 		$('#triggerType').val(processData.trigger_type);
 		if(processData.trigger_name=="事件触发"){
 			if(processData.trigger_conditions.length>0){
-				var thing_name=processData.trigger_conditions[0].thing_name
-				$('.eventBox').find('.conditionThing').val(thing_name)
+				var thing_name=processData.trigger_conditions[0].thing_name;
+				$('.eventBox').find('.conditionThing').val(thing_name);
 				$('.eventBox').find('.conditionThingList').attr('thing_id',processData.trigger_conditions[0].thing_id);
 				$('.eventBox').find('.conditionThingList').getConditionTagList(processData.trigger_conditions[0]);
 				$('.eventBox').find('.conditionTag').val(processData.trigger_conditions[0].data_id);
@@ -651,8 +646,8 @@ $.extend({
 				$('.eventBox').find('.compareValue').val(processData.trigger_conditions[0].compare_value);
 				for(var i=1;i<processData.trigger_conditions.length;i++){
 					$('.addConditionBtn').click();
-					var thing_name=processData.trigger_conditions[1].thing_name
-					$('.addEventBox').find('.conditionThing').val(thing_name)
+					var thing_name=processData.trigger_conditions[1].thing_name;
+					$('.addEventBox').find('.conditionThing').val(thing_name);
 					$('.addEventBox').find('.conditionThingList').attr('thing_id',processData.trigger_conditions[i].thing_id);
 					$('.addEventBox').find('.conditionThingList').getConditionTagList(processData.trigger_conditions[i]);
 					$('.addEventBox').find('.conditionTag').val(processData.trigger_conditions[i].data_id);
@@ -661,11 +656,14 @@ $.extend({
 				}
 			}
 		}else if(processData.trigger_name=="时间周期触发"){
+			$('.timingBox').show();
+			$('.eventBox').hide();
 			if(processData.trigger_conditions.length>0){
 				$('#datetimepicker').val(processData.trigger_conditions[0].begin_time);
 				$('#timeInterval').val(processData.trigger_conditions[0].cycle_time);
 			}
 		}
+		$('#triggerType').changeTriggerTypeAction(processData.trigger_name);
 		$.addProcessBox=layer.open({
 			type: 1,
 			title: titleMsg,
@@ -697,12 +695,12 @@ $.extend({
 			$('#controlTag').empty();
 			$('.portAction').empty();
 			$(this).openAddRuleBox($.taskData.ruleBox,titleMsg);
-		})
+		});
 	},
 	selectTriggerType:function(){		//选择触发类型
 		$("#triggerType").change(function(){
 			$(this).changeTriggerType();
-		})
+		});
 	},
 	setConditionThing:function(){		//任务列表的绑定事件
 		$("#controlTag").change(function(){
@@ -737,7 +735,7 @@ $.extend({
 		});
 		$("#controlThing").keyup(function(){	//实体名称输入框keyUp
 			$.taskData.selectControlThing=0;
-			$.taskData.ruleBox.target_data_id=''
+			$.taskData.ruleBox.target_data_id='';
 			$(this).getThing();
 		});
 		
@@ -759,11 +757,11 @@ $.extend({
 						return false;
 					}
 				}
-			})
+			});
 			if($.taskData.inputCheck){
 				$(this).saveProcessData();
 			}
-		})
+		});
 	},
 	conditionBox:function(){
 		$(".conditionThing").keyup(function(){
@@ -790,8 +788,8 @@ $.extend({
 		});
 		$('.closeBox').click(function(){
 			$(this).parent().parent().remove();
-			$('.layui-layer-content').height($('.addProcessContent').height()+42)
-		})
+			$('.layui-layer-content').height($('.addProcessContent').height()+42);
+		});
 		$('[data-toggle="tooltip"]').tooltip();
 	},
 	saveRule:function(){		//点击保存规则
