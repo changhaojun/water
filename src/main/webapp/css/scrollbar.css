@@ -1,0 +1,29 @@
+/*滚动条*/
+@-moz-document
+url-prefix(http://),
+url-prefix(https://),
+url-prefix(about:),
+url-prefix(chrome://),    
+
+url("chrome://browser/content/bookmarks/bookmarksPanel.xul"),
+url("chrome://browser/content/browser.xul"),
+url("chrome://browser/content/history/history-panel.xul")
+{
+    scrollbar{-moz-appearance:none !important;background:#FAFAFA !important;}
+    scrollbar thumb{-moz-appearance:none !important;background:rgba(255,167,41,.9) !important;
+    border:0px !important;border-radius:30px !important;}
+    scrollbar thumb:hover,scrollbar thumb:active{background:rgba(37,179,246,.9) !important;}
+
+    slider,slider:hover,slider:active
+    {-moz-appearance:none !important;background:transparent !important;
+    border:0px !important;opacity:0.9 !important;-moz-transition-duration:0.5s !important;}
+
+    scrollbar[orient="vertical"]{width:7px !important;} scrollbar[orient="horizontal"]{height:7px !important;}
+    scrollbar[orient="vertical"],scrollbar[orient="horizontal"]{padding:0px !important;border-width:0px !important;}
+
+    scrollbarbutton[sbattr="scrollbar-up-top"],scrollbarbutton[sbattr="scrollbar-down-top"],
+    scrollbarbutton[sbattr="scrollbar-up-bottom"],scrollbarbutton[sbattr="scrollbar-down-bottom"]
+    {-moz-appearance:none !important;display:none !important;}
+
+
+}
