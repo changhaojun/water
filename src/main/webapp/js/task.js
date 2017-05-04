@@ -215,8 +215,8 @@ $.fn.extend({
 				url:globalurl+"/v1/processes?access_token="+$.taskData.access_token+"&process_id="+technologyId,
 				async:false,
 				success:function(data){
-					console.info(data);
 					var titleMsg='修改工艺';
+					$('.addConditionBox').empty();
 					$.taskData.processBox=data;
 					$.showAddProcessBox(data,titleMsg);
 				}
@@ -638,7 +638,6 @@ $.extend({
 		})
 	},
 	showAddProcessBox:function(processData,titleMsg){
-		console.info(processData)
 		$('#addTechnologyName').val(processData.process_name);
 		$('#triggerType').val(processData.trigger_type);
 		if(processData.trigger_name=="事件触发"){
