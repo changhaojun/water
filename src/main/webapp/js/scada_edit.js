@@ -10,7 +10,7 @@ $.data = {
 		thing_id: '',
 		scada_name: '',
 		scada_model_id: $('#modelId').val(),
-		description: '测试描述123456',
+		description: '',
 		scada_config: []
 	}
 }
@@ -194,6 +194,7 @@ $.extend({
 				}
 				$('.link').find('p').changeThingName($.data.thingName);
 				$('.name').find('input').val($.data.sentData.scada_name);
+				$('.description').find('input').val($.data.sentData.description);
 				$('.selectData').find('input').searchData(function(data) {
 					$('.selectData').find('.selector-list').refreshDataList(data);
 				});
@@ -315,6 +316,7 @@ $.extend({
 	saveScada: function(callBack) {
 		$('.save').click(function() {
 			$.data.sentData.scada_name = $('.name').find('input').val();
+			$.data.sentData.description = $('.description').find('input').val();
 			$.data.sentData.scada_config = $.initThree.createLabelData();
 			if ($.data.sentData.scada_name==='') {
 				layer.msg('请输入情景名称！', {
@@ -322,6 +324,13 @@ $.extend({
 					time: 1000
 				});
 				$('.name').find('input').focus();
+				return false;
+			} else if ($.data.sentData.description==='') {
+				layer.msg('请输入情景描述！', {
+					icon: 2,
+					time: 1000
+				});
+				$('.description').find('input').focus();
 				return false;
 			} else if ($.data.thingName==='') {
 				layer.msg('请绑定对应实体！', {
