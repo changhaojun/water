@@ -641,6 +641,7 @@ $.extend({
 		console.info(processData)
 		$('#addTechnologyName').val(processData.process_name);
 		$('#triggerType').val(processData.trigger_type);
+		$('.actionTimes').val(processData.action_times);
 		if(processData.trigger_name=="事件触发"){
 			if(processData.trigger_conditions.length>0){
 				var thing_name=processData.trigger_conditions[0].thing_name;
