@@ -47,7 +47,8 @@ $.taskData = {
 		trigger_conditions:[],
 		action_times:1,
 		mobile:''
-	}
+	},
+	ruleIndexBox:[]
 };
 
 $.fn.extend({
@@ -114,7 +115,7 @@ $.fn.extend({
 				}
 			}
 		}else if(typeName=='时间周期触发'){
-			$(this).find('.content1').append('开始时间:'+conditions[0].begin_time+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间间隔:'+conditions[0].cycle_time)
+			$(this).find('.content1').append('开始时间:'+conditions[0].begin_time+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间间隔:'+conditions[0].cycle_time+'分钟')
 		}else{
 			$(this).find('.content1').append('人工触发没有触发条件')
 		}
@@ -128,10 +129,12 @@ $.fn.extend({
 			url:globalurl+"/v1/missions?access_token="+$.taskData.access_token,
 			async:true,
 			data:{
-				filter:'{"process_id":"'+$.taskData.selectTaskId+'"}'
+				filter:'{"process_id":"'+$.taskData.selectTaskId+'"}',
+				sorts:'{"index":"asc"}'
 			},
 			success:function(data){
 				if(data.rows.length>0){
+					$.taskData.ruleIndexBox=data.rows;
 					for(var i=0;i<data.rows.length;i++){
 						This.showMissionsDom(data.rows[i]);
 					}
@@ -544,8 +547,77 @@ $.fn.extend({
 			}
 		});
 	},
-	dragMissionFn:function(){
-		$(this).gridly();
+	dragMissionFn:function(callBack){
+		var parent = $(this);
+		$(this).css({
+			'position': 'relative',
+			'top': 0
+		});
+		var singleHeight = $(this).children().outerHeight(true);
+		$(this).delegate('.missionBox','mousedown',function(ev) {
+			parent.children().css({
+			    'position': 'relative',
+			    'top': 0
+			});
+			var son = $(this);
+			var start = parseInt($(this).css('top'));
+			var dis = ev.pageY;
+			var oldIndex = $(this).index();
+			var index = null;
+			var direction = null;
+			$(this).css('zIndex',99999);
+			$(document).mousemove(function(ev) {
+				var currentTop = start+ev.pageY-dis;
+				index = Math.round(currentTop/singleHeight) + oldIndex;
+				if (index<0) {
+					index = 0;
+				} else if (index>=parent.children().length-1) {
+					index = parent.children().length-1;
+				}
+				parent.children().css('border','none');
+				if (index>oldIndex) {
+					direction = 'down';
+					parent.children().eq(index).css({
+						'borderBottomColor': '#ff0000',
+						'borderBottomStyle': 'solid',
+						'borderBottomWidth': '2px'
+					});
+				} else {
+					direction = 'up';
+					parent.children().eq(index).css({
+						'borderTopColor': '#ff0000',
+						'borderTopStyle': 'solid',
+						'borderTopWidth': '2px'
+					});
+				}
+				son.css('top', currentTop);
+				return false;
+			});
+			$(document).mouseup(function(ev) {
+				$(document).unbind();
+				if (direction=='down') {
+					son.insertAfter(parent.children().eq(index));
+				} else if (direction=='up') {
+					son.insertBefore(parent.children().eq(index));
+				}
+				parent.children().css({
+				    'position': '',
+				    'top': 0,
+				    'border': 'none',
+				    'zIndex': 0
+				});
+				var sendIndex = {
+					oldIndex: oldIndex,
+					newIndex: son.index()
+				};
+				start = 0;
+				dis = 0;
+				oldIndex = null;
+				index = null;
+				direction = null;
+				callBack && callBack(sendIndex);
+			});
+		})
 	}
 });
 
@@ -710,7 +782,46 @@ $.extend({
 		});
 	},
 	dragMission:function(){
-		$('.ruleMain').dragMissionFn();
+		$('.ruleMain').dragMissionFn(function(index) {
+			if(index.oldIndex!=index.newIndex){
+				$.changeOrder($.taskData.ruleIndexBox,index,$.saveMissionIndex)
+			}
+		});
+	},
+	changeOrder:function(ruleDatas,index,callBack){
+		var thisData=ruleDatas[index.oldIndex];
+		if(index.oldIndex>index.newIndex){
+			ruleDatas.splice(index.newIndex,0,thisData);
+			ruleDatas.splice(index.oldIndex+1, 1);
+		}else{
+			ruleDatas.splice(index.newIndex+1,0,thisData);
+			ruleDatas.splice(index.oldIndex, 1);
+		}
+		callBack && callBack(ruleDatas);
+	},
+	saveMissionIndex:function(arr){
+		for(var i=0;i<arr.length;i++){
+			var thisData=arr[i];
+			delete thisData.target_thing_name;
+			delete thisData.target_data_name;
+			delete thisData.action_str;
+			thisData.index=i+1;
+			$.sendChanged(thisData,thisData._id)
+		}
+		
+	},
+	sendChanged:function(data,missionId){
+		delete data._id;
+		var sendeData={data:JSON.stringify(data)}
+		$.ajax({
+			type:'put',
+			url:globalurl+"/v1/missions?access_token="+$.taskData.access_token+'&mission_id='+missionId,
+			dataType:'JSON',
+			data:sendeData,
+			async:false,
+			success:function(data){
+			}
+		})
 	},
 	setConditionThing:function(){		//任务列表的绑定事件
 		$("#controlTag").change(function(){

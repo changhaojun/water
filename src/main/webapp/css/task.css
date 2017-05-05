@@ -167,6 +167,9 @@ body{
     background-color: #1AB394 !important;
     border-radius: 4px;
 }
+.missionToolsEdit,.missionToolsDelete{
+	cursor: pointer;
+}
 .fa{
 	padding:7px;
 }
@@ -243,7 +246,7 @@ body{
 	color: #FFFFFF;
 	background-color: #758499;
 	border-radius: 45px;
-	cursor: pointer;
+	cursor: move;
 }
 .missionBox > .content1,
 .missionBox > .content2,
