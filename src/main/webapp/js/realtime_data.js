@@ -163,19 +163,19 @@ function initChart(data,chartType){
 		chartSeries=[{ 
 			"name":"平均值",
 			"type":chartType,
-			"areaStyle": {normal: {}},
+			 barWidth: '10%',
 			"data":data.data_values		
 		},
 		{ 
 			"name":"最大值",
 			"type":chartType,
-			"areaStyle": {normal: {}},
+			 barWidth: '10%',
 			"data":data.max_values		
 		},
 		{ 
 			"name":"最小值",
 			"type":chartType,
-			"areaStyle": {normal: {}},
+			 barWidth: '10%',
 			"data":data.min_values		
 		}]		
 	}else{
@@ -183,6 +183,7 @@ function initChart(data,chartType){
 		chartSeries=[{ 
 			"name":"实时数据",
 			"type":chartType,
+			 barWidth: '10%',
 			"data":data.data_values		
 		}]
 	}

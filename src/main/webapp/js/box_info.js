@@ -48,7 +48,6 @@ window.getDTUList=function(){
 		    	}
 		    	toolTip();//顶部提示框
 		    	$("#dtuList tbody>tr").each(function(i,ele){
-						console.log(1)
 								$(this).mouseover(function(){
 									$(this).addClass("borderColor").siblings().removeClass("borderColor");
 								});
@@ -180,7 +179,6 @@ function give(value){
 					layer.msg('已下发', {
 						icon : 1
 					});
-//					window.top.MQTTconnect(guid);
 				}else{
 					layer.msg('下发失败', {
 						icon : 2

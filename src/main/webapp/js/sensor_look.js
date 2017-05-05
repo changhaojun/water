@@ -48,7 +48,7 @@ function listBox(){
 		    		if(data.datas[i].oper_type==2&&data.datas[i].data_type==3){
 		    			str='<div class="lookList  normal">'+
 								'<div class="listTop">'+
-									'<span>'+data.datas[i].data_name+'</span>'+
+									'<span>'+deviceName+'-'+data.datas[i].data_name+'</span>'+
 									'<span class="fa fa-area-chart" data-toggle="tooltip" data-placement="top" "tooltip" data-placement="top" title="数据" onclick="show(&apos;'+data.datas[i].data_id+'&apos;,&apos;'+data.datas[i].data_name+'&apos;)"></span>'+
 								'</div>'+
 								'<div class="listHr"></div>'+
@@ -85,7 +85,7 @@ function listBox(){
 		    			}
 		    			str='<div class="lookList  normal">'+
 								'<div class="listTop">'+
-									'<span>'+data.datas[i].data_name+'</span>'+
+									'<span>'+deviceName+'-'+data.datas[i].data_name+'</span>'+
 									'<span class="fa fa-area-chart" data-toggle="tooltip" data-placement="top" "tooltip" data-placement="top" title="数据" onclick="show(&apos;'+data.datas[i].data_id+'&apos;,&apos;'+data.datas[i].data_name+'&apos;)" ></span>'+
 								'</div>'+
 								'<div class="listHr"></div>'+
@@ -118,7 +118,7 @@ function listBox(){
 		    		}else{
 		    			str='<div class="lookList  normal">'+
 								'<div class="listTop">'+
-									'<span>'+data.datas[i].data_name+'</span>'+
+									'<span>'+deviceName+'-'+data.datas[i].data_name+'</span>'+
 									'<span class="fa fa-area-chart" data-toggle="tooltip" data-placement="top" "tooltip" data-placement="top" title="数据" onclick="show(&apos;'+data.datas[i].data_id+'&apos;,&apos;'+data.datas[i].data_name+'&apos;)" ></span>'+
 								'</div>'+
 								'<div class="listHr"></div>'+
