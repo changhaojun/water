@@ -371,15 +371,6 @@ $.fn.extend({
 							$("#controlTag").change();
 						}
 					}
-//					if(tagSelect.attr("id")=="controlTag"){
-//						if($.taskData.ruleBox.target_data_id==''){
-//							$.taskData.selectControlTag=parseInt(data[0].data_id);
-//							$
-//						}else{
-//							$.taskData.selectControlTag=$.taskData.ruleBox.target_data_id;
-//							$("#controlTag").val($.taskData.selectControlTag);
-//						}
-//					}
 				}else{
 					tagSelect.append($('<option class="tagLi" value=0>该实体下没有符合的数据端口</option>'))
 				}
