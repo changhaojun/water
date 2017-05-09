@@ -46,8 +46,8 @@ $.three = {
 	font: {
 		loader: null,
 		src: '/finfosoft-water/plugins/three/font/FZLanTingHeiS-UL-GB_Regular.json',
-		size: 10,
-		depth: 4,
+		size: 6,
+		depth: 2,
 		color: 0xffffff,
 		opacity: 0.9
 	},
@@ -87,7 +87,7 @@ $.three = {
 }
 
 $.initThree = {
-	init: function(models, selectLabelFn, isControlLabel) {
+	init: function(models, selectLabelFn, isTransform) {
 		$.initThree.initScene();
 		$.initThree.initCamera();
 		$.initThree.initLight();
@@ -95,8 +95,8 @@ $.initThree = {
 		$.initThree.initGround();
 		$.initThree.initRenderer();
 		$.initThree.initCameraController();
-		!isControlLabel && $.initThree.initRaycaster(selectLabelFn);
-		!isControlLabel && $.initThree.initTransformController();
+		selectLabelFn && $.initThree.initRaycaster(selectLabelFn, isTransform);
+		isTransform && $.initThree.initTransformController();
 		$.initThree.initAnimation();
 		$.initThree.threeResize();
 	},
@@ -208,16 +208,18 @@ $.initThree = {
 		$.three.ground.el = ground;
 	},
 	initLabel: function(data, oldPos) {
-		var dataId = data.dataId;
-		var dataName = data.dataName ? data.dataName : 'noName';
-		var dataValue = data.dataValue==='null' || !data.dataValue ? 'noVal' : data.dataValue;
-		var dataUnit = data.dataUnit ? data.dataUnit : 'noUnit';
-		var dataStatus = data.dataStatus ? data.dataStatus : 1;
-		var message = dataName+':'+dataValue+dataUnit;
+		var userData = typeof data === 'string' ? JSON.parse(data) : data;
+		var dataId = userData.data_id;
+		var dataName = userData.data_name ? userData.data_name : 'noName';
+		var dataValue = userData.data_value === 'null' || !userData.data_value ? 'noVal' : userData.data_value;
+		var dataUnit = userData.data_unit ? userData.data_unit : 'noUnit';
+		var dataStatus = userData.status ? userData.status : 1;
+		var labelMessage = dataName+':'+dataValue+dataUnit;
+		var labelType = typeof userData.label_type === 'undefined' ? $.initThree.judgeLabelType(userData) : userData.label_type;
 		$.three.font.loader = new THREE.FontLoader();
 		$.three.font.loader.load($.three.font.src, function(font) {
 			//text
-			var textGeo = new THREE.TextGeometry(message, {
+			var textGeo = new THREE.TextGeometry(labelMessage, {
 				font: font,
 				size:  $.three.font.size,
 				height: $.three.font.depth,
@@ -286,6 +288,7 @@ $.initThree = {
 			label.labelName = dataName;
 			label.labelValue = dataValue;
 			label.labelUnit = dataUnit;
+			label.labelType = labelType;
 			$.three.labelGroup.add(label);
 			$.three.scene.el.add($.three.labelGroup);
 			$.initThree.rendererUpdata();
@@ -321,27 +324,27 @@ $.initThree = {
 		$.three.scene.el.add(controller);
 		$.three.controller.transformController = controller;
 	},
-	initRaycaster: function(selectLabelFn) {
+	initRaycaster: function(selectLabelFn, isTransform) {
 		var raycaster = new THREE.Raycaster();
 		var mouse = new THREE.Vector2();
 		$.three.capturer.raycaster = raycaster;
 		$.three.capturer.mouse = mouse;
 		$.ThreeCavs.get(0).addEventListener('mousedown', function() {
 			$.initThree.getMouseCoordinate(event);
-			$.initThree.initCapturer(selectLabelFn);
+			$.initThree.initCapturer(selectLabelFn, isTransform);
 		});
 	},
-	initCapturer: function(selectLabelFn) {
+	initCapturer: function(selectLabelFn, isTransform) {
 		if ($.three.capturer.mouse.x===0&&$.three.capturer.mouse.y===0) return;
 		$.three.capturer.raycaster.setFromCamera($.three.capturer.mouse, $.three.camera.el);
 		var intersects = $.three.capturer.raycaster.intersectObjects($.three.labelGroup.children, true);
 		if ( intersects.length > 0 ) {
 			if ( $.three.capturer.intersected != $.initThree.searchLabelFromChild(intersects[0].object) ) {
-				if ( $.three.capturer.intersected ) {
+				if ( isTransform && $.three.capturer.intersected ) {
 					$.three.controller.transformController.detach($.three.capturer.intersected);
 				}
 				$.three.capturer.intersected = $.initThree.searchLabelFromChild(intersects[0].object);
-				$.three.controller.transformController.attach($.three.capturer.intersected);
+				isTransform && $.three.controller.transformController.attach($.three.capturer.intersected);
 				var oldPos = $.three.capturer.intersected.position;
 				selectLabelFn && selectLabelFn();
 			}
@@ -430,10 +433,25 @@ $.initThree = {
 				data_name: $.three.labelGroup.children[i].labelName,
 				data_value: $.three.labelGroup.children[i].labelValue,
 				data_unit: $.three.labelGroup.children[i].labelUnit,
+				label_type: $.three.labelGroup.children[i].labelType,
 				objPosition: $.three.labelGroup.children[i].position,
 				objRotation: $.three.labelGroup.children[i].rotation
 			})
 		}
 		return labels;
+	},
+	judgeLabelType: function(data) {
+		var firstType, secondType;
+		if (data.oper_type === 1) {
+			secondType = 'I';
+		} else {
+			secondType = 'O';
+		}
+		if (data.low_battery === ''|| data.low_battery === '-' || data.high_battery === '' || data.high_battery === '-') {
+			firstType = 'A';
+		} else {
+			firstType = 'D';
+		}
+		return firstType + secondType;
 	}
 }

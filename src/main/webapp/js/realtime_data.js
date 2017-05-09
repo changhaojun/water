@@ -41,7 +41,7 @@ var chartDivArr =new Array();
 //转换初始化时间值的格式
 startTime=year+"$"+p(month)+"$"+(p(date-date+1))+"$"+(p(h-h))+":"+(p(m-m))+":"+(p(s-s));
 endTime=year+"$"+p(month)+"$"+(p(date))+"$"+(p(h))+":"+(p(m))+":"+(p(s));
-initstartTime=year+'-'+p(month)+"-"+p(date)+" AM "+p(h-h)+':'+p(m-m);
+initstartTime=year+'-'+p(month)+"-"+p(date-date+1)+" AM "+p(h-h)+':'+p(m-m);
 initendTime=year+'-'+p(month)+"-"+p(date)+" "+flag+" "+p(h)+':'+p(m);
 $("#reservationtime").val(initstartTime+" - "+initendTime);
 
@@ -91,9 +91,6 @@ $(document).ready(function() {
     		  end=new Date(end).getFullYear()+"$"+p(new Date(end).getMonth()+1)+"$"+p(new Date(end).getDate())+"$"+p(new Date(end).getHours())+":"+p(new Date(end).getMinutes())+":"+p(new Date(end).getSeconds());			           
            	  startTime=start;
            	  endTime=end;
-           	 for(var i=0;i<chartDivArr.length;i++){
-           	 	currentChart(chartDivArr[i]);
-           	 }
            });
 });
 //获取对比数据
