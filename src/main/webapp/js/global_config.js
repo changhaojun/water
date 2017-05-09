@@ -64,7 +64,11 @@ var $extend =$.fn.extend({
 			crossDomain: true == !(document.all),
 			data:sendData ,
 			success: function(data) {
-				console.info(data)
+				if(data.code==200){
+					layer.msg(data.success,{icon:1})
+				}else{
+					layer.msg(data.error)
+				}
 			}
 		});
 	}
