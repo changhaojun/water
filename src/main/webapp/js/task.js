@@ -717,13 +717,13 @@ $.extend({
 				$('.eventBox').find('.compareValue').val(processData.trigger_conditions[0].compare_value);
 				for(var i=1;i<processData.trigger_conditions.length;i++){
 					$('.addConditionBtn').click();
-					var thing_name=processData.trigger_conditions[1].thing_name;
-					$('.addEventBox').find('.conditionThing').val(thing_name);
-					$('.addEventBox').find('.conditionThingList').attr('thing_id',processData.trigger_conditions[i].thing_id);
-					$('.addEventBox').find('.conditionThingList').getConditionTagList(processData.trigger_conditions[i]);
-					$('.addEventBox').find('.conditionTag').val(processData.trigger_conditions[i].data_id);
-					$('.addEventBox').find('.compareOper').val(processData.trigger_conditions[i].compare_oper);
-					$('.addEventBox').find('.compareValue').val(processData.trigger_conditions[i].compare_value);
+					var thing_name=processData.trigger_conditions[i].thing_name;
+					$('.addEventBox').eq(i-1).find('.conditionThing').val(thing_name);
+					$('.addEventBox').eq(i-1).find('.conditionThingList').attr('thing_id',processData.trigger_conditions[i].thing_id);
+					$('.addEventBox').eq(i-1).find('.conditionThingList').getConditionTagList(processData.trigger_conditions[i]);
+					$('.addEventBox').eq(i-1).find('.conditionTag').val(processData.trigger_conditions[i].data_id);
+					$('.addEventBox').eq(i-1).find('.compareOper').val(processData.trigger_conditions[i].compare_oper);
+					$('.addEventBox').eq(i-1).find('.compareValue').val(processData.trigger_conditions[i].compare_value);
 				}
 			}
 		}else if(processData.trigger_name=="时间周期触发"){
