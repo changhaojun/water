@@ -127,7 +127,7 @@ $.fn.extend({
 		$.ajax({
 			type:"GET",
 			url:globalurl+"/v1/missions?access_token="+$.taskData.access_token,
-			async:true,
+			async:false,
 			data:{
 				filter:'{"process_id":"'+$.taskData.selectTaskId+'"}',
 				sorts:'{"index":"asc"}'
@@ -451,6 +451,8 @@ $.fn.extend({
 								time:2000
 							})
 							$('#'+$.taskData.selectTaskId).showStepLine();
+							$.saveMissionIndex($.taskData.ruleIndexBox);
+							
 						}
 					}
 				});
@@ -701,7 +703,6 @@ $.extend({
 		})
 	},
 	showAddProcessBox:function(processData,titleMsg){
-		console.info(processData)
 		$('#addTechnologyName').val(processData.process_name);
 		$('#triggerType').val(processData.trigger_type);
 		$('.actionTimes').val(processData.action_times);
@@ -802,14 +803,14 @@ $.extend({
 		
 	},
 	sendChanged:function(data,missionId){
-		delete data._id;
+		//delete data._id;
 		var sendeData={data:JSON.stringify(data)}
 		$.ajax({
 			type:'put',
 			url:globalurl+"/v1/missions?access_token="+$.taskData.access_token+'&mission_id='+missionId,
 			dataType:'JSON',
 			data:sendeData,
-			async:false,
+			async:true,
 			success:function(data){
 			}
 		})
@@ -930,6 +931,7 @@ $.extend({
 				var sendType;
 				if($.taskData.ruleBox.mission_id==''){
 					sendType='post';
+					sendeData.index=$.taskData.ruleIndexBox.length+1;
 					sendeData={data:JSON.stringify(sendeData)};
 				}else{
 					sendType='put';

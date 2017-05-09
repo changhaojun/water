@@ -7,7 +7,7 @@ Copyright 2013 Kevin Sylvestre
 
 (function() {
   "use strict";
-  var $, Animation, Draggable, Gridly,
+  var $, Animation, Draggable, Gridly, $dragElem,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __slice = [].slice;
 
@@ -112,6 +112,7 @@ Copyright 2013 Kevin Sylvestre
       this.bind('on');
       this.$target = $(event.target).closest(this.$container.find(this.selector));
       this.$target.addClass('dragging');
+      $dragElem = this.$target;
       this.origin = {
         x: this.coordinate(event).pageX - this.$target.position().left,
         y: this.coordinate(event).pageY - this.$target.position().top
@@ -303,6 +304,8 @@ Copyright 2013 Kevin Sylvestre
       $elements = this.$sorted();
       this.ordinalize($elements);
       setTimeout(this.layout, 0);
+      this.settings.callBack && this.settings.callBack.call($dragElem);
+      $dragElem = null;
       return (_ref = this.settings) != null ? (_ref1 = _ref.callbacks) != null ? typeof _ref1.reordered === "function" ? _ref1.reordered($elements) : void 0 : void 0 : void 0;
     };
 
