@@ -3,6 +3,7 @@ package com.finfosoft.water.common;
 import com.finfosoft.db.mongo.MongodbPlugin;
 import com.finfosoft.water.dataTag.DataTagController;
 import com.finfosoft.water.frame.FrameController;
+import com.finfosoft.water.globalConfig.GlobalConfigController;
 import com.finfosoft.water.task.TaskController;
 import com.finfosoft.water.thing.ThingController;
 import com.finfosoft.water.login.LoginController;
@@ -38,6 +39,7 @@ public class WaterConfig extends JFinalConfig{
 		me.add("/task",TaskController.class,"/");				//任务相关
 		me.add("/thing",ThingController.class,"/");             //实体相关的页面
 		me.add("/scada",ScadaController.class,"/");			//组态相关
+		me.add("/globalConfig",GlobalConfigController.class,"/");  //全局配置
 	}
 
 	@Override

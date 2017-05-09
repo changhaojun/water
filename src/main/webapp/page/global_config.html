@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.min.css"/>
+		<link rel="stylesheet" href="/finfosoft-water/plugins/bootstarp/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/finfosoft-water/css/global_config.css?1.01" />
+	</head>
+	<body>
+		<input type="text" id="companyId" value="${companyId}" hidden="hidden"/>
+		<div class="globalBox">
+			<!--账户top-->
+			<div class="globalTop">
+				<span>全局配置</span>
+				<span>/</span>
+				<span>当前位置：</span>
+				<span>全局配置</span>	
+			</div>
+			<hr>
+			<!--账户内容-->
+			<div class="globalContent container-fluid">
+				<div class="globalMain">
+					<div class="row">
+						<label>接收短信号码</label>
+						<input v-model="globalData.receive_number" type="text" placeholder="请输入接收短信号码，多个号码以逗号分隔"/>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<label>最长掉线时间</label>
+							<input v-model="globalData.max_drop_time" num-limit="limit"  type="text" placeholder="请输入最长掉线时间，以分钟为单位"/>
+						</div>
+						<div class="col-xs-6">
+							<label>提醒时间间隔</label>
+							<input v-model="globalData.warn_time_interval" num-limit="limit" type="text" placeholder="请输入提醒时间间隔，以分钟为单位"/>
+						</div>
+					</div>
+					<div class="row">
+						<label>开启智能模式</label>
+						<div class="btn-group" role="group" aria-label="...">
+						    <button type="button" class="btn-left ">开启</button>
+						    <button type="button" class="btn-right actionBTn">关闭</button>
+						</div>
+						<span class="notes">注:针对一段时间的波动范围自动计算合理运行区间，超出此区间进行告警</span>
+					</div>
+				</div>
+				<div class="globalFooter">
+					<hr />
+					<button class="saveBtn">保存配置</button>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="/finfosoft-water/plugins/bootstarp/js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="/finfosoft-water/plugins/layer/layer.min.js"></script>
+		<script src="/finfosoft-water/plugins/vue/dist/vue.js"></script>
+		<script type="text/javascript" src="/finfosoft-water/js/public_resources.js" ></script>
+		<script src="/finfosoft-water/js/global_config.js"></script>
+	</body>
+</html>

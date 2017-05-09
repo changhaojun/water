@@ -1,0 +1,169 @@
+html{
+	background:#f3f3f4 !important;
+	height: 100% !important;
+}
+body{
+	height: 100% !important;
+	font-family: microsoft yahei !important;
+}
+.globalBox{	
+	width:100%;
+	height: 100%;
+	background:#f3f3f4;
+	float:left;
+	position: relative;	
+	/*min-width:1366px;*/
+	overflow-y: hidden;
+	overflow-x: hidden;
+}
+/*账户top区域*/
+.globalBox .globalTop{
+	width:100%;
+	height:65px;
+	
+}
+.globalBox .globalTop span{
+	font-size:22px;
+	padding-top:25px;
+	display: inline-block;
+}
+.globalBox .globalTop span:nth-child(1){	
+	margin-left:20px;
+	color:#5d5d5d;	
+}
+.globalBox .globalTop span:nth-child(2){
+	margin-left:5px;
+	margin-right:5px;
+}
+.globalBox .globalTop span:nth-child(3){
+	font-size:16px;
+	color:#000;	
+}
+.globalBox .globalTop span:nth-child(4){
+	font-size:16px;
+	color:#1ab394;	
+}
+.globalContent{
+	background: #ffffff;
+	height: calc(100% - 110px);
+	margin:10px 20px 20px 20px;
+	padding:20px;
+	overflow: auto;
+	position: relative;
+}
+.globalMain{
+	height: calc(100% - 100px);
+}
+.row{
+	margin-left: 0;
+	margin-right: 0;
+	margin-bottom: 20px;
+}
+.col-xs-6{
+	padding-left: 0;
+	padding-right: 0;
+}
+label{
+	width:100px;
+	height: 30px;
+	float: left;
+	color: #848484;
+	font-weight: 100;
+	line-height: 30px;
+}
+input{
+	width:calc(100% - 120px);
+	height: 30px;
+	float: left;
+}
+.notes{
+	margin-left: 10px;
+	height: 34px;
+	line-height: 34px;
+	font-size: 14px;
+	color: #FFCB00;
+}
+.btn-group >.btn-left,
+.btn-group >.btn-right{
+	display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    float: left;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    background-image: none;
+    color: #1AB394;
+    background-color: #fff;
+    border: 1px solid transparent;
+}
+.btn-group >.btn-left:hover{
+	filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.7; /*Firefox私有，透明度50%*/
+	opacity:0.7;/*其他，透明度50%*/
+}
+.btn-group >.btn-right:hover{
+	filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.7; /*Firefox私有，透明度50%*/
+	opacity:0.7;/*其他，透明度50%*/
+}
+.btn-group >.btn-left{
+	border-color: #1AB394;
+    border-radius: 4px 0 0 4px;
+}
+.btn-group >.btn-right{
+	border-color: #1AB394;
+	border-left: none;
+	border-radius: 0 4px 4px 0;
+}
+.actionBTn{
+	background-color: #1AB394 !important;
+	color: #ffffff !important;
+}
+.globalFooter{
+	height: 100px;
+	text-align: center;
+}
+.globalFooter >hr{
+	margin:0 20px;
+	width:calc(100% - 40px);
+	height:1px;
+	background:#1AB394;
+	border:0;
+	display: inline-block;
+}
+.saveBtn{
+	width: 300px;
+	margin-top: 20px;
+	display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    background-image: none;
+    color: #ffffff;
+    background-color: #1AB394;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.saveBtn:hover{
+	filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.7; /*Firefox私有，透明度50%*/
+	opacity:0.7;/*其他，透明度50%*/
+}
+
