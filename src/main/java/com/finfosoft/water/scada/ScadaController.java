@@ -1,5 +1,7 @@
 package com.finfosoft.water.scada;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
@@ -22,9 +24,13 @@ public class ScadaController extends Controller{
 		render("scada_list.html");
 	}
 	
-	public void review() {
+	public void review() throws UnsupportedEncodingException {
 		String scadaId = getPara(0);
+		String scadaName = URLDecoder.decode(getPara(1), "UTF-8");
+		String scadaDescription = URLDecoder.decode(getPara(2), "UTF-8");
 		setAttr("scadaId", scadaId);
+		setAttr("scadaName", scadaName);
+		setAttr("scadaDescription", scadaDescription);
 		render("scada_review.html");
 	}
 	

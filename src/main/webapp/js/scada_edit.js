@@ -137,16 +137,11 @@ $.fn.extend({
 		$(this).html('');
 		var liDom = '';
 		$.each(data, function(i) {
-			liDom += '<li dataId="'+data[i].data_id+'" dataName="'+data[i].data_name+'" dataValue="'+data[i].data_value+'"dataUnit="'+data[i].data_unit+'">'+data[i].data_name+'</li>'
+			liDom += "<li primary='"+JSON.stringify(data[i])+"'>"+data[i].data_name+"</li>";
 		});
 		$(this).html(liDom);
 		$(this).children().click(function() {
-			$.selectThingData({
-				dataId: $(this).attr('dataId'),
-				dataName: $(this).attr('dataName'),
-				dataValue: $(this).attr('dataValue'),
-				dataUnit: $(this).attr('dataUnit'),
-			});
+			$.selectThingData($(this).attr('primary'));
 		});
 		$(this).parents('.selector').resetScrollBar();
 	},
@@ -184,10 +179,11 @@ $.extend({
 				for (var i=0; i<$.data.sentData.scada_config.length; i++) {
 					$.initThree.initLabel(
 						{
-							dataId: $.data.sentData.scada_config[i].data_id,
-							dataName: $.data.sentData.scada_config[i].data_name,
-							dataValue: $.data.sentData.scada_config[i].data_value,
-							dataUnit: $.data.sentData.scada_config[i].data_unit
+							data_id: $.data.sentData.scada_config[i].data_id,
+							data_name: $.data.sentData.scada_config[i].data_name,
+							data_value: $.data.sentData.scada_config[i].data_value,
+							data_unit: $.data.sentData.scada_config[i].data_unit,
+							label_type: $.data.sentData.scada_config[i].label_type
 						},
 						$.data.sentData.scada_config[i].objPosition
 					);
@@ -200,7 +196,7 @@ $.extend({
 				});
 				$.initThree.init(data.scadaModel.modelConfig, function() {
 					$('.footBar').selectLabel();
-				});
+				}, true);
 				$.initButton();
 				$.saveScada();
 			});
@@ -252,10 +248,10 @@ $.extend({
 					$.three.capturer.intersected = null;
 					$.initThree.rendererUpdata();
 					layer.close(confirm);
-					$.openSelectTingName();
+					$.openSelectThingName();
 				});
 			} else {
-				$.openSelectTingName();
+				$.openSelectThingName();
 			}
 		});
 		$('.add').click(function() {
@@ -279,7 +275,7 @@ $.extend({
 			$('.selector').toggleWin(true);
 		});
 	},
-	openSelectTingName: function() {
+	openSelectThingName: function() {
 		$('.selectThing').toggleWin();
 		$('.selectThing').find('.selector-body').stayCenter($('.selectThing'));
 		$('.selectThing').resetScrollBar();

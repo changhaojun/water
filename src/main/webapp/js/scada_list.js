@@ -107,7 +107,9 @@ function addEntity(){
 
 function reviewScada(){
 	var id = $(this).parents('tr').attr('id');
-	self.location.href = 'scada/review/'+id;
+	var name = $(this).parents('tr').find('td').eq(0).html();
+	var description = $(this).parents('tr').find('td').eq(1).html();
+	self.location.href = 'scada/review/'+id+'-'+name+'-'+description;
 }
 
 function editScada(){
