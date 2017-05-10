@@ -14,5 +14,11 @@ public class RunDataController extends Controller{
 		setAttr("companyId", companyId);
 		render("run_data.html");
 	}
+	
+	public void getDatas(){
+		String thingId = getPara(0);
+		setAttr("thingId", thingId);
+		render("entity_data.html");
+	}
 
 }

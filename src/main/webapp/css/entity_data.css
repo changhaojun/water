@@ -1,43 +1,43 @@
 html{
 	background:#f3f3f4 !important;
 	}
-
-a{
-	text-decoration: none!important;
+body{
+	background:#f3f3f4 !important;
 }
-.accountData{
+
+.entityData{
 	width: 100%;
     background: #f3f3f4;
     float: left;
     position: relative;
 }
 /*Top区域*/
-.accountData .accountTop{
+.entityData .dataTop{
 	height: 65px;
     margin-right: 20px;
 }
-.accountData .accountTop span {
+.entityData .dataTop span {
     font-size: 22px;
     padding-top: 25px;
     display: inline-block;
 }
-.accountData .accountTop span:nth-child(1) {
+.entityData .dataTop span:nth-child(1) {
     margin-left: 20px;
     color: #5d5d5d;
 }
-.accountData .accountTop span:nth-child(2) {
+.entityData .dataTop span:nth-child(2) {
     margin-left: 5px;
     margin-right: 5px;
 }
-.accountData .accountTop span:nth-child(3) {
+.entityData .dataTop span:nth-child(3) {
     color: #5d5d5d;
     font-size: 14px;
 }
-.accountData .accountTop span:nth-child(3) i {
+.entityData .dataTop span:nth-child(3) i {
     color: #1ab394;
 }
 /*搜索*/
-.accountData .accountTop .search {
+.entityData .dataTop .search {
     border: 1px solid #c1c1c1;
     background: #fff;
     float: right;
@@ -48,21 +48,21 @@ a{
     font-size: 14px;
     margin-top: 25px;
 }
-.accountData .accountTop .search input{
+.entityData .dataTop .search input{
     color: #1AB394;
     width: 321px;
     padding-left: 12px;
     height: 36px;
     border-radius: 5px 5px;
 }
-.accountData .accountTop .search i{
+.entityData .dataTop .search i{
     color: #1AB394;
     line-height: 36px;
     font-size: 14px;
     cursor: pointer;
 }
 
-.accountData hr {
+.entityData hr {
     width: calc(100% - 40px);
     margin-left: 20px;
     height: 4px;
@@ -70,20 +70,20 @@ a{
     border: 0;
     display: inline-block;
 }
-/*dataContent*/
+
+
+
+/*.dataContent .normal{
+	border-left: 8px solid #1ab394;
+}*/
 .dataContent .dataList{
-	width: 528px;
-    height: 262px;
+	width: 391px;
+    height: 212px;
     background: #fff;
+    border-left: 8px solid #1ab394;
     margin-left: 20px;
     float: left;
-    margin-top: 20px;
-}
-.dataContent .dataList:hover{
-	background:rgba(256,256,256,0.5);
-}
-.dataContent .dataList a{
-	display: inline-block;
+    margin-top: 20px
 }
 .dataList .listTop{
 	width: 100%;
@@ -91,28 +91,50 @@ a{
     height: 40px;
     line-height: 40px;
 }
-.dataList .listTop span{
-	margin-left: 20px;
-	color:#1ab394; 
+.dataList .listTop>span:nth-child(1){
+	margin-left: 10px;
+    float: left;
 }
-.dataList .listHr{
+.dataList .listTop>span:nth-child(2){
+	margin-right: 10px;
+    float: right;
+    cursor: pointer;
+}
+.dataList .listTop>span:nth-child(3){
+	margin-right: 10px;
+    float: right;
+    cursor: pointer;
+}
+.dataList .listTop>span:nth-child(2),.dataList .listTop>span:nth-child(3){
+	background: orange;
+    border-radius: 35px;
+    padding: 0px 9px;
+    color: white;
+    line-height:30px;
+    margin-top: 5px;
+    display: none;
+}
+.dataList  .listHr{
 	padding: 0;
     margin: 0;
     height: 1px;
     background: #F3F3F4;
-    margin-left: 20px;
-    width: 478px;
+    margin-left: 10px;
+    width: 353px;
 }
 .dataList .listContent{
-	width: 100%;
-    height: 222px;
+	    width: 100%;
+    height: 172px;
 }
-.dataList .listContent .contentTop{
-	height:182px;
+.dataList .contentTop .Itext{
+	width: 100%;
+    height: 136px;
+    font-size: 30px;
+    line-height: 136px;
+    text-align: center;
 }
 .dataList .listContent .contentBottom{
 	color: #afafaf;
     text-align: center;
     height: 30px;
-    -margin-top: 40px;
 }
