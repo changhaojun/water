@@ -314,7 +314,6 @@ function MQTTconnect(){
 // called when the client connects
 function onConnect() {
     console.log("onConnect");
-    console.info('companyId:'+companyId)
     topic = companyId;
     client.subscribe(topic);
 }
