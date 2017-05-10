@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.min.css"/>
+		<link rel="stylesheet" href="/finfosoft-water/plugins/bootstarp/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/bootstrap-table/bootstrap-table.css"/>
+		<link rel="stylesheet" href="/finfosoft-water/css/alarm_history.css?1.00" />
+	</head>
+	<body>
+		<input type="text" id="companyId" value="${companyId}" hidden="hidden"/>
+		<div class="alarmBox">
+			<!--账户top-->
+			<div class="alarmTop">
+				<span>历史告警</span>
+				<span>/</span>
+				<span>当前位置：</span>
+				<span>查看历史告警</span>	
+			</div>
+			<hr>
+			<!--账户内容-->
+			<div class="alarmContent container-fluid">
+				<table class="table table-hover" id="alarmList" >
+                </table>
+			</div>
+		</div>
+		
+		<div class="alarmInfo" hidden="hidden">
+			<textarea class="resultInfo" placeholder="请输入处理结果"></textarea>
+			<div class="row btnRow">
+				<div class="col-xs-offset-3 col-xs-3 btnCol">
+					<button class="saveBtn">提交</button>
+				</div>
+				<div class="col-xs-3 btnCol">
+					<button class="cancelBtn">取消</button>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="/finfosoft-water/plugins/bootstarp/js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="/finfosoft-water/plugins/layer/layer.min.js"></script>
+		<script type="text/javascript" src="/finfosoft-water/js/public_resources.js" ></script>
+		<script src="/finfosoft-water/plugins/bootstrap-table/bootstrap-table.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/alarm_history.js"></script>
+	</body>
+</html>
