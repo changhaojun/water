@@ -35,7 +35,7 @@ function getAlarmList(){
                     },
                     {
                         title: "告警项目",//标题
-                        field: "name",//键名
+                        field: "alarm_name",//键名
                     },
                     {
                         title: "当前值",//标题
@@ -57,7 +57,8 @@ function queryParams(params){
 		pageNumber:params.offset,//第几页
 		pageSize:params.limit,//每页的条数
 		access_token:access_token,
-		filter:'{"company_id":"'+company_id+'"}'
+		filter:'{"company_id":"'+company_id+'"}',
+		sorts:'{"start_time":"desc"}'
 	};
 }
 function resultFormatter(value,rows){
