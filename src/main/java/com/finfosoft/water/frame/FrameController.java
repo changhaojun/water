@@ -17,6 +17,9 @@ public class FrameController extends Controller{
 	 */
 	public void index(){
 		Record user=getSessionAttr(Constants.SESSION_USER);
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String companyId=company.get("companyId");
+		setAttr("companyId", companyId);
 		setAttr("user",JSON.toJSON(user));
 		render("index.html");
 	}

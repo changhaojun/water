@@ -1,5 +1,8 @@
 	getToken();
 	getNavData();
+	var companyId=$('#companyId').val();
+	getMsgNum();
+	MQTTconnect();
 	$(".userName").append("欢迎你，"+user.fullname)
 var flag=-1;
 	//二维码的展现	
@@ -267,3 +270,82 @@ $(".popMsg_content button,.popMsg .pop-close").click(function(){
 	$(".popMsg").hide();
 	
 });
+
+function getMsgNum(){
+	$.ajax({
+		type:'get',
+		crossDomain: true == !(document.all),
+		url:globalurl+"/v1/alarmHistorys",
+		datatype:'json',
+		data:{
+			access_token:accesstoken,
+			filter:'{"company_id":"'+$('#companyId').val()+'"}'
+		},
+		success:function(data){
+			$('.msgNum').text(data.untreated)
+		}
+	});
+}
+function MQTTconnect(){
+	console.log("订阅程序开始执行");
+	var mqttHost = '192.168.1.114';
+	var username = "admin";
+	var password = "password";
+	client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
+	var options = {
+		timeout: 1000,
+		onSuccess: onConnect,
+		onFailure: function(message) {
+			setTimeout(MQTTconnect, 10000000);
+		}
+	};
+	// set callback handlers
+	client.onConnectionLost = onConnectionLost;
+	client.onMessageArrived = onMessageArrived;
+	
+	if(username != null) {
+		options.userName = username;
+		options.password = password;
+	}
+	client.connect(options);
+	// connect the clien
+}
+
+// called when the client connects
+function onConnect() {
+    console.log("onConnect");
+    console.info('companyId:'+companyId)
+    topic = companyId;
+    client.subscribe(topic);
+}
+
+// called when the client loses its connection
+function onConnectionLost(responseObject) {
+  if (responseObject.errorCode !== 0) {
+    console.log("onConnectionLost:" + responseObject.errorMessage);
+  }
+}
+
+// called when a message arrives
+function onMessageArrived(message) {
+  var topic = message.destinationName;
+  var payload = JSON.parse(message.payloadString);
+  toastr.options = {
+	  "closeButton":true,
+	  "debug":false,
+	  "progressBar":true,
+	  "positionClass":"toast-top-right",
+	  "onclick":null,
+	  "showDuration": "400",
+	  "hideDuration": "1000",
+	  "timeOut": "7000",
+	  "extendedTimeOut": "1000",
+	  "showEasing": "swing",
+	  "hideEasing": "linear",
+	  "showMethod": "fadeIn",
+	  "hideMethod": "fadeOut"
+	}
+   toastr.error('告警!&nbsp;&nbsp;'+payload.whole_name+'&nbsp;&nbsp;&nbsp;&nbsp;当前值：'+payload.data_value);
+   var alarmNum=$('.msgNum').text();
+   $('.msgNum').text(Number(alarmNum)+1);
+}

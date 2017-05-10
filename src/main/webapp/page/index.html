@@ -9,9 +9,11 @@
 		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/style.css" />
 		<link rel="stylesheet" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.min.css" />
 		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/toastr/toastr.min.css" />
 		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/system_frame.css"/>
 	</head>
 	<body class="fixed-sidebar full-height-layout pace-done">
+		<input type="text" id="companyId" value="${companyId}" hidden="hidden"/>
 		<div id="wrapper">
 			<!--右侧导航开始-->
 			<nav class="navbar-default navbar-static-side fixedTop" id="fixedTop" role="navigation">
@@ -79,10 +81,10 @@
 							</li>
 							<li>
 								<dl>
-									<dt>
+									<a href="/finfosoft-water/alarm" target="iframe0">
 										<strong></strong>
-										<em class="msgNum">1</em>
-									</dt>
+										<em  class="msgNum"></em>
+									</a>
 									<dd>
 										<div class="msgContent"></div>
 									</dd>
@@ -148,6 +150,8 @@
 			 var user=${user.columns};
 			</script>
 			<script src="/finfosoft-water/js/public_resources.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+			<script src="/finfosoft-water/plugins/toastr/toastr.min.js"></script>
 			<script src="/finfosoft-water/js/system_frame.js?1.01"></script>
 	</body>
 </html>

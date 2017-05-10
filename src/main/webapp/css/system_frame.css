@@ -168,8 +168,14 @@ body.fixed-sidebar .navbar-static-side{
 #wrapper .indexHeader ul li dt {
 	position: relative;
 }
-
-#wrapper .indexHeader ul li dt strong {
+#wrapper .indexHeader ul li a{
+	padding: 0 20px;
+    font-weight: 100;
+    border-left: 2px solid #45464f;
+    line-height: 50px;
+    cursor: pointer;
+}
+#wrapper .indexHeader ul li a strong {
 	display: inline-block;
 	width: 18px;
 	height: 13px;
@@ -177,7 +183,7 @@ body.fixed-sidebar .navbar-static-side{
 	vertical-align: middle;
 }
 
-#wrapper .indexHeader ul li dt .msgNum {
+#wrapper .indexHeader ul li a .msgNum {
 	color: #fff;
 	width: 16px;
 	height: 16px;
