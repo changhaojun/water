@@ -170,6 +170,7 @@ $.fn.extend({
 			type: "post",
 			dataType: "json",
 			url: globalurl + "/authorize/authorize",
+//			url:'http://192.168.1.106:8080/authorize',
 			async: true,
 			crossDomain: true == !(document.all),
 			data: $.userInfo,

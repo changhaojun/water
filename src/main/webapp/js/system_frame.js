@@ -2,7 +2,11 @@
 	getNavData();
 	var companyId=$('#companyId').val();
 	getMsgNum();
-	MQTTconnect();
+	setTimeout(function(){
+		console.info('定时器')
+		MQTTconnect()
+	},5000)
+//	MQTTconnect();
 	$(".userName").append("欢迎你，"+user.fullname)
 var flag=-1;
 	//二维码的展现	

@@ -122,7 +122,7 @@ $(".IContent").append(str);
 	}
 }
 //告警颜色设置
-function colorBg(data,index){	
+function colorBg(data,index){
 	if(data==1){
 		$(".alarmList").eq(index).addClass("greenBg");
 	}else if(data==0){
@@ -403,12 +403,14 @@ var topic;
 var data;
 function MQTTconnect(dataIds) {
   console.log("订阅程序开始执行");
-  var mqttHost = '139.129.231.31';
-  var username="admin";
-  var password="finfosoft123";
-	 topic="mqtt_alarm_currentdata";
-	  client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
-	 data = dataIds;  
+//var mqttHost = '139.129.231.31';
+//var username="admin";
+//var password="finfosoft123";
+	var mqttHost = '192.168.1.114';
+	var username = "admin";
+	var password = "password";
+	client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
+	data = dataIds;  
 	  var options = {
 			  timeout: 1000,
 			  onSuccess: onConnect,
@@ -435,7 +437,7 @@ function onConnect() {
   for(var i=0;i<data.length;i++){
 	  console.log("订阅第"+i+"个主题");
 	  console.log(data[i]);
-	  topic=data[i];
+	  topic=data[i].toString();
 	  client.subscribe(topic);
   }
 }
@@ -451,15 +453,25 @@ function onConnectionLost(responseObject) {
 function onMessageArrived(message) {
   var topic = message.destinationName;
   var payload = message.payloadString;
-  console.log(payload)
-  var dataId=JSON.parse(message.payloadString)
-  for(var i=0;i<$(".alarmList").length;i++){	
-  		if(dataId.data_id==$(".alarmList").eq(i).attr("id")){
-  			$("#"+dataId.data_id+"").find(".alarmContent .dataTime").html(dataId.data_time);
-  			$("#"+dataId.data_id+"").find(".alarmContent .dataValue").html(dataId.data_value);
-  			colorBg(dataId.status,i);
-  		}
-  }
+  var dataConfig=JSON.parse(payload)
+  var dataId=dataConfig.data_id
+  console.info(dataConfig)
+//for(var i=0;i<$(".alarmList").length;i++){	
+//		if(dataId.data_id==$(".alarmList").eq(i).attr("id")){
+//			$("#"+dataId.data_id+"").find(".alarmContent .dataTime").html(dataId.data_time);
+//			$("#"+dataId.data_id+"").find(".alarmContent .dataValue").html(dataId.data_value);
+//			colorBg(dataId.status,i);
+//		}
+//}
+	$('#'+dataId).find('.dataValue').text(dataConfig.data_value);
+	$('#'+dataId).find('dataTime').text(dataConfig.data_time);
+	if(dataConfig.status==1){
+		$('#'+dataId).addClass("greenBg");
+	}else if(data==0){
+		$('#'+dataId).addClass("grayBg");
+	}else{
+		$('#'+dataId).addClass("redBg");
+	}
 }
 
 

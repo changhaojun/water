@@ -4,7 +4,7 @@ var access_token = accesstoken;
 var alarmId;
 var isSearch=false;
 getAlarmList();
-//MQTTconnect();
+MQTTconnect();
 var This;
 
 function searchAlarm(){
