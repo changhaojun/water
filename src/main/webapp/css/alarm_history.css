@@ -141,9 +141,43 @@ tr{
 textarea:disabled{
     background-color: #EEEEEE;
 }
-textarea,input{
+textarea{
 	border-color: #D2D2D2;
 }
 .layui-layer{
     box-shadow: 8px 8px rgba(0,0,0,.5) !important;
+}
+/*账户搜索*/
+.search{
+	border:1px solid #c1c1c1;
+	background:#fff;
+	float:right;
+	border-radius: 5px 5px;
+	width:360px;
+	padding:0;
+	height:36px;
+	font-size:14px;
+	margin-right: 20px;
+	margin-top:25px;
+}
+.search input:nth-child(1){
+	color:#1AB394;
+	width:321px;
+	padding-left:6px;
+	height:28px;
+	top:28px;
+	font-size: 14px;
+	position: absolute;
+	outline: none;
+	border: none;
+	/*border-radius: 5px 5px;*/
+}
+.search i:nth-child(2){
+	color:#1AB394;
+	line-height:28px;
+	right: 35px;
+	top:28px;
+	font-size:16px;
+	position: absolute;
+	cursor: pointer;
 }

@@ -2,8 +2,17 @@ var company_id=$('#companyId').val()
 getToken();
 var access_token = accesstoken;
 var alarmId;
+var isSearch=false;
 getAlarmList();
+//MQTTconnect();
 var This;
+
+function searchAlarm(){
+	isSearch=true;
+	$('#alarmList').bootstrapTable("removeAll");
+	$('#alarmList').bootstrapTable("refresh",queryParams);
+	isSearch=false;
+};
 function getAlarmList(){
 	$('#alarmList').bootstrapTable({
 	  	method: 'get',
@@ -54,10 +63,11 @@ function getAlarmList(){
 
 function queryParams(params){
 	return{
-		pageNumber:params.offset,//第几页
+		pageNumber:isSearch ? 0 : params.offset,//第几页
 		pageSize:params.limit,//每页的条数
 		access_token:access_token,
 		filter:'{"company_id":"'+company_id+'"}',
+		like:'{"alarm_name":"'+$('#searchId').val()+'"}',
 		sorts:'{"start_time":"desc"}'
 	};
 }
@@ -138,3 +148,48 @@ $('.cancelBtn').click(function(){
 	layer.close(resultBox)
 });
 
+function MQTTconnect(){
+	console.log("订阅程序开始执行");
+	var mqttHost = '192.168.1.114';
+	var username = "admin";
+	var password = "password";
+	client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
+	var options = {
+		timeout: 1000,
+		onSuccess: onConnect,
+		onFailure: function(message) {
+			setTimeout(MQTTconnect, 10000000);
+		}
+	};
+	// set callback handlers
+	client.onConnectionLost = onConnectionLost;
+	client.onMessageArrived = onMessageArrived;
+	
+	if(username != null) {
+		options.userName = username;
+		options.password = password;
+	}
+	client.connect(options);
+	// connect the clien
+}
+
+// called when the client connects
+function onConnect() {
+    console.log("onConnect");
+    topic = company_id;
+    client.subscribe(topic);
+}
+
+// called when the client loses its connection
+function onConnectionLost(responseObject) {
+  if (responseObject.errorCode !== 0) {
+    console.log("onConnectionLost:" + responseObject.errorMessage);
+  }
+}
+
+// called when a message arrives
+function onMessageArrived(message) {
+  var topic = message.destinationName;
+  var payload = JSON.parse(message.payloadString);
+  $('#alarmList').bootstrapTable("refresh",queryParams)
+}
