@@ -11,7 +11,7 @@ var globalConfig={	//全局变量
 	inputCheck:false
 }
 
-var $extend =$.fn.extend({
+var $extend=$.fn.extend({
 	smartModel:function(smart_mode){	//点击智能提醒后通过数据变更按钮样式
 		var This;
 		if(smart_mode==1){

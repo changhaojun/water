@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="/finfosoft-water/plugins/bootstarp/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/manual_data.css?1.00" />
+	</head>
+
+	<body>
+		<div>
+			<input type="text" id="companyId" hidden="hidden" value="${companyId}"/>
+			<input type="text" id="companyCode" hidden="hidden" value="${companyCode}"/>
+			<input type="text" id="deviceId" hidden="hidden" value="${deviceId}"/>
+		</div>
+		<div id="vue">
+			<div class="boxAccess">
+				<div class="boxHeader">
+					<h3>
+						<span>新增PLC</span>
+						<span>/</span>
+						<span>ADD PLC</span>
+					</h3>
+					<h4>
+						<span>当前位置：</span>
+						<span>接入PLC</span>
+						<span>></span>
+						<span>新增PLC</span>
+					</h4>
+				</div>
+				<!--主要内容部分-->
+				<div class="dataInfo">
+					<div class="boxContent clearfix">
+						<div class="equipment">
+							<i class="fa fa-book"></i>&nbsp;设备信息
+						</div>
+						<div class="dataCircle">
+							<label for="device_code">分组编号</label>
+							<input v-model="manualData.device_code" type="text" id="device_code" class="textInput" placeholder="请输入分组编号"/>
+						</div>
+						<div class="dataCircle">
+							<label for="device_name">分组名称</label>
+							<input v-model="manualData.device_name" id="device_name" type="text" class="textInput" placeholder="请输入分组名称"/>
+						</div>
+					</div>
+					<div class="boxContent clearfix">
+						<div class="equipment">
+							<i class="fa fa-wrench"></i>&nbsp;数据配置
+							<a class="btnYellow addPort">
+								<i class="fa fa-plus"></i>
+								<div class="tip">
+									添加数据
+									<em class="tip-arrow"></em>
+								</div>
+							</a>
+						</div>
+						<div class="detialData" >
+							<div v-for="(dataConfig,index) in dataConfigs" class="dataModel">
+								<div class="dataCircle">
+									<label>数据名称</label>
+									<input type="text" v-model="dataConfig.data_name"  class="textInput" placeholder="请输入数据名称"/>
+								</div>
+								<div class="dataCircle">
+									<label>数据单位</label>
+									<input type="text" v-model="dataConfig.data_unit" class="textInput" placeholder="请输入数据单位"/>
+									<span @click='deleteData(index,$event)' class="fa fa-times-circle deleteData" data-toggle="tooltip" data-placement="top" title="删除"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="saveSettings">
+						<button id="main-submit">保存设置</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="/finfosoft-water/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="/finfosoft-water/plugins/bootstarp/js/bootstrap.min.js" ></script>
+		<script src="/finfosoft-water/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/public_resources.js?1.0"></script>
+		<script src="/finfosoft-water/js/manual_data.js?1.01" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

@@ -186,4 +186,41 @@ public class DataTagController extends Controller{
 		render("box_plc_edit.html");
 	}
 	
+	/**
+	 * 
+	 * @Title: manualEntry
+	 * @Description:
+	 *    作用:打开人工录入列表页面
+	 *    限制:
+	 *    注意事项:
+	 *    修改历史:(date:xxxx by:xxx comment:xxx)
+	 * @author dongmo(113552669@qq.com)
+	 * @date 2017年5月11日    
+	 * @return void 
+	 * @exception  (说明在某情况下，将发生什么异常)
+	 * 
+	 * */
+	public void manualEntry(){
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String companyCode=company.get("companyCode");
+		String companyId=company.get("companyId");
+		setAttr("companyCode", companyCode);
+		setAttr("companyId", companyId);
+		render("manual_entry.html");
+	}
+	
+	public void addManual(){
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String companyCode=company.get("companyCode");
+		String companyId=company.get("companyId");
+		String deviceId="";
+		if(getPara(0)!=null){
+			deviceId=getPara(0);
+		}
+		setAttr("deviceId", deviceId);
+		setAttr("companyCode", companyCode);
+		setAttr("companyId", companyId);
+		render("manual_data.html");
+	}
+	
 }
