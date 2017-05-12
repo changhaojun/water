@@ -61,7 +61,7 @@ body{
     font-size: 14px;
     cursor: pointer;
 }
-
+/*Hr*/
 .entityData hr {
     width: calc(100% - 40px);
     margin-left: 20px;
@@ -73,17 +73,23 @@ body{
 
 
 
-/*.dataContent .normal{
-	border-left: 8px solid #1ab394;
-}*/
 .dataContent .dataList{
 	width: 391px;
     height: 212px;
     background: #fff;
-    border-left: 8px solid #1ab394;
+    /*border-left: 8px solid #1ab394;*/
     margin-left: 20px;
     float: left;
     margin-top: 20px
+}
+.dataContent .dataList:hover{
+	background:rgba(256,256,256,0.5)
+}
+.dataContent .dataList:hover span:nth-child(2){
+	display: inline-block;
+}
+.dataContent .dataList:hover span:nth-child(3){
+	display: inline-block;
 }
 .dataList .listTop{
 	width: 100%;
@@ -96,12 +102,12 @@ body{
     float: left;
 }
 .dataList .listTop>span:nth-child(2){
-	margin-right: 10px;
+	margin-right: 5px;
     float: right;
     cursor: pointer;
 }
 .dataList .listTop>span:nth-child(3){
-	margin-right: 10px;
+	margin-right: 5px;
     float: right;
     cursor: pointer;
 }
@@ -111,7 +117,7 @@ body{
     padding: 0px 9px;
     color: white;
     line-height:30px;
-    margin-top: 5px;
+    margin-top: -15px;
     display: none;
 }
 .dataList  .listHr{
@@ -132,9 +138,28 @@ body{
     font-size: 30px;
     line-height: 136px;
     text-align: center;
+    /*color: #1ab394;*/
 }
 .dataList .listContent .contentBottom{
 	color: #afafaf;
     text-align: center;
     height: 30px;
 }
+/*告警颜色设置*/
+.dataContent .greenBg{
+	color:#1AB394;
+}
+.dataContent .grayBg{
+	color:#9a9a9a;
+}
+.dataContent .redBg{
+	color:#d51b1c;
+}
+
+/*.dataContent .grayBg .dataList .listTop>span:nth-child(1),.dataContent .grayBg .dataContent .dataList,.dataContent .grayBg .dataList .contentTop .Itext{
+	color: #9a9a9a!important;
+}
+.dataContent .redBg .dataList .listTop>span:nth-child(1),.dataContent .redBg .dataContent .dataList,.dataContent .redBg .dataList .contentTop .Itext{
+	color: #f27779!important;
+}*/
+

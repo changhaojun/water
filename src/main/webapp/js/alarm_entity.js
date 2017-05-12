@@ -435,7 +435,7 @@ function onConnect() {
   for(var i=0;i<data.length;i++){
 	  console.log("订阅第"+i+"个主题");
 	  console.log(data[i]);
-	  topic=data[i];
+	  topic=data[i]+"";
 	  client.subscribe(topic);
   }
 }

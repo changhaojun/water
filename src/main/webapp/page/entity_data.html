@@ -18,8 +18,8 @@
 				<span>/</span>
 				<span>当前位置：选择实体 > <i>选择数据标签</i></span>
 				<span class="search">
-					<input type="text" value="请输入关键字来查找" id="searchId"/>
-					<i class="fa fa-search"></i>					
+					<input type="text" placeholder="请输入关键字查找" id="searchId" onkeypress="if(event.keyCode==13) {searchThing($(this));return false;}" onkeyup="if(event.keyCode==32){space($(this))}"/>
+					<i class="fa fa-search" onclick="searchThing($('#searchId'))"></i>					
 				</span>
 			</div>
 			<hr>
@@ -32,5 +32,6 @@
 	<script src="/finfosoft-water/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/finfosoft-water/plugins/bootstarp/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/finfosoft-water/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/finfosoft-water/js/entity_data.js?1.07" type="text/javascript" charset="utf-8"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+	<script src="/finfosoft-water/js/entity_data.js?1.01" type="text/javascript" charset="utf-8"></script>
 </html>
