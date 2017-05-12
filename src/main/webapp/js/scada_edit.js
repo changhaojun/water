@@ -1,4 +1,4 @@
-$.data = {
+$.initData = {
 	token: {
 		access: '',
 		refresh: ''
@@ -16,6 +16,7 @@ $.data = {
 }
 
 $.fn.extend({
+	//窗口显示 & 隐藏
 	toggleWin: function(hide) {
 		if (hide) {
 			$(this).css('display', 'none');
@@ -24,12 +25,14 @@ $.fn.extend({
 		}
 		return $(this);
 	},
+	//居中位置计算与设置
 	setCenterPos: function(parent) {
 		$(this).css({
 			'left': (parent.width() - $(this).width()) / 2,
 			'top': (parent.height() - $(this).height()) / 2
 		});
 	},
+	//改变窗口大小重新设置位置居中
 	stayCenter: function(parent) {
 		var This = $(this);
 		$(this).setCenterPos(parent);
@@ -37,6 +40,7 @@ $.fn.extend({
 			This.setCenterPos(parent)
 		});
 	},
+	//自定义滚动条
 	resetScrollBar: function() {
 		var contentParent = $(this).find('.selector-main');
 		var contentPlus = $(this).find('.selector-search');
@@ -80,16 +84,17 @@ $.fn.extend({
 			});
 		});
 	},
+	//ajax查询实体列表
 	searchThingName: function(callBack) {
 		var val = $(this).val();
 		$.ajax({
 			type: "get",
 			dataType: "json",
-			url: $.data.globalurl+"/v1/things",
+			url: $.initData.globalurl+"/v1/things",
 			async: true,
 			crossDomain: true == !(document.all),
 			data: {
-				access_token: $.data.token.access,
+				access_token: $.initData.token.access,
 				like: JSON.stringify({
 					thing_name: val
 				})
@@ -99,19 +104,21 @@ $.fn.extend({
 			}
 		});
 	},
+	//确定并改变实体名称
 	changeThingName: function(thingName) {
 		$(this).css('color', '#1ab394').html(thingName);
 	},
+	//ajax查询实体下绑定的数据列表
 	searchData: function(callBack) {
 		var val = $(this).val();
 		$.ajax({
 			type: "get",
 			dataType: "json",
-			url: $.data.globalurl+"/v1/things/"+$.data.sentData.thing_id+"/thingDatas",
+			url: $.initData.globalurl+"/v1/things/"+$.initData.sentData.thing_id+"/thingDatas",
 			async: true,
 			crossDomain: true == !(document.all),
 			data: {
-				access_token: $.data.token.access,
+				access_token: $.initData.token.access,
 				like: JSON.stringify({
 					data_name: val
 				})
@@ -121,6 +128,7 @@ $.fn.extend({
 			}
 		});
 	},
+	//刷新实体名称列表
 	refreshNameList: function(data) {
 		$(this).html('');
 		var liDom = '';
@@ -133,6 +141,7 @@ $.fn.extend({
 		})
 		$(this).parents('.selector').resetScrollBar();
 	},
+	//刷新数据列表
 	refreshDataList: function(data) {
 		$(this).html('');
 		var liDom = '';
@@ -141,10 +150,11 @@ $.fn.extend({
 		});
 		$(this).html(liDom);
 		$(this).children().click(function() {
-			$.selectThingData($(this).attr('primary'));
+			$.selectThingData(JSON.parse($(this).attr('primary')));
 		});
 		$(this).parents('.selector').resetScrollBar();
 	},
+	//选择数据标签后，底部操作栏交互
 	selectLabel: function() {
 		var This = $(this);
 		var oldPos = -$(this).height()-1;
@@ -167,30 +177,32 @@ $.fn.extend({
 });
 
 $.extend({
+	//总程序
 	init: function() {
 		$.initToken('get', function() {
 			$.initAjax(function(data) {
-				$.data.thingName = data.scada.thing_name;
-				$.data.sentData.thing_id = data.scada.thing_id;
-				$.data.sentData.scada_name = data.scada.scada_name;
-				$.data.sentData.scada_model_id = data.scada.scada_model_id;
-				$.data.sentData.description = data.scada.description;
-				$.data.sentData.scada_config = data.scada.scada_config;
-				for (var i=0; i<$.data.sentData.scada_config.length; i++) {
+				$.initData.thingName = data.scada.thing_name;
+				$.initData.sentData.thing_id = data.scada.thing_id;
+				$.initData.sentData.scada_name = data.scada.scada_name;
+				$.initData.sentData.scada_model_id = data.scada.scada_model_id;
+				$.initData.sentData.description = data.scada.description;
+				$.initData.sentData.scada_config = data.scada.scada_config;
+				for (var i=0; i<$.initData.sentData.scada_config.length; i++) {
 					$.initThree.initLabel(
 						{
-							data_id: $.data.sentData.scada_config[i].data_id,
-							data_name: $.data.sentData.scada_config[i].data_name,
-							data_value: $.data.sentData.scada_config[i].data_value,
-							data_unit: $.data.sentData.scada_config[i].data_unit,
-							label_type: $.data.sentData.scada_config[i].label_type
+							data_id: $.initData.sentData.scada_config[i].data_id,
+							data_name: $.initData.sentData.scada_config[i].data_name,
+							data_value: $.initData.sentData.scada_config[i].data_value,
+							data_unit: $.initData.sentData.scada_config[i].data_unit,
+							port_type: $.initData.sentData.scada_config[i].port_type,
+							status: $.initData.sentData.scada_config[i].status
 						},
-						$.data.sentData.scada_config[i].objPosition
+						$.initData.sentData.scada_config[i].objPosition
 					);
 				}
-				$('.link').find('p').changeThingName($.data.thingName);
-				$('.name').find('input').val($.data.sentData.scada_name);
-				$('.description').find('input').val($.data.sentData.description);
+				$('.link').find('p').changeThingName($.initData.thingName);
+				$('.name').find('input').val($.initData.sentData.scada_name);
+				$('.description').find('input').val($.initData.sentData.description);
 				$('.selectData').find('input').searchData(function(data) {
 					$('.selectData').find('.selector-list').refreshDataList(data);
 				});
@@ -202,39 +214,42 @@ $.extend({
 			});
 		})
 	},
+	//获取token
 	initToken: function(type, callBack) {
 		switch (type) {
 			case 'get':
 				getToken(function() {
-					$.data.token.access = accesstoken;
-					$.data.token.refresh = refreshToken;
+					$.initData.token.access = accesstoken;
+					$.initData.token.refresh = refreshToken;
 					callBack && callBack();
 				});
 				break;
 			case 'refresh':
 				getNewToken(function() {
-					$.data.token.access = accesstoken;
-					$.data.token.refresh = refreshToken;
+					$.initData.token.access = accesstoken;
+					$.initData.token.refresh = refreshToken;
 					callBack && callBack();
 				});	
 				break;
 		}
 	},
+	//获取组态
 	initAjax: function(callBack) {
 		$.ajax({
 			type: "get",
 			dataType: "json",
-			url: $.data.globalurl+"/v1/scadas/"+$.data.scadaId,
+			url: $.initData.globalurl+"/v1/scadas/"+$.initData.scadaId,
 			async: true,
 			crossDomain: true == !(document.all),
 			data: {
-				access_token: $.data.token.access
+				access_token: $.initData.token.access
 			},
 			success: function(data) {
 				callBack && callBack(data);
 			}
 		});
 	},
+	//按钮鼠标交互
 	initButton: function() {
 		$('.link').click(function() {
 			if ($('.link').find('p').html()!=='请绑定实体') {
@@ -275,6 +290,7 @@ $.extend({
 			$('.selector').toggleWin(true);
 		});
 	},
+	//打开选择实体列表
 	openSelectThingName: function() {
 		$('.selectThing').toggleWin();
 		$('.selectThing').find('.selector-body').stayCenter($('.selectThing'));
@@ -285,9 +301,10 @@ $.extend({
 			});
 		});
 	},
+	//选择相应实体
 	selectThingName: function(thingId, thingName) {
-		$.data.thingName = thingName;
-		$.data.sentData.thing_id = thingId;
+		$.initData.thingName = thingName;
+		$.initData.sentData.thing_id = thingId;
 		$('.selector').toggleWin(true);
 		$('.link').find('p').changeThingName(thingName);
 		layer.msg('绑定实体：【'+thingName+'】成功！', {
@@ -298,8 +315,9 @@ $.extend({
 			$('.selectData').find('.selector-list').refreshDataList(data);
 		});
 	},
+	//选择相应数据
 	selectThingData: function(data) {
-		if ($.initThree.searchLabelFromId(data.dataId)>-1) {
+		if ($.initThree.searchLabelFromId(data.data_id)>-1) {
 			layer.msg('请勿绑定重复的数据标签！', {
 				icon: 2,
 				time: 1000
@@ -309,26 +327,27 @@ $.extend({
 		$('.selector').toggleWin(true);
 		$.initThree.initLabel(data);
 	},
+	//保存情景
 	saveScada: function(callBack) {
 		$('.save').click(function() {
-			$.data.sentData.scada_name = $('.name').find('input').val();
-			$.data.sentData.description = $('.description').find('input').val();
-			$.data.sentData.scada_config = $.initThree.createLabelData();
-			if ($.data.sentData.scada_name==='') {
+			$.initData.sentData.scada_name = $('.name').find('input').val();
+			$.initData.sentData.description = $('.description').find('input').val();
+			$.initData.sentData.scada_config = $.initThree.createLabelData();
+			if ($.initData.sentData.scada_name==='') {
 				layer.msg('请输入情景名称！', {
 					icon: 2,
 					time: 1000
 				});
 				$('.name').find('input').focus();
 				return false;
-			} else if ($.data.sentData.description==='') {
+			} else if ($.initData.sentData.description==='') {
 				layer.msg('请输入情景描述！', {
 					icon: 2,
 					time: 1000
 				});
 				$('.description').find('input').focus();
 				return false;
-			} else if ($.data.thingName==='') {
+			} else if ($.initData.thingName==='') {
 				layer.msg('请绑定对应实体！', {
 					icon: 2,
 					time: 1000
@@ -339,12 +358,12 @@ $.extend({
 			$.ajax({
 				type: "put",
 				dataType: "json",
-				url: $.data.globalurl+'/v1/scadas/'+$.data.scadaId,
+				url: $.initData.globalurl+'/v1/scadas/'+$.initData.scadaId,
 				async: true,
 				crossDomain: true == !(document.all),
 				data: {
-					access_token: $.data.token.access,
-					data: JSON.stringify($.data.sentData)
+					access_token: $.initData.token.access,
+					data: JSON.stringify($.initData.sentData)
 				},
 				success: function(data) {
 					if (data.code===200) {

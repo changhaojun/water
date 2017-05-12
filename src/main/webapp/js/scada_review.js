@@ -1,4 +1,4 @@
-$.data = {
+$.initData = {
 	token: {
 		access: '',
 		refresh: ''
@@ -17,12 +17,12 @@ $.data = {
 		client: null,
 		topic: null,
 		data: null,
-		host: '139.129.231.31',
-//		host: '192.168.1.114',
+//		host: '139.129.231.31',
+		host: '192.168.1.114',
 		port: 61623,
 		username: 'admin',
-		password: 'finfosoft123',
-//		password: 'password',
+//		password: 'finfosoft123',
+		password: 'password'
 	}
 }
 
@@ -54,27 +54,28 @@ $.extend({
 	init: function() {
 		$.initToken('get', function() {
 			$.initAjax(function(data) {
-				$.data.thingName = data.scada.thing_name;
-				$.data.sentData.thing_id = data.scada.thing_id;
-				$.data.sentData.scada_name = data.scada.scada_name;
-				$.data.sentData.scada_model_id = data.scada.scada_model_id;
-				$.data.sentData.description = data.scada.description;
-				$.data.sentData.scada_config = data.scada.scada_config;
-				for (var i=0; i<$.data.sentData.scada_config.length; i++) {
+				$.initData.thingName = data.scada.thing_name;
+				$.initData.sentData.thing_id = data.scada.thing_id;
+				$.initData.sentData.scada_name = data.scada.scada_name;
+				$.initData.sentData.scada_model_id = data.scada.scada_model_id;
+				$.initData.sentData.description = data.scada.description;
+				$.initData.sentData.scada_config = data.scada.scada_config;
+				for (var i=0; i<$.initData.sentData.scada_config.length; i++) {
 					$.initThree.initLabel(
 						{
-							data_id: $.data.sentData.scada_config[i].data_id,
-							data_name: $.data.sentData.scada_config[i].data_name,
-							data_value: $.data.sentData.scada_config[i].data_value,
-							data_unit: $.data.sentData.scada_config[i].data_unit,
-							label_type: $.data.sentData.scada_config[i].label_type
+							data_id: $.initData.sentData.scada_config[i].data_id,
+							data_name: $.initData.sentData.scada_config[i].data_name,
+							data_value: $.initData.sentData.scada_config[i].data_value,
+							data_unit: $.initData.sentData.scada_config[i].data_unit,
+							port_type: $.initData.sentData.scada_config[i].port_type,
+							status: $.initData.sentData.scada_config[i].status
 						},
-						$.data.sentData.scada_config[i].objPosition
+						$.initData.sentData.scada_config[i].objPosition
 					);
 				}
-				if ($.data.sentData.scada_config.length>0) $.initMQTT($.data.sentData.scada_config);
+				if ($.initData.sentData.scada_config.length>0) $.initMQTT($.initData.sentData.scada_config);
 				$.initThree.init(data.scadaModel.modelConfig, function() {
-					$.labelOperation($.three.capturer.intersected.labelType);
+					$.labelOperation($.three.capturer.intersected);
 				});
 			});
 		})
@@ -83,15 +84,15 @@ $.extend({
 		switch (type) {
 			case 'get':
 				getToken(function() {
-					$.data.token.access = accesstoken;
-					$.data.token.refresh = refreshToken;
+					$.initData.token.access = accesstoken;
+					$.initData.token.refresh = refreshToken;
 					callBack && callBack();
 				});
 				break;
 			case 'refresh':
 				getNewToken(function() {
-					$.data.token.access = accesstoken;
-					$.data.token.refresh = refreshToken;
+					$.initData.token.access = accesstoken;
+					$.initData.token.refresh = refreshToken;
 					callBack && callBack();
 				});	
 				break;
@@ -101,85 +102,518 @@ $.extend({
 		$.ajax({
 			type: "get",
 			dataType: "json",
-			url: $.data.globalurl+"/v1/scadas/"+$.data.scadaId,
+			url: $.initData.globalurl+"/v1/scadas/"+$.initData.scadaId,
 			async: true,
 			crossDomain: true == !(document.all),
 			data: {
-				access_token: $.data.token.access
+				access_token: $.initData.token.access
 			},
 			success: function(data) {
-				console.log(data);
 				callBack && callBack(data);
 			}
 		});
 	},
-	initMQTT: function(data) {
-		$.data.mqtt.client = new Paho.MQTT.Client($.data.mqtt.host, $.data.mqtt.port, "server" + parseInt(Math.random() * 100, 10));
+	initMQTT: function(data, isIssue) {
+		$.initData.mqtt.client = new Paho.MQTT.Client($.initData.mqtt.host, $.initData.mqtt.port, "server" + parseInt(Math.random() * 100, 10));
 		var options = {
-			userName: $.data.mqtt.username,
-			password: $.data.mqtt.password,
+			userName: $.initData.mqtt.username,
+			password: $.initData.mqtt.password,
 			timeout: 1000,
 			onSuccess: function() {
 				for (var i = 0; i < data.length; i++) {
-					$.data.mqtt.client.subscribe(data[i].data_id.toString());
+					if (data[i].port_type == 'AO' || data[i].port_type == 'DO') {
+						if (isIssue) {
+							$.initData.mqtt.client.subscribe(data[i].guid.toString());
+						} else {
+							continue;
+						}
+					} else {
+						$.initData.mqtt.client.subscribe(data[i].data_id.toString());
+					}
 				}
 			},
 			onFailure: function(message) {
 				setTimeout($.initMQTT, 10000000);
 			}
 		};
-		$.data.mqtt.client.onConnectionLost = function(responseObject) {
+		$.initData.mqtt.client.onConnectionLost = function(responseObject) {
 			if(responseObject.errorCode !== 0) {
 				console.log("onConnectionLost:" + responseObject.errorMessage);
 			}
 		};
-		$.data.mqtt.client.onMessageArrived = $.onMessageArrived;
-		$.data.mqtt.client.connect(options);
+		$.initData.mqtt.client.onMessageArrived = function(message) {
+			if (!isIssue) {
+				$.onLabelValueChange(message);
+			} else {
+				$.onIssueSuccess(message, data);
+			}
+		};
+		$.initData.mqtt.client.connect(options);
 	},
-	onMessageArrived: function(message) {
+	onLabelValueChange: function(message) {
 		var dataId = Number(message.destinationName);
 		var payload = JSON.parse(message.payloadString);
 		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(dataId)];
 		if (!originLabel) return;
 		var newData = {
-			dataId: dataId,
-			dataName: originLabel.labelName,
-			dataValue: payload.data_value,
-			dataUnit: originLabel.labelUnit,
-			dataStatus: payload.status
+			data_id: dataId,
+			data_name: originLabel.labelName,
+			data_value: payload.data_value,
+			data_unit: originLabel.labelUnit,
+			port_type: originLabel.labelType,
+			status: payload.status
 		};
 		var position = originLabel.position;
 		var payload = JSON.parse(message.payloadString);
 		$.three.labelGroup.remove(originLabel);
 		$.initThree.initLabel(newData, position);
 	},
-	labelOperation: function(type) {
+	onIssueSuccess: function(message, data) {
+		var payload = JSON.parse(message.payloadString);
+		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(data.data_id)];
+		if (!originLabel) return;
+		var newData = {
+			data_id: originLabel.labelId,
+			data_name: originLabel.labelName,
+			data_value: data.data_value,
+			data_unit: originLabel.labelUnit,
+			port_type: originLabel.labelType,
+			status: originLabel.status
+		};
+		var position = originLabel.position;
+		$.three.labelGroup.remove(originLabel);
+		$.initThree.initLabel(newData, position);
+	},
+	labelOperation: function(label) {
+		var time = $.initTime();
 		$('.operation').toggleWin();
-		$('.AI').stayCenter($('.operation'));
-		$('.AI').find('.date').daterangepicker({
+		$('.operation').children().toggleWin(true);
+		$('.operation').find('.close').click(function() {
+			$('.operation').toggleWin(true);
+			$.three.capturer.intersected = null;
+			$('.AO').find('.confirm').unbind();
+		});
+		switch (label.labelType) {
+			case 'AI':
+				//do AI
+				$('.AI').toggleWin().stayCenter($('.operation'));
+				$('.AI').find('.name').html(label.labelName);
+				var chart = echarts.init($('.AI').find('.chart').get(0));
+				$.getRealTimeData(label.labelId, time, chart, 'AI');
+				$.initDatePacker($('.AI').find('.date'), time, function(changedTime) {
+					$.getRealTimeData(label.labelId, changedTime, chart, 'AI');
+				});
+				break;
+			case 'DI':
+				//do DI
+				$('.DI').toggleWin().stayCenter($('.operation'));
+				$('.DI').find('.name').html(label.labelName);
+				var chart = echarts.init($('.DI').find('.chart').get(0));
+				$.getRealTimeData(label.labelId, time, chart, 'DI');
+				$.initDatePacker($('.DI').find('.date'), time, function(changedTime) {
+					$.getRealTimeData(label.labelId, changedTime, chart, 'DI');
+				});
+				break;
+			case 'AO':
+				//do AO
+				$('.AO').toggleWin().stayCenter($('.operation'));
+				$('.AO').find('.name').html(label.labelName);
+				$('.AO').find('.realtime').html(time.endDate);
+				var ring = new Finfosoft.Ring({
+					el: '.finfosoft-ring',
+					startDeg: 125,
+					endDeg: 55,
+					lineWidth: 20,
+					initVal: label.labelValue == 'noVal' ? 0 : label.labelValue,
+					mainColor: '#1ab394',
+					bgColor: '#eeeeee'
+				});
+				$('.AO').find('.confirm').click(function() {
+					layer.confirm('是否确定下发？', {
+						btn: ['确定','取消'] //按钮
+					}, function(){
+						var data_value = $('.AO').find('.confirmVal').val();
+						var	data_id = label.labelId;
+						var	guid = new Date().getTime();
+						var port_type = label.labelType;
+						$.issueAjax({
+							data_value: data_value,
+							data_id: data_id,
+							guid: guid
+						}, function() {
+							$.initMQTT(
+								[{
+									data_value: data_value,
+									data_id: data_id,
+									guid: guid,
+									port_type: port_type
+								}],
+								true
+							);
+							$('.operation').toggleWin(true);
+							$('.AO').find('.confirm').unbind();
+							$.three.capturer.intersected = null;
+						});
+					});
+				});
+				break;
+			case 'DO':
+				//do DO
+				$('.DO').toggleWin().stayCenter($('.operation'));
+				$('.DO').find('.name').html(label.labelName);
+				$('.DO').find('.realtime').html(time.endDate);
+				var onOff = new Finfosoft.OnOff({
+					el: '.finfosoft-onOff',
+					status: label.labelValue=='noVal' ? 0 : label.labelValue,
+					onChanged: function(status) {
+						layer.confirm('是否确定下发？', {
+							btn: ['确定','取消'] //按钮
+						}, function() {
+							var data_value = status;
+							var	data_id = label.labelId;
+							var	guid = new Date().getTime();
+							var port_type = label.labelType;
+							$.issueAjax({
+								data_value: data_value,
+								data_id: data_id,
+								guid: guid
+							}, function() {
+								$.initMQTT(
+									[{
+										data_value: data_value,
+										data_id: data_id,
+										guid: guid,
+										port_type: port_type
+									}],
+									true
+								);
+								$('.operation').toggleWin(true);
+								$.three.capturer.intersected = null;
+							});
+						}, function() {
+							onOff.reset();
+						});
+					}
+				});
+				break;
+			case 'MO':
+				//do MO
+				$('.MO').toggleWin().stayCenter($('.operation'));
+				$('.MO').find('.name').html(label.labelName);
+				$('.MO').find('.realtime').html(time.endDate);
+				$('.MO').find('.oldVal').val(label.labelValue);
+				$('.MO').find('.confirm').click(function() {
+					if ($('.MO').find('.newVal').val() == '') {
+						$('.MO').find('.newVal').focus();
+						layer.tips('修改值不能为空', '.newVal', {
+							tips: [2, '#ff787b'],
+							time: 2000,
+							tipsMore: true
+						});
+						return false;
+					}
+					if ($('.MO').find('.oldVal').val() == $('.MO').find('.newVal').val()) {
+						$('.MO').find('.newVal').focus();
+						layer.tips('修改值需不同于原始值', '.newVal', {
+							tips: [2, '#ff787b'],
+							time: 2000,
+							tipsMore: true
+						});
+						return false;
+					}
+					layer.confirm('是否确定下发？', {
+						btn: ['确定','取消'] //按钮
+					}, function(){
+						var data_value = $('.MO').find('.newVal').val();
+						var	data_id = label.labelId;
+						var	guid = new Date().getTime();
+						var port_type = label.labelType;
+						$.issueAjax({
+							data_value: data_value,
+							data_id: data_id,
+							guid: guid
+						}, function() {
+							$.initMQTT(
+								[{
+									data_value: data_value,
+									data_id: data_id,
+									guid: guid,
+									port_type: port_type
+								}],
+								true
+							);
+							$('.operation').toggleWin(true);
+							$('.MO').find('.confirm').unbind();
+							$.three.capturer.intersected = null;
+						});
+					});
+				});
+				break;
+		}
+	},
+	initTime: function() {
+		var now = new Date();
+		var year = now.getFullYear();
+		var month = now.getMonth()+1 < 10 ? '0'+(now.getMonth()+1) : now.getMonth()+1;
+		var date = now.getDate() < 10 ? '0'+now.getDate() : now.getDate(); 
+		var hour = now.getHours() < 10 ? '0'+now.getHours() : now.getHours();
+		var minute = now.getMinutes() < 10 ? '0'+now.getMinutes() : now.getMinutes();
+		var second = now.getSeconds() < 10 ? '0'+now.getSeconds() : now.getSeconds(); 
+		var flag = (function() { return hour >= 12 ? 'PM' : 'AM'; })();
+		var startDate = year + '-' + month + '-' + ((date-4)<10 ? '0'+(date-4) : (date-4)) + ' ' + flag + ' ' + hour + ':' + minute;
+		var endDate = year + '-' + month + '-' + date + ' ' + flag + ' ' + hour + ':' + minute;
+		var startDateSent = year + '$' + month + '$' + ((date-4)<10 ? '0'+(date-4) : (date-4)) + '$' + hour + ':' + minute + ':' + second;
+		var endDateSent = year + '$' + month + '$' + date + '$' + hour + ':' + minute + ':' + second;
+		return {
+			startDate: startDate,
+			endDate: endDate,
+			startDateSent: startDateSent,
+			endDateSent: endDateSent
+		}
+	},
+	getRealTimeData: function(dataId, time, chart, chartType) {
+		chart.showLoading('default', {
+			text: '加载中...',
+			color: '#1ab394'
+		});
+		var dataSent = {
+			data_id: dataId,
+			start_time: time.startDateSent,
+			end_time: time.endDateSent
+		};
+		$.ajax({
+			type: "post",
+			url:  globalurl+"/v1/realtimeDatas",
+			dataType: "JSON",
+			async: true,
+			crossDomain: true == !(document.all),
+			data: {
+				access_token: $.initData.token.access,
+				data: JSON.stringify(dataSent)
+			},
+			success: function(data) {
+				$.initChart(chart, data, chartType);
+			}
+		})
+	},
+	initDatePacker: function(inputElement, time, callBack) {
+		var startDate = time.startDate;
+		var endDate = time.endDate;
+		inputElement.val(startDate+' - '+endDate);
+		inputElement.daterangepicker({
 			timePicker: true,
-			timePickerIncrement: 30,
-			format: 'YYYY-MM-DD A h:mm'
-    	});
-//		$('.selectData').find('.selector-body').stayCenter($('.selectData'));
-//		switch (type) {
-//			case 'AI':
-//				//do AI
-//				alert(1);
-//				break;
-//			case 'DI':
-//				//do DI
-//				alert(2);
-//				break;
-//			case 'AO':
-//				//do AO
-//				alert(3);
-//				break;
-//			case 'DO':
-//				//do DO
-//				alert(4);
-//				break;
-//		}
+	        timePickerIncrement: 1,
+			showDropdowns: true,
+			opens: 'left',
+			startDate: startDate,
+		    endDate: endDate,
+		    locale: {
+		        format: "YYYY-MM-DD A hh:mm",
+		        separator: " - ",
+		        applyLabel: "確定",
+		        cancelLabel: "取消",
+		        fromLabel: "From",
+    			toLabel: "To",
+    			customRangeLabel: "Custom",
+		        daysOfWeek: [
+		            "日",
+		            "一",
+		            "二",
+		            "三",
+		            "四",
+		            "五",
+		            "六"
+		        ],
+		        "monthNames": [
+		            "一月",
+		            "二月",
+		            "三月",
+		            "四月",
+		            "五月",
+		            "六月",
+		            "七月",
+		            "八月",
+		            "九月",
+		            "十月",
+		            "十一月",
+		            "十二月"
+		        ],
+		        "firstDay": 1
+		    }
+		}, function(start, end) {
+			callBack && callBack({
+				startDateSent: start.format('YYYY$MM$DD$HH:mm:ss'),
+				endDateSent: end.format('YYYY$MM$DD$HH:mm:ss')
+			});
+		});
+	},
+	initChart: function(chart, data, chartType) {
+		var option = {
+            tooltip: {
+            	trigger: 'axis'
+            },
+            xAxis: {
+                data: data.data_times,
+				axisTick: {
+					alignWithLabel: true
+				}
+            },
+            yAxis: {
+            	name: data.data_unit
+            },
+            grid: {
+            	show: true,
+            	top: '30',
+            	bottom: '50',
+		        left: '14',
+		        right: '14',
+		        containLabel: true
+		    },
+		    dataZoom: [
+		        {
+		            type: 'slider',
+		            show: true,
+		            start: 0,
+		            end: 100,
+		            bottom: 14,
+		            right: 100,
+		            left: 100
+		        },
+		        {
+		            type: 'inside',
+		            show: true,
+		            start: 0,
+		            end: 100
+		        }
+		    ],
+		    toolbox: {
+		    	show: true,
+		    	right: 14,
+		    	feature: {
+		            saveAsImage: {
+		            	title: '保存图表'
+		            }
+		        }
+		    },
+		    legend: {},
+            series: []
+		};
+        switch (chartType) {
+        	case 'AI':
+        		option.legend = {
+	            	data:['最小值', '平均值', '最大值']
+	        	};
+	        	option.series = [
+	            	{
+		                name: '最小值',
+		                type: 'line',
+		                data: data.min_values
+	           		},
+	            	{
+		                name: '平均值',
+		                type: 'line',
+		                data: data.data_values
+	           		},
+	            	{
+		                name: '最大值',
+		                type: 'line',
+		                data: data.max_values
+	           		}
+	        	];
+        		break;
+        	case 'DI':
+        		option.grid.show = false;
+        		option.tooltip.trigger = 'item';
+        		option.legend = {};
+	        	option.series = [
+	            	{
+		                type: 'bar',
+		                barWidth: '80%',
+		                data: (function(values) {
+		                	var formattedData = [];
+		                	for (var i=0; i<values.length; i++) {
+		                		if (values[i] == 0) {
+		                			values[i] = -1;
+		                		}
+		                		formattedData.push({
+		                			value: values[i],
+		                			itemStyle: {
+		                				normal: {
+		                					color: values[i] == 1 ? '#1ab394' : '#c23531'
+		                				}
+		                			},
+		                			tooltip: {
+		                				formatter: function(data) {
+		                					return data.name + ' ' + (data.value == 1 ? '开' : '关');
+		                				}
+		                			}
+		                		});
+		                	}
+		                	return formattedData;
+		                })(data.data_values ? data.data_values : [])
+	           		}
+	        	];
+	        	option.yAxis = {
+	        		min: -1,
+	        		max: 1,
+	        		interval: 2,
+	        		axisLabel: {
+	        			formatter: function(value) {
+	        				var status;
+			        		switch (value) {
+			        			case 1:
+			        				status = '开';
+			        				break;
+			        			case -1:
+			        				status = '关';
+			        				break;
+			        			default:
+			        				status = ''
+			        				break;
+			        		}
+			        		return status;
+			        	}
+	        		}
+	        	}
+        		break;
+        }
+        chart.hideLoading();
+        chart.setOption(option);
+	},
+	issueAjax: function(newData, callBack) {
+		$.ajax({
+			type: "post",
+			dataType: "json",
+			url: $.initData.globalurl+"/v1/homes/",
+			async: true,
+			crossDomain: true == !(document.all),
+			data: {
+				access_token: $.initData.token.access,
+				data: JSON.stringify(newData)
+			},
+			success: function(data) {
+				if (data.result == 1) {
+					layer.msg('已下发！', {icon: 1});
+					callBack && callBack();
+				}
+			}
+		});
+	},
+	onAOConfirm: function(label, newVal, callBack) {
+		var originLabel = label;
+		if (!originLabel) return;
+		var newData = {
+			data_id: originLabel.labelId,
+			data_name: originLabel.labelName,
+			data_value: newVal,
+			data_unit: originLabel.labelUnit,
+			port_type: originLabel.labelType,
+			status: originLabel.status
+		};
+		var position = originLabel.position;
+		$.three.labelGroup.remove(originLabel);
+		$.initThree.initLabel(newData, position);
+		callBack && callBack();
 	}
 });
 

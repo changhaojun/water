@@ -35,7 +35,7 @@ var initData = {
 	//新增端口接口
 	newPort: {
 		data_name: "",
-		port_type: "A",
+		port_name: "A",
 		oper_type: 1,
 		data_unit: "",
 		data_type: 0,
@@ -272,7 +272,7 @@ $.extend({
 	initNewPort: function() {
 		initData.newPort = {
 			data_name: "",
-			port_type: "A",
+			port_name: "A",
 			oper_type: 1,
 			data_unit: "",
 			data_type: 0,

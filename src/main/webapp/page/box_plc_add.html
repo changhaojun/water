@@ -185,7 +185,7 @@
 										<td>{{ port.data_name }}</td>
 										<td>
 											<div class="fixIeSelect">
-												<select disabled="disabled" v-model="port.port_type">
+												<select disabled="disabled" v-model="port.port_name">
 													<option value="A">模拟量</option>
 													<option value="D">数字量</option>
 												</select>
@@ -211,10 +211,10 @@
 										</td>
 										<td>{{ port.data_precision }}</td>
 										<td>{{ port.data_addr }}</td>
-										<td>{{ port.port_type=='A' ? port.real_range_low : '' }}</td>
-										<td>{{ port.port_type=='A' ? port.real_range_high : '' }}</td>
-										<td>{{ port.port_type=='D' ? port.low_battery : '' }}</td>
-										<td>{{ port.port_type=='D' ? port.high_battery : '' }}</td>
+										<td>{{ port.port_name=='A' ? port.real_range_low : '' }}</td>
+										<td>{{ port.port_name=='A' ? port.real_range_high : '' }}</td>
+										<td>{{ port.port_name=='D' ? port.low_battery : '' }}</td>
+										<td>{{ port.port_name=='D' ? port.high_battery : '' }}</td>
 										<td>
 											<i class="fa fa-edit" @click="editPort(index,$event)"></i>
 										</td>
@@ -244,7 +244,7 @@
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label>端口类型</label>
-						<select v-model="newPort.port_type">
+						<select v-model="newPort.port_name">
 							<option value="A">模拟量</option>
 							<option value="D">数字量</option>
 						</select>
@@ -276,19 +276,19 @@
 						<label for="new_data_addr">数据地址</label>
 						<input id="new_data_addr" type="text" v-model="newPort.data_addr" datasrc="newPort.data_addr" v-bind:empty="!newPort.data_addr&&newPort.data_addr!==0 ? true : false" num-limit="limit" warning="请输入数据地址" placeholder="请输入数据地址"/>
 					</dd>
-					<dd class="clearfix dataEdit" v-if="newPort.port_type=='A'">
+					<dd class="clearfix dataEdit" v-if="newPort.port_name=='A'">
 						<label for="new_real_range_low">实际量程低</label>
 						<input id="new_real_range_low" type="text" v-model="newPort.real_range_low" datasrc="newPort.real_range_low" v-bind:empty="!newPort.real_range_low&&newPort.real_range_low!==0 ? true : false" num-limit="limit" warning="请输入实际量程低" placeholder="请输入实际量程低"/>
 					</dd>
-					<dd class="clearfix dataEdit" v-if="newPort.port_type=='A'">
+					<dd class="clearfix dataEdit" v-if="newPort.port_name=='A'">
 						<label for="new_real_range_high">实际量程高</label>
 						<input id="new_real_range_high" type="text" v-model="newPort.real_range_high" datasrc="newPort.real_range_high" v-bind:empty="!newPort.real_range_high&&newPort.real_range_high!==0 ? true : false" num-limit="limit" warning="请输入实际量程高" placeholder="请输入实际量程高"/>
 					</dd>
-					<dd class="clearfix dataEdit" v-if="newPort.port_type=='D'">
+					<dd class="clearfix dataEdit" v-if="newPort.port_name=='D'">
 						<label for="new_low_battery">低电平</label>
 						<input id="new_low_battery" type="text" v-model="newPort.low_battery" datasrc="newPort.low_battery" v-bind:empty="!newPort.low_battery&&newPort.low_battery!==0 ? true : false" num-limit="limit" warning="请输入低电平" placeholder="请输入低电平"/>
 					</dd>
-					<dd class="clearfix dataEdit" v-if="newPort.port_type=='D'">
+					<dd class="clearfix dataEdit" v-if="newPort.port_name=='D'">
 						<label for="new_high_battery">高电平</label>
 						<input id="new_high_battery" type="text" v-model="newPort.high_battery" datasrc="newPort.high_battery" v-bind:empty="!newPort.high_battery&&newPort.high_battery!==0 ? true : false" num-limit="limit" warning="请输入高电平" placeholder="请输入高电平"/>
 					</dd>
@@ -310,7 +310,7 @@
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label>端口类型</label>
-						<select v-model="newPort.port_type">
+						<select v-model="newPort.port_name">
 							<option value="A">模拟量</option>
 							<option value="D">数字量</option>
 						</select>
@@ -342,19 +342,19 @@
 						<label for="edit_data_addr">数据地址</label>
 						<input id="edit_data_addr" type="text" v-model="newPort.data_addr" datasrc="newPort.data_addr" v-bind:empty="!newPort.data_addr&&newPort.data_addr!==0 ? true : false" num-limit="limit" warning="请输入数据地址" placeholder="请输入数据地址"/>
 					</dd>
-					<dd class="clearfix dataEdit" v-if="newPort.port_type=='A'">
+					<dd class="clearfix dataEdit" v-if="newPort.port_name=='A'">
 						<label for="edit_real_range_low">实际量程低</label>
 						<input id="edit_real_range_low" type="text" v-model="newPort.real_range_low" datasrc="newPort.real_range_low" v-bind:empty="!newPort.real_range_low&&newPort.real_range_low!==0 ? true : false" num-limit="limit" warning="请输入实际量程低" placeholder="请输入实际量程低"/>
 					</dd>
-					<dd class="clearfix dataEdit" v-if="newPort.port_type=='A'">
+					<dd class="clearfix dataEdit" v-if="newPort.port_name=='A'">
 						<label for="edit_real_range_high">实际量程高</label>
 						<input id="edit_real_range_high" type="text" v-model="newPort.real_range_high" datasrc="newPort.real_range_high" v-bind:empty="!newPort.real_range_high&&newPort.real_range_high!==0 ? true : false" num-limit="limit" warning="请输入实际量程高" placeholder="请输入实际量程高"/>
 					</dd>
-					<dd class="clearfix dataEdit" v-if="newPort.port_type=='D'">
+					<dd class="clearfix dataEdit" v-if="newPort.port_name=='D'">
 						<label for="edit_low_battery">低电平</label>
 						<input id="edit_low_battery" type="text" v-model="newPort.low_battery" datasrc="newPort.low_battery" v-bind:empty="!newPort.low_battery&&newPort.low_battery!==0 ? true : false" num-limit="limit" warning="请输入低电平" placeholder="请输入低电平"/>
 					</dd>
-					<dd class="clearfix dataEdit" v-if="newPort.port_type=='D'">
+					<dd class="clearfix dataEdit" v-if="newPort.port_name=='D'">
 						<label for="edit_high_battery">高电平</label>
 						<input id="edit_high_battery" type="text" v-model="newPort.high_battery" datasrc="newPort.high_battery" v-bind:empty="!newPort.high_battery&&newPort.high_battery!==0 ? true : false" num-limit="limit" warning="请输入高电平" placeholder="请输入高电平"/>
 					</dd>

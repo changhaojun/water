@@ -214,8 +214,13 @@ $.initThree = {
 		var dataValue = userData.data_value === 'null' || !userData.data_value ? 'noVal' : userData.data_value;
 		var dataUnit = userData.data_unit ? userData.data_unit : 'noUnit';
 		var dataStatus = userData.status ? userData.status : 1;
-		var labelMessage = dataName+':'+dataValue+dataUnit;
-		var labelType = typeof userData.label_type === 'undefined' ? $.initThree.judgeLabelType(userData) : userData.label_type;
+		var portType = userData.port_type;
+		var labelMessage;
+		if (portType == 'AI' || portType == 'AO' || portType == 'MO') {
+			labelMessage = dataName + ':' + dataValue + dataUnit;
+		} else if (portType == 'DI' || portType == 'DO') {
+			labelMessage = dataName + ':' + (dataValue == 1 ? '开启' : '关闭');
+		}
 		$.three.font.loader = new THREE.FontLoader();
 		$.three.font.loader.load($.three.font.src, function(font) {
 			//text
@@ -283,12 +288,13 @@ $.initThree = {
 			} else {
 				label.position.y = 40;
 			}
-			label.userData = 'target';
+			label.target = 'target';
 			label.labelId = parseInt(dataId);
 			label.labelName = dataName;
 			label.labelValue = dataValue;
 			label.labelUnit = dataUnit;
-			label.labelType = labelType;
+			label.labelType = portType;
+			label.labelStatus = dataStatus;
 			$.three.labelGroup.add(label);
 			$.three.scene.el.add($.three.labelGroup);
 			$.initThree.rendererUpdata();
@@ -301,7 +307,6 @@ $.initThree = {
 		});
 		renderer.setClearColor($.three.renderer.clearColor);
 		renderer.setSize($.ThreeCavs.width(), $.ThreeCavs.height());
-		
 		$.three.renderer.el = renderer;
 		$.initThree.rendererUpdata();
 	},
@@ -395,7 +400,7 @@ $.initThree = {
 	},
 	searchLabelFromChild: function(obj) {
 		while (obj) {
-			if (obj.userData==='target') {
+			if (obj.target==='target') {
 				return obj;
 			}
 			obj = obj.parent;
@@ -433,25 +438,26 @@ $.initThree = {
 				data_name: $.three.labelGroup.children[i].labelName,
 				data_value: $.three.labelGroup.children[i].labelValue,
 				data_unit: $.three.labelGroup.children[i].labelUnit,
-				label_type: $.three.labelGroup.children[i].labelType,
+				port_type: $.three.labelGroup.children[i].labelType,
+				status: $.three.labelGroup.children[i].labelStatus,
 				objPosition: $.three.labelGroup.children[i].position,
 				objRotation: $.three.labelGroup.children[i].rotation
 			})
 		}
 		return labels;
-	},
-	judgeLabelType: function(data) {
-		var firstType, secondType;
-		if (data.oper_type === 1) {
-			secondType = 'I';
-		} else {
-			secondType = 'O';
-		}
-		if (data.low_battery === ''|| data.low_battery === '-' || data.high_battery === '' || data.high_battery === '-') {
-			firstType = 'A';
-		} else {
-			firstType = 'D';
-		}
-		return firstType + secondType;
 	}
+//	judgeLabelType: function(data) {
+//		var firstType, secondType;
+//		if (data.oper_type === 1) {
+//			secondType = 'I';
+//		} else {
+//			secondType = 'O';
+//		}
+//		if (data.low_battery === ''|| data.low_battery === '-' || data.high_battery === '' || data.high_battery === '-') {
+//			firstType = 'A';
+//		} else {
+//			firstType = 'D';
+//		}
+//		return firstType + secondType;
+//	}
 }

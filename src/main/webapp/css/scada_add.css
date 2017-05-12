@@ -2,6 +2,8 @@ html,
 body{
 	height: 100%;
 	overflow: hidden;
+	position: relative;
+	box-sizing: content-box!important;
 }
 body{
 	min-width: 1106px;
@@ -160,6 +162,7 @@ body *{
 	width: 300px;
 	height: 430px;
 	background: #fff;
+	-webkit-box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.38);
 	box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.38);
 	position: absolute;
 	left: 0;
@@ -263,9 +266,13 @@ body *{
 .operation>.AI,
 .operation>.DI,
 .operation>.AO,
-.operation>.DO{
+.operation>.DO,
+.operation>.MO{
+	display: none;
 	position: absolute;
 	background: #fff;
+	-webkit-box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.38);
+	box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.38);
 }
 .operation .title{
 	margin: 0;
@@ -276,6 +283,7 @@ body *{
 	background: #1ab394;
 }
 .operation .title>p{
+	margin: 0;
 	height: 40px;
 	line-height: 40px;
 	color: #fff;
@@ -300,23 +308,22 @@ body *{
 
 .operation>.AI .info,
 .operation>.DI .info{
-	height: 41px;
+	height: 40px;
 	border-bottom: 1px solid #e6e6e6;
 }
 
 .operation>.AI .name,
 .operation>.DI .name{
-	width: calc( 100% - 286px );
-	height: 40px;
+	height: 39px;
 	font-size: 16px;
-	line-height: 40px;
+	line-height: 39px;
 	text-indent: 14px;
 	color: #979797;
 }
 
 .operation>.AI .date,
 .operation>.DI .date{
-	width: 286px;
+	width: 326px;
 	height: 40px;
 	line-height: 40px;
 	text-align: center;
@@ -324,3 +331,121 @@ body *{
 	color: #8B91A0;
 	cursor: pointer;
 }
+
+.operation>.AI .chart,
+.operation>.DI .chart{
+	width: 100%;
+	height: 360px;
+	background: #ccc;
+}
+
+.operation>.AO,
+.operation>.DO,
+.operation>.MO{
+	width: 340px;
+	height: 240px;
+}
+
+.operation>.AO>.content,
+.operation>.DO>.content,
+.operation>.MO>.content{
+	padding: 10px;
+}
+
+.operation>.MO>.content>ul{
+	margin: 38px auto 58px;
+	width: 220px;
+}
+.operation>.MO>.content>ul>li{
+	margin-bottom: 4px;
+	line-height: 30px;
+}
+.operation>.MO .oldVal{
+	background: #eee;
+	color: red;
+}
+.operation>.MO input{
+	border: 1px solid #ccc;
+	text-indent: 4px;
+}
+.operation>.MO input:focus{
+	border-color: #1ab394;
+}
+
+.operation .finfosoft-ring{
+	margin: 0 auto;
+	width: 160px;
+}
+
+.operation .finfosoft-onOff{
+	margin: 58px auto 70px;
+	width: 160px;
+	height: 24px;
+}
+
+.operation .time{
+	width: 100%;
+	text-align: center;
+	color: #aeaeae;
+}
+
+.operation .confirm{
+	margin-left: -30px;
+	width: 60px;
+	height: 20px;
+	background: #1ab394;
+	border-radius: 10px;
+	color: #fff;
+	position: absolute;
+	left: 50%;
+	top: 186px;
+	transition: 0.5s;
+}
+.operation .confirm:hover{
+	background-color: #24c5a4;
+}
+
+.daterangepicker select{
+	height: inherit;
+	padding-top: 0;
+	padding-bottom: 0;
+	text-align: center;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+.daterangepicker select.monthselect{
+	padding-left: 28px;
+}
+.daterangepicker select.yearselect{
+	padding-left: 14px;
+}
+
+.daterangepicker td.active{
+	background: #1ab394;
+	border-radius: 4px 4px;
+}
+.daterangepicker td.active:hover{
+	background: #24c5a4;
+}
+
+.daterangepicker .input-mini.active {
+    border: 1px solid #1ab394;
+    border-radius: 4px;
+}
+.daterangepicker .form-control{
+	display: inline-block;
+}
+.daterangepicker .form-control:focus {
+  border-color: #1ab394;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(26, 179, 148, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(26, 179, 148, 0.6);
+}
+
+.daterangepicker .btn-success{
+	background: #1ab394;
+}
+.daterangepicker .btn-success:hover{
+	background: #24c5a4;
+}
+
