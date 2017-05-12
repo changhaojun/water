@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/layer/skin/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/bootstarp/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/bootstrap-table/bootstrap-table.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.css"/>	
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/manual_entry.css"/>
+	</head>
+	<body>
+		<input type="text" id="companyCode" hidden="hidden" value=${companyCode} />
+		<input type="text" id="companyId" hidden="hidden" value=${companyId} />
+		<input type="text" id="companyId" value="${companyId}" hidden="hidden"/>
+		<div class="manualBox">
+			<!--账户top-->
+			<div class="manualTop">
+				<span>人工录入数据</span>
+				<span>/</span>
+				<span>当前位置：</span>
+				<span>人工录入数据</span>	
+				<span class="search">
+					<input type="text" placeholder="请输入设备名称查找" id="searchName" onkeypress="if(event.keyCode==13) {searchmanual();return false;}"/>
+					<i class="fa fa-search" onclick="searchmanual()"></i>
+				</span>
+				<input type="button" value="新增" class="btn-primary" onclick="addmanual()"/>
+			</div>
+			<hr>
+			<!--账户内容-->
+			<div class="manualContent container-fluid">
+				<table class="table table-hover" id="manualList" >
+					
+                </table>
+			</div>
+		</div>
+	</body>
+	<script src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/plugins/bootstarp/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/plugins/bootstrap-table/bootstrap-table.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/js/manual_entry.js?1.00" type="text/javascript" charset="utf-8"></script>
+</html>

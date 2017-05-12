@@ -47,7 +47,6 @@ public class WaterConfig extends JFinalConfig{
 	@Override
 	public void configPlugin(Plugins me) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
