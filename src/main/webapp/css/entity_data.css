@@ -147,19 +147,33 @@ body{
 }
 /*告警颜色设置*/
 .dataContent .greenBg{
+	border-left: 8px solid #1ab394;
+}
+.dataContent .greenBg .listTop>span:nth-child(1){
 	color:#1AB394;
 }
+.dataContent .greenBg .contentTop .Itext{
+	color:#1AB394;
+}
+
 .dataContent .grayBg{
+	border-left:8px solid color:#9a9a9a;
+}
+.dataContent .grayBg .listTop>span:nth-child(1){
 	color:#9a9a9a;
 }
+.dataContent .grayBg .contentTop .Itext{
+	color:#9a9a9a;
+}
+
 .dataContent .redBg{
+	border-left:8px solid #d51b1c;
+}
+.dataContent .redBg .listTop>span:nth-child(1){
+	color:#d51b1c;
+}
+.dataContent .redBg .contentTop .Itext{
 	color:#d51b1c;
 }
 
-/*.dataContent .grayBg .dataList .listTop>span:nth-child(1),.dataContent .grayBg .dataContent .dataList,.dataContent .grayBg .dataList .contentTop .Itext{
-	color: #9a9a9a!important;
-}
-.dataContent .redBg .dataList .listTop>span:nth-child(1),.dataContent .redBg .dataContent .dataList,.dataContent .redBg .dataList .contentTop .Itext{
-	color: #f27779!important;
-}*/
 

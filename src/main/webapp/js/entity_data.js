@@ -73,7 +73,7 @@ function searchThing(obj){
 		if(dataLike[i].title.search(obj.val())!=-1){	
 			var str='';
 					str='<div class="dataList" id="'+data[i].data_id+'" style="cursor:pointer;">'+
-						'<div class="listTop normal" style="border-left-color: rgb(26, 179, 148);color: rgb(26, 179, 148)">'+
+						'<div class="listTop normal" >'+
 							'<span>'+dataLike[i].device_name+"-"+dataLike[i].data_name+'</span>'+
 							'<span class="fa fa-plus-square" data-toggle="tooltip" data-placement="top"  title="关注"></span>'+
 							'<span class="fa fa-list-alt" data-toggle="tooltip" data-placement="top"  title="设封面"></span>'+
@@ -98,44 +98,33 @@ function searchThing(obj){
 }
 
 //告警颜色设置
-function colorBg(data,index){	
+function colorBg(data,index){
 	if(data==1){
-		$(".dataList .listTop>span:nth-child(1)").eq(index).addClass("greenBg");
-		$(".dataList").eq(index).css('border-left',"8px solid #1AB394");
-		$(".dataList .contentTop .Itext").eq(index).addClass("greenBg");
+		$('.dataList').eq(index).addClass('greenBg')
 	}else if(data==0){
-		$(".dataList .listTop>span:nth-child(1)").eq(index).addClass("grayBg");
-		$(".dataList").eq(index).css('border-left',"8px solid #9a9a9a");
-		$(".dataList .contentTop .Itext").eq(index).addClass("grayBg");
+		$('.dataList').eq(index).addClass('grayBg')
 	}else{
-		$(".dataList .listTop>span:nth-child(1)").eq(index).addClass("redBg");
-		$(".dataList").eq(index).css('border-left',"8px solid #d51b1c");
-		$(".dataList .contentTop .Itext").eq(index).addClass("redBg");
+		$('.dataList').addClass('redBg')
 	}
 }
 function colorBg1(data){	
 	if(data==1){
-		$(".dataList .listTop>span:nth-child(1)").addClass("greenBg");
-		$(".dataList").css('border-left',"8px solid #1AB394");
-		$(".dataList .contentTop .Itext").addClass("greenBg");
+		$(".dataList").addClass("greenBg");
 	}else if(data==0){
-		$(".dataList .listTop>span:nth-child(1)").addClass("grayBg");
-		$(".dataList").css('border-left',"8px solid #9a9a9a");
-		$(".dataList .contentTop .Itext").addClass("grayBg");
+		$(".dataList").addClass("grayBg");
 	}else{
-		$(".dataList .listTop>span:nth-child(1)").addClass("redBg");
-		$(".dataList").css('border-left',"8px solid #d51b1c");
-		$(".dataList .contentTop .Itext").addClass("redBg");
+		$(".dataList").addClass("redBg");
 	}
 }
+
 //订阅
 var client; 
 var topic;
 var data;
 function MQTTconnect(dataIds) {
     console.log("订阅程序开始执行");
-//  var mqttHost = '139.129.231.31';
-	var mqttHost='192.168.1.114';
+    var mqttHost = '139.129.231.31';
+//	var mqttHost='192.168.1.114';
     var username="admin";
 //  var password="finfosoft123";
     var password="password";

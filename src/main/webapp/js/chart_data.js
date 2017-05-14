@@ -4,6 +4,8 @@ var thingId=$('#thingId').val()
 var selectedId=[];
 var startTime;
 var endTime;
+var dateInfo=[];
+var series=[];
 
 var selectedId=[];
 $(function(){
@@ -31,19 +33,20 @@ function dataList(){
 				var screenList="";			
 				for(var i=0;i<data.length;i++){
 //						console.log(data.[i].data_id+","+selectedId[i])
-					if(selectedId.indexOf(data[i].data_id)!=-1){					
+					/*if(selectedId.indexOf(data[i].data_id)!=-1){					
 						screenList='<div class="selectdLi">'+
 										'<div class="selectdFont">'+data[i].device_name+'</div>'+
 										'<div class="selectdIcon" id="'+data[i].data_id+'">已选</div>'+
 									'</div>';
+									
 						$(".list").append(screenList);
-					}else{
+					}else{*/
 						screenList='<div class="disabledLi">'+
 										'<div class="disabledFont">'+data[i].device_name+'</div>'+
-										'<div class="disabledIcon" id="'+data[i].data_id+'">+</div>'+
+										'<div class="disabledIcon" onclick="selectData(&apos;'+data[i].data_id+'&apos;)" id="'+data[i].data_id+'">+</div>'+
 									'</div>';
 						$(".list").append(screenList);
-					}
+//					}
 					
 				}
 				
@@ -51,6 +54,19 @@ function dataList(){
 		}
 	})
 }
+//选择数据
+function selectData(id){
+	console.log($("#"+id+"").html())
+	
+	if($("#"+id+"").html()=="+"){
+		$("#"+id+"").prev().removeClass("disabledFont").addClass("selectdFont");
+		$("#"+id+"").removeClass("disabledIcon").addClass("selectdIcon");
+		$("#"+id+"").parent("div").removeClass("disabledLi").addClass("selectdLi");
+		$("#"+id+"").html("已选");
+	}	
+}
+
+
 
 function p(s) {	
     return s < 10 ? '0' + s: s;
@@ -92,24 +108,61 @@ function getChart(dataId){
 		success:function(data){
 			console.log(data)
 			if(data.length==0){
-				$(".list").html("<span class='nonedata'>暂无数据</span>");
+				$(".chartsContent").html("<span class='nonedata'>暂无数据</span>");
+			}else{
+				dateInfo.push(data.dataTimes);
+				series.push({
+					data:data.dataValues,
+					type:'line'
+				})
+				console.log(dateInfo)
+				console.log(series)
 			}
 		}
 	})
 }
+var myChart=echarts.init(document.getElementById('chartsContent'))
+var option={
+		title:{
+			text:''
+		},
+		tooltip: {
+			trigger: 'axis'
+		},
+		legend: {
+//	        data:legendData
+	    },
+	    grid: {
+			left: '5%',
+			right: '20%',
+			bottom: '5%'
+		},
+		xAxis: {
+	        type: 'category',
+//	        boundaryGap: false,
+	        data:dateInfo
+	    },
+	    yAxis:{
+	    	type:'value'
+	    } ,
+		series:series
+		
+	};
+	myChart.setOption(option);
+
 //点击时间获取图表；
 $(document).ready(function() {
-           $('#reservationtime').daterangepicker({
-              timePicker: true,
-              timePickerIncrement: 30,
-              format: 'YYYY-MM-DD A h:mm '
-           }, function(start, end, label) {				        		
-              start=new Date(start).getFullYear()+"$"+p(new Date(start).getMonth()+1)+"$"+p(new Date(start).getDate())+"$"+p(new Date(start).getHours())+":"+p(new Date(start).getMinutes())+":"+p(new Date(start).getSeconds());
-    		  end=new Date(end).getFullYear()+"$"+p(new Date(end).getMonth()+1)+"$"+p(new Date(end).getDate())+"$"+p(new Date(end).getHours())+":"+p(new Date(end).getMinutes())+":"+p(new Date(end).getSeconds());			           
-           	  startTime=start;
-           	  endTime=end;
-           	 for(var i=0;i<chartDivArr.length;i++){
-           	 	currentChart(chartDivArr[i]);
-           	 }
-           });
+   $('#reservationtime').daterangepicker({
+      timePicker: true,
+      timePickerIncrement: 30,
+      format: 'YYYY-MM-DD A h:mm '
+   }, function(start, end, label) {				        		
+      start=new Date(start).getFullYear()+"$"+p(new Date(start).getMonth()+1)+"$"+p(new Date(start).getDate())+"$"+p(new Date(start).getHours())+":"+p(new Date(start).getMinutes())+":"+p(new Date(start).getSeconds());
+	  end=new Date(end).getFullYear()+"$"+p(new Date(end).getMonth()+1)+"$"+p(new Date(end).getDate())+"$"+p(new Date(end).getHours())+":"+p(new Date(end).getMinutes())+":"+p(new Date(end).getSeconds());			           
+   	  startTime=start;
+   	  endTime=end;
+// 	 for(var i=0;i<chartDivArr.length;i++){
+// 	 	currentChart(chartDivArr[i]);
+// 	 }
+   });
 });

@@ -99,7 +99,6 @@ body{
     height: 33px;
     float: right;
     background: #b3b3b3;
-    margin-right: 20px;
     margin-bottom: 20px;
     color: #fff;
     text-align: center;
@@ -187,24 +186,20 @@ body{
 }
 .rangefooter .right{
 	display: inline-block !important;
-	float:right;
-    border: 1px solid #eee;
-    padding: 10px;
-    border-radius: 5px
+	float:left;
 	
 }
 .rangefooter .left{
 	display: inline-block !important;
-	float:left;
-	border: 1px solid #eee;
-    padding: 10px;
-    border-radius: 5px
+	float:right;
+    margin-right: 20px!important;
 }
 .nodata{
 	width:100%;
 	height:316px;
 	text-align:center;
 	font-size:24px;
+
 	line-height:316px;
 	background:#E5E5E5;
 	border-bottom:1px solid #ccc;
@@ -212,9 +207,7 @@ body{
 }
 .chartContent{
 	width:100%;
-	height:316px;
 	border-bottom:1px solid #ccc;
-	margin-top: -15px;
 }
 .contrastChart{
 	height:316px;
@@ -266,3 +259,14 @@ option:hover{
 	background:#1ab394 !important;
 }
 
+.chartContent .chartTop hr{
+	height: 1px;
+    width: 100%;
+    margin-left: 0;
+}
+
+/*生成第一张图表*/
+#chartsContent{
+	width: 100%;
+	height:500px;
+}

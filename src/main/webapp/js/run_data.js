@@ -10,7 +10,8 @@ function entityList(){
 	$.ajax({
 		type: "get",
 //		url: 'http://rapapi.org/mockjsdata/15031/v1/things-runData',
-		url: 'http://192.168.1.114/v1/things',
+//		url: 'http://192.168.1.114/v1/things',
+		url: globalurl+"/v1/things",
 		dataType: "JSON",
 		async: false,
 		crossDomain: true == !(document.all),
