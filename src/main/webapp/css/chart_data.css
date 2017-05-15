@@ -1,0 +1,272 @@
+html{
+	background:#f3f3f4 !important;
+	}
+body{
+	background:#f3f3f4 !important;
+}
+
+.chartData{
+	width: 100%;
+    background: #f3f3f4;
+    float: left;
+    position: relative;
+}
+/*Top区域*/
+.chartData .dataTop{
+	height: 65px;
+    margin-right: 20px;
+}
+.chartData .dataTop span {
+    font-size: 22px;
+    padding-top: 25px;
+    display: inline-block;
+}
+.chartData .dataTop span:nth-child(1) {
+    margin-left: 20px;
+    color: #5d5d5d;
+}
+.chartData .dataTop span:nth-child(2) {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.chartData .dataTop span:nth-child(3) {
+    color: #5d5d5d;
+    font-size: 14px;
+}
+.chartData .dataTop span:nth-child(3) i {
+    color: #1ab394;
+}
+/*Hr*/
+.chartData  hr {
+    width: calc(100% - 40px);
+    margin-left: 20px;
+    height: 4px;
+    background: #e0e0e0;
+    border: 0;
+    display: inline-block;
+}
+/*mainData*/
+.mainData{
+	width: 98%;
+	margin: 0 auto;
+	background: #fff;
+}
+.dataContent{
+	padding: 10px;
+}
+.mainData .top span{
+	color: #1ab394;
+}
+.mainData .dataContent hr{
+	width: 100%;
+    height: 1px;
+    margin: 10px 0;
+    background: #1ab394;
+}
+.mainData .dataContent hr:nth-child(3){
+	margin-bottom: 15px;
+    margin-top: 0px;
+}
+/*dataContent*/
+.list{
+	float: left;
+    width: 100%;
+    padding-bottom: 10px;
+}
+.list .selectdLi{
+	float: left;
+    width: 154px;
+    height: 35px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    color: #b3b3b3;
+    border: 1px solid #b3b3b3;
+    line-height: 32px;
+    cursor: not-allowed;
+    border-radius: 2px 2px;
+}
+.list .selectdLi .selectdFont{
+	width: 120px;
+    height: 32px;
+    overflow: hidden;
+    float: left;
+    padding-left: 5px;
+    font-size: 16px;
+    line-height: 32px;
+}
+.list .selectdLi .selectdIcon{
+	width: 30px;
+    height: 33px;
+    float: right;
+    background: #b3b3b3;
+    margin-bottom: 20px;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    cursor: not-allowed;
+    line-height: 33px;
+}
+.list .disabledLi{
+	float: left;
+    width: 154px;
+    height: 35px;
+    color: #1AB394;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #1AB394;
+    line-height: 32px;
+    cursor: not-allowed;
+    border-radius: 2px 2px;
+}
+.list .disabledLi .disabledFont{
+	width: 120px;
+    height: 32px;
+    overflow: hidden;
+    float: left;
+    padding-left: 5px;
+    font-size: 14px;
+}
+.list .disabledLi .disabledIcon{
+	width: 30px;
+    height: 33px;
+    float: right;
+    background: #1AB394;
+    color: #fff;
+    text-align: center;
+    font-size: 30px;
+    cursor: pointer;
+    line-height: 32px;
+}
+
+
+
+/*chartContent*/
+.chartContent{
+	padding: 0 15px 50px 15px;
+}
+#reservationtime{
+	border: 1px solid #ccc;
+    width: 800px !important;
+    line-height: 35px;
+    text-align: center;
+    color: #9096a4;
+    cursor: pointer;
+}
+.chartContent .chartTop .dataTime input{
+    width: 800px;
+    
+}
+
+.btn-small{
+	margin-top:20px;
+}
+.applyBtn{
+	background:#1ab394;
+	color:#fff;
+	margin-left:10px;
+}
+.daterangepicker.opensright .ranges{
+	width:600px;
+	height:50px;
+	float:left;
+	/*text-align:right;*/
+	padding-left:8px;
+	
+	
+}
+.daterangepicker select{
+	border:1px solid #ccc;
+	text-align:center;
+	
+}
+.rangefooter{
+	height:290px;
+	/*float:left;*/
+	width:600px;
+}
+.rangefooter .right{
+	display: inline-block !important;
+	float:left;
+	
+}
+.rangefooter .left{
+	display: inline-block !important;
+	float:right;
+    margin-right: 20px!important;
+}
+.nodata{
+	width:100%;
+	height:316px;
+	text-align:center;
+	font-size:24px;
+
+	line-height:316px;
+	background:#E5E5E5;
+	border-bottom:1px solid #ccc;
+	display:block;
+}
+.chartContent{
+	width:100%;
+	border-bottom:1px solid #ccc;
+}
+.contrastChart{
+	height:316px;
+	/*background:#de3;*/
+	margin:auto;
+	
+}
+#line{
+	width:800px;
+	height:316px;
+	margin:auto;
+	color:#1ab394;
+	text-align:center;
+	float:left;
+	margin-left:10px;
+}
+.closeChart{
+	font-size:28px;
+	color:#1ab394;
+	float:right;
+	cursor: pointer;
+	display: inline-block;
+	width:30px;
+	height:30px;
+}
+.dataChartBox{
+	text-align:center;
+	color:#acacac;
+	line-height:300px;
+}
+.hourselect,.minuteselect,.ampmselect{
+	padding-left:12px !important;
+	text-align: left !important;
+	
+}
+.hourselect option,.minuteselect option,.ampmselect option{
+	padding-left:12px !important;
+	width:50px !important;
+}
+.daterangepicker td.active{
+	background: #1ab394;
+	border-radius: 5px 5px;
+}
+.daterangepicker td.active:hover{
+	background: #1ab394;
+	border-radius: 5px 5px;
+}
+option:hover{
+	background:#1ab394 !important;
+}
+
+.chartContent .chartTop hr{
+	height: 1px;
+    width: 100%;
+    margin-left: 0;
+}
+
+/*生成第一张图表*/
+#chartsContent{
+	width: 100%;
+	height:500px;
+}

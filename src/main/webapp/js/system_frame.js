@@ -66,8 +66,10 @@ function getNavData(){
 						case "实体":iIcon = 'fa-sitemap';break;
 						case "操作日志":iIcon = 'fa-file-text-o';break;
 						case "任务配置":iIcon = 'fa-calendar';break;
+						case "运行数据":iIcon = 'fa-database';break;
 						default :break;
 					}
+					console.info('-----'+dataNav[j].resourceUrl);
 					strNav=$('<li class="changeLi" data-type="" data-toggle="tooltip" data-placement="right"'+
 								' title="'+dataNav[j].resourceName+'"><a class="J_menuItem slideToggle" href="'+dataNav[j].resourceUrl+'" target="iframe0">'+
 								'<i class="fa '+iIcon+'"></i><span class="nav-label">'+dataNav[j].resourceName+'</span>'+

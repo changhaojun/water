@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/layer/skin/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/bootstarp/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/bootstrap-datepicker/css/datepicker.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/layer/skin/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/chart_data.css"/>
+	</head>
+	<body>
+		<input id="dataId" value="${dataId}" hidden="hidden" />
+		<input id="thingId" value="${thingId}"  hidden="hidden"/>
+		<div class="chartData">
+			<div class="dataTop">
+				<span>运行数据</span>
+				<span>/</span>
+				<span>当前位置：选择实体 > <i>运行图表</i></span>
+			</div>
+			<hr>
+			<div class="mainData">
+				<div class="dataContent">
+					<div class="top"> 
+						<span>请选择对比项</span>
+						<hr/>
+					</div>
+					<div class="list">
+						
+					</div>
+					<hr/>
+				</div>
+				<div class="chartContent">
+					<div class="chartTop">
+						<span>选择日期</span>&nbsp;&nbsp;&nbsp;
+						<input type="text" name="reservation" id="reservationtime"class="span4"/>
+						<hr />
+					</div>
+					<div id="chartsContent"></div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/plugins/bootstarp/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/js/moment.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/js/echarts.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/finfosoft-water/js/chart_data.js?1.05" type="text/javascript" charset="utf-8"></script>
+</html>

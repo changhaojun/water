@@ -5,10 +5,11 @@ import com.finfosoft.water.alarm.AlarmController;
 import com.finfosoft.water.dataTag.DataTagController;
 import com.finfosoft.water.frame.FrameController;
 import com.finfosoft.water.globalConfig.GlobalConfigController;
-import com.finfosoft.water.task.TaskController;
 import com.finfosoft.water.thing.ThingController;
 import com.finfosoft.water.login.LoginController;
+import com.finfosoft.water.rundata.RunDataController;
 import com.finfosoft.water.scada.ScadaController;
+import com.finfosoft.water.task.TaskController;
 import com.finfosoft.water.user.UserController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -16,9 +17,7 @@ import com.jfinal.config.Interceptors;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
-import com.jfinal.core.Controller;
 import com.jfinal.core.JFinal;
-import com.jfinal.kit.PropKit;
 import com.jfinal.render.ViewType;
 
 public class WaterConfig extends JFinalConfig{
@@ -42,6 +41,7 @@ public class WaterConfig extends JFinalConfig{
 		me.add("/scada",ScadaController.class,"/");			//组态相关
 		me.add("/globalConfig",GlobalConfigController.class,"/");  //全局配置
 		me.add("/alarm",AlarmController.class,"/");		//告警
+		me.add("/runData",RunDataController.class,"/");
 	}
 
 	@Override
