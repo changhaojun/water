@@ -60,7 +60,7 @@ body{
 	position: relative;
 }
 .globalMain{
-	height: calc(100% - 100px);
+	height: calc(100% - 120px);
 }
 .row{
 	margin-left: 0;

@@ -1,5 +1,5 @@
 //项目中所有页面公用的代码(获取token,获取新token)
-//var globalurl="http://192.168.1.106";
+//var globalurl="http://192.168.1.103";
 var globalurl="http://121.42.253.149:18808";
 var itemName="/finfosoft-water";
 var accesstoken;
