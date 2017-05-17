@@ -103,6 +103,7 @@ $.initThree = {
 	initScene: function() {
 		var scene = new THREE.Scene();
 		$.three.scene.el = scene;
+		$.three.scene.el.add($.three.labelGroup);
 	},
 	initCamera: function() {
 		var camera = new THREE.PerspectiveCamera(
@@ -207,15 +208,28 @@ $.initThree = {
 		$.three.scene.el.add(ground);
 		$.three.ground.el = ground;
 	},
-	initLabel: function(data, oldPos) {
+	initLabel: function(data, oldPos, callBack) {
 		var userData = typeof data === 'string' ? JSON.parse(data) : data;
-		var dataId = userData.data_id;
-		var dataName = userData.data_name ? userData.data_name : 'noName';
-		var dataValue = userData.data_value === 'null' || !userData.data_value ? 'noVal' : userData.data_value;
-		var dataUnit = userData.data_unit ? userData.data_unit : 'noUnit';
-		var dataStatus = userData.status ? userData.status : 1;
-		var labelMessage = dataName+':'+dataValue+dataUnit;
-		var labelType = typeof userData.label_type === 'undefined' ? $.initThree.judgeLabelType(userData) : userData.label_type;
+		var labelMessage;
+		if ($.initThree.judgeLabelType(userData)=='data') {
+			var dataId = userData.data_id;
+			var dataName = userData.data_name ? userData.data_name : 'noName';
+			var dataValue = userData.data_value === 'null' || !userData.data_value ? 'noVal' : userData.data_value;
+			var dataUnit = userData.data_unit ? userData.data_unit : 'noUnit';
+			var dataStatus = userData.status ? userData.status : 1;
+			var portType = userData.port_type;
+			if (portType == 'AI' || portType == 'AO' || portType == 'MO') {
+				labelMessage = dataName + ':' + dataValue + dataUnit;
+			} else if (portType == 'DI' || portType == 'DO') {
+				labelMessage = dataName + ':' + (dataValue == 1 ? '开启' : '关闭');
+			}
+		} else if ($.initThree.judgeLabelType(userData)=='process') {
+			var processId = userData._id ? userData._id : userData.process_id;
+			var processName = userData.process_name;
+			var processStatus = userData.status ? userData.status : 0;
+			labelMessage = processName;
+		}
+		
 		$.three.font.loader = new THREE.FontLoader();
 		$.three.font.loader.load($.three.font.src, function(font) {
 			//text
@@ -245,23 +259,46 @@ $.initThree = {
 			var labelPlaneLength = textLength+10;
 			var labelPlaneHeight = textHeight*1.2;
 			var labelPlaneDepth = textDepth*0.6;
-			var labelPlaneColor = (function() {
-				switch (dataStatus) {
-					case 0:
-						return 0xcccccc;
-					case 1:
-						return 0x00aeff;
-					case 2:
-						return 0xff0000;
-				}
-			})();
-			var labelPlaneGeo = new THREE.ExtrudeGeometry(
-				$.initThree.createLabelShape(0, 0, labelPlaneLength, labelPlaneHeight, labelPlaneHeight/5, labelPlaneHeight/4),
-				{
-					amount: labelPlaneDepth,
-					bevelEnabled: false
-				}
-			);
+			
+			if ($.initThree.judgeLabelType(userData) == 'data') {
+				var labelPlaneColor = (function() {
+					switch (dataStatus) {
+						case 0:
+							return 0xcccccc;
+						case 1:
+							return 0x00aeff;
+						case 2:
+							return 0xff0000;
+					}
+				})();
+			} else if ($.initThree.judgeLabelType(userData) == 'process') {
+				var labelPlaneColor = (function() {
+					switch (processStatus) {
+						case 0:
+							return 0xcccccc;
+						case 1:
+							return 0x00aeff;
+					}
+				})();
+			}
+			
+			if ($.initThree.judgeLabelType(userData) == 'data') {
+				var labelPlaneGeo = new THREE.ExtrudeGeometry(
+					$.initThree.createDataLabelShape(0, 0, labelPlaneLength, labelPlaneHeight, labelPlaneHeight/5, labelPlaneHeight/4),
+					{
+						amount: labelPlaneDepth,
+						bevelEnabled: false
+					}
+				);
+			} else if ($.initThree.judgeLabelType(userData) == 'process') {
+				var labelPlaneGeo = new THREE.ExtrudeGeometry(
+					$.initThree.createMissionLabelShape(0, 0, labelPlaneLength, labelPlaneHeight),
+					{
+						amount: labelPlaneDepth,
+						bevelEnabled: false
+					}
+				);
+			}
 			var labelPlaneMtl = new THREE.MeshPhongMaterial({
 				color: labelPlaneColor,
 				transparent: true,
@@ -273,6 +310,7 @@ $.initThree = {
 				-labelPlaneHeight/2,
 				-labelPlaneDepth/2
 			);
+			
 			//label
 			var label = new THREE.Object3D();
 			label.add(text, labelPlane);
@@ -283,15 +321,24 @@ $.initThree = {
 			} else {
 				label.position.y = 40;
 			}
-			label.userData = 'target';
-			label.labelId = parseInt(dataId);
-			label.labelName = dataName;
-			label.labelValue = dataValue;
-			label.labelUnit = dataUnit;
-			label.labelType = labelType;
+			label.target = 'target';
+			
+			if ($.initThree.judgeLabelType(userData) == 'data') {
+				label.labelId = parseInt(dataId);
+				label.labelName = dataName;
+				label.labelValue = dataValue;
+				label.labelUnit = dataUnit;
+				label.labelType = portType;
+				label.labelStatus = dataStatus;
+			} else if ($.initThree.judgeLabelType(userData) == 'process') {
+				label.processId = processId;
+				label.processName = processName;
+				label.labelStatus = processStatus;
+			}
+			
 			$.three.labelGroup.add(label);
-			$.three.scene.el.add($.three.labelGroup);
 			$.initThree.rendererUpdata();
+			callBack && callBack(userData);
 		});
 	},
 	initRenderer: function() {
@@ -301,7 +348,6 @@ $.initThree = {
 		});
 		renderer.setClearColor($.three.renderer.clearColor);
 		renderer.setSize($.ThreeCavs.width(), $.ThreeCavs.height());
-		
 		$.three.renderer.el = renderer;
 		$.initThree.rendererUpdata();
 	},
@@ -346,6 +392,7 @@ $.initThree = {
 				$.three.capturer.intersected = $.initThree.searchLabelFromChild(intersects[0].object);
 				isTransform && $.three.controller.transformController.attach($.three.capturer.intersected);
 				var oldPos = $.three.capturer.intersected.position;
+				console.log($.three.capturer.intersected)
 				selectLabelFn && selectLabelFn();
 			}
 		}
@@ -357,7 +404,7 @@ $.initThree = {
 		$.three.controller.transformController && $.three.controller.transformController.update();
 		$.initThree.rendererUpdata();
 	},
-	createLabelShape: function(x, y, width, height, radius, arrowLength) {
+	createDataLabelShape: function(x, y, width, height, radius, arrowLength) {
 		var labelShape = new THREE.Shape();
 		labelShape.moveTo(x, y + radius);
 		labelShape.lineTo(x, y + height - radius);
@@ -371,6 +418,17 @@ $.initThree = {
 		labelShape.lineTo(x+width/2-arrowLength/2, y);
 		labelShape.lineTo(x + radius, y);
 		labelShape.quadraticCurveTo(x, y, x, y + radius);
+		return labelShape;
+	},
+	createMissionLabelShape: function(x, y, width, height) {
+		var labelShape = new THREE.Shape();
+		labelShape.moveTo(x, y);
+		labelShape.lineTo(x - height/2, y + height/2);
+		labelShape.lineTo(x, y + height);
+		labelShape.lineTo(x + width, y + height);
+		labelShape.lineTo(x + width + height/2, y + height/2);
+		labelShape.lineTo(x + width, y);
+		labelShape.lineTo(x, y);
 		return labelShape;
 	},
 	getMouseCoordinate: function(event) {
@@ -395,16 +453,18 @@ $.initThree = {
 	},
 	searchLabelFromChild: function(obj) {
 		while (obj) {
-			if (obj.userData==='target') {
+			if (obj.target==='target') {
 				return obj;
 			}
 			obj = obj.parent;
 		}
 	},
-	searchLabelFromId: function(id) {
+	searchLabelFromId: function(id, type) {
 		var index;
 		for (var i=0; i<$.three.labelGroup.children.length; i++) {
-			if ($.three.labelGroup.children[i].labelId==id) {
+			if (type == 'data' && $.three.labelGroup.children[i].labelId == id) {
+				index = i;
+			} else if (type == 'process' && $.three.labelGroup.children[i].processId == id) {
 				index = i;
 			}
 		}
@@ -428,30 +488,35 @@ $.initThree = {
 	createLabelData: function() {
 		var labels = [];
 		for (var i=0; i<$.three.labelGroup.children.length; i++) {
-			labels.push({
-				data_id: $.three.labelGroup.children[i].labelId,
-				data_name: $.three.labelGroup.children[i].labelName,
-				data_value: $.three.labelGroup.children[i].labelValue,
-				data_unit: $.three.labelGroup.children[i].labelUnit,
-				label_type: $.three.labelGroup.children[i].labelType,
-				objPosition: $.three.labelGroup.children[i].position,
-				objRotation: $.three.labelGroup.children[i].rotation
-			})
+			if ($.initThree.judgeLabelType($.three.labelGroup.children[i]) == 'data') {
+				labels.push({
+					data_id: $.three.labelGroup.children[i].labelId,
+					data_name: $.three.labelGroup.children[i].labelName,
+					data_value: $.three.labelGroup.children[i].labelValue,
+					data_unit: $.three.labelGroup.children[i].labelUnit,
+					port_type: $.three.labelGroup.children[i].labelType,
+					status: $.three.labelGroup.children[i].labelStatus,
+					objPosition: $.three.labelGroup.children[i].position,
+					objRotation: $.three.labelGroup.children[i].rotation
+				});
+			} else if ($.initThree.judgeLabelType($.three.labelGroup.children[i]) == 'process') {
+				labels.push({
+					process_id: $.three.labelGroup.children[i].processId,
+					process_name: $.three.labelGroup.children[i].processName,
+					status: $.three.labelGroup.children[i].labelStatus,
+					objPosition: $.three.labelGroup.children[i].position,
+					objRotation: $.three.labelGroup.children[i].rotation
+				})
+			}
+				
 		}
 		return labels;
 	},
 	judgeLabelType: function(data) {
-		var firstType, secondType;
-		if (data.oper_type === 1) {
-			secondType = 'I';
-		} else {
-			secondType = 'O';
+		if (data.data_id || data.labelId) {
+			return 'data';
+		} else if (data._id || data.process_id || data.processId) {
+			return 'process';
 		}
-		if (data.low_battery === ''|| data.low_battery === '-' || data.high_battery === '' || data.high_battery === '-') {
-			firstType = 'A';
-		} else {
-			firstType = 'D';
-		}
-		return firstType + secondType;
 	}
 }

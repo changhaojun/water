@@ -109,12 +109,12 @@ function reviewScada(){
 	var id = $(this).parents('tr').attr('id');
 	var name = $(this).parents('tr').find('td').eq(0).html();
 	var description = $(this).parents('tr').find('td').eq(1).html();
-	self.location.href = 'scada/review/'+id+'-'+name+'-'+description;
+	self.location.href = '/finfosoft-water/scada/review/'+id+'-'+name+'-'+description;
 }
 
 function editScada(){
 	var id = $(this).parents('tr').attr('id');
-	self.location.href = 'scada/edit/'+id;
+	self.location.href = '/finfosoft-water/scada/edit/'+id;
 }
 
 //删除一条数据

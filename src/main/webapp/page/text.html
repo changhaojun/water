@@ -1,16 +1,31 @@
 <html>
 	<head>
 		<title></title>
+		<style type="text/css">
+			ul{
+				width: 200px;
+				transition: 1s;
+			}
+			li{
+				height: 100px;
+				background: red;
+				margin-bottom: 4px;
+				transition: 1s;
+			}
+			ul:hover{
+				width: 250px;
+			}
+			li:hover{
+				background: yellow;
+			}
+		</style>
 	</head>
 	<body>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
-		<script src="../js/test.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript">
-			
-			var arr = ['3613','3584']
-			
-			MQTTconnect(arr);
-			
-		</script>
+		<ul>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
 	</body>
 </html>
