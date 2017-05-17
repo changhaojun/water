@@ -151,7 +151,7 @@ input{
 }
 .saveBtn{
 	width: 300px;
-	margin-top: 20px;
+	margin-top: -10px;
 	display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;

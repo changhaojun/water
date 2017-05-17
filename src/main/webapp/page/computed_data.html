@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="/finfosoft-water/plugins/bootstarp/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/computed_data.css?1.00" />
+		<style>
+		    [v-cloak] {
+		        display: none;
+		    }
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<input type="text" id="companyId" hidden="hidden" value="${companyId}"/>
+			<input type="text" id="companyCode" hidden="hidden" value="${companyCode}"/>
+			<input type="text" id="deviceId" hidden="hidden" value="${deviceId}"/>
+		</div>
+		<div id="vue">
+			<div class="boxAccess">
+				<div class="boxHeader">
+					<span>人工录入数据</span>
+					<span>/</span>
+					<span>当前位置：</span>
+					<span>人工录入数据</span>	
+				</div>
+				<!--主要内容部分-->
+				<div class="dataInfo">
+					<div class="boxContent clearfix">
+						<div class="equipment">
+							<i class="fa fa-book"></i>&nbsp;设备信息
+						</div>
+						<div class="dataCircle">
+							<label for="device_code">分组编号</label>
+							<input v-model="computedData.device_code" type="text" id="device_code" class="textInput" placeholder="请输入分组编号"/>
+						</div>
+						<div class="dataCircle">
+							<label for="device_name">分组名称</label>
+							<input v-model="computedData.device_name" id="device_name" type="text" class="textInput" placeholder="请输入分组名称"/>
+						</div>
+					</div>
+					<div class="boxContent clearfix">
+						<div class="equipment">
+							<i class="fa fa-wrench"></i>&nbsp;数据配置
+							<a class="btnYellow addPort">
+								<i class="fa fa-plus"></i>
+								<div class="tip">
+									添加数据
+									<em class="tip-arrow"></em>
+								</div>
+							</a>
+						</div>
+						<div class="detialData" >
+							<table class="table table-hover">
+								<thead>
+									<td>名称</td>
+									<td>计算公式</td>
+									<td>编辑</td>
+									<td>删除</td>
+								</thead>
+								<tbody>
+									<tr v-for="(dataConfig,index) in dataConfigs">
+										<td>{{dataConfig.data_name}}</td>
+										<td>
+											<span v-for="(formula,index) in dataConfig.calculate_formula" >
+												{{formula.data_name}}
+											</span>
+										</td>
+										<td class="operate">
+											<i class="fa fa-edit" @click="editPort(index,$event)"></i>
+										</td>
+										<td class="operate">
+											<i class="fa fa-trash" @click="deletePort(index)"></i>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="saveSettings">
+						<button id="main-submit">保存设置</button>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="dataBox" hidden="hidden">
+				<div class="boxTitle">
+					<div class="row">
+						<div class="col-xs-6">
+							<label>数据名称</label>
+							<input v-model="dataConfig.data_name" id="dataName" type="text" placeholder="请输入数据名称"/>
+						</div>
+						<div class="col-xs-6">
+							<label>运算符号</label>
+							<span class="sign">+</span>
+							<span class="sign">-</span>
+							<span class="sign">*</span>
+							<span class="sign">/</span>
+							<span class="sign">(</span>
+							<span class="sign">)</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<label>实体名称</label>
+							<input class="controls thing" placeholder="请输入端口所属的实体名" />
+							<ul class="thingList" hidden="hidden">
+							</ul>
+						</div>
+						<div class="col-xs-6">
+							<label>采集端口</label>
+							<select v-model="selectPort" class="conditionTag" >
+								<option v-for="port in ports" :value="port.data_id">{{port.data_name}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="boxContent">
+					<div class="analogInput">
+						<div v-for="thisFormula in dataConfig.calculate_formula" :class="thisFormula.class_name" :dataTag="thisFormula.data_tag" v-cloak>{{thisFormula.data_name}}</div>
+						<div class="analogCursor" hidden="hidden"></div>
+					</div>
+				</div>
+				<div class="saveRow">
+					<button class="saveBtn">保存公式</button>
+				</div>
+			</div>
+		</div>
+		
+		
+		<script src="/finfosoft-water/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="/finfosoft-water/plugins/bootstarp/js/bootstrap.min.js" ></script>
+		<script src="/finfosoft-water/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/public_resources.js?1.0"></script>
+		<script src="/finfosoft-water/js/computed_data.js?1.10" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

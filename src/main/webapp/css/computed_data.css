@@ -88,15 +88,13 @@ input:disabled{
 	color:#39bda2 ;
 	border-bottom: 1px solid #1ab394;
 }
-.boxContent .dataCircle,
-.dataModel .dataCircle{
+.boxContent .dataCircle{
 	width: 50%;
 	float: left;
 	padding-top: 25px;
 	position: relative;
 }
 .boxContent .dataCircle label,
-.dataModel .dataCircle label,
 .dataEdit label{
 	float: left;
 	color: #9f9f9f;
@@ -109,7 +107,6 @@ input:disabled{
 	font-weight: 500;
 }
 .boxContent .dataCircle input,
-.dataModel .dataCircle input,
 .boxContent .dataCircle select,
 .dataEdit input,
 .dataEdit select{
@@ -124,7 +121,6 @@ input:disabled{
     color: #a7a7a7;
 }
 .boxContent .dataCircle input,
-.dataModel .dataCircle input,
 .dataEdit input{
     text-indent: 12px;
 }
@@ -178,6 +174,9 @@ input:disabled{
 	color: #fff;
 	text-align: center;
 	font-size: 14px;
+	border-top:1px solid #1ab394;
+	padding: 20px;
+    width: 98%;
 	margin-bottom:45px ;
 }
 .saveSettings button{
@@ -187,15 +186,6 @@ input:disabled{
 }
 button:hover{
 	background: #24c5a4;
-}
-.deleteData{
-    color: #fc6565;
-    float: right;
-    padding: 7px;
-    margin-right: 114px;
-    font-size: 18px;
-    cursor: pointer;
-    z-index: 99999;
 }
 .tooltip.top .tooltip-arrow{
 	bottom: 0;
@@ -211,4 +201,134 @@ button:hover{
     font-family: "microsoft yahei";
     background-color: #ffc333 !important;
     border-radius: 4px;
+}
+.detialData table{
+	width: 100%;
+}
+.detialData table thead{
+	font-size: 15px;
+    font-weight: 700;
+}
+.detialData table tbody tr{
+	color: #8b91a0;
+	font-size: 12px;
+}
+.operate{
+	width: 50px;
+}
+.dataBox{
+	width:95%;
+	margin: 20px;
+}
+.boxTitle >.row{
+	height:35px;
+    line-height: 35px;
+	margin:20px 0;
+}
+.boxTitle input{
+	height: 34px;
+    border: 1px solid #e5e6e7;
+    width: calc(100% - 80px);
+    margin-left: 10px;
+}
+.conditionTag{
+	height: 34px;
+    border: 1px solid #e5e6e7;
+    width: calc(100% - 80px);
+    margin-left: 10px;
+}
+.sign{
+    padding: 0px 12px;
+    background-color: #1ab394;
+    color: #fff;
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 900;
+    cursor: pointer;
+}
+.sign:hover{
+	filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.7; /*Firefox私有，透明度50%*/
+	opacity:0.7;/*其他，透明度50%*/
+}
+.analogInput{
+	height: 35px;
+    border: 1px solid #e5e6e7;
+    cursor: text;
+    padding: 5px;
+}
+.saveRow{
+	text-align: center;
+    padding: 20px;
+}
+.saveBtn{
+	width: 300px;
+	display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    background-image: none;
+    color: #ffffff;
+    background-color: #1AB394;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.saveBtn:hover{
+	filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.7; /*Firefox私有，透明度50%*/
+	opacity:0.7;/*其他，透明度50%*/
+}
+.analogCursor{
+	width: 1px;
+	height: 100%;
+	float: left;
+	border-left:1px solid #000000;
+	animation:divCursor 1.25s infinite;
+	-moz-animation:divCursor 1.25s infinite; /* Firefox */
+	-webkit-animation:divCursor 1.25s infinite; /* Safari and Chrome */
+	-o-animation:divCursor 1.25s infinite; /* Opera */
+}
+@keyframes divCursor{
+	0%{opacity:0;}
+	100%{opacity:1;}
+}
+ul{
+	width: calc(100% - 110px);
+    margin-left: 70px;
+    max-height: 150px;
+    overflow: auto;
+    padding: 0;
+    z-index: 999;
+    position: absolute;
+    background: #fff;
+    top: 33px;
+    border: #E7E7E7 1px solid;
+}
+li{
+	list-style: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    height: 25px;
+    line-height: 25px;
+}
+li:hover{
+	background: #F1F1F1;
+}
+.dataTag,
+.selectSign{
+	margin:0 3px;
+    padding: 0 2px;
+	float: left;
+    background: #1ab394;
+    color: #ffffff;
 }

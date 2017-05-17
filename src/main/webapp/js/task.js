@@ -43,7 +43,7 @@ $.taskData = {
 		process_name:'',
 		trigger_type:'58ef46b543929a10708f2b08',
 		company_id:$("#companyId").val(),
-		status:1,
+		status:0,
 		trigger_conditions:[],
 		action_times:1,
 		mobile:''
@@ -55,7 +55,7 @@ $.fn.extend({
 	addTechnology:function(){	//添加工艺
 		$.taskData.processBox.process_name='';
 		$.taskData.processBox.trigger_type='58ef46b543929a10708f2b08';
-		$.taskData.processBox.status=1;
+		$.taskData.processBox.status=0;
 		$.taskData.processBox.trigger_conditions=[];
 		$.taskData.processBox.action_times=1;
 		$.taskData.processBox.mobile='';

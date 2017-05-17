@@ -209,6 +209,20 @@ public class DataTagController extends Controller{
 		render("manual_entry.html");
 	}
 	
+	/**
+	 * 
+	 * @Title: addManual
+	 * @Description:
+	 *    作用:打开新增、修改人工录入页面
+	 *    限制:
+	 *    注意事项:
+	 *    修改历史:(date:xxxx by:xxx comment:xxx)
+	 * @author dongmo(113552669@qq.com)
+	 * @date 2017年5月12日    
+	 * @return void 
+	 * @exception  (说明在某情况下，将发生什么异常)
+	 * 
+	 * */
 	public void addManual(){
 		Record company=getSessionAttr(Constants.SESSION_COMPANY);
 		String companyCode=company.get("companyCode");
@@ -223,4 +237,54 @@ public class DataTagController extends Controller{
 		render("manual_data.html");
 	}
 	
+	/**
+	 * 
+	 * @Title: computedEntry
+	 * @Description:
+	 *    作用:打开计算数值列表页面
+	 *    限制:
+	 *    注意事项:
+	 *    修改历史:(date:xxxx by:xxx comment:xxx)
+	 * @author dongmo(113552669@qq.com)
+	 * @date 2017年5月15日    
+	 * @return void 
+	 * @exception  (说明在某情况下，将发生什么异常)
+	 * 
+	 * */
+	public void computedEntry(){
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String companyCode=company.get("companyCode");
+		String companyId=company.get("companyId");
+		setAttr("companyCode", companyCode);
+		setAttr("companyId", companyId);
+		render("computed_entry.html");
+	}
+	
+	/**
+	 * 
+	 * @Title: addManual
+	 * @Description:
+	 *    作用:打开新增、修改人工录入页面
+	 *    限制:
+	 *    注意事项:
+	 *    修改历史:(date:xxxx by:xxx comment:xxx)
+	 * @author dongmo(113552669@qq.com)
+	 * @date 2017年5月12日    
+	 * @return void 
+	 * @exception  (说明在某情况下，将发生什么异常)
+	 * 
+	 * */
+	public void addComputed(){
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String companyCode=company.get("companyCode");
+		String companyId=company.get("companyId");
+		String deviceId="";
+		if(getPara(0)!=null){
+			deviceId=getPara(0);
+		}
+		setAttr("deviceId", deviceId);
+		setAttr("companyCode", companyCode);
+		setAttr("companyId", companyId);
+		render("computed_data.html");
+	}
 }
