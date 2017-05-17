@@ -95,7 +95,9 @@ $.extend({
 		});
 		$('input').limitSpacing();		//输入框去除空格
 		$('input').filter('[num-limit=limit]').numOnly();		//数字限制输入
-		
+		$('input').filter('[num-limit=limit]').keyup(function(){
+			globalConfig.globalData[$(this).attr('dataSource')]=globalConfig.globalData[$(this).attr('dataSource')].replace(/[^0-9-]/g, '')
+		})
 		$('.saveBtn').click(function(){	//点击保存按钮
 			$('.globalMain input').each(function(){
 				var overEach=$(this).formCheckFoo();

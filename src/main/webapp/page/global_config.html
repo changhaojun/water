@@ -34,11 +34,11 @@
 					<div class="row">
 						<div class="col-xs-6">
 							<label>最长掉线时间</label>
-							<input v-model="globalData.max_drop_time" num-limit="limit"  type="text" placeholder="请输入最长掉线时间，以分钟为单位"/>
+							<input v-model="globalData.max_drop_time" num-limit="limit" dataSource="max_drop_time" type="text" placeholder="请输入最长掉线时间，以分钟为单位"/>
 						</div>
 						<div class="col-xs-6">
 							<label>提醒时间间隔</label>
-							<input v-model="globalData.warn_time_interval" num-limit="limit" type="text" placeholder="请输入提醒时间间隔，以分钟为单位"/>
+							<input v-model="globalData.warn_time_interval" dataSource="warn_time_interval" num-limit="limit" type="text" placeholder="请输入提醒时间间隔，以分钟为单位"/>
 						</div>
 					</div>
 					<div class="row">
@@ -62,6 +62,6 @@
 		<script type="text/javascript" src="/finfosoft-water/plugins/layer/layer.min.js"></script>
 		<script src="/finfosoft-water/plugins/vue/dist/vue.js"></script>
 		<script type="text/javascript" src="/finfosoft-water/js/public_resources.js" ></script>
-		<script src="/finfosoft-water/js/global_config.js"></script>
+		<script src="/finfosoft-water/js/global_config.js?1.09"></script>
 	</body>
 </html>
