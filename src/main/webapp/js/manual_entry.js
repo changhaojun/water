@@ -126,9 +126,7 @@ window.deleteCol=function(value){
 			  success : function(data) {
 				  if(data.code==200){
 					  layer.msg(data.success,{icon:1})
-					  setTimeout(function(){
-					  	$('#manualList').bootstrapTable("refresh",queryParams);
-					  },2000)
+					   setTimeout("self.location.reload()",2000);
 				  }else if(data.code==400005){
 					  window.getNewToken()
 					  deleteCol(value)
