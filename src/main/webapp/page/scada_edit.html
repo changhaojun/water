@@ -6,7 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/common.css"/>
 		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.css"/>
-		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/scada_add.css?1.1"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/scada_add.css?1.2"/>
 	</head>
 	<body>
 		<input type="text" id="scadaId" hidden="hidden" value=${scadaId} />
@@ -30,9 +30,9 @@
 						<button>添加数据</button>
 						<span class="fa fa-plus"></span>
 					</li>
-					<li class="pull-left public">
-						<button>公共数据</button>
-						<span class="fa fa-cloud"></span>
+					<li class="pull-left process">
+						<button>添加工艺</button>
+						<span class="fa fa-tasks"></span>
 					</li>
 					<li class="pull-right save">
 						<button>保存情景</button>
@@ -94,6 +94,24 @@
 						</div>
 					</div>
 				</div>
+				<div class="selector selectProcess">
+					<div class="selector-body">
+						<div class="clearfix selector-title">
+							<p class="pull-left">选择任务标签</p>
+							<a href="javascript:;" class="pull-right selector-close"></a>
+						</div>
+						<div class="selector-main">
+							<div class="selector-search">
+								<input type="text" placeholder="输入关键字查找"/>
+								<span class="fa fa-search"></span>
+							</div>
+							<ul class="selector-list"></ul>
+							<div class="selector-scroll">
+								<div class="scrollBar"></div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<script src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
@@ -106,7 +124,7 @@
 		<script src="/finfosoft-water/plugins/three/MTLLoader.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/finfosoft-water/plugins/three/OBJLoader.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/finfosoft-water/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/finfosoft-water/js/scada_three.js?1.0" type="text/javascript" charset="utf-8"></script>
-		<script src="/finfosoft-water/js/scada_edit.js?1.1" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/scada_three.js?1.3" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/scada_edit.js?1.3" type="text/javascript" charset="utf-8"></script>
 	</body>
 </html>

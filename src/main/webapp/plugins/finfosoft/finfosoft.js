@@ -41,6 +41,28 @@ var Finfosoft = {
 		this.init();
 	},
 	
+	/*
+	@ 插件名： 条形开关
+	@ 插件作者：dongmo / Michael.Lu
+	@ 插件版本：1.0
+	@ 插件兼容性：IE9.0及以上浏览器
+	@ API
+	 * el: 元素选择器
+	 ** lineWidth：滚动条宽度
+	 ** bgColor: 滚动条背景色
+	 ** mainColor： 主情景色
+	 ** initVal：input接口
+	@ 插件实例：
+		new Finfosoft.Ring({
+			el: '.finfosoft-ring',
+			startDeg: 150,
+			endDeg: 30,
+			lineWidth: 18,
+			bgColor: '#eeeeee',
+			mainColor: '#66ee66',
+			initVal: 20
+		});
+	*/
 	OnOff: function(opts) {
 		this.parent = document.querySelector(opts.el);
 		this.leftBtn = this.parent.querySelector('.left');
@@ -251,6 +273,7 @@ Finfosoft.OnOff.prototype = {
 		this.slider.endPos = (this.width - this.width / 4) / 2 - this.height/2 + this.width / 4;
 	},
 	
+	//状态判断
 	judgeStatus() {
 		switch (this.status) {
 			case 1:

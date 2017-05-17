@@ -17,21 +17,29 @@ $.initData = {
 		client: null,
 		topic: null,
 		data: null,
-//		host: '139.129.231.31',
-		host: '192.168.1.114',
+		host: '139.129.231.31',
+//		host: '192.168.1.114',
 		port: 61623,
 		username: 'admin',
-//		password: 'finfosoft123',
-		password: 'password'
+		password: 'finfosoft123',
+//		password: 'password'
 	}
 }
 
 $.fn.extend({
 	toggleWin: function(hide) {
+		var This = $(this);
 		if (hide) {
-			$(this).css('display', 'none');
+			$(this).animate({
+				opacity: 0
+			}, 'normal', 'swing', function() {
+				This.css('display', 'none');
+			});
 		} else {
 			$(this).css('display', 'block');
+			$(this).animate({
+				opacity: 1
+			});
 		}
 		return $(this);
 	},
@@ -53,6 +61,7 @@ $.fn.extend({
 $.extend({
 	init: function() {
 		$.initToken('get', function() {
+			$.initTitle();
 			$.initAjax(function(data) {
 				$.initData.thingName = data.scada.thing_name;
 				$.initData.sentData.thing_id = data.scada.thing_id;
@@ -62,23 +71,55 @@ $.extend({
 				$.initData.sentData.scada_config = data.scada.scada_config;
 				for (var i=0; i<$.initData.sentData.scada_config.length; i++) {
 					$.initThree.initLabel(
-						{
-							data_id: $.initData.sentData.scada_config[i].data_id,
-							data_name: $.initData.sentData.scada_config[i].data_name,
-							data_value: $.initData.sentData.scada_config[i].data_value,
-							data_unit: $.initData.sentData.scada_config[i].data_unit,
-							port_type: $.initData.sentData.scada_config[i].port_type,
-							status: $.initData.sentData.scada_config[i].status
-						},
+						$.initData.sentData.scada_config[i],
 						$.initData.sentData.scada_config[i].objPosition
+//						function(userData) {
+//							$.initMQTT(userData);
+//						}
 					);
+					$.initMQTT($.initData.sentData.scada_config);
 				}
-				if ($.initData.sentData.scada_config.length>0) $.initMQTT($.initData.sentData.scada_config);
 				$.initThree.init(data.scadaModel.modelConfig, function() {
 					$.labelOperation($.three.capturer.intersected);
 				});
 			});
 		})
+	},
+	initTitle: function() {
+		$.ajax({
+			type: "get",
+			dataType: "json",
+			url: $.initData.globalurl+"/v1/scadas",
+			async: true,
+			crossDomain: true == !(document.all),
+			data: {
+				access_token: $.initData.token.access
+			},
+			success: function(data) {
+				var listDom = '';
+				$.each(data.rows, function(i) {
+					if (data.rows[i]._id == $.initData.scadaId) {
+						listDom += "<li class='active' scadaId='"+data.rows[i]._id+"' scadaName='"+data.rows[i].scada_name+"' scadaDescription='"+data.rows[i].description+"'>"+data.rows[i].scada_name+"</li>";
+					} else {
+						listDom += "<li scadaId='"+data.rows[i]._id+"' scadaName='"+data.rows[i].scada_name+"' scadaDescription='"+data.rows[i].description+"'>"+data.rows[i].scada_name+"</li>";
+					}
+				});
+				$('.mainTitle').find('.backSide').html(listDom);;
+				$('.mainTitle').find('.backSide').children().click(function() {
+					var id = $(this).attr('scadaId');
+					var name = $(this).attr('scadaName');
+					var description = $(this).attr('scadaDescription');
+					if (id == $.initData.scadaId) {
+						$('.mainTitle').removeClass('active');
+					} else {
+						self.location.href = '/finfosoft-water/scada/review/'+id+'-'+name+'-'+description;
+					}
+				});
+			}
+		});
+		$('.mainTitle').find('.frontSide').find('button').click(function() {
+			$('.mainTitle').addClass('active');
+		});
 	},
 	initToken: function(type, callBack) {
 		switch (type) {
@@ -120,10 +161,10 @@ $.extend({
 			password: $.initData.mqtt.password,
 			timeout: 1000,
 			onSuccess: function() {
-				for (var i = 0; i < data.length; i++) {
-					if (data[i].port_type == 'AO' || data[i].port_type == 'DO') {
+				for (var i=0; i<data.length; i++) {
+					if (data[i].port_type == 'AO' || data[i].port_type == 'DO' || data[i].port_type == 'MO') {
 						if (isIssue) {
-							$.initData.mqtt.client.subscribe(data[i].guid.toString());
+							$.initData.mqtt.client.subscribe(data[i].data_id.toString());
 						} else {
 							continue;
 						}
@@ -133,7 +174,9 @@ $.extend({
 				}
 			},
 			onFailure: function(message) {
-				setTimeout($.initMQTT, 10000000);
+				setTimeout(function() {
+					$.initMQTT(data, isIssue);
+				}, 10000000);
 			}
 		};
 		$.initData.mqtt.client.onConnectionLost = function(responseObject) {
@@ -145,7 +188,7 @@ $.extend({
 			if (!isIssue) {
 				$.onLabelValueChange(message);
 			} else {
-				$.onIssueSuccess(message, data);
+				$.onIssueSuccess(message, data[0]);
 			}
 		};
 		$.initData.mqtt.client.connect(options);
@@ -153,7 +196,7 @@ $.extend({
 	onLabelValueChange: function(message) {
 		var dataId = Number(message.destinationName);
 		var payload = JSON.parse(message.payloadString);
-		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(dataId)];
+		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(dataId, $.initThree.judgeLabelType({data_id: dataId}))];
 		if (!originLabel) return;
 		var newData = {
 			data_id: dataId,
@@ -170,7 +213,10 @@ $.extend({
 	},
 	onIssueSuccess: function(message, data) {
 		var payload = JSON.parse(message.payloadString);
-		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(data.data_id)];
+		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(data.data_id, $.initThree.judgeLabelType(data))];
+		if (payload.payloadString=='0') {
+			return;
+		}
 		if (!originLabel) return;
 		var newData = {
 			data_id: originLabel.labelId,
@@ -186,16 +232,24 @@ $.extend({
 	},
 	labelOperation: function(label) {
 		var time = $.initTime();
+		if (!label.labelType) {
+			return false;
+		}
+		$('.operation').stop(true, true);
+		$('.operation').children().stop(true, true);
 		$('.operation').toggleWin();
-		$('.operation').children().toggleWin(true);
 		$('.operation').find('.close').click(function() {
+			$('.operation').stop(true, true);
+			$('.operation').children().stop(true, true);
 			$('.operation').toggleWin(true);
+			$('.operation').children().toggleWin(true);
 			$.three.capturer.intersected = null;
 			$('.AO').find('.confirm').unbind();
 		});
 		switch (label.labelType) {
 			case 'AI':
 				//do AI
+				$('.AI').siblings().toggleWin(true);
 				$('.AI').toggleWin().stayCenter($('.operation'));
 				$('.AI').find('.name').html(label.labelName);
 				var chart = echarts.init($('.AI').find('.chart').get(0));
@@ -207,6 +261,7 @@ $.extend({
 			case 'DI':
 				//do DI
 				$('.DI').toggleWin().stayCenter($('.operation'));
+				$('.DI').siblings().toggleWin(true);
 				$('.DI').find('.name').html(label.labelName);
 				var chart = echarts.init($('.DI').find('.chart').get(0));
 				$.getRealTimeData(label.labelId, time, chart, 'DI');
@@ -216,6 +271,7 @@ $.extend({
 				break;
 			case 'AO':
 				//do AO
+				$('.AO').siblings().toggleWin(true);
 				$('.AO').toggleWin().stayCenter($('.operation'));
 				$('.AO').find('.name').html(label.labelName);
 				$('.AO').find('.realtime').html(time.endDate);
@@ -230,22 +286,19 @@ $.extend({
 				});
 				$('.AO').find('.confirm').click(function() {
 					layer.confirm('是否确定下发？', {
-						btn: ['确定','取消'] //按钮
+						btn: ['确定','取消']
 					}, function(){
 						var data_value = $('.AO').find('.confirmVal').val();
 						var	data_id = label.labelId;
-						var	guid = new Date().getTime();
 						var port_type = label.labelType;
 						$.issueAjax({
 							data_value: data_value,
-							data_id: data_id,
-							guid: guid
+							data_id: data_id
 						}, function() {
 							$.initMQTT(
 								[{
 									data_value: data_value,
 									data_id: data_id,
-									guid: guid,
 									port_type: port_type
 								}],
 								true
@@ -259,6 +312,7 @@ $.extend({
 				break;
 			case 'DO':
 				//do DO
+				$('.DO').siblings().toggleWin(true);
 				$('.DO').toggleWin().stayCenter($('.operation'));
 				$('.DO').find('.name').html(label.labelName);
 				$('.DO').find('.realtime').html(time.endDate);
@@ -267,22 +321,19 @@ $.extend({
 					status: label.labelValue=='noVal' ? 0 : label.labelValue,
 					onChanged: function(status) {
 						layer.confirm('是否确定下发？', {
-							btn: ['确定','取消'] //按钮
+							btn: ['确定','取消']
 						}, function() {
 							var data_value = status;
 							var	data_id = label.labelId;
-							var	guid = new Date().getTime();
 							var port_type = label.labelType;
 							$.issueAjax({
 								data_value: data_value,
-								data_id: data_id,
-								guid: guid
+								data_id: data_id
 							}, function() {
 								$.initMQTT(
 									[{
 										data_value: data_value,
 										data_id: data_id,
-										guid: guid,
 										port_type: port_type
 									}],
 									true
@@ -299,6 +350,7 @@ $.extend({
 			case 'MO':
 				//do MO
 				$('.MO').toggleWin().stayCenter($('.operation'));
+				$('.MO').siblings().toggleWin(true);
 				$('.MO').find('.name').html(label.labelName);
 				$('.MO').find('.realtime').html(time.endDate);
 				$('.MO').find('.oldVal').val(label.labelValue);
@@ -326,18 +378,15 @@ $.extend({
 					}, function(){
 						var data_value = $('.MO').find('.newVal').val();
 						var	data_id = label.labelId;
-						var	guid = new Date().getTime();
 						var port_type = label.labelType;
 						$.issueAjax({
 							data_value: data_value,
-							data_id: data_id,
-							guid: guid
+							data_id: data_id
 						}, function() {
 							$.initMQTT(
 								[{
 									data_value: data_value,
 									data_id: data_id,
-									guid: guid,
 									port_type: port_type
 								}],
 								true

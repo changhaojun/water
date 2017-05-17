@@ -17,10 +17,18 @@ $.initData = {
 $.fn.extend({
 	//窗口显示 & 隐藏
 	toggleWin: function(hide) {
+		var This = $(this);
 		if (hide) {
-			$(this).css('display', 'none');
+			$(this).animate({
+				opacity: 0
+			}, 'normal', 'swing', function() {
+				This.css('display', 'none');
+			});
 		} else {
 			$(this).css('display', 'block');
+			$(this).animate({
+				opacity: 1
+			});
 		}
 		return $(this);
 	},
@@ -104,8 +112,12 @@ $.fn.extend({
 		});
 	},
 	//确定并改变实体名称
-	changeThingName: function(thingName) {
-		$(this).css('color', '#1ab394').html(thingName);
+	changeThingName: function(thingName, isRestore) {
+		if (isRestore) {
+			$(this).css('color', '#ccc').html(thingName);
+		} else {
+			$(this).css('color', '#1ab394').html(thingName);
+		}
 	},
 	//ajax查询实体下绑定的数据列表
 	searchData: function(callBack) {
@@ -124,6 +136,29 @@ $.fn.extend({
 			},
 			success: function(data) {
 				callBack && callBack(data.dataConfigList);
+			}
+		});
+	},
+	//ajax查询所有人工出发的任务
+	searchTask: function(callBack) {
+		var val = $(this).val();
+		$.ajax({
+			type: "get",
+			dataType: "json",
+			url: $.initData.globalurl+"/v1/processes/",
+			async: true,
+			crossDomain: true == !(document.all),
+			data: {
+				access_token: $.initData.token.access,
+				filter: JSON.stringify({
+					trigger_type: "58f0431743929a10a8fb49fa"
+				}),
+				like: JSON.stringify({
+					process_name: val
+				})
+			},
+			success: function(data) {
+				callBack && callBack(data.rows);
 			}
 		});
 	},
@@ -150,6 +185,19 @@ $.fn.extend({
 		$(this).html(liDom);
 		$(this).children().click(function() {
 			$.selectThingData(JSON.parse($(this).attr('primary')));
+		});
+		$(this).parents('.selector').resetScrollBar();
+	},
+	//刷新任务列表
+	refreshProcessList: function(data) {
+		$(this).html('');
+		var liDom = '';
+		$.each(data, function(i) {
+			liDom += "<li primary='"+JSON.stringify(data[i])+"'>"+data[i].process_name+"</li>";
+		});
+		$(this).html(liDom);
+		$(this).children().click(function() {
+			$.selectProcess(JSON.parse($(this).attr('primary')));
 		});
 		$(this).parents('.selector').resetScrollBar();
 	},
@@ -230,6 +278,7 @@ $.extend({
 				var confirm = layer.confirm('警告：更换绑定的实体会清除所有情景内所有的数据标签！是否确定更换？', {
 					btn: ['确定','取消']
 				}, function(){
+					$('.link').find('p').changeThingName('请绑定实体', true);
 					$.three.scene.el.remove($.three.labelGroup);
 					$.three.labelGroup = new THREE.Object3D();
 					$.three.controller.transformController.detach($.three.capturer.intersected);
@@ -257,6 +306,16 @@ $.extend({
 			$('.selectData').find('input').keyup(function() {
 				$(this).searchData(function(data) {
 					$('.selectData').find('.selector-list').refreshDataList(data);
+				});
+			});
+		});
+		$('.process').click(function() {
+			$('.selectProcess').toggleWin();
+			$('.selectProcess').find('.selector-body').stayCenter($('.selectProcess'));
+			$('.selectProcess').resetScrollBar();
+			$('.selectProcess').find('input').keyup(function() {
+				$(this).searchTask(function(data) {
+					$('.selectProcess').find('.selector-list').refreshProcessList(data);
 				});
 			});
 		});
@@ -291,8 +350,20 @@ $.extend({
 	},
 	//选择相应数据
 	selectThingData: function(data) {
-		if ($.initThree.searchLabelFromId(data.data_id)>-1) {
+		if ($.initThree.searchLabelFromId(data.data_id, $.initThree.judgeLabelType(data))>-1) {
 			layer.msg('请勿绑定重复的数据标签！', {
+				icon: 2,
+				time: 1000
+			});
+			return false;
+		}
+		$('.selector').toggleWin(true);
+		$.initThree.initLabel(data);
+	},
+	//选择相应工艺
+	selectProcess: function(data) {
+		if ($.initThree.searchLabelFromId(data._id, $.initThree.judgeLabelType(data))>-1) {
+			layer.msg('请勿绑定重复的工艺标签！', {
 				icon: 2,
 				time: 1000
 			});
