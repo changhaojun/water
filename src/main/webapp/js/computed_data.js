@@ -125,6 +125,22 @@ var $extend=$.fn.extend({
 		var $This = typeof event==="undefined" ? $(this) : $(event.currentTarget);
 		$.allData.dataConfigs.splice(index,1)
 	},
+	//空格限制输入
+	limitSpacing: function() {
+		$(this).keyup(function() {
+			$(this).val($(this).val().replace(/\s/g, ''));
+		});
+	},
+	formCheckFoo:function(){
+		$.allData.inputCheck=true
+		if($(this).val()==''){
+			var This=$(this)
+			$(this).focus();
+			layer.tips(This.attr("placeholder"),This,{tips: [1,'#FE777A']})
+			$.allData.inputCheck=false
+		}
+		return $.allData.inputCheck;
+	}
 });
 
 $.extend({
@@ -137,6 +153,7 @@ $.extend({
 		getToken();
 		$.allData.access_token = accesstoken;
 		$.addPort();
+		$('input').limitSpacing();		//输入框去除空格
 		$(document).delegate('*','click',function(ev){
 			if($(ev.target).attr('class')==='analogInput'){
 				$('.analogCursor').removeAttr("hidden")
@@ -158,10 +175,38 @@ $.extend({
 			$(this).addSign();
 		});
 		$('.saveBtn').click(function(){
-			$.saveDataConfig();
+			$('.dataBox input').each(function(){
+				if($(this).attr('ischeck')!='false'){
+					var overEach=$(this).formCheckFoo();
+						if(overEach==false){
+							return false;
+						}
+				}
+			})
+			if($.allData.inputCheck){
+				if($.allData.dataConfig.calculate_formula.length==0){
+					$.allData.inputCheck=false;
+					layer.tips("请书写公式后再进行保存",$('.analogInput'),{tips: [1,'#FE777A']})
+				}else{
+					$.allData.inputCheck=true
+				}
+			}
+			if($.allData.inputCheck){
+				$.saveDataConfig();
+			}
 		});
 		$('#main-submit').click(function(){
-			$.saveDevice();
+			$('.dataInfo input').each(function(){
+				if($(this).attr('ischeck')!='false'){
+					var overEach=$(this).formCheckFoo();
+						if(overEach==false){
+							return false;
+						}
+				}
+			})
+			if($.allData.inputCheck){
+				$.saveDevice();
+			}
 		});
 		$(document).keydown(function (event) {
 			if($('.analogCursor').attr("hidden")==undefined){ 

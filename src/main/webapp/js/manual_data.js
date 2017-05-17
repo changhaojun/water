@@ -52,12 +52,13 @@ $.extend({
 		});
 		$('#main-submit').click(function(){
 			$('.dataInfo input').each(function(){
-				var overEach=$(this).formCheckFoo();
-					if(overEach==false){
-						return false;
-					}
+				if($(this).attr('ischeck')!='false'){
+					var overEach=$(this).formCheckFoo();
+						if(overEach==false){
+							return false;
+						}
+				}
 			})
-
 			if($.allData.inputCheck){
 				$.saveDevice();
 			}
