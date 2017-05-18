@@ -29,14 +29,14 @@ function dataList(){
 			var str=''
 			for(var i=0;i<data.length;i++){
 				data[i].title=data[i].device_name+"-"+data[i].data_name		
-				str='<div class="dataList" style="cursor:pointer;" id="'+data[i].data_id+'" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
+				str='<div class="dataList" id="'+data[i].data_id+'" >'+
 					'<div class="listTop normal" style="border-left-color: rgb(26, 179, 148);color: rgb(26, 179, 148)">'+
 						'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+
-						'<span class="fa fa-plus-square" data-toggle="tooltip" data-placement="top"  title="关注"></span>'+
-						'<span class="fa fa-list-alt" data-toggle="tooltip" data-placement="top"  title="设封面"></span>'+
+						'<span class="fa fa-plus-square" data-toggle="tooltip" data-placement="top" onclick="focus1('+data[i].data_id+','+i+')"  title="关注"></span>'+
+						'<span class="fa fa-list-alt" data-toggle="tooltip" data-placement="top" onclick="cover('+data[i].data_id+','+i+')"  title="设封面"></span>'+
 					'</div>'+
 					'<div class="listHr"></div>'+
-					'<div class="listContent">'+
+					'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
 						'<div class="contentTop">'+
 							'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
 							'</div>'+						
@@ -57,6 +57,57 @@ function dataList(){
 		}
 	})
 }
+//设封面
+function cover(id,i){
+	$('.fa-list-alt').css('background','orange')
+	$('.fa-list-alt').eq(i).css('background','#ccc')
+//console.log(id)
+console.log(thingId)
+	$.ajax({
+		type: "put",
+		url: globalurl+"/v1/things/"+thingId,
+		dataType: "JSON",
+		async: false,
+		crossDomain: true == !(document.all),
+		data:{
+			access_token: accesstoken,
+			data:JSON.stringify({"data_id":Number(id)})	
+		},
+		success:function(data){
+			console.log(data)
+			if(data.code==200){
+				layer.msg('封面设置成功', {
+					icon: 1,
+					time:2000,
+				});
+			}	
+		}
+	})
+}
+//设关注
+function focus1(id,m){
+	$('.fa-plus-square').eq(m).css('background','#ccc')
+	$.ajax({
+		type:'post',
+		url: globalurl+"/v1/desktops",
+		dataType: "JSON",
+		async: false,
+		crossDomain: true == !(document.all),
+		data:{
+			access_token: accesstoken,
+//			data:JSON.stringify({"data_id":Number(id)})
+			data:'{"data_id":'+Number(id)+',"thing_id":"'+thingId+'"}'		
+		},
+		success:function(data){
+			console.log(data)
+			layer.msg('关注成功', {
+				icon: 1,
+				time:2000,
+			});
+		}
+	})
+}
+
 //初始化提示框
 //$(function () { $("[data-toggle='tooltip']").tooltip(); });
 function toolTip(){
@@ -122,7 +173,7 @@ var client;
 var topic;
 var data;
 function MQTTconnect(dataIds) {
-    console.log("订阅程序开始执行");
+//  console.log("订阅程序开始执行");
     var mqttHost = '139.129.231.31';
 //	var mqttHost='192.168.1.114';
     var username="admin";
