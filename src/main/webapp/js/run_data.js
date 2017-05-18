@@ -11,7 +11,7 @@ function entityList(){
 		type: "get",
 //		url: 'http://rapapi.org/mockjsdata/15031/v1/things-runData',
 //		url: 'http://192.168.1.114/v1/things',
-		url: globalurl+"/v1/things",
+		url: globalurl+"/v1/runDatas",
 		dataType: "JSON",
 		async: false,
 		crossDomain: true == !(document.all),
@@ -22,11 +22,12 @@ function entityList(){
 			console.log(data);
 			$(".dataContent").html("");
 			if(data.rows.length==0){
-		    		$(".dataContent").html("<p>暂无数据</p>");
+		    	$(".dataContent").html("<p>暂无数据</p>");
 		   }
 			var str='';
 			for(var i=0;i<data.rows.length;i++){
-				console.log(data.rows.length);
+//				console.log(data.rows[0].run_data.data_times[0])
+//				console.log(data.rows.length);
 				if(data.rows[i].run_data){
 					str='<div class="dataList" style="cursor:pointer;" onclick="look(&apos;'+data.rows[i]._id+'&apos;)">'+
 							'<div class="listTop">'+
@@ -38,10 +39,10 @@ function entityList(){
 								
 								'</div>'+
 								'<div class="contentBottom">'+
-									'<span class="fa fa-clock-o">'+' '+data.rows[i].run_data.data_times[0]+'&nbsp; &nbsp;&nbsp;&nbsp;'+'72h'+'</span>'+
+									'<span class="fa fa-clock-o">'+' '+data.rows[i].run_data.data_times[0].substring(0,7)+'&nbsp; &nbsp;&nbsp;&nbsp;'+'72h'+'</span>'+
 								'</div>'+
 							'</div>'+			
-					'</div>';
+						'</div>';
 					option={
 						tooltip:{
 							trigger:'axis'

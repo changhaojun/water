@@ -125,6 +125,7 @@ body{
     float: left;
     padding-left: 5px;
     font-size: 14px;
+    cursor: pointer;
 }
 .list .disabledLi .disabledIcon{
 	width: 30px;
@@ -265,8 +266,39 @@ option:hover{
     margin-left: 0;
 }
 
+
+.chartContent .chartTop button{
+	border: 1px solid #1AB394;
+    color: #1AB394;
+    padding: 7px 60px;
+    margin-left: 40px;
+    margin-right: 30px;
+    float: right;
+}
+.chartContent .chartTop .btnColor{
+	background: #1AB394;
+	color:#fff;
+}
 /*生成第一张图表*/
 #chartsContent{
 	width: 100%;
 	height:500px;
+}
+
+.chartContent .chartTop .out{
+	padding: 8px 20px;
+    background: #1AB394;
+    display: inline-block;
+    color: #fff;
+    border-radius: 4px;
+	cursor: pointer;
+}
+.chartContent .chartTop .focusr{
+	background: orange;
+    border-radius: 35px;
+    padding: 0px 9px;
+    color: white;
+    line-height: 30px;
+    margin-right: 30px;
+    cursor: pointer;
 }

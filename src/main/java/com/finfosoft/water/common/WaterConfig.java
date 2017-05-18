@@ -3,6 +3,7 @@ package com.finfosoft.water.common;
 import com.finfosoft.db.mongo.MongodbPlugin;
 import com.finfosoft.water.alarm.AlarmController;
 import com.finfosoft.water.dataTag.DataTagController;
+import com.finfosoft.water.desktop.DesktopController;
 import com.finfosoft.water.frame.FrameController;
 import com.finfosoft.water.globalConfig.GlobalConfigController;
 import com.finfosoft.water.thing.ThingController;
@@ -42,6 +43,7 @@ public class WaterConfig extends JFinalConfig{
 		me.add("/globalConfig",GlobalConfigController.class,"/");  //全局配置
 		me.add("/alarm",AlarmController.class,"/");		//告警
 		me.add("/runData",RunDataController.class,"/");
+		me.add("/desktop",DesktopController.class,"/");
 	}
 
 	@Override

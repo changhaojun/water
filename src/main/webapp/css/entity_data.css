@@ -74,7 +74,7 @@ body{
 
 
 .dataContent .dataList{
-	width: 391px;
+	width: 260px;
     height: 212px;
     background: #fff;
     /*border-left: 8px solid #1ab394;*/
@@ -107,7 +107,7 @@ body{
     cursor: pointer;
 }
 .dataList .listTop>span:nth-child(3){
-	margin-right: 5px;
+	margin-right: 10px;
     float: right;
     cursor: pointer;
 }
@@ -118,7 +118,7 @@ body{
     color: white;
     line-height:30px;
     margin-top: -15px;
-    display: none;
+    -display: none;
 }
 .dataList  .listHr{
 	padding: 0;
