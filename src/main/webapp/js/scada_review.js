@@ -14,9 +14,6 @@ $.initData = {
 		scada_config: []
 	},
 	mqtt: {
-		client: null,
-		topic: null,
-		data: null,
 		host: '139.129.231.31',
 //		host: '192.168.1.114',
 		port: 61623,
@@ -72,12 +69,11 @@ $.extend({
 				for (var i=0; i<$.initData.sentData.scada_config.length; i++) {
 					$.initThree.initLabel(
 						$.initData.sentData.scada_config[i],
-						$.initData.sentData.scada_config[i].objPosition
-//						function(userData) {
-//							$.initMQTT(userData);
-//						}
+						$.initData.sentData.scada_config[i].objPosition,
+						function(userData) {
+							$.initMQTT(userData);
+						}
 					);
-					$.initMQTT($.initData.sentData.scada_config);
 				}
 				$.initThree.init(data.scadaModel.modelConfig, function() {
 					$.labelOperation($.three.capturer.intersected);
@@ -155,22 +151,20 @@ $.extend({
 		});
 	},
 	initMQTT: function(data, isIssue) {
-		$.initData.mqtt.client = new Paho.MQTT.Client($.initData.mqtt.host, $.initData.mqtt.port, "server" + parseInt(Math.random() * 100, 10));
+		var client = new Paho.MQTT.Client($.initData.mqtt.host, $.initData.mqtt.port, "server" + parseInt(Math.random() * 100, 10));
 		var options = {
 			userName: $.initData.mqtt.username,
 			password: $.initData.mqtt.password,
 			timeout: 1000,
 			onSuccess: function() {
-				for (var i=0; i<data.length; i++) {
-					if (data[i].port_type == 'AO' || data[i].port_type == 'DO' || data[i].port_type == 'MO') {
-						if (isIssue) {
-							$.initData.mqtt.client.subscribe(data[i].data_id.toString());
-						} else {
-							continue;
-						}
-					} else {
-						$.initData.mqtt.client.subscribe(data[i].data_id.toString());
+				if (data.port_type == 'AO' || data.port_type == 'DO' || data.port_type == 'MO') {
+					if (isIssue) {
+						client.subscribe(data.data_id.toString());
 					}
+				} else if (data.port_type == 'AI' || data.port_type == 'DI') {
+					client.subscribe(data.data_id.toString());
+				} else {
+					
 				}
 			},
 			onFailure: function(message) {
@@ -179,19 +173,20 @@ $.extend({
 				}, 10000000);
 			}
 		};
-		$.initData.mqtt.client.onConnectionLost = function(responseObject) {
+		client.onConnectionLost = function(responseObject) {
 			if(responseObject.errorCode !== 0) {
 				console.log("onConnectionLost:" + responseObject.errorMessage);
 			}
 		};
-		$.initData.mqtt.client.onMessageArrived = function(message) {
+		client.onMessageArrived = function(message) {
 			if (!isIssue) {
 				$.onLabelValueChange(message);
 			} else {
-				$.onIssueSuccess(message, data[0]);
+				$.onIssueSuccess(message, data);
 			}
 		};
-		$.initData.mqtt.client.connect(options);
+		client.connect(options);
+		
 	},
 	onLabelValueChange: function(message) {
 		var dataId = Number(message.destinationName);
@@ -232,173 +227,189 @@ $.extend({
 	},
 	labelOperation: function(label) {
 		var time = $.initTime();
-		if (!label.labelType) {
-			return false;
-		}
-		$('.operation').stop(true, true);
-		$('.operation').children().stop(true, true);
-		$('.operation').toggleWin();
-		$('.operation').find('.close').click(function() {
+		if (label.labelType) {
 			$('.operation').stop(true, true);
 			$('.operation').children().stop(true, true);
-			$('.operation').toggleWin(true);
-			$('.operation').children().toggleWin(true);
-			$.three.capturer.intersected = null;
-			$('.AO').find('.confirm').unbind();
-		});
-		switch (label.labelType) {
-			case 'AI':
-				//do AI
-				$('.AI').siblings().toggleWin(true);
-				$('.AI').toggleWin().stayCenter($('.operation'));
-				$('.AI').find('.name').html(label.labelName);
-				var chart = echarts.init($('.AI').find('.chart').get(0));
-				$.getRealTimeData(label.labelId, time, chart, 'AI');
-				$.initDatePacker($('.AI').find('.date'), time, function(changedTime) {
-					$.getRealTimeData(label.labelId, changedTime, chart, 'AI');
-				});
-				break;
-			case 'DI':
-				//do DI
-				$('.DI').toggleWin().stayCenter($('.operation'));
-				$('.DI').siblings().toggleWin(true);
-				$('.DI').find('.name').html(label.labelName);
-				var chart = echarts.init($('.DI').find('.chart').get(0));
-				$.getRealTimeData(label.labelId, time, chart, 'DI');
-				$.initDatePacker($('.DI').find('.date'), time, function(changedTime) {
-					$.getRealTimeData(label.labelId, changedTime, chart, 'DI');
-				});
-				break;
-			case 'AO':
-				//do AO
-				$('.AO').siblings().toggleWin(true);
-				$('.AO').toggleWin().stayCenter($('.operation'));
-				$('.AO').find('.name').html(label.labelName);
-				$('.AO').find('.realtime').html(time.endDate);
-				var ring = new Finfosoft.Ring({
-					el: '.finfosoft-ring',
-					startDeg: 125,
-					endDeg: 55,
-					lineWidth: 20,
-					initVal: label.labelValue == 'noVal' ? 0 : label.labelValue,
-					mainColor: '#1ab394',
-					bgColor: '#eeeeee'
-				});
-				$('.AO').find('.confirm').click(function() {
-					layer.confirm('是否确定下发？', {
-						btn: ['确定','取消']
-					}, function(){
-						var data_value = $('.AO').find('.confirmVal').val();
-						var	data_id = label.labelId;
-						var port_type = label.labelType;
-						$.issueAjax({
-							data_value: data_value,
-							data_id: data_id
-						}, function() {
-							$.initMQTT(
-								[{
-									data_value: data_value,
-									data_id: data_id,
-									port_type: port_type
-								}],
-								true
-							);
-							$('.operation').toggleWin(true);
-							$('.AO').find('.confirm').unbind();
-							$.three.capturer.intersected = null;
-						});
+			$('.operation').toggleWin();
+			$('.operation').find('.close').click(function() {
+				$('.operation').stop(true, true);
+				$('.operation').children().stop(true, true);
+				$('.operation').toggleWin(true);
+				$('.operation').children().toggleWin(true);
+				$.three.capturer.intersected = null;
+				$('.AO').find('.confirm').unbind();
+			});
+			switch (label.labelType) {
+				case 'AI':
+					//do AI
+					$('.AI').siblings().toggleWin(true);
+					$('.AI').toggleWin().stayCenter($('.operation'));
+					$('.AI').find('.name').html(label.labelName);
+					var chart = echarts.init($('.AI').find('.chart').get(0));
+					$.getRealTimeData(label.labelId, time, chart, 'AI');
+					$.initDatePacker($('.AI').find('.date'), time, function(changedTime) {
+						$.getRealTimeData(label.labelId, changedTime, chart, 'AI');
 					});
-				});
-				break;
-			case 'DO':
-				//do DO
-				$('.DO').siblings().toggleWin(true);
-				$('.DO').toggleWin().stayCenter($('.operation'));
-				$('.DO').find('.name').html(label.labelName);
-				$('.DO').find('.realtime').html(time.endDate);
-				var onOff = new Finfosoft.OnOff({
-					el: '.finfosoft-onOff',
-					status: label.labelValue=='noVal' ? 0 : label.labelValue,
-					onChanged: function(status) {
+					break;
+				case 'DI':
+					//do DI
+					$('.DI').toggleWin().stayCenter($('.operation'));
+					$('.DI').siblings().toggleWin(true);
+					$('.DI').find('.name').html(label.labelName);
+					var chart = echarts.init($('.DI').find('.chart').get(0));
+					$.getRealTimeData(label.labelId, time, chart, 'DI');
+					$.initDatePacker($('.DI').find('.date'), time, function(changedTime) {
+						$.getRealTimeData(label.labelId, changedTime, chart, 'DI');
+					});
+					break;
+				case 'AO':
+					//do AO
+					$('.AO').siblings().toggleWin(true);
+					$('.AO').toggleWin().stayCenter($('.operation'));
+					$('.AO').find('.name').html(label.labelName);
+					$('.AO').find('.realtime').html(time.endDate);
+					var ring = new Finfosoft.Ring({
+						el: '.finfosoft-ring',
+						startDeg: 125,
+						endDeg: 55,
+						lineWidth: 20,
+						initVal: label.labelValue == 'noVal' ? 0 : label.labelValue,
+						mainColor: '#1ab394',
+						bgColor: '#eeeeee'
+					});
+					$('.AO').find('.confirm').click(function() {
 						layer.confirm('是否确定下发？', {
 							btn: ['确定','取消']
-						}, function() {
-							var data_value = status;
+						}, function(){
+							var data_value = $('.AO').find('.confirmVal').val();
 							var	data_id = label.labelId;
 							var port_type = label.labelType;
 							$.issueAjax({
 								data_value: data_value,
 								data_id: data_id
 							}, function() {
-								$.initMQTT(
-									[{
-										data_value: data_value,
-										data_id: data_id,
-										port_type: port_type
-									}],
-									true
-								);
-								$('.operation').toggleWin(true);
-								$.three.capturer.intersected = null;
-							});
-						}, function() {
-							onOff.reset();
-						});
-					}
-				});
-				break;
-			case 'MO':
-				//do MO
-				$('.MO').toggleWin().stayCenter($('.operation'));
-				$('.MO').siblings().toggleWin(true);
-				$('.MO').find('.name').html(label.labelName);
-				$('.MO').find('.realtime').html(time.endDate);
-				$('.MO').find('.oldVal').val(label.labelValue);
-				$('.MO').find('.confirm').click(function() {
-					if ($('.MO').find('.newVal').val() == '') {
-						$('.MO').find('.newVal').focus();
-						layer.tips('修改值不能为空', '.newVal', {
-							tips: [2, '#ff787b'],
-							time: 2000,
-							tipsMore: true
-						});
-						return false;
-					}
-					if ($('.MO').find('.oldVal').val() == $('.MO').find('.newVal').val()) {
-						$('.MO').find('.newVal').focus();
-						layer.tips('修改值需不同于原始值', '.newVal', {
-							tips: [2, '#ff787b'],
-							time: 2000,
-							tipsMore: true
-						});
-						return false;
-					}
-					layer.confirm('是否确定下发？', {
-						btn: ['确定','取消'] //按钮
-					}, function(){
-						var data_value = $('.MO').find('.newVal').val();
-						var	data_id = label.labelId;
-						var port_type = label.labelType;
-						$.issueAjax({
-							data_value: data_value,
-							data_id: data_id
-						}, function() {
-							$.initMQTT(
-								[{
+								$.initMQTT({
 									data_value: data_value,
 									data_id: data_id,
 									port_type: port_type
-								}],
-								true
-							);
-							$('.operation').toggleWin(true);
-							$('.MO').find('.confirm').unbind();
-							$.three.capturer.intersected = null;
+								}, true);
+								$('.operation').toggleWin(true);
+								$('.AO').find('.confirm').unbind();
+								$.three.capturer.intersected = null;
+							});
 						});
 					});
-				});
-				break;
+					break;
+				case 'DO':
+					//do DO
+					$('.DO').siblings().toggleWin(true);
+					$('.DO').toggleWin().stayCenter($('.operation'));
+					$('.DO').find('.name').html(label.labelName);
+					$('.DO').find('.realtime').html(time.endDate);
+					var onOff = new Finfosoft.OnOff({
+						el: '.finfosoft-onOff',
+						status: label.labelValue=='noVal' ? 0 : label.labelValue,
+						onChanged: function(status) {
+							layer.confirm('是否确定下发？', {
+								btn: ['确定','取消']
+							}, function() {
+								var data_value = status;
+								var	data_id = label.labelId;
+								var port_type = label.labelType;
+								$.issueAjax({
+									data_value: data_value,
+									data_id: data_id
+								}, function() {
+									$.initMQTT({
+										data_value: data_value,
+										data_id: data_id,
+										port_type: port_type
+									}, true);
+									$('.operation').toggleWin(true);
+									$.three.capturer.intersected = null;
+								});
+							}, function() {
+								onOff.reset();
+							});
+						}
+					});
+					break;
+				case 'MO':
+					//do MO
+					$('.MO').toggleWin().stayCenter($('.operation'));
+					$('.MO').siblings().toggleWin(true);
+					$('.MO').find('.name').html(label.labelName);
+					$('.MO').find('.realtime').html(time.endDate);
+					$('.MO').find('.oldVal').val(label.labelValue);
+					$('.MO').find('.confirm').click(function() {
+						if ($('.MO').find('.newVal').val() == '') {
+							$('.MO').find('.newVal').focus();
+							layer.tips('修改值不能为空', '.newVal', {
+								tips: [2, '#ff787b'],
+								time: 2000,
+								tipsMore: true
+							});
+							return false;
+						}
+						if ($('.MO').find('.oldVal').val() == $('.MO').find('.newVal').val()) {
+							$('.MO').find('.newVal').focus();
+							layer.tips('修改值需不同于原始值', '.newVal', {
+								tips: [2, '#ff787b'],
+								time: 2000,
+								tipsMore: true
+							});
+							return false;
+						}
+						layer.confirm('是否确定下发？', {
+							btn: ['确定','取消'] //按钮
+						}, function(){
+							var data_value = $('.MO').find('.newVal').val();
+							var	data_id = label.labelId;
+							var port_type = label.labelType;
+							$.issueAjax({
+								data_value: data_value,
+								data_id: data_id
+							}, function() {
+								$.initMQTT({
+									data_value: data_value,
+									data_id: data_id,
+									port_type: port_type
+								}, true);
+								$('.operation').toggleWin(true);
+								$('.MO').find('.confirm').unbind();
+								$.three.capturer.intersected = null;
+							});
+						});
+					});
+					break;
+			}
+		} else {
+			var processId = label.processId;
+			var processName = label.processName;
+			layer.confirm('是否确定执行<span style="color: red;">'+processName+'</span>？', {
+				btn: ['确定','取消'],
+				btn1: function() {
+					$.issueAjax({
+						process_id: processId
+					}, function() {
+//						$.initMQTT({
+//							data_value: data_value,
+//							data_id: data_id,
+//							port_type: port_type
+//						}, true);
+//						$('.operation').toggleWin(true);
+//						$.three.capturer.intersected = null;
+					});
+				},
+				btn2: function() {
+					$.three.capturer.intersected = null;
+				},
+				cancel: function() {
+					$.three.capturer.intersected = null;
+				}
+			});
 		}
+			
 	},
 	initTime: function() {
 		var now = new Date();
@@ -641,6 +652,7 @@ $.extend({
 				data: JSON.stringify(newData)
 			},
 			success: function(data) {
+				console.log(data);
 				if (data.result == 1) {
 					layer.msg('已下发！', {icon: 1});
 					callBack && callBack();
