@@ -40,7 +40,7 @@ function getCharts(){
 						str='<div id="chartContent"></div>';
 						$('.desktopContent').append(str);
 						chartInfo()
-						alert(1)
+//						alert(1)
 					}else if(data[i].is_chart==0){
 						console.log(data[i].status)
 						listData.push(data[i])

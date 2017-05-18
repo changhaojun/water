@@ -50,18 +50,18 @@ function entityList(){
 						xAxis:{
 							type:'category',
 							data: data.rows[i].run_data.data_times,  
-							show:false,
+//							show:false,
 							/*axisLabel: {
 	                            show: true,
 	                            textStyle: {
 	                                color: '#fff'
 	                            }
 	                       },*/
-	                       
+	              
 						},
 						yAxis:{
 							type:'value',
-							show:false
+//							show:false
 						},
 						series:[
 							{
@@ -73,13 +73,13 @@ function entityList(){
 				                        {type : 'min', name: '最小值'}
 				                    ]
 		                		},
-		                		/*markline:{
+		                		markline:{
 		                			data : [
-									[
+									
 									    {name: '标线1起点', value: 100, x: 50, y: 20},
-									    {name: '标线1终点', x: 150, y: 120}
+									    {name: '标线1终点', x: 50, y: 120}
 									]
-		                		},*/
+		                		},
 			                	itemStyle : {  
 		                                normal : {  
 		                                	color:'#1ab394',
