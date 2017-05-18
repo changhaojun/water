@@ -265,7 +265,7 @@ function initChart(data,i,legendData){
 		        data:chartArr[0].dataTimes
 		    },
 		    yAxis:yAxis,
-		    dataZoom:[
+		    /*dataZoom:[
             //x轴缩放
 	            {
 	                type:'slider',
@@ -280,7 +280,7 @@ function initChart(data,i,legendData){
 	                start:20,
 	                end:80
 	            }
-	        ],
+	        ],*/
 			series:series
 			
 		};

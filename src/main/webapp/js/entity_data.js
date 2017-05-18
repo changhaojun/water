@@ -59,8 +59,8 @@ function dataList(){
 }
 //设封面
 function cover(id,i){
-	$('.fa-list-alt').css('background','orange')
-	$('.fa-list-alt').eq(i).css('background','#ccc')
+	$('.fa-list-alt').removeClass('disabledLi')
+	$('.fa-list-alt').eq(i).addClass('disabledLi')
 //console.log(id)
 console.log(thingId)
 	$.ajax({
@@ -76,17 +76,17 @@ console.log(thingId)
 		success:function(data){
 			console.log(data)
 			if(data.code==200){
-				layer.msg('封面设置成功', {
+				/*layer.msg('封面设置成功', {
 					icon: 1,
 					time:2000,
-				});
+				});*/
 			}	
 		}
 	})
 }
 //设关注
 function focus1(id,m){
-	$('.fa-plus-square').eq(m).css('background','#ccc')
+	$('.fa-plus-square').eq(m).addClass('disabledLi')
 	$.ajax({
 		type:'post',
 		url: globalurl+"/v1/desktops",
@@ -100,10 +100,10 @@ function focus1(id,m){
 		},
 		success:function(data){
 			console.log(data)
-			layer.msg('关注成功', {
+			/*layer.msg('关注成功', {
 				icon: 1,
 				time:2000,
-			});
+			});*/
 		}
 	})
 }
@@ -123,14 +123,14 @@ function searchThing(obj){
 	for(var i=0;i<dataLike.length;i++){
 		if(dataLike[i].title.search(obj.val())!=-1){	
 			var str='';
-					str='<div class="dataList" id="'+data[i].data_id+'" style="cursor:pointer;">'+
+					str='<div class="dataList" id="'+dataLike[i].data_id+'">'+
 						'<div class="listTop normal" >'+
 							'<span>'+dataLike[i].device_name+"-"+dataLike[i].data_name+'</span>'+
-							'<span class="fa fa-plus-square" data-toggle="tooltip" data-placement="top"  title="关注"></span>'+
-							'<span class="fa fa-list-alt" data-toggle="tooltip" data-placement="top"  title="设封面"></span>'+
+							'<span class="fa fa-plus-square" data-toggle="tooltip" data-placement="top" onclick="focus1('+dataLike[i].data_id+','+i+')"  title="关注"></span>'+
+						'<span class="fa fa-list-alt" data-toggle="tooltip" data-placement="top" onclick="cover('+dataLike[i].data_id+','+i+')"  title="设封面"></span>'+
 						'</div>'+
 						'<div class="listHr"></div>'+
-						'<div class="listContent">'+
+						'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+dataLike[i].data_id+'&apos;)">'+
 							'<div class="contentTop">'+
 								'<div class="Itext">'+dataLike[i].data_value+dataLike[i].data_unit+						
 								'</div>'+						
@@ -141,7 +141,7 @@ function searchThing(obj){
 						'</div>'+			
 					'</div>'
 					$(".dataContent").append(str);	
-			colorBg1(dataLike[i].status)		
+			colorBg1(dataLike[i].status)
 		}
 		dataId.push(dataLike[i].data_id)	
 	}
@@ -158,7 +158,8 @@ function colorBg(data,index){
 		$('.dataList').addClass('redBg')
 	}
 }
-function colorBg1(data){	
+function colorBg1(data){
+	alert(1)
 	if(data==1){
 		$(".dataList").addClass("greenBg");
 	}else if(data==0){

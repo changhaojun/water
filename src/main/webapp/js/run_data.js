@@ -143,7 +143,7 @@ function ajaxRequest(){
 		$(".dataContent").html("");
 		$.ajax({
 			type: 'get',
-			url: 'http://192.168.1.114/v1/things',
+			url: globalurl+"/v1/runDatas",
 			dataType: "JSON",
 			crossDomain: true == !(document.all),
 			data:{
@@ -158,13 +158,13 @@ function ajaxRequest(){
 					var str='';
 					for(var i=0;i<data.rows.length;i++){
 						if(data.rows[i].run_data){
-							str='<div class="dataList">'+
+							str='<div class="dataList" style="cursor:pointer;" onclick="look(&apos;'+data.rows[i]._id+'&apos;)">'+
 										'<div class="listTop">'+
 											'<span>'+data.rows[i].thing_name+'</span>'+								
 										'</div>'+
 										'<div class="listHr"></div>'+
 										'<div class="listContent">'+
-											'<div class="contentTop">'+
+											'<div class="contentTop" id="'+data.rows[i]._id+'">'+
 												/*'<div class="Itext">'+data.datas[i].data_value+data.datas[i].data_unit+						
 												'</div>'+	*/					
 											'</div>'+
@@ -181,13 +181,7 @@ function ajaxRequest(){
 								type:'category',
 								data: data.rows[i].run_data.data_times,  
 								show:false,
-								/*axisLabel: {
-		                            show: true,
-		                            textStyle: {
-		                                color: '#fff'
-		                            }
-		                       },*/
-		                       
+								
 							},
 							yAxis:{
 								type:'value',
@@ -222,7 +216,7 @@ function ajaxRequest(){
 							]
 						}
 						$(".dataContent").append(str);
-						var myChart=echarts.init($('.contentTop')[i])
+						var myChart=echarts.init(document.getElementById(data.rows[i]._id))
 						myChart.setOption(option)
 						}	
 					}
