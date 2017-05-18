@@ -385,6 +385,7 @@ $.initThree = {
 		$.three.capturer.raycaster.setFromCamera($.three.capturer.mouse, $.three.camera.el);
 		var intersects = $.three.capturer.raycaster.intersectObjects($.three.labelGroup.children, true);
 		if ( intersects.length > 0 ) {
+			console.log($.three.capturer.intersected)
 			if ( $.three.capturer.intersected != $.initThree.searchLabelFromChild(intersects[0].object) ) {
 				if ( isTransform && $.three.capturer.intersected ) {
 					$.three.controller.transformController.detach($.three.capturer.intersected);

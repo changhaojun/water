@@ -1,22 +1,23 @@
+//数据流
 $.initData = {
-	token: {
+	token: { //令牌
 		access: '',
 		refresh: ''
 	},
-	globalurl: globalurl,
-	scadaId: $('#scadaId').val(),
-	thingName: '',
-	sentData: {
-		thing_id: '',
-		scada_name: '',
-		scada_model_id: $('#modelId').val(),
-		description: '',
-		scada_config: []
+	globalurl: globalurl, //全局路径
+	scadaId: $('#scadaId').val(), //情景id
+	thingName: '', //实体名称
+	sentData: { //待请求数据
+		thing_id: '', //实体id
+		scada_name: '', //情景名称
+		scada_model_id: $('#modelId').val(), //该情景所引用的模型id
+		description: '', //情景描述
+		scada_config: [] //数据标签以及任务标签集合
 	}
 }
 
 $.fn.extend({
-	//窗口显示 & 隐藏
+	//窗口显示 & 隐藏(运动版)
 	toggleWin: function(hide) {
 		var This = $(this);
 		if (hide) {
@@ -140,8 +141,8 @@ $.fn.extend({
 			}
 		});
 	},
-	//ajax查询所有人工出发的任务
-	searchTask: function(callBack) {
+	//ajax查询所有人工触发的工艺
+	searchProcess: function(callBack) {
 		var val = $(this).val();
 		$.ajax({
 			type: "get",
@@ -205,7 +206,7 @@ $.fn.extend({
 	//选择数据标签后，底部操作栏交互
 	selectLabel: function() {
 		var This = $(this);
-		var oldPos = -$(this).height()-1;
+		var oldPos = -$(this).outerHeight(true)-1;
 		$(this).css('bottom', 0);
 		$(this).find('.confirm').unbind();
 		$(this).find('.delete').unbind();
@@ -330,7 +331,7 @@ $.extend({
 			$('.selectProcess').find('.selector-body').stayCenter($('.selectProcess'));
 			$('.selectProcess').resetScrollBar();
 			$('.selectProcess').find('input').keyup(function() {
-				$(this).searchTask(function(data) {
+				$(this).searchProcess(function(data) {
 					$('.selectProcess').find('.selector-list').refreshProcessList(data);
 				});
 			});
