@@ -6,7 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/common.css"/>
 		<link rel="stylesheet" type="text/css" href="/finfosoft-water/plugins/font-awesome/css/font-awesome.css"/>
-		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/scada_select.css?1.0"/>
+		<link rel="stylesheet" type="text/css" href="/finfosoft-water/css/scada_select.css?1.2"/>
 	</head>
 	<body>
 		<div id="vue">
@@ -19,11 +19,13 @@
 					<span>选择模板</span>
 				</div>
 				<div class="pos-rel pull-right search">
-					<input type="text" placeholder="请输入关键字查找" id="searchId"/>
-					<i class="fa fa-search pos-abs"></i>
+					<input type="text" placeholder="请输入关键字查找" id="searchId" v-model="search" v-on:keyup="likeSearch($event, 'key')"/>
+					<i class="fa fa-search pos-abs" v-on:click="likeSearch($event, 'mouse')"></i>
 				</div>
 			</div>
 			<div class="main">
+				<p class="loading" v-show="pageStatus == 'loading'">加载中，请稍后...</p>
+				<p class="nodata" v-cloak v-show="pageStatus == 'nodata'">没有找到相关模板！</p>
 				<ul>
 					<li v-cloak v-for="info in infoMap" class="pull-left" v-on:click="confirmModel(info._id)">
 						<img v-bind:src="info.modelImg" alt="" />
@@ -35,6 +37,6 @@
 		<script src="/finfosoft-water/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/finfosoft-water/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/finfosoft-water/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/finfosoft-water/js/scada_select.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/finfosoft-water/js/scada_select.js?1.0" type="text/javascript" charset="utf-8"></script>
 	</body>
 </html>

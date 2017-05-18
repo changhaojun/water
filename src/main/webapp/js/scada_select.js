@@ -1,9 +1,20 @@
 $.initData = {
 	access_token: '',
-	infoMap: []
+	infoMap: [],
+	search: '',
+	pageStatus: 'loading'
 }
 
-$.fn.extend({
+var $extend = $.fn.extend({
+	likeSearch: function(event, type) {
+		if (type == 'key') {
+			if (event.keyCode == 13) {
+				$.initAjax();
+			}
+		} else if (type == 'mouse') {
+			$.initAjax();
+		}
+	},
 	confirmModel: function(modelId) {
 		self.location.href = '/finfosoft-water/scada/add/'+modelId;
 	}
@@ -17,6 +28,7 @@ $.extend({
 		});
 	},
 	initAjax: function(callBack) {
+		$.initData.pageStatus = 'loading';
 		$.ajax({
 			type: "get",
 			dataType: "json",
@@ -24,10 +36,18 @@ $.extend({
 			async: true,
 			crossDomain: true == !(document.all),
 			data: {
-				access_token: $.initData.access_token
+				access_token: $.initData.access_token,
+				like: JSON.stringify({
+					modelName: $.initData.search
+				})
 			},
 			success: function(data) {
 				$.initData.infoMap = data;
+				if ($.initData.infoMap.length == 0) {
+					$.initData.pageStatus = 'nodata';
+				} else {
+					$.initData.pageStatus = '';
+				}
 				callBack && callBack();
 			}
 		});
@@ -36,7 +56,7 @@ $.extend({
 		$.vue = new Vue({
 			el: '#vue',
 			data: $.initData,
-			methods: $.fn
+			methods: $extend
 		});
 	}
 });

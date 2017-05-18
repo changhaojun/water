@@ -167,39 +167,54 @@ $.fn.extend({
 	refreshNameList: function(data) {
 		$(this).html('');
 		var liDom = '';
-		$.each(data, function(i) {
-			liDom += '<li thingId="'+data[i]._id+'">'+data[i].thing_name+'</li>'
-		});
-		$(this).html(liDom);
-		$(this).children().click(function() {
-			$.selectThingName($(this).attr('thingId'), $(this).html());
-		})
+		if (data.length > 0) {
+			$.each(data, function(i) {
+				liDom += '<li thingId="'+data[i]._id+'">'+data[i].thing_name+'</li>'
+			});
+			$(this).html(liDom);
+			$(this).children().click(function() {
+				$.selectThingName($(this).attr('thingId'), $(this).html());
+			})
+		} else {
+			liDom += '<li style="color: #ff787b;">未查询到对应实体!</li>';
+			$(this).html(liDom);
+		}
 		$(this).parents('.selector').resetScrollBar();
 	},
 	//刷新数据列表
 	refreshDataList: function(data) {
 		$(this).html('');
 		var liDom = '';
-		$.each(data, function(i) {
-			liDom += "<li primary='"+JSON.stringify(data[i])+"'>"+data[i].data_name+"</li>";
-		});
-		$(this).html(liDom);
-		$(this).children().click(function() {
-			$.selectThingData(JSON.parse($(this).attr('primary')));
-		});
+		if (data.length > 0) {
+			$.each(data, function(i) {
+				liDom += "<li primary='"+JSON.stringify(data[i])+"'>"+data[i].data_name+"</li>";
+			});
+			$(this).html(liDom);
+			$(this).children().click(function() {
+				$.selectThingData(JSON.parse($(this).attr('primary')));
+			});
+		} else {
+			liDom += '<li style="color: #ff787b;">未查询到对应数据!</li>';
+			$(this).html(liDom);
+		}
 		$(this).parents('.selector').resetScrollBar();
 	},
 	//刷新任务列表
 	refreshProcessList: function(data) {
 		$(this).html('');
 		var liDom = '';
-		$.each(data, function(i) {
-			liDom += "<li primary='"+JSON.stringify(data[i])+"'>"+data[i].process_name+"</li>";
-		});
-		$(this).html(liDom);
-		$(this).children().click(function() {
-			$.selectProcess(JSON.parse($(this).attr('primary')));
-		});
+		if (data.length > 0) {
+			$.each(data, function(i) {
+				liDom += "<li primary='"+JSON.stringify(data[i])+"'>"+data[i].process_name+"</li>";
+			});
+			$(this).html(liDom);
+			$(this).children().click(function() {
+				$.selectProcess(JSON.parse($(this).attr('primary')));
+			});
+		} else {
+			liDom += '<li style="color: #ff787b;">未查询到对应工艺!</li>';
+			$(this).html(liDom);
+		}
 		$(this).parents('.selector').resetScrollBar();
 	},
 	//选择数据标签后，底部操作栏交互

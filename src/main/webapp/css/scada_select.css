@@ -44,6 +44,20 @@ body *{
 	width: 100%;
 	overflow: hidden;
 }
+.main>p{
+	width: 100%;
+	line-height: 30px;
+	color: #ff787b;
+	font-size: 16px;
+	text-align: center;
+}
+.main>.loading{
+	color: #1ab394;
+}
+.main>.nodata{
+	color: #ff787b;
+}
+
 .main>ul{
 	width: calc(100% + 20px);
 }
@@ -53,6 +67,7 @@ body *{
 	border: 1px solid #e0e0e0;
 	background: #fff;
 	cursor: pointer;
+	transition: 0.5s;
 }
 .main li:hover{
 	border-color: #1ab394;
