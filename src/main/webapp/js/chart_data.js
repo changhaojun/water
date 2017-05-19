@@ -1,6 +1,7 @@
 
 var dataId=$("#dataId").val()
 var thingId=$('#thingId').val()
+console.log(dataId)
 var selectedId=[];
 var startTime;
 var endTime;
@@ -19,26 +20,9 @@ $(function(){
 	getToken();//刷新令牌
 	dataList();//获取device_name
 	toolTip();
-	getChart();//获取图表数据
 })
-console.log(thingId)
-console.log(dataId)
 
 
-
-//
-////选择数据
-//function selectData(id){
-//	console.log($("#"+id+"").html())
-//	
-//	if($("#"+id+"").html()=="+"){
-//		$("#"+id+"").prev().removeClass("disabledFont").addClass("selectdFont");
-//		$("#"+id+"").removeClass("disabledIcon").addClass("selectdIcon");
-//		$("#"+id+"").parent("div").removeClass("disabledLi").addClass("selectdLi");
-//		$("#"+id+"").html("已选");
-//	}
-////	getChart(dataId)
-//}
 
 function p(s) {	
     return s < 10 ? '0' + s: s;
@@ -86,15 +70,15 @@ function dataList(){
 				var screenList="";			
 				for(var i=0;i<data.length;i++){
 //						console.log(data.[i].data_id+","+selectedId[i])
-					if(dataId.indexOf(data[i].data_id)!=-1){					
-						screenList='<div class="selectdLi">'+
-										'<div class="selectdFont">'+data[i].device_name+'-'+data[i].data_name+'</div>'+
-										'<div class="selectdIcon" id="'+data[i].data_id+'">已选</div>'+
-										'<div hidden="hidden">'+data[i].data_unit+'</div>'+
-										'<div hidden="hidden">'+data[i].data_id+'</div>'+
-									'</div>';		
-						$(".list").append(screenList);
-					}else{
+//					if(dataId.indexOf(data[i].data_id)!=-1){					
+//						screenList='<div class="selectdLi">'+
+//										'<div class="selectdFont">'+data[i].device_name+'-'+data[i].data_name+'</div>'+
+//										'<div class="selectdIcon" id="'+data[i].data_id+'">已选</div>'+
+//										'<div hidden="hidden">'+data[i].data_unit+'</div>'+
+//										'<div hidden="hidden">'+data[i].data_id+'</div>'+
+//									'</div>';		
+//						$(".list").append(screenList);
+//					}else{
 						screenList='<div class="disabledLi" onclick="getChart(&apos;'+data[i].data_id+'&apos;)" >'+
 										'<div class="disabledFont">'+data[i].device_name+'-'+data[i].data_name+'</div>'+
 										'<div class="disabledIcon" id="'+data[i].data_id+'">+</div>'+
@@ -102,31 +86,33 @@ function dataList(){
 										'<div hidden="hidden">'+data[i].data_id+'</div>'+
 									'</div>';
 						$(".list").append(screenList);
-					}	
-				}		
-				getChart(data[0].data_id)
+//					}	
+				}
+				getChart(dataId)
 			}
 		}
 	})
 }
 //当前图表以及点击添加生成图表
 function getChart(i){
-//	console.info("dataId:"+dataId)
-//	console.info("i:"+i)
+	console.info("i:"+i)
 	if($("#"+i+"").html()=="+"){
 		$("#"+i+"").prev().removeClass("disabledFont").addClass("selectdFont");
 		$("#"+i+"").removeClass("disabledIcon").addClass("selectdIcon");
 		$("#"+i+"").parent("div").removeClass("disabledLi").addClass("selectdLi");
 		$("#"+i+"").html("已选");
+	}else{
+		layer.msg('该数据已添加过', {
+			icon : 7
+		});
+		return;
 	}
 	legendData=[];dataUnit=[];dataFid=[];
 	for(var n=0;n<$(".list").children().length;n++){
-		
 		if($(".list").children().eq(n).hasClass('selectdLi')){
 			legendData.push($(".list").children().eq(n).children().eq(0).html());
-//			console.log(legendData)
+
 			dataUnit.push($(".list").children().eq(n).children().eq(2).html())
-//			console.log(dataUnit)
 			dataFid.push(Number($(".list").children().eq(n).children().eq(3).html()))
 			console.log(dataFid)
 		}
@@ -147,12 +133,9 @@ function getChart(i){
 			console.log(data)
 			if(data.length==0){
 				$(".chartsContent").html("<span class='nonedata'>暂无数据</span>");
-	
-			
 			}else{
-				
 				chartArr.push(data);
-//				console.log(chartArr)
+				console.log(chartArr)
 				initChart(data,i,legendData);
 			}
 		}
@@ -230,14 +213,6 @@ function initChart(data,i,legendData){
                     {type : 'average', name: '平均值'},
                 ]
             },
-//          markLine:{
-//                  data:[
-//                          [ {name: '标线1起点', x: 280, y: 460},
-//                              {name: '标线1终点', x: 800, y: 460}
-//                          ]
-//                  ]
-//              }
-
        });
 	}	
 
@@ -252,6 +227,32 @@ function initChart(data,i,legendData){
 			legend: {
 		        data:legendData
 		    },
+		    toolbox : {
+	            show :true,
+	            orient :'vertical',
+	            x :'right',
+	            y :'center',
+	            feature : {
+	                mark : {
+	                    show :true
+	                },
+	                dataView : {
+	                    show :true,
+	                    readOnly :true
+	                },
+	                magicType : {
+	                    show :true,
+	                    type : ['line','bar', 'stack','tiled']
+	                },
+	                restore : {
+	                    show :true
+	                },
+	                saveAsImage : {
+	                    show :true
+	                }
+	            }
+	       },
+
 		    grid: {
 				left: '10%',
 				right: '5%',
@@ -265,8 +266,8 @@ function initChart(data,i,legendData){
 		        data:chartArr[0].dataTimes
 		    },
 		    yAxis:yAxis,
-		    /*dataZoom:[
-            //x轴缩放
+		    dataZoom:[
+            	//x轴缩放
 	            {
 	                type:'slider',
 	                xAxisIndex:0,
@@ -280,7 +281,7 @@ function initChart(data,i,legendData){
 	                start:20,
 	                end:80
 	            }
-	        ],*/
+	        ],
 			series:series
 			
 		};

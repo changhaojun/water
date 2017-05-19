@@ -5,13 +5,13 @@ var obj=[];
 var thingName;
 var legendData=[];
 var objData=[];
-var ser=[];
+
 
 $(function(){
 	getToken(); //刷新令牌
 	getCharts()//获取图表
 })
-
+var selecteData=[];
 function getCharts(){
 	$.ajax({
 		type:'get',
@@ -46,41 +46,25 @@ function getCharts(){
 								'</div>';
 							$('.desktopContent').append(str);
 //							chartInfo();
-							series=[];obj=[];legendData=[];ser=[];
+							series=[];obj=[];legendData=[];
 							for(var j=0;j<chartData.length;j++){
 								obj.push(chartData[j].chart_data);
 								console.log(obj)
-								console.log(obj[0][0].dataTimes)//x轴数据
+								console.log(obj[0].length)
 							}
 							
 							for(var m=0;m<obj.length;m++){
-								
+								var objData=[];var series=[];
 								for(var n=0;n<obj[m].length;n++){
-									var objData=[];var series=[];
 									objData.push(obj[m][n].dataValues)
-									legendData.push(obj[m][n].device_name+'-'+obj[m][n].data_name)
-									for(var v=0;v<obj[m].length;v++){
-										series.push({
-											type: 'line',
-											name:legendData[v],
-								            data: objData[m],
-										})
-									}
-									
-								}
-								
-//								console.log(objData[0].length)
-								/*series.push({
-									type: 'line',
-									name:legendData[j],
-						            data: objData[j],
-								})*/
+									legendData.push(obj[m][n].device_name+'-'+obj[m][n].data_name)	
+									series.push({
+										type: 'line',
+										name:legendData[n],
+							            data: objData[n],
+									})
+								}		
 							}
-							
-							/*for(var n=0;n<objData.length;n++){
-								
-							}*/
-						//	console.log(legendData)
 							var option={
 									title:{
 										text:thingName,
@@ -133,6 +117,8 @@ function getCharts(){
 						
 							
 					}else if(data[i].is_chart==0){
+						/*selecteData.push(data[i].data_id)
+						console.log(selecteData)*/
 							str='<div class="dataList" id="'+data[i].data_id+'">'+
 									'<div class="listTop">'+
 										'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+
@@ -170,91 +156,6 @@ function colorBg(status,i){
 		}else{
 			$('.dataList').eq(i).addClass('redBg')
 		}
-}
-var ss=[]
-//获取图表配置项
-function chartInfo(){	
-	series=[];objData=[];legendData=[];
-	/*for(var i=0;i<chartData.length;i++){
-		if(chartData[i].is_chart==1){
-			for(var j=0;j<chartData[i].chart_data.length;){
-				
-			}
-			objData.push(chartData[i].dataValues)
-		}
-	}*/
-	/*
-	ss=[];
-	for(var j=0;j<chartData.length;j++){
-			ss.push(chartData[j].chart_data)
-			console.log(ss)
-	}*/
-
-//	for(var m=0;m<ss.length.m++){
-//		for(var n=0;n<){
-//			
-//		}
-//	}
-	/*objData.push(chartData[j].dataValues)
-		console.log(objData)
-		legendData.push(chartData[j].device_name+'-'+chartData[j].data_name)
-		
-		series.push({
-			type: 'line',
-			name:legendData[j],
-            data: objData[j],
-		})*/
-//	console.log(legendData)
-//	var option={
-//			title:{
-//				text:thingName,
-//				textStyle:{
-//					color:'#999',
-//					fontSize:'16px'
-//				}
-//				
-//			},
-//			tooltip:{
-//				trigger:'axis'
-//			},
-//			legend:{
-//				data:legendData
-//			},
-//			grid: {
-//				left: '8%',
-//				right: '5%',
-//				top: '20%',
-//				bottom: '8%',
-//				containLabel: true
-//			},
-//			xAxis:{
-//				type: 'category',
-//	        	boundaryGap: false,
-//	        	data:chartData[0].dataTimes,
-//	        	axisLine:{
-//	                lineStyle:{
-//	                    color:'#1ab394',
-//	                    width:2,//这里是为了突出显示加上的，可以去掉
-//	                }
-//          	}
-//			},
-//			yAxis:{
-//				type:'value',
-//				splitLine: { show: false }, //去除网格中的坐标线
-//				axisLabel: {
-//					formatter: '{value}'
-//				},
-//				axisLine:{
-//	                lineStyle:{
-//	                    color:'#1ab394',
-//	                    width:2,//这里是为了突出显示加上的，可以去掉
-//	                }
-//	        	}
-//			},
-//			series:series
-//		}
-//	var mychart=echarts.init(document.getElementById(data[i]._id))
-//	mychart.setOption(option)
 }
 
 //初始化提示框

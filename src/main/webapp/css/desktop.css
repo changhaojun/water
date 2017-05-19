@@ -82,7 +82,7 @@ body{
     height: 30px;
 }
 .dataList .listTop span:nth-child(2){
-	-display: none;
+	display: none;
 }
 .dataList:hover span:nth-child(2){
 	display: inline-block;

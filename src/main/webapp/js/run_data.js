@@ -50,7 +50,7 @@ function entityList(){
 						xAxis:{
 							type:'category',
 							data: data.rows[i].run_data.data_times,  
-//							show:false,
+							show:false,
 							/*axisLabel: {
 	                            show: true,
 	                            textStyle: {
@@ -61,7 +61,7 @@ function entityList(){
 						},
 						yAxis:{
 							type:'value',
-//							show:false
+							show:false
 						},
 						series:[
 							{
@@ -74,12 +74,12 @@ function entityList(){
 				                    ]
 		                		},
 		                		markline:{
-		                			data : [
-									
-									    {name: '标线1起点', value: 100, x: 50, y: 20},
-									    {name: '标线1终点', x: 50, y: 120}
-									]
-		                		},
+								        data:[
+				                            [ {name: '标线1起点', x: 100, y: 200},
+				                                {name: '标线1终点', x: 500, y: 200}
+				                            ]
+					                    ]
+			                	},
 			                	itemStyle : {  
 		                                normal : {  
 		                                	color:'#1ab394',
@@ -197,13 +197,13 @@ function ajaxRequest(){
 					                        {type : 'min', name: '最小值'}
 					                    ]
 			                		},
-			                		/*markline:{
-			                			data : [
-										[
-										    {name: '标线1起点', value: 100, x: 50, y: 20},
-										    {name: '标线1终点', x: 150, y: 120}
-										]
-			                		},*/
+			                		markline:{
+								        data:[
+				                            [ {name: '标线1起点', x: 100, y: 200},
+				                                {name: '标线1终点', x: 500, y: 200}
+				                            ]
+					                    ]
+			                		},
 				                	itemStyle : {  
 			                                normal : {  
 			                                	color:'#1ab394',
