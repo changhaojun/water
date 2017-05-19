@@ -55,6 +55,7 @@ $.three = {
 		opacity: 0.8
 	},
 	labelGroup: new THREE.Object3D(),
+	loading: 0,
 	renderer: {
 		el: null,
 		clearColor: 0xffffff
@@ -208,7 +209,7 @@ $.initThree = {
 		$.three.scene.el.add(ground);
 		$.three.ground.el = ground;
 	},
-	initLabel: function(data, oldPos, callBack) {
+	initLabel: function(data, oldPos, onSingleLabelLoaded, onAllLabelLoaded) {
 		var userData = typeof data === 'string' ? JSON.parse(data) : data;
 		var labelMessage;
 		if ($.initThree.judgeLabelType(userData)=='data') {
@@ -230,6 +231,7 @@ $.initThree = {
 			labelMessage = processName;
 		}
 		
+		$.three.loading++;
 		$.three.font.loader = new THREE.FontLoader();
 		$.three.font.loader.load($.three.font.src, function(font) {
 			//text
@@ -335,10 +337,13 @@ $.initThree = {
 				label.processName = processName;
 				label.labelStatus = processStatus;
 			}
-			
 			$.three.labelGroup.add(label);
 			$.initThree.rendererUpdata();
-			callBack && callBack(userData);
+			onSingleLabelLoaded && onSingleLabelLoaded(userData);
+			$.three.loading--;
+			if ($.three.loading===0) {
+				onAllLabelLoaded && onAllLabelLoaded();
+			}
 		});
 	},
 	initRenderer: function() {
@@ -385,7 +390,6 @@ $.initThree = {
 		$.three.capturer.raycaster.setFromCamera($.three.capturer.mouse, $.three.camera.el);
 		var intersects = $.three.capturer.raycaster.intersectObjects($.three.labelGroup.children, true);
 		if ( intersects.length > 0 ) {
-			console.log($.three.capturer.intersected)
 			if ( $.three.capturer.intersected != $.initThree.searchLabelFromChild(intersects[0].object) ) {
 				if ( isTransform && $.three.capturer.intersected ) {
 					$.three.controller.transformController.detach($.three.capturer.intersected);

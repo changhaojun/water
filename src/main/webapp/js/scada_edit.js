@@ -252,7 +252,14 @@ $.extend({
 				$.initData.sentData.description = data.scada.description;
 				$.initData.sentData.scada_config = data.scada.scada_config;
 				for (var i=0; i<$.initData.sentData.scada_config.length; i++) {
-					$.initThree.initLabel($.initData.sentData.scada_config[i], $.initData.sentData.scada_config[i].objPosition);
+					$.initThree.initLabel(
+						$.initData.sentData.scada_config[i], 
+						$.initData.sentData.scada_config[i].objPosition,
+						function() {},
+						function() {
+							$.initButton();
+						}
+					);
 				}
 				$('.link').find('p').changeThingName($.initData.thingName);
 				$('.name').find('input').val($.initData.sentData.scada_name);
@@ -263,7 +270,6 @@ $.extend({
 				$.initThree.init(data.scadaModel.modelConfig, function() {
 					$('.footBar').selectLabel();
 				}, true);
-				$.initButton();
 				$.saveScada();
 			});
 		})
@@ -313,8 +319,9 @@ $.extend({
 					$('.link').find('p').changeThingName('请绑定实体', true);
 					$.three.scene.el.remove($.three.labelGroup);
 					$.three.labelGroup = new THREE.Object3D();
+					$.three.scene.el.add($.three.labelGroup);
 					$.three.controller.transformController.detach($.three.capturer.intersected);
-					$('.footBar').css('bottom', -$('.footBar').height()-1);
+					$('.footBar').css('bottom', -$('.footBar').outerHeight(true)-1);
 					$.three.capturer.intersected = null;
 					$.initThree.rendererUpdata();
 					layer.close(confirm);

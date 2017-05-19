@@ -1,29 +1,29 @@
+//数据流
 $.initData = {
-	token: {
+	token: { //令牌
 		access: '',
 		refresh: ''
 	},
-	globalurl: globalurl,
-	scadaId: $('#scadaId').val(),
-	thingName: '',
-	sentData: {
+	globalurl: globalurl, //全局路径
+	scadaId: $('#scadaId').val(), //情景id
+	thingName: '', //实体名称
+	sentData: { //待发送数据
 		thing_id: '',
 		scada_name: '',
 		scada_model_id: $('#modelId').val(),
 		description: '',
 		scada_config: []
 	},
-	mqtt: {
+	mqtt: { //MQTT订阅数据
 		host: '139.129.231.31',
-//		host: '192.168.1.114',
 		port: 61623,
 		username: 'admin',
-		password: 'finfosoft123',
-//		password: 'password'
+		password: 'finfosoft123'
 	}
 }
 
 $.fn.extend({
+	//窗口显示&&隐藏(运动)
 	toggleWin: function(hide) {
 		var This = $(this);
 		if (hide) {
@@ -40,12 +40,14 @@ $.fn.extend({
 		}
 		return $(this);
 	},
+	//居中位置计算
 	setCenterPos: function(parent) {
 		$(this).css({
 			'left': (parent.width() - $(this).width()) / 2,
 			'top': (parent.height() - $(this).height()) / 2
 		});
 	},
+	//窗口改变时保持元素位置居中
 	stayCenter: function(parent) {
 		var This = $(this);
 		$(this).setCenterPos(parent);
@@ -56,31 +58,37 @@ $.fn.extend({
 });
 
 $.extend({
+	//初始化
 	init: function() {
 		$.initToken('get', function() {
 			$.initTitle();
 			$.initAjax(function(data) {
+				//数据流初始化
 				$.initData.thingName = data.scada.thing_name;
 				$.initData.sentData.thing_id = data.scada.thing_id;
 				$.initData.sentData.scada_name = data.scada.scada_name;
 				$.initData.sentData.scada_model_id = data.scada.scada_model_id;
 				$.initData.sentData.description = data.scada.description;
 				$.initData.sentData.scada_config = data.scada.scada_config;
+				//数据标签渲染
 				for (var i=0; i<$.initData.sentData.scada_config.length; i++) {
 					$.initThree.initLabel(
 						$.initData.sentData.scada_config[i],
 						$.initData.sentData.scada_config[i].objPosition,
 						function(userData) {
+							//数据标签订阅MQTT
 							$.initMQTT(userData);
 						}
 					);
 				}
+				//三维场景初始化
 				$.initThree.init(data.scadaModel.modelConfig, function() {
 					$.labelOperation($.three.capturer.intersected);
 				});
 			});
 		})
 	},
+	//页头初始化
 	initTitle: function() {
 		$.ajax({
 			type: "get",
@@ -92,6 +100,7 @@ $.extend({
 				access_token: $.initData.token.access
 			},
 			success: function(data) {
+				//页头背面渲染
 				var listDom = '';
 				$.each(data.rows, function(i) {
 					if (data.rows[i]._id == $.initData.scadaId) {
@@ -101,6 +110,7 @@ $.extend({
 					}
 				});
 				$('.mainTitle').find('.backSide').html(listDom);;
+				//页头背面标签点击交互
 				$('.mainTitle').find('.backSide').children().click(function() {
 					var id = $(this).attr('scadaId');
 					var name = $(this).attr('scadaName');
@@ -113,10 +123,12 @@ $.extend({
 				});
 			}
 		});
+		//页头正面列表点击交互
 		$('.mainTitle').find('.frontSide').find('button').click(function() {
 			$('.mainTitle').addClass('active');
 		});
 	},
+	//令牌初始化
 	initToken: function(type, callBack) {
 		switch (type) {
 			case 'get':
@@ -135,6 +147,7 @@ $.extend({
 				break;
 		}
 	},
+	//页面初始化请求
 	initAjax: function(callBack) {
 		$.ajax({
 			type: "get",
@@ -150,6 +163,7 @@ $.extend({
 			}
 		});
 	},
+	//MQTT订阅相关
 	initMQTT: function(data, isIssue) {
 		var client = new Paho.MQTT.Client($.initData.mqtt.host, $.initData.mqtt.port, "server" + parseInt(Math.random() * 100, 10));
 		var options = {
@@ -157,14 +171,14 @@ $.extend({
 			password: $.initData.mqtt.password,
 			timeout: 1000,
 			onSuccess: function() {
-				if (data.port_type == 'AO' || data.port_type == 'DO' || data.port_type == 'MO') {
+				if (data.port_type == 'AO' || data.port_type == 'DO' || data.port_type == 'MO') { //AO && DO && MO订阅
 					if (isIssue) {
 						client.subscribe(data.data_id.toString());
 					}
-				} else if (data.port_type == 'AI' || data.port_type == 'DI') {
+				} else if (data.port_type == 'AI' || data.port_type == 'DI') { //AI && DI订阅
 					client.subscribe(data.data_id.toString());
-				} else {
-					
+				} else { //任务订阅
+					//任务订阅预留接口
 				}
 			},
 			onFailure: function(message) {
@@ -179,18 +193,20 @@ $.extend({
 			}
 		};
 		client.onMessageArrived = function(message) {
-			if (!isIssue) {
+			if (!isIssue) { //AO && DO && MO回调
 				$.onLabelValueChange(message);
-			} else {
+			} else { //AI && DI回调
 				$.onIssueSuccess(message, data);
 			}
 		};
 		client.connect(options);
 		
 	},
+	//MQTT
 	onLabelValueChange: function(message) {
 		var dataId = Number(message.destinationName);
 		var payload = JSON.parse(message.payloadString);
+		console.log(payload);
 		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(dataId, $.initThree.judgeLabelType({data_id: dataId}))];
 		if (!originLabel) return;
 		var newData = {

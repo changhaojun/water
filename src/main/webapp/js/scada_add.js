@@ -297,8 +297,9 @@ $.extend({
 					$('.link').find('p').changeThingName('请绑定实体', true);
 					$.three.scene.el.remove($.three.labelGroup);
 					$.three.labelGroup = new THREE.Object3D();
+					$.three.scene.el.add($.three.labelGroup);
 					$.three.controller.transformController.detach($.three.capturer.intersected);
-					$('.footBar').css('bottom', -$('.footBar').height()-1);
+					$('.footBar').css('bottom', -$('.footBar').outerHeight(true)-1);
 					$.three.capturer.intersected = null;
 					$.initThree.rendererUpdata();
 					layer.close(confirm);
