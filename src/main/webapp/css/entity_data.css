@@ -118,7 +118,7 @@ body{
     color: white;
     line-height:30px;
     margin-top: -15px;
-    -display: none;
+    display: none;
 }
 .dataList  .listHr{
 	padding: 0;

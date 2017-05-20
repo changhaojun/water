@@ -10,6 +10,12 @@ $(function(){
 	selectId();
 	dataList(); //加载数据列表
 })
+var searchBox=new Vue({
+	el:'.search',
+	data:{
+		searchId:''
+	} 
+})
 
 function dataList(){
 	$.ajax({
@@ -28,140 +34,108 @@ function dataList(){
 			if(data.length==0){
 				$(".dataContent").html("<p>暂无数据</p>");
 			}
-			var str=''
 			for(var i=0;i<data.length;i++){
-				data[i].title=data[i].device_name+"-"+data[i].data_name	
-				/*if(selectedId.indexOf(data[i].data_id)!=-1){
-					str='<div class="dataList" id="'+data[i].data_id+'" >'+
-						'<div class="listTop normal" style="border-left-color: rgb(26, 179, 148);color: rgb(26, 179, 148)">'+
-							'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+
-							'<span class="fa fa-plus-square disabledLi focus1" data-toggle="tooltip" data-placement="top" title="已关注"></span>'+
-							'<span class="fa fa-list-alt cover" data-toggle="tooltip" data-placement="top"  title="已设封面"></span>'+
-						'</div>'+
-						'<div class="listHr"></div>'+
-						'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
-							'<div class="contentTop">'+
-								'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
-								'</div>'+						
-							'</div>'+
-							'<div class="contentBottom">'+
-								'<span class="fa fa-clock-o dataTime">'+data[i].data_time+'</span>'+
-							'</div>'+
-						'</div>'+			
-					'</div>'
-					$(".dataContent").append(str);
-				}else{
-					str='<div class="dataList" id="'+data[i].data_id+'" >'+
-						'<div class="listTop normal" style="border-left-color: rgb(26, 179, 148);color: rgb(26, 179, 148)">'+
-							'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+
-							'<span class="fa fa-plus-square focus1" data-toggle="tooltip" data-placement="top" title="已关注"></span>'+
-							'<span class="fa fa-list-alt cover" data-toggle="tooltip" data-placement="top"  title="已设封面"></span>'+
-						'</div>'+
-						'<div class="listHr"></div>'+
-						'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
-							'<div class="contentTop">'+
-								'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
-								'</div>'+						
-							'</div>'+
-							'<div class="contentBottom">'+
-								'<span class="fa fa-clock-o dataTime">'+data[i].data_time+'</span>'+
-							'</div>'+
-						'</div>'+			
-					'</div>'
-					$(".dataContent").append(str);
-				}
-				*/
-				//已关注，已设封面
-				if(selectedId.indexOf(data[i].data_id)!=-1 && selectedData.indexOf(data[i].data_id)!=-1){
-					str='<div class="dataList" id="'+data[i].data_id+'" >'+
-						'<div class="listTop normal" style="border-left-color: rgb(26, 179, 148);color: rgb(26, 179, 148)">'+
-							'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+
-							'<span class="fa fa-plus-square disabledLi focus1" data-toggle="tooltip" data-placement="top" title="已关注"></span>'+
-							'<span class="fa fa-list-alt disabledLi cover" data-toggle="tooltip" data-placement="top"  title="已设封面"></span>'+
-						'</div>'+
-						'<div class="listHr"></div>'+
-						'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
-							'<div class="contentTop">'+
-								'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
-								'</div>'+						
-							'</div>'+
-							'<div class="contentBottom">'+
-								'<span class="fa fa-clock-o dataTime">'+data[i].data_time+'</span>'+
-							'</div>'+
-						'</div>'+			
-					'</div>'
-					$(".dataContent").append(str);
-					//已关注，没设封面
-				}else if(selectedId.indexOf(data[i].data_id)!=-1 && selectedData.indexOf(data[i].data_id)==-1){
-					str='<div class="dataList" id="'+data[i].data_id+'" >'+
-						'<div class="listTop normal" style="border-left-color: rgb(26, 179, 148);color: rgb(26, 179, 148)">'+
-							'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+
-							'<span class="fa fa-plus-square disabledLi focus1" data-toggle="tooltip" data-placement="top" title="已关注"></span>'+
-							'<span class="fa fa-list-alt cover" data-toggle="tooltip" data-placement="top" title="设封面"></span>'+
-						'</div>'+
-						'<div class="listHr"></div>'+
-						'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
-							'<div class="contentTop">'+
-								'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
-								'</div>'+						
-							'</div>'+
-							'<div class="contentBottom">'+
-								'<span class="fa fa-clock-o dataTime">'+data[i].data_time+'</span>'+
-							'</div>'+
-						'</div>'+			
-					'</div>'
-					$(".dataContent").append(str);
-					//没关注，已设封面
-				}else if(selectedId.indexOf(data[i].data_id)==-1 && selectedData.indexOf(data[i].data_id)!=-1){
-					str='<div class="dataList" id="'+data[i].data_id+'" >'+
-						'<div class="listTop normal" style="border-left-color: rgb(26, 179, 148);color: rgb(26, 179, 148)">'+
-							'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+
-							'<span class="fa fa-plus-square focus1" data-toggle="tooltip" data-placement="top" title="关注"></span>'+
-							'<span class="fa fa-list-alt disabledLi cover" data-toggle="tooltip" data-placement="top" title="已设封面"></span>'+
-						'</div>'+
-						'<div class="listHr"></div>'+
-						'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
-							'<div class="contentTop">'+
-								'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
-								'</div>'+						
-							'</div>'+
-							'<div class="contentBottom">'+
-								'<span class="fa fa-clock-o dataTime">'+data[i].data_time+'</span>'+
-							'</div>'+
-						'</div>'+			
-					'</div>'
-					$(".dataContent").append(str);
-				}
-				//没关注，没设封面
-				else{
-					str='<div class="dataList" id="'+data[i].data_id+'" >'+
-						'<div class="listTop normal" style="border-left-color: rgb(26, 179, 148);color: rgb(26, 179, 148)">'+
-							'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+
-							'<span class="fa fa-plus-square focus1" data-toggle="tooltip" data-placement="top" title="关注"></span>'+
-							'<span class="fa fa-list-alt cover" data-toggle="tooltip" data-placement="top" title="设封面"></span>'+
-						'</div>'+
-						'<div class="listHr"></div>'+
-						'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
-							'<div class="contentTop">'+
-								'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
-								'</div>'+						
-							'</div>'+
-							'<div class="contentBottom">'+
-								'<span class="fa fa-clock-o dataTime">'+data[i].data_time+'</span>'+
-							'</div>'+
-						'</div>'+			
-					'</div>'
-					$(".dataContent").append(str);
-				}
+				data[i].title=data[i].device_name+"-"+data[i].data_name		
+				listData(data,i)
 				dataId.push(data[i].data_id)
 				colorBg(data[i].status,i);
 			}
 			dataLike=data
+			if($("#searchId").val()!=""){
+				searchThing($("#searchId"))
+			}
 			toolTip();
 			MQTTconnect(dataId);
 		}
 	})
 }
+//数据列表
+function listData(data,i){
+	var str='';
+	//已关注，已设封面
+	if(selectedId.indexOf(data[i].data_id)!=-1 && selectedData.indexOf(data[i].data_id)!=-1){
+		str='<div class="dataList" id="'+data[i].data_id+'" >'+
+			'<div class="listTop normal" >'+
+				'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+
+				'<span class="fa fa-plus-square disabledLi focus1" data-toggle="tooltip" data-placement="top" title="已关注"></span>'+
+				'<span class="fa fa-list-alt disabledLi cover" data-toggle="tooltip" data-placement="top"  title="已设封面"></span>'+
+			'</div>'+
+			'<div class="listHr"></div>'+
+			'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
+				'<div class="contentTop">'+
+					'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
+					'</div>'+						
+				'</div>'+
+				'<div class="contentBottom">'+
+					'<span class="fa fa-clock-o dataTime">'+data[i].data_time+'</span>'+
+				'</div>'+
+			'</div>'+			
+		'</div>'
+		$(".dataContent").append(str);
+		//已关注，没设封面
+	}else if(selectedId.indexOf(data[i].data_id)!=-1 && selectedData.indexOf(data[i].data_id)==-1){
+		str='<div class="dataList" id="'+data[i].data_id+'" >'+
+			'<div class="listTop normal">'+
+				'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+
+				'<span class="fa fa-plus-square disabledLi focus1" data-toggle="tooltip" data-placement="top" title="已关注"></span>'+
+				'<span class="fa fa-list-alt cover" data-toggle="tooltip" data-placement="top" title="设封面"></span>'+
+			'</div>'+
+			'<div class="listHr"></div>'+
+			'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
+				'<div class="contentTop">'+
+					'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
+					'</div>'+						
+				'</div>'+
+				'<div class="contentBottom">'+
+					'<span class="fa fa-clock-o dataTime">'+data[i].data_time+'</span>'+
+				'</div>'+
+			'</div>'+			
+		'</div>'
+		$(".dataContent").append(str);
+		//没关注，已设封面
+	}else if(selectedId.indexOf(data[i].data_id)==-1 && selectedData.indexOf(data[i].data_id)!=-1){
+		str='<div class="dataList" id="'+data[i].data_id+'" >'+
+			'<div class="listTop normal">'+
+				'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+
+				'<span class="fa fa-plus-square focus1" data-toggle="tooltip" data-placement="top" title="关注"></span>'+
+				'<span class="fa fa-list-alt disabledLi cover" data-toggle="tooltip" data-placement="top" title="已设封面"></span>'+
+			'</div>'+
+			'<div class="listHr"></div>'+
+			'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
+				'<div class="contentTop">'+
+					'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
+					'</div>'+						
+				'</div>'+
+				'<div class="contentBottom">'+
+					'<span class="fa fa-clock-o dataTime">'+data[i].data_time+'</span>'+
+				'</div>'+
+			'</div>'+			
+		'</div>'
+		$(".dataContent").append(str);
+	}
+	//没关注，没设封面
+	else{
+		str='<div class="dataList" id="'+data[i].data_id+'" >'+
+			'<div class="listTop normal">'+
+				'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+
+				'<span class="fa fa-plus-square focus1" data-toggle="tooltip" data-placement="top" title="关注"></span>'+
+				'<span class="fa fa-list-alt cover" data-toggle="tooltip" data-placement="top" title="设封面"></span>'+
+			'</div>'+
+			'<div class="listHr"></div>'+
+			'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
+				'<div class="contentTop">'+
+					'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
+					'</div>'+						
+				'</div>'+
+				'<div class="contentBottom">'+
+					'<span class="fa fa-clock-o dataTime">'+data[i].data_time+'</span>'+
+				'</div>'+
+			'</div>'+			
+		'</div>'
+		$(".dataContent").append(str);
+	}
+}
+
 //获取已关注的数据
 var selectedId=[];
 function selectData(){
@@ -180,7 +154,6 @@ function selectData(){
 			for(var i=0;i<data.length;i++){
 				selectedId.push(data[i].data_id)
 			}
-			console.log(selectedId)	
 		}
 	})
 }
@@ -197,7 +170,6 @@ function selectId(){
 		  access_token: accesstoken,
 		},
 		success:function(data){
-			console.log(data.data_id)
 			selectedData.push(data.data_id)
 		}
 	})
@@ -226,28 +198,6 @@ $('.dataContent').delegate('.cover','click',function(){
 		$(this).addClass('disabledLi')
 	}
 })
-/*function cover(id,i){
-	$('.fa-list-alt').removeClass('disabledLi')
-	$('.fa-list-alt').eq(i).addClass('disabledLi')
-	
-	$.ajax({
-		type: "put",
-		url: globalurl+"/v1/things/"+thingId,
-		dataType: "JSON",
-		async: false,
-		crossDomain: true == !(document.all),
-		data:{
-			access_token: accesstoken,
-			data:JSON.stringify({"data_id":Number(id)})	
-		},
-		success:function(data){
-			console.log(data)
-			if(data.code==200){
-				
-			}	
-		}
-	})
-}*/
 //设关注
 $('.dataContent').delegate('.focus1','click',function(){
 	var id=$(this).parent().parent().attr('id');
@@ -283,98 +233,25 @@ function look(dataId){
 function searchThing(obj){
 	$(".dataContent").html("");
 	for(var i=0;i<dataLike.length;i++){
-				dataLike[i].title=dataLike[i].device_name+"-"+dataLike[i].data_name	
-				if(dataLike[i].title.search(obj.val())!=-1){
-					if(selectedId.indexOf(dataLike[i].data_id)!=-1){
-						str='<div class="dataList" id="'+dataLike[i].data_id+'" >'+
-							'<div class="listTop normal" style="border-left-color: rgb(26, 179, 148);color: rgb(26, 179, 148)">'+
-								'<span>'+dataLike[i].device_name+"-"+dataLike[i].data_name+'</span>'+
-								'<span class="fa fa-plus-square disabledLi focus1" data-toggle="tooltip" data-placement="top" title="已关注"></span>'+
-								'<span class="fa fa-list-alt" data-toggle="tooltip" data-placement="top" onclick="cover(&apos;'+data[i].data_id+'&apos;)"  title="已设封面"></span>'+
-							'</div>'+
-							'<div class="listHr"></div>'+
-							'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+dataLike[i].data_id+'&apos;)">'+
-								'<div class="contentTop">'+
-									'<div class="Itext dataValue">'+dataLike[i].data_value+dataLike[i].data_unit+						
-									'</div>'+						
-								'</div>'+
-								'<div class="contentBottom">'+
-									'<span class="fa fa-clock-o dataTime">'+dataLike[i].data_time+'</span>'+
-								'</div>'+
-							'</div>'+			
-						'</div>'
-						$(".dataContent").append(str);
-					}else{
-						str='<div class="dataList" id="'+dataLike[i].data_id+'" >'+
-							'<div class="listTop normal" style="border-left-color: rgb(26, 179, 148);color: rgb(26, 179, 148)">'+
-								'<span>'+dataLike[i].device_name+"-"+dataLike[i].data_name+'</span>'+
-								'<span class="fa fa-plus-square focus1" data-toggle="tooltip" data-placement="top" title="关注"></span>'+
-								'<span class="fa fa-list-alt" data-toggle="tooltip" data-placement="top" onclick="cover(&apos;'+data[i].data_id+'&apos;)"  title="设封面"></span>'+
-							'</div>'+
-							'<div class="listHr"></div>'+
-							'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+dataLike[i].data_id+'&apos;)">'+
-								'<div class="contentTop">'+
-									'<div class="Itext dataValue">'+dataLike[i].data_value+dataLike[i].data_unit+						
-									'</div>'+						
-								'</div>'+
-								'<div class="contentBottom">'+
-									'<span class="fa fa-clock-o dataTime">'+dataLike[i].data_time+'</span>'+
-								'</div>'+
-							'</div>'+			
-						'</div>'
-						$(".dataContent").append(str);
-					}
-				}
-				dataId.push(dataLike[i].data_id)
-				colorBg(dataLike[i].status,i);
-			}
-	/*for(var i=0;i<dataLike.length;i++){
-		if(dataLike[i].title.search(obj.val())!=-1){	
-			
-			/*var str='';
-					str='<div class="dataList" id="'+dataLike[i].data_id+'">'+
-						'<div class="listTop normal" >'+
-							'<span>'+dataLike[i].device_name+"-"+dataLike[i].data_name+'</span>'+
-							'<span class="fa fa-plus-square" data-toggle="tooltip" data-placement="top" onclick="focus1('+dataLike[i].data_id+','+i+')"  title="关注"></span>'+
-						'<span class="fa fa-list-alt" data-toggle="tooltip" data-placement="top" onclick="cover('+dataLike[i].data_id+','+i+')"  title="设封面"></span>'+
-						'</div>'+
-						'<div class="listHr"></div>'+
-						'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+dataLike[i].data_id+'&apos;)">'+
-							'<div class="contentTop">'+
-								'<div class="Itext">'+dataLike[i].data_value+dataLike[i].data_unit+						
-								'</div>'+						
-							'</div>'+
-							'<div class="contentBottom">'+
-								'<span class="fa fa-clock-o">'+dataLike[i].data_time+'</span>'+
-							'</div>'+
-						'</div>'+			
-					'</div>'
-					$(".dataContent").append(str);	*/
-			
-//		}
-//		colorBg(dataLike[i].status,i)
-//		dataId.push(dataLike[i].data_id)	
-//	}
+		if(dataLike[i].title.search(obj.val())!=-1){
+			listData(dataLike,i)
+			colorBg(dataLike[i].status,i);
+		}
+		dataId.push(dataLike[i].data_id)
+	}
+	toolTip()
 	MQTTconnect(dataId);
 }
 
 //告警颜色设置
 function colorBg(data,index){
-	if(data==1){
-		$('.dataList').eq(index).addClass('greenBg')
-	}else if(data==0){
+	if(data==0){
 		$('.dataList').eq(index).addClass('grayBg')
+	}else if(data==1){
+		$('.dataList').eq(index).addClass('greenBg')
 	}else{
+		alert(2)
 		$('.dataList').eq(index).addClass('redBg')
-	}
-}
-function colorBg1(dataStatus){
-	if(dataStatus==1){
-		$(".dataList").addClass("greenBg");
-	}else if(dataStatus==0){
-		$(".dataList").addClass("grayBg");
-	}else{
-		$(".dataList").addClass("redBg");
 	}
 }
 

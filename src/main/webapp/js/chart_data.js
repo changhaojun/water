@@ -69,24 +69,13 @@ function dataList(){
 			}else{
 				var screenList="";			
 				for(var i=0;i<data.length;i++){
-//						console.log(data.[i].data_id+","+selectedId[i])
-//					if(dataId.indexOf(data[i].data_id)!=-1){					
-//						screenList='<div class="selectdLi">'+
-//										'<div class="selectdFont">'+data[i].device_name+'-'+data[i].data_name+'</div>'+
-//										'<div class="selectdIcon" id="'+data[i].data_id+'">已选</div>'+
-//										'<div hidden="hidden">'+data[i].data_unit+'</div>'+
-//										'<div hidden="hidden">'+data[i].data_id+'</div>'+
-//									'</div>';		
-//						$(".list").append(screenList);
-//					}else{
-						screenList='<div class="disabledLi" onclick="getChart(&apos;'+data[i].data_id+'&apos;)" >'+
-										'<div class="disabledFont">'+data[i].device_name+'-'+data[i].data_name+'</div>'+
-										'<div class="disabledIcon" id="'+data[i].data_id+'">+</div>'+
-										'<div hidden="hidden">'+data[i].data_unit+'</div>'+
-										'<div hidden="hidden">'+data[i].data_id+'</div>'+
-									'</div>';
-						$(".list").append(screenList);
-//					}	
+					screenList='<div class="disabledLi" onclick="getChart(&apos;'+data[i].data_id+'&apos;)" >'+
+									'<div class="disabledFont">'+data[i].device_name+'-'+data[i].data_name+'</div>'+
+									'<div class="disabledIcon" id="'+data[i].data_id+'">+</div>'+
+									'<div hidden="hidden">'+data[i].data_unit+'</div>'+
+									'<div hidden="hidden">'+data[i].data_id+'</div>'+
+								'</div>';
+					$(".list").append(screenList);	
 				}
 				getChart(dataId)
 			}
@@ -142,35 +131,6 @@ function getChart(i){
 	})
 }
 
-var option={
-		title:{
-			text:''
-		},
-		tooltip: {
-			trigger: 'axis'
-		},
-		legend: {
-//	        data:legendData
-	    },
-	    grid: {
-			left: '5%',
-			right: '20%',
-			bottom: '5%'
-		},
-		xAxis: {
-	        type: 'category',
-	        boundaryGap: false,//段空白策略
-	        data:dateInfo
-	    },
-	    yAxis:{
-	    	type:'value'
-	    } ,
-		series:series	
-	};
-	var myChart=echarts.init(document.getElementById('chartsContent'))
-	myChart.setOption(option);
-
-
 function initChart(data,i,legendData){
 	var objData=[];obj=[]
 	for(var j=0;j<chartArr.length;j++){
@@ -225,13 +185,15 @@ function initChart(data,i,legendData){
 				trigger: 'axis'
 			},
 			legend: {
-		        data:legendData
+		        data:legendData,
+		        x:'50px',
+		        y:'top'
 		    },
 		    toolbox : {
 	            show :true,
-	            orient :'vertical',
+	            /*orient :'vertical',
 	            x :'right',
-	            y :'center',
+	            y :'center',*/
 	            feature : {
 	                mark : {
 	                    show :true
@@ -253,42 +215,38 @@ function initChart(data,i,legendData){
 	            }
 	       },
 
-		    grid: {
-				left: '10%',
-				right: '5%',
-				top: '12%',
-				bottom: '12%',
-				containLabel: true
-			},
-			xAxis: {
-		        type: 'category',
-		        boundaryGap: false,
-		        data:chartArr[0].dataTimes
-		    },
-		    yAxis:yAxis,
-		    dataZoom:[
-            	//x轴缩放
-	            {
-	                type:'slider',
-	                xAxisIndex:0,
-	                start:20,
-	                end:80,
-	                height:30,
-	            },
-	            {
-	                type:'inside',
-	                xAxisIndex:0,
-	                start:20,
-	                end:80
-	            }
-	        ],
-			series:series
-			
-		};
-		//console.log(dateInfo)
-//		console.log(yAxis)
-//		console.log(series)
-		myChart.setOption(option);
+	    grid: {
+			left: '10%',
+			right: '10%',
+			top: '15%',
+			bottom: '12%',
+			containLabel: true
+		},
+		xAxis: {
+	        type: 'category',
+	        boundaryGap: false,
+	        data:chartArr[0].dataTimes
+	    },
+	    yAxis:yAxis,
+	    dataZoom:[
+        	//x轴缩放
+            {
+                type:'slider',
+                xAxisIndex:0,
+                start:20,
+                end:80,
+                height:30,
+            },
+            {
+                type:'inside',
+                xAxisIndex:0,
+                start:20,
+                end:80
+            }
+        ],
+		series:series		
+	};
+	myChart.setOption(option);
 }
 
 $('.chartContent button').click(function(){
@@ -338,8 +296,27 @@ $(document).ready(function() {
 	  end=new Date(end).getFullYear()+"$"+p(new Date(end).getMonth()+1)+"$"+p(new Date(end).getDate())+"$"+p(new Date(end).getHours())+":"+p(new Date(end).getMinutes())+":"+p(new Date(end).getSeconds());			           
    	  startTime=start;
    	  endTime=end;
-// 	 for(var i=0;i<chartDivArr.length;i++){
-// 	 	currentChart(chartDivArr[i]);
-// 	 }
+   	  var data="{data_id:'"+dataId+"',start_time:'"+startTime+"',end_time:'"+endTime+"'}";
+	$.ajax({
+		url: globalurl+"/v1/runDatas",
+		type:"post",
+		dataType:"JSON",
+		data:{
+			access_token: accesstoken,
+			data:data
+		},
+		async:false,
+		crossDomain: true == !(document.all),
+		success:function(data){
+			console.log(data)
+			if(data.length==0){
+				$(".chartsContent").html("<span class='nonedata'>暂无数据</span>");
+			}else{
+				chartArr.push(data);
+				console.log(chartArr)
+				initChart(data,dataId,legendData);
+			}
+		}
+	})
    });
 });

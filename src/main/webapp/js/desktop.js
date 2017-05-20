@@ -30,115 +30,39 @@ function getCharts(){
 				var  str=''
 				chartData=[];
 				for(var i=0;i<data.length;i++){
-//					console.info(data[i].is_chart)
-//					console.info(data[i].is_chart==0)
 					if(data[i].is_chart==1){
 						chartData.push(data[i])
 						console.log(chartData)
-
 						thingName=data[i].thing_name
 						console.log(thingName)
-						str='<div class="charts" style="width:740px; height:240px;margin-right:20px; margin-top:20px;background:#fff;border-radius: 4px; float:left;">'+
-									'<div id="'+data[i]._id+'" class="chartcontent"></div>'+
-									'<div class="del" style="width:28px; height:240px;padding-top:5px; background:#fff; float:left;">'+
-										'<span class="fa fa-remove" data-toggle="tooltip" data-placement="top" onclick="cancel(&apos;'+data[i]._id+'&apos;)" title="删除"></span>'+
-									'</div>'+
-								'</div>';
-							$('.desktopContent').append(str);
-//							chartInfo();
-							series=[];obj=[];legendData=[];
-							for(var j=0;j<chartData.length;j++){
-								obj.push(chartData[j].chart_data);
-								console.log(obj)
-								console.log(obj[0].length)
-							}
-							
-							for(var m=0;m<obj.length;m++){
-								var objData=[];var series=[];
-								for(var n=0;n<obj[m].length;n++){
-									objData.push(obj[m][n].dataValues)
-									legendData.push(obj[m][n].device_name+'-'+obj[m][n].data_name)	
-									series.push({
-										type: 'line',
-										name:legendData[n],
-							            data: objData[n],
-									})
-								}		
-							}
-							var option={
-									title:{
-										text:thingName,
-										textStyle:{
-											color:'#999',
-											fontSize:'16px'
-										}	
-									},
-									tooltip:{
-										trigger:'axis'
-									},
-									legend:{
-										data:legendData
-									},
-									grid: {
-										left: '8%',
-										right: '5%',
-										top: '20%',
-										bottom: '8%',
-										containLabel: true
-									},
-									xAxis:{
-										type: 'category',
-							        	boundaryGap: false,
-							        	data:obj[0][0].dataTimes,
-							        	axisLine:{
-							                lineStyle:{
-							                    color:'#1ab394',
-							                    width:2,//这里是为了突出显示加上的，可以去掉
-							                }
-						            	}
-									},
-									yAxis:{
-										type:'value',
-										splitLine: { show: false }, //去除网格中的坐标线
-										axisLabel: {
-											formatter: '{value}'
-										},
-										axisLine:{
-							                lineStyle:{
-							                    color:'#1ab394',
-							                    width:2,//这里是为了突出显示加上的，可以去掉
-							                }
-							        	}
-									},
-									series:series
-								}
-							var mychart=echarts.init(document.getElementById(data[i]._id))
-							mychart.setOption(option)
-						
-							
+						str='<div class="charts">'+
+								'<div id="'+data[i]._id+'" class="chartcontent"></div>'+
+								'<div class="del">'+
+									'<span class="fa fa-remove" data-toggle="tooltip" data-placement="top" onclick="cancel(&apos;'+data[i]._id+'&apos;)" title="删除"></span>'+
+								'</div>'+
+							'</div>';
+						$('.desktopContent').append(str);
+						chartInfo(data,i)							
 					}else if(data[i].is_chart==0){
-						/*selecteData.push(data[i].data_id)
-						console.log(selecteData)*/
-							str='<div class="dataList" id="'+data[i].data_id+'">'+
-									'<div class="listTop">'+
-										'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+
-										'<span class="fa fa-remove" data-toggle="tooltip" data-placement="top" onclick="cancel(&apos;'+data[i]._id+'&apos;)" title="删除"></span>'+
+						str='<div class="dataList" id="'+data[i].data_id+'">'+
+								'<div class="listTop">'+
+									'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+
+									'<span class="fa fa-remove" data-toggle="tooltip" data-placement="top" onclick="cancel(&apos;'+data[i]._id+'&apos;)" title="删除"></span>'+
+								'</div>'+
+								'<div class="listHr"></div>'+
+								'<div class="listContent">'+
+									'<div class="contentTop">'+
+										'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
+										'</div>'+
 									'</div>'+
-									'<div class="listHr"></div>'+
-									'<div class="listContent">'+
-										'<div class="contentTop">'+
-											'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
-											'</div>'+
-										'</div>'+
-										'<div class="contentBottom">'+
-											'<span class="fa fa-clock-o dataTime">'+data[i].data_time+'</span>'+
-										'</div>'+
-									'</div>'+			
-								'</div>';
-								$('.desktopContent').append(str);
-								dataId.push(data[i].data_id)
-//								console.log(dataId)
-								colorBg(data[i].status,i)
+									'<div class="contentBottom">'+
+										'<span class="fa fa-clock-o dataTime">'+data[i].data_time+'</span>'+
+									'</div>'+
+								'</div>'+			
+							'</div>';
+							$('.desktopContent').append(str);
+						dataId.push(data[i].data_id);
+						colorBg(data[i].status,i);
 					}
 				}
 				MQTTconnect(dataId);		
@@ -148,14 +72,86 @@ function getCharts(){
 	})
 }
 //告警颜色设置
-function colorBg(status,i){
-		if(status==1){
-			$('.dataList').eq(i).addClass('greenBg')
-		}else if(status==0){
-			$('.dataList').eq(i).addClass('grayBg');
-		}else{
-			$('.dataList').eq(i).addClass('redBg')
+function colorBg(data,index){
+	if(data==0){
+		alert(0)
+		$('.dataList').eq(index).addClass('grayBg')
+	}else if(data==1){
+		$('.dataList').eq(index).addClass('greenBg')
+	}else{
+		alert(2)
+		$('.dataList').eq(index).addClass('redBg')
+	}
+}
+//图表配置项
+function chartInfo(data,i){
+	obj=[]
+	for(var j=0;j<chartData.length;j++){
+		obj.push(chartData[j].chart_data);
+	}
+	for(var m=0;m<obj.length;m++){
+		objData=[]; series=[];legendData=[];
+		for(var n=0;n<obj[m].length;n++){
+			objData.push(obj[m][n].dataValues)
+			legendData.push(obj[m][n].device_name+'-'+obj[m][n].data_name)	
+			series.push({
+				type: 'line',
+				name:legendData[n],
+	            data: objData[n],
+			})
+//			console.log(objData[n])
+//			console.log(legendData[n])
 		}
+	}
+	var option={
+			title:{
+				text:thingName,
+				textStyle:{
+					color:'#999',
+					fontSize:'16px'
+				}	
+			},
+			tooltip:{
+				trigger:'axis'
+			},
+			legend:{
+				data:legendData
+			},
+			grid: {
+				left: '8%',
+				right: '5%',
+				top: '20%',
+				bottom: '8%',
+				containLabel: true
+			},
+			xAxis:{
+				type: 'category',
+	        	boundaryGap: false,
+	        	data:obj[0][0].dataTimes,
+	        	axisLine:{
+	                lineStyle:{
+	                    color:'#1ab394',
+	                    width:2,//这里是为了突出显示加上的，可以去掉
+	                }
+            	}
+			},
+			yAxis:{
+				type:'value',
+				splitLine: { show: false }, //去除网格中的坐标线
+				axisLabel: {
+					formatter: '{value}'
+				},
+				axisLine:{
+	                lineStyle:{
+	                    color:'#1ab394',
+	                    width:2,//这里是为了突出显示加上的，可以去掉
+	                }
+	        	}
+			},
+			series:series
+		}
+	var mychart=echarts.init(document.getElementById(data[i]._id))
+	mychart.setOption(option)
 }
 
 //初始化提示框

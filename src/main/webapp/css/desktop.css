@@ -46,7 +46,7 @@ body{
 .dataList .listTop>span:nth-child(1){
 	margin-left: 10px;
     float: left;
-    color: #999
+    /*color: #999*/
 }
 .dataList .listTop>span:nth-child(2){
 	margin-right: 10px;
@@ -74,7 +74,7 @@ body{
     font-size: 30px;
     line-height: 136px;
     text-align: center;
-    color: #1ab394;
+    /*color: #1ab394;*/
 }
 .dataList .listContent .contentBottom{
 	color: #afafaf;
@@ -103,8 +103,23 @@ body{
 }
 
 .desktopContent .redBg .listTop span:nth-child(1){
-	color:#d51b1c;
+	color:red!important;
 }
 .desktopContent .redBg .contentTop .Itext{
 	color:#d51b1c;
+}
+.desktopContent .charts{
+	width:740px;
+    height:240px;
+    margin-right:20px; 
+    margin-top:20px;
+    background:#fff;
+    border-radius: 4px; float:left;
+}
+.desktopContent .charts .del{
+	width:28px; 
+	height:240px;
+	padding-top:5px; 
+	background:#fff; 
+	float:left;
 }
