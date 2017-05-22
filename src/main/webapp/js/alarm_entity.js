@@ -345,7 +345,6 @@ function alarmDel(_id,min,max,Iindex,dataIndex){
 }
 //ajax函数的调用
 function ajax(data){
-	
 	$.ajax({
 				url:globalurl+"/v1/alarms",
 				data:data,
@@ -390,7 +389,6 @@ function ajax(data){
 function space(obj){
 	obj.val(obj.val().replace(/\s/g, ''))
 }
-
 //订阅
 var client; 
 var topic;
