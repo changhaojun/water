@@ -416,8 +416,7 @@ function MQTTconnect(dataIds) {
 		  options.password = password;
 	  }
 	  client.connect(options);  
-	  // connect the clien	
-	  
+	  // connect the clien		  
 }
 // called when the client connects
 function onConnect() {
