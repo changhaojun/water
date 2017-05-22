@@ -6,6 +6,10 @@ var thingName;
 var legendData=[];
 var objData=[];
 
+var newData=[];
+var objData1=[];
+var series1=[];
+var obj1=[];
 
 $(function(){
 	getToken(); //刷新令牌
@@ -89,6 +93,7 @@ function chartInfo(data,i){
 	for(var j=0;j<chartData.length;j++){
 		obj.push(chartData[j].chart_data);
 	}
+	xdata=obj[0][0].dataTimes
 	for(var m=0;m<obj.length;m++){
 		objData=[]; series=[];legendData=[];
 		for(var n=0;n<obj[m].length;n++){
@@ -127,7 +132,7 @@ function chartInfo(data,i){
 			xAxis:{
 				type: 'category',
 	        	boundaryGap: false,
-	        	data:obj[0][0].dataTimes,
+	        	data:xdata,
 	        	axisLine:{
 	                lineStyle:{
 	                    color:'#1ab394',
@@ -150,6 +155,33 @@ function chartInfo(data,i){
 			},
 			series:series
 		}
+	//设置x轴标签文字换行个数
+    /*option.xAxis.axisLabel={
+        interval: 0,
+        formatter : function(params){
+            var newParamsName = "";
+            var paramsNameNumber = params.length;
+            var provideNumber = 10;
+            var rowNumber = Math.ceil(paramsNameNumber / provideNumber);
+            if (paramsNameNumber > provideNumber) {
+                for (var p = 0; p < rowNumber; p++) {
+                    var tempStr = "";
+                    var start = p * provideNumber;
+                    var end = start + provideNumber;
+                    if (p == rowNumber - 1) {
+                        tempStr = params.substring(start, paramsNameNumber);
+                    } else {
+                        tempStr = params.substring(start, end) + "\n";
+                    }
+                    newParamsName += tempStr;
+                }
+
+            } else {
+                newParamsName = params;
+            }
+            return newParamsName
+        }
+    }*/
 	var mychart=echarts.init(document.getElementById(data[i]._id))
 	mychart.setOption(option)
 }
@@ -227,12 +259,17 @@ function onMessageArrived(message) {
   var topic = message.destinationName;
   var payload = message.payloadString;
 //console.log(payload)
-  var dataId=JSON.parse(message.payloadString)
-  for(var i=0;i<$(".dataList").length;i++){	
+    var dataId=JSON.parse(message.payloadString)
+    for(var i=0;i<$(".dataList").length;i++){	
   		if(dataId.data_id==$(".dataList").eq(i).attr("id")){
   			$("#"+dataId.data_id+"").find(".listContent .dataTime").html(dataId.data_time);
   			$("#"+dataId.data_id+"").find(".listContent .dataValue").html(dataId.data_value);
   			colorBg(dataId.status,i);
   		}
-  }
+    }
+    for(var j=0;j<$('.charts').length;j++){
+    	if(dataId.data_id==$('.charts').eq(j)){
+    		
+    	}
+    }
 }

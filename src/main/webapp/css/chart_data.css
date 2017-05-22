@@ -118,6 +118,10 @@ body{
     cursor: not-allowed;
     border-radius: 2px 2px;
 }
+.chartContent .disabledFa{
+	background: #b3b3b3!important;
+	cursor: not-allowed!important;
+}
 .list .disabledLi .disabledFont{
 	width: 120px;
     height: 32px;

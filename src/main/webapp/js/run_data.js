@@ -41,7 +41,7 @@ function entityData(data,i){
 				'</div>'+
 				'<div class="listHr"></div>'+
 				'<div class="listContent">'+
-					'<div class="contentTop" id="'+data.rows[i]._id+'">'+
+					'<div style="width:478px;margin:0 auto;" class="contentTop" id="'+data.rows[i]._id+'">'+
 					
 					'</div>'+
 					'<div class="contentBottom">'+
@@ -78,18 +78,18 @@ function chartInfo(data,i){
                         {type : 'min', name: '最小值'}
                     ]
         		},
-        		markline:{
-				        data:[
-                            [ { x: 80, y: 150},
-                                { x: 480, y: 150}
+        		markLine:{
+                    data:[
+                            [ {color:'#ccc', x: -10, y: 123},
+                                { x: 500, y: 123}
                             ]
-	                    ]
-            	},
+                    ]
+               	},
             	itemStyle : {  
                     normal : {  
-                    	color:'#1ab394',
+                    	color:'#53b29e',
                         lineStyle:{  
-                            color:'#1ab394' ,   
+                            color:'#53b29e' ,   
                         }  
                     }  
                 }
