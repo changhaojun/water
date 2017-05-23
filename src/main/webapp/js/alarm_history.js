@@ -107,6 +107,7 @@ function openResult(resultData){
 		$('.btnRow').show();
 	}else{
 		titleMsg='查看处理结果';
+		console.info(resultData.handle_result)
 		$('.resultInfo').val(resultData.handle_result);
 		$('.resultInfo').attr('disabled','disabled');
 		$('.btnRow').hide();
@@ -128,7 +129,7 @@ $('.saveBtn').click(function(){
 			async:true,
 			data:{
 				access_token: access_token,
-				data:'{"handle_result":"'+$('.resultInfo').val()+'"}',
+				data:'{"handle_result":"'+$('.resultInfo').val()+' "}',
 				alarm_history_id:alarmId
 			},
 			success:function(data){
@@ -150,6 +151,9 @@ $('.cancelBtn').click(function(){
 
 function MQTTconnect(){
 	console.log("订阅程序开始执行");
+//	var mqttHost = '139.129.231.31';
+//	var username = "admin";
+//	var password = "finfosoft123";
 	var mqttHost = '192.168.1.114';
 	var username = "admin";
 	var password = "password";

@@ -2,10 +2,6 @@
 	getNavData();
 	var companyId=$('#companyId').val();
 	getMsgNum();
-//	setTimeout(function(){
-//		console.info('定时器')
-//		MQTTconnect()
-//	},5000)
 	MQTTconnect();
 	$(".userName").append("欢迎你，"+user.fullname)
 var flag=-1;
@@ -75,9 +71,7 @@ function getNavData(){
 						'<span class="fa arrow"></span></a><div class="nav-second-box"><ul class="nav nav-second-level nav_list"></ul></div></li>');
 					$('#side-menu ').append(strNav);
 					var m=dataNav[j].dataNum;
-					//console.log(m)
 					if(data[m].children_resource.length){
-						//console.log(data[m].children_resource)
 						var childStr="";
 						for(var t=0;t<data[m].children_resource.length;t++){
 							if(data[m].children_resource[t].is_navigation>0){
@@ -131,12 +125,9 @@ function getNavData(){
 							$("#side-menu .changeLi").removeClass("active");
 							$(this).offsetParent().addClass("active");
 						}
-						//console.log(flag)
 						if($("body").hasClass("mini-navbar")){
 							$(this).next().hide();
 						}else{
-							/*$(this).find("slideToggle").next().stop().slideToggle(500);
-						$("#side-menu .slideToggle").next().slideUp(500);*/
 							$("#side-menu .changeLi").find(".nav-second-box").finish().slideUp(500);
 							$(this).next().stop().slideToggle(500);
 						}
@@ -151,7 +142,6 @@ function getNavData(){
 }
 	//修改密码
 	$(".personMsg a:nth-child(1)").click(function(){
-		//console.log(22);
 		$('.pop').filter('.step1').removeClass('hidden');
 		$('.pop-mask').removeClass('hidden');
 		
@@ -224,14 +214,12 @@ function getNavData(){
 	});
 	//修改密码
 	function editPassword(){
-		console.log(44455)
 		$.ajax({
 			type:"put",
 			crossDomain: true == !(document.all),
 			url:globalurl+"/v1/users",
 			datatype:"json",
 			data:{
-				//old_password:dataPass,
 				old_password:$(".oldPassword .pop-username").val(),
 				new_password:$(".newPassword .pop-username").val(),
 				confirm_password:$(".confirmPassword .pop-username").val(),
@@ -239,7 +227,6 @@ function getNavData(){
 				_id:user.user_id
 			},
 			success:function(data){
-				//console.info(data)
 				$(".popMsg").show();
 				if(data.code==400011){
 					$(".errorMsg i").addClass("error");
@@ -293,6 +280,9 @@ function getMsgNum(){
 }
 function MQTTconnect(){
 	console.log("订阅程序开始执行");
+//	var mqttHost = '139.129.231.31';
+//	var username = "admin";
+//	var password = "finfosoft123";
 	var mqttHost = '192.168.1.114';
 	var username = "admin";
 	var password = "password";
@@ -334,7 +324,6 @@ function onConnectionLost(responseObject) {
 function onMessageArrived(message) {
   var topic = message.destinationName;
   var payload = JSON.parse(message.payloadString);
-  console.info(payload)
   toastr.options = {
 	  "closeButton":true,
 	  "debug":false,

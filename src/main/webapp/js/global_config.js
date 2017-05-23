@@ -44,6 +44,17 @@ var $extend=$.fn.extend({
 		}
 		return globalConfig.inputCheck;
 	},
+	isMobile:function(){
+		var mobileStr=globalConfig.globalData.receive_number.replace(/，/g,',')
+		var mobile=mobileStr.split(',')
+		for(var i=0;i<mobile.length;i++){
+			if(!(/^1(3|4|5|7|8)\d{9}$/.test(mobile[i]))){ 
+				layer.tips('请输入正确的手机号！',$(this),{tips: [1,'#FE777A']})
+				globalConfig.inputCheck=false;
+				return false;
+			}
+		}
+	},
 	saveGlobal:function(){		//保存全局配置
 		var  sendType;
 		var sendData={};
@@ -105,7 +116,7 @@ $.extend({
 						return false;
 					}
 			})
-
+			$('.mobile').isMobile();
 			if(globalConfig.inputCheck){
 				$(this).saveGlobal();
 			}
