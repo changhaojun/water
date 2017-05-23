@@ -251,16 +251,6 @@ $.extend({
 				$.initData.sentData.scada_model_id = data.scada.scada_model_id;
 				$.initData.sentData.description = data.scada.description;
 				$.initData.sentData.scada_config = data.scada.scada_config;
-				for (var i=0; i<$.initData.sentData.scada_config.length; i++) {
-					$.initThree.initLabel(
-						$.initData.sentData.scada_config[i], 
-						$.initData.sentData.scada_config[i].objPosition,
-						function() {},
-						function() {
-							$.initButton();
-						}
-					);
-				}
 				$('.link').find('p').changeThingName($.initData.thingName);
 				$('.name').find('input').val($.initData.sentData.scada_name);
 				$('.description').find('input').val($.initData.sentData.description);
@@ -268,6 +258,11 @@ $.extend({
 					$('.selectData').find('.selector-list').refreshDataList(data);
 				});
 				$.initThree.init(data.scadaModel.modelConfig, function() {
+					for (var i=0; i<$.initData.sentData.scada_config.length; i++) {
+						$.initThree.initLabel($.initData.sentData.scada_config[i], $.initData.sentData.scada_config[i].objPosition);
+					}
+					$.initButton();
+				}, function() {
 					$('.footBar').selectLabel();
 				}, true);
 				$.saveScada();

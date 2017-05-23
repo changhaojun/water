@@ -245,9 +245,10 @@ $.extend({
 		$.initToken('get', function() {
 			$.initAjax(function(data) {
 				$.initThree.init(data.modelConfig, function() {
+					$.initButton();
+				}, function() {
 					$('.footBar').selectLabel();
 				}, true);
-				$.initButton();
 				$.saveScada();
 			});
 		})

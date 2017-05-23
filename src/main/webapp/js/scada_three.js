@@ -34,7 +34,7 @@ $.three = {
 		transparent: true
 	},
 	model: {
-		tmlLoader: null,
+		mtlLoader: null,
 		objLoader: null,
 		path: '/finfosoft-water/modelResource/',
 		count: 0,
@@ -49,7 +49,8 @@ $.three = {
 		size: 6,
 		depth: 2,
 		color: 0xffffff,
-		opacity: 0.9
+		opacity: 0.9,
+		geometry: null
 	},
 	labelPlane: {
 		opacity: 0.8
@@ -88,7 +89,7 @@ $.three = {
 }
 
 $.initThree = {
-	init: function(models, selectLabelFn, isTransform) {
+	init: function(models, afterFontLoaded, selectLabelFn, isTransform) {
 		$.initThree.initScene();
 		$.initThree.initCamera();
 		$.initThree.initLight();
@@ -96,8 +97,11 @@ $.initThree = {
 		$.initThree.initGround();
 		$.initThree.initRenderer();
 		$.initThree.initCameraController();
-		selectLabelFn && $.initThree.initRaycaster(selectLabelFn, isTransform);
-		isTransform && $.initThree.initTransformController();
+		$.initThree.initFont(function() {
+			afterFontLoaded && afterFontLoaded();
+			selectLabelFn && $.initThree.initRaycaster(selectLabelFn, isTransform);
+			isTransform && $.initThree.initTransformController();
+		});
 		$.initThree.initAnimation();
 		$.initThree.threeResize();
 	},
@@ -209,7 +213,14 @@ $.initThree = {
 		$.three.scene.el.add(ground);
 		$.three.ground.el = ground;
 	},
-	initLabel: function(data, oldPos, onSingleLabelLoaded, onAllLabelLoaded) {
+	initFont: function(callBack) {
+		$.three.font.loader = $.three.font.loader===null ? new THREE.FontLoader() : $.three.font.loader;
+		$.three.font.loader.load($.three.font.src, function(font) {
+			$.three.font.geometry = font;
+			callBack && callBack();
+		});
+	},
+	initLabel: function(data, oldPos, onSingleLabelLoaded) {
 		var userData = typeof data === 'string' ? JSON.parse(data) : data;
 		var labelMessage;
 		if ($.initThree.judgeLabelType(userData)=='data') {
@@ -231,12 +242,12 @@ $.initThree = {
 			labelMessage = processName;
 		}
 		
-		$.three.loading++;
-		$.three.font.loader = new THREE.FontLoader();
-		$.three.font.loader.load($.three.font.src, function(font) {
+//		$.three.loading++;
+//		$.three.font.loader = $.three.font.loader===null ? new THREE.FontLoader() : $.three.font.loader;
+//		$.three.font.loader.load($.three.font.src, function(font) {
 			//text
 			var textGeo = new THREE.TextGeometry(labelMessage, {
-				font: font,
+				font: $.three.font.geometry,
 				size:  $.three.font.size,
 				height: $.three.font.depth,
 				curveSegments: 10
@@ -340,11 +351,11 @@ $.initThree = {
 			$.three.labelGroup.add(label);
 			$.initThree.rendererUpdata();
 			onSingleLabelLoaded && onSingleLabelLoaded(userData);
-			$.three.loading--;
-			if ($.three.loading===0) {
-				onAllLabelLoaded && onAllLabelLoaded();
-			}
-		});
+//			$.three.loading--;
+//			if ($.three.loading===0) {
+//				onAllLabelLoaded && onAllLabelLoaded();
+//			}
+//		});
 	},
 	initRenderer: function() {
 		var renderer =  new THREE.WebGLRenderer({

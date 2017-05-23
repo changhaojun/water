@@ -71,18 +71,19 @@ $.extend({
 				$.initData.sentData.description = data.scada.description;
 				$.initData.sentData.scada_config = data.scada.scada_config;
 				//数据标签渲染
-				for (var i=0; i<$.initData.sentData.scada_config.length; i++) {
-					$.initThree.initLabel(
-						$.initData.sentData.scada_config[i],
-						$.initData.sentData.scada_config[i].objPosition,
-						function(userData) {
-							//数据标签订阅MQTT
-							$.initMQTT(userData);
-						}
-					);
-				}
 				//三维场景初始化
 				$.initThree.init(data.scadaModel.modelConfig, function() {
+					for (var i=0; i<$.initData.sentData.scada_config.length; i++) {
+						$.initThree.initLabel(
+							$.initData.sentData.scada_config[i],
+							$.initData.sentData.scada_config[i].objPosition,
+							function(userData) {
+								//数据标签订阅MQTT
+								$.initMQTT(userData);
+							}
+						);
+					}
+				}, function() {
 					$.labelOperation($.three.capturer.intersected);
 				});
 			});
@@ -206,7 +207,6 @@ $.extend({
 	onLabelValueChange: function(message) {
 		var dataId = Number(message.destinationName);
 		var payload = JSON.parse(message.payloadString);
-		console.log(payload);
 		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(dataId, $.initThree.judgeLabelType({data_id: dataId}))];
 		if (!originLabel) return;
 		var newData = {

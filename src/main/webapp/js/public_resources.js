@@ -5,6 +5,7 @@ var globalurl="http://121.42.253.149:18808";
 var itemName="/finfosoft-water";
 var accesstoken;
 var refreshToken;
+
 //获取token
 var getToken=function(callBack){
 	$.ajax({
