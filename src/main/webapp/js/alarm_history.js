@@ -72,7 +72,7 @@ function queryParams(params){
 	};
 }
 function resultFormatter(value,rows){
-	if(value==''||value==undefined){
+	if(value==undefined){
 		return '<span class="result untreated" data-toggle="tooltip" data-placement="top" title="处理">未处理</span>'
 	}else{
 		return '<span class="result already" data-toggle="tooltip" data-placement="top" title="查看">已处理</span>'
@@ -100,7 +100,7 @@ function resultBind(){
 
 function openResult(resultData){
 	var titleMsg;
-	if(resultData.handle_result==undefined||resultData.handle_result==''){
+	if(resultData.handle_result==undefined){
 		titleMsg='提交处理结果';
 		$('.resultInfo').val('');
 		$('.resultInfo').removeAttr('disabled');

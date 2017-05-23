@@ -33,7 +33,7 @@ function DevList(){
 			}else{
 				var str="";
 				for(var i=0;i<data.rows.length;i++){
-					str="<li id='"+data.rows[i]._id+"'>"+data.rows[i].device_name+"<span onclick='colseDev(&apos;"+data.rows[i]._id+"&apos;)'>&times;</span></li>"
+					str="<li id='"+data.rows[i]._id+"' onclick='colseDev(&apos;"+data.rows[i]._id+"&apos;)' >"+data.rows[i].device_name+"<span>&times;</span></li>"
 					$(".selectedUl").append(str);
 					selectedId.push(data.rows[i]._id)
 				}
@@ -138,10 +138,11 @@ function screenDev(){
 	for(var i=0;i<$(".infoList").length;i++){
 		if($(".infoList").eq(i).find("i").attr("class")=="fa fa-check-circle"){			
 			DevKind+=(i+1)+",";			
-		}		
+		}
+	
 	}
-	if($(".infoList").find("i").attr("class")!="fa fa-check-circle"){
-			DevKind=0+",";	
+	if($(".infoList").find(".fa-circle-o").length==5){		
+		DevKind=0+",";	
 	}
 	if($("#searchDevice").val()==""){	
 		data={"device_kind":DevKind,"access_token":window.accesstoken}
@@ -177,15 +178,15 @@ function doAjax(data){
 						for(var i=0;i<data.rows.length;i++){
 		//						console.log(data.rows[i]._id+","+selectedId[i])
 							if(selectedId.indexOf(data.rows[i]._id)!=-1){					
-								screenList='<div class="selectdLi">'+
+								screenList='<div class="selectdLi" onclick="selectDev(&apos;'+data.rows[i]._id+'&apos;)">'+
 								'<div class="selectdFont">'+data.rows[i].device_name+'</div>'+
-								'<div class="selectdIcon" onclick="selectDev(&apos;'+data.rows[i]._id+'&apos;)" id="'+data.rows[i]._id+'">已选</div>'+
+								'<div class="selectdIcon"  id="'+data.rows[i]._id+'">已选</div>'+
 								'</div>';
 								$(".optionalList").append(screenList);
 							}else{
-								screenList='<div class="disabledLi">'+
+								screenList='<div class="disabledLi" onclick="selectDev(&apos;'+data.rows[i]._id+'&apos;)">'+
 								'<div class="disabledFont">'+data.rows[i].device_name+'</div>'+
-								'<div class="disabledIcon" onclick="selectDev(&apos;'+data.rows[i]._id+'&apos;)" id="'+data.rows[i]._id+'">+</div>'+
+								'<div class="disabledIcon"  id="'+data.rows[i]._id+'">+</div>'+
 								'</div>';
 								$(".optionalList").append(screenList);
 							}

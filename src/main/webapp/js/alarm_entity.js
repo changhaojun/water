@@ -18,7 +18,7 @@ var searchBox=new Vue({
 function alarmList(){
 		Omission($(".alarmEntity .alarmTop .thingName"));
 		var data={access_token:window.accesstoken};	
-			doajax(data)
+		doajax(data)
 };
 function doajax(data){
 	$(".IContent").html("");
@@ -39,8 +39,7 @@ function doajax(data){
 				var str=""	;	
 				for(var i=0;i<data.length;i++){
 					data[i].title=data[i].device_name+"-"+data[i].data_name					
-					Dom(data[i],i);//创建动态Dom	
-					colorBg(data[i].status,i);
+					Dom(data[i],i);//创建动态Dom						
 					dataId.push(data[i].data_id)
 			}
 			dataLike=data;
@@ -63,12 +62,13 @@ function searchThing(obj){
 	var q=0;
 	for(var i=0;i<dataLike.length;i++){
 		if(dataLike[i].title.search(obj.val())!=-1){
-			Dom(dataLike[i],q);		
-			q++;
-			colorBg1(dataLike[i].status);						
+			Dom(dataLike[i],q);	
+			q++;					
 		}
-		dataId.push(dataLike[i].data_id)
-		
+		dataId.push(dataLike[i].data_id);		
+	}
+	if($("#searchId").val()==""){
+		alarmList();
 	}
 	MQTTconnect(dataId);
 }
@@ -86,7 +86,8 @@ function Dom(data,i){
 			'</ul>'+
 		'</div>'+
 	'</div>'
-$(".IContent").append(str);			
+$(".IContent").append(str);	
+colorBg(data.status,i);
 	var oLi="";
 	for(var j=0;j<2;j++){
 		if(data.threshold==undefined||data.threshold[j]==undefined||(data.threshold[j].upper_value=="+∞"&&data.threshold[j].lower_value=="-∞")||(data.threshold[j].upper_value==""&&data.threshold[j].lower_value=="")){
@@ -118,26 +119,18 @@ $(".IContent").append(str);
 					'</div>'+							
 				'</li>'
 		}
-		$(".alarmFooter ul").eq(i).append(oLi);						
+		$(".alarmFooter ul").eq(i).append(oLi);		
+		
 	}
 }
 //告警颜色设置
 function colorBg(data,index){
 	if(data==1){
-		$(".alarmList").eq(index).addClass("greenBg");
+		$(".IContent .alarmList").eq(index).addClass("greenBg");
 	}else if(data==0){
-		$(".alarmList").eq(index).addClass("grayBg");
+		$(".IContent .alarmList").eq(index).addClass("grayBg");
 	}else{
-		$(".alarmList").eq(index).addClass("redBg");
-	}
-}
-function colorBg1(data){	
-	if(data==1){
-		$(".alarmList").addClass("greenBg");
-	}else if(data==0){
-		$(".alarmList").addClass("grayBg");
-	}else{
-		$(".alarmList").addClass("redBg");
+		$(".IContent .alarmList").eq(index).addClass("redBg");
 	}
 }
 //初始化提示框
@@ -396,16 +389,12 @@ function ajax(data){
 function space(obj){
 	obj.val(obj.val().replace(/\s/g, ''))
 }
-
 //订阅
 var client; 
 var topic;
 var data;
 function MQTTconnect(dataIds) {
   console.log("订阅程序开始执行");
-//var mqttHost = '139.129.231.31';
-//var username="admin";
-//var password="finfosoft123";
 	var mqttHost = '192.168.1.114';
 	var username = "admin";
 	var password = "password";
@@ -427,10 +416,8 @@ function MQTTconnect(dataIds) {
 		  options.password = password;
 	  }
 	  client.connect(options);  
-	  // connect the clien	
-	  
+	  // connect the clien		  
 }
-
 // called when the client connects
 function onConnect() {
   console.log("onConnect");
@@ -441,14 +428,12 @@ function onConnect() {
 	  client.subscribe(topic);
   }
 }
-
 // called when the client loses its connection
 function onConnectionLost(responseObject) {
   if (responseObject.errorCode !== 0) {
     console.log("onConnectionLost:" + responseObject.errorMessage);
   }
 }
-
 // called when a message arrives
 function onMessageArrived(message) {
   var topic = message.destinationName;
@@ -456,15 +441,8 @@ function onMessageArrived(message) {
   var dataConfig=JSON.parse(payload)
   var dataId=dataConfig.data_id
   console.info(dataConfig)
-//for(var i=0;i<$(".alarmList").length;i++){	
-//		if(dataId.data_id==$(".alarmList").eq(i).attr("id")){
-//			$("#"+dataId.data_id+"").find(".alarmContent .dataTime").html(dataId.data_time);
-//			$("#"+dataId.data_id+"").find(".alarmContent .dataValue").html(dataId.data_value);
-//			colorBg(dataId.status,i);
-//		}
-//}
 	$('#'+dataId).find('.dataValue').text(dataConfig.data_value);
-	$('#'+dataId).find('dataTime').text(dataConfig.data_time);
+	$('#'+dataId).find('.dataTime').text(dataConfig.data_time);
 	if(dataConfig.status==1){
 		$('#'+dataId).addClass("greenBg");
 	}else if(data==0){
@@ -473,11 +451,6 @@ function onMessageArrived(message) {
 		$('#'+dataId).addClass("redBg");
 	}
 }
-
-
-
-
-
 //超出一行省略
 function Omission(obj){
 	if(obj.html().length>40){
