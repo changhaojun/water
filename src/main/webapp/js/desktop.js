@@ -165,6 +165,7 @@ $(function () { $("[data-toggle='tooltip']").tooltip(); });
 $('.desktopContent').delegate('.cancel','click',function(){
 	var id=$(this).attr('deleteId');
 	var This=$(this)
+	dataIndex.splice(This.index(),1);
 	$.ajax({
 		type:'delete',
 		url:globalurl+'/v1/desktops/'+id+'?access_token='+window.accesstoken,
@@ -175,6 +176,7 @@ $('.desktopContent').delegate('.cancel','click',function(){
 			if(data.code==200){
 				layer.msg(data.success,{icon:1})
 				This.parent().parent().remove();
+				saveDeskIndex(dataIndex)
 			}
 		}
 	})
@@ -291,7 +293,6 @@ function onMessageArrived(message) {
 }
 /*下面开始拖动*/
 $(document).delegate('.dataBox','dragstart',function(evetn){
-//	dragged.addClass('grayBox');
 	$(this).attr('dragged','dragged')
 	oldIndex=$(this).index()
 	dragged=$(this)
@@ -353,8 +354,34 @@ function changeOrder(ruleDatas,index,callBack){
 	callBack && callBack(ruleDatas);
 }
 function saveDeskIndex(arr){
-	console.info(arr)
 	for(var i=0;i<arr.length;i++){
-		
+		delete arr[i].chart_data
+		delete arr[i].data_id
+		delete arr[i].index
+		delete arr[i].is_chart
+		delete arr[i].thing_name
+		delete arr[i].data_name
+		delete arr[i].data_unit
+		delete arr[i].device_name
+		delete arr[i].port_type
+		delete arr[i].status
+		delete arr[i].data_value
+		delete arr[i].data_time
+		if(arr[i]._id){
+			arr[i].desktop_id=arr[i]._id
+		}
+		delete arr[i]._id
+		arr[i].index=i+1
 	}
+	$.ajax({
+		type:"put",
+		url:globalurl+"/v1/desktops",
+		async:true,
+		data:{
+			access_token:accesstoken,
+			data:JSON.stringify(arr)
+		},
+		success:function(data){
+		}
+	});
 }
