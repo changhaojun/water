@@ -107,7 +107,6 @@ function openResult(resultData){
 		$('.btnRow').show();
 	}else{
 		titleMsg='查看处理结果';
-		console.info(resultData.handle_result)
 		$('.resultInfo').val(resultData.handle_result);
 		$('.resultInfo').attr('disabled','disabled');
 		$('.btnRow').hide();
@@ -151,7 +150,7 @@ $('.cancelBtn').click(function(){
 
 function MQTTconnect(){
 	console.log("订阅程序开始执行");
-	var mqttHost = mqttHost;
+	var mqttHost = mqttHostIP;
 	var username = mqttName;
 	var password = mqttWord;
 	client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));

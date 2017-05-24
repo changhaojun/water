@@ -122,3 +122,17 @@ body{
 	background:#fff; 
 	float:left;
 }
+
+.arrowDom{
+	color: red;
+	font-size: 20px;
+	position: absolute;
+	animation:divCursor 1.25s infinite;
+	-moz-animation:divCursor 1.25s infinite; /* Firefox */
+	-webkit-animation:divCursor 1.25s infinite; /* Safari and Chrome */
+	-o-animation:divCursor 1.25s infinite; /* Opera */
+}
+@keyframes divCursor{
+	0%{opacity:0;}
+	100%{opacity:1;}
+}

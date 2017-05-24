@@ -8,9 +8,10 @@ var objData=[];
 var newData=[];
 var objId=[];
 var xdata;
+var dataIndex=[];
 var myChart;
 var option;
-
+var dragged,moveDom,mouseX,centerS,oldIndex,newIndex;	
 $(function(){
 	getToken(); //刷新令牌
 	getCharts()//获取图表
@@ -27,10 +28,10 @@ function getCharts(){
 			access_token: accesstoken
 		},
 		success:function(data){
-			console.log(data)
 			if(data.length==0){
 				$(".desktopContent").html("<p>暂无数据</p>");
 			}else{
+				dataIndex=data
 				var  str=''
 				chartData=[];
 				for(var i=0;i<data.length;i++){
@@ -39,7 +40,7 @@ function getCharts(){
 						console.log(chartData);
 						thingName=data[i].thing_name
 						console.log(thingName)
-						str='<div class="charts">'+
+						str='<div class="charts dataBox" draggable="true">'+
 								'<div id="'+data[i]._id+'" class="chartcontent"></div>'+
 								'<div class="del">'+
 									'<span class="fa fa-remove cancel" data-toggle="tooltip" data-placement="top" deleteId="'+data[i]._id+'" title="删除"></span>'+
@@ -48,7 +49,7 @@ function getCharts(){
 						$('.desktopContent').append(str);
 						chartInfo(data,i)
 					}else if(data[i].is_chart==0){
-						str='<div class="dataList" id="'+data[i].data_id+'">'+
+						str='<div class="dataList dataBox" draggable="true" id="'+data[i].data_id+'">'+
 								'<div class="listTop">'+
 									'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+
 									'<span class="fa fa-remove cancel" data-toggle="tooltip" data-placement="top" deleteId="'+data[i]._id+'" title="删除"></span>'+
@@ -287,4 +288,59 @@ function onMessageArrived(message) {
 		}
 		
    }
+}
+/*下面开始拖动*/
+$(document).delegate('.dataBox','dragstart',function(evetn){
+//	dragged.addClass('grayBox');
+	$(this).attr('dragged','dragged')
+	oldIndex=$(this).index()
+	dragged=$(this)
+	event.dataTransfer.setData("Text", event.target.id);
+})
+document.addEventListener("dragover", function( event ) {
+	var This=$(event.target)
+	if(This[0].tagName=="CANVAS"){
+		This=$(event.target).parent().parent().parent();
+	}
+	if(This.hasClass('dataValue')){
+		This=This.parent().parent().parent();
+	}
+  	if(This.hasClass('dataBox')){
+	  	moveDom=This
+	  	mouseX=event.clientX;
+	  	centerS=moveDom.offset().left+moveDom.width()/2;
+	  	if(dragged.attr('dragged')!=moveDom.attr('dragged')){
+	  		$('#arrow').show()
+	  		$('#arrow').addClass('arrowDom')
+	  		if(mouseX<centerS){
+				$('#arrow').css('left',moveDom.offset().left-19)
+				$('#arrow').css('top',moveDom.offset().top+5)
+	  		}else{
+	  			$('#arrow').css('left',moveDom.offset().left+moveDom.width()+3)
+	  			$('#arrow').css('top',moveDom.offset().top+5)
+	  		}
+	  	}
+  	}
+  	event.preventDefault();
+}, false);
+document.addEventListener("drop", function( event ) {
+	$('#arrow').removeClass('arrowDom')
+  	$('#arrow').hide()
+  	if(dragged.attr('dragged')!=moveDom.attr('dragged')){
+  		if(mouseX<centerS){
+  			dragged.insertBefore(moveDom)
+  		}else{
+  			dragged.insertAfter(moveDom)
+  		}
+  	}
+  	newIndex=dragged.index()
+  	var index={
+  		'oldIndex':oldIndex,
+  		'newIndex':newIndex
+  	}
+  	console.info(index)
+	dragged.removeAttr('dragged');
+})
+function updataIndex(){
+	
 }

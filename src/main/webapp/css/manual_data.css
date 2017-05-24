@@ -192,7 +192,7 @@ button:hover{
     color: #fc6565;
     float: right;
     padding: 7px;
-    margin-right: 114px;
+    margin-right: calc(30% - 125px);
     font-size: 18px;
     cursor: pointer;
     z-index: 99999;

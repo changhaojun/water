@@ -395,10 +395,10 @@ var topic;
 var data;
 function MQTTconnect(dataIds) {
   console.log("订阅程序开始执行");
-	var mqttHost = '192.168.1.114';
-	var username = "admin";
-	var password = "password";
-	client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
+	var mqttHost = mqttHostIP;
+	var username = mqttName;
+	var password = mqttWord;
+	client = new Paho.MQTT.Client(mqttHost, Number(portNum), "server" + parseInt(Math.random() * 100, 10));
 	data = dataIds;  
 	  var options = {
 			  timeout: 1000,
