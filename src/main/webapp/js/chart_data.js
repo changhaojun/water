@@ -13,6 +13,9 @@ var legendData=[];//存放每一个图标的lengend
 var dataUnit=[];
 var dataFid=[];
 var selectedId=[];
+var minData=[];
+var maxData=[];
+
 $(function(){
 	getToken();//刷新令牌
 	dataList();//获取device_name
@@ -92,11 +95,11 @@ function getChart(i){
 		});
 		return;
 	}
-	legendData=[];dataUnit=[];dataFid=[];
+	dataUnit=[];dataFid=[];
 	for(var n=0;n<$(".list").children().length;n++){
 		if($(".list").children().eq(n).hasClass('selectdLi')){
-			legendData.push($(".list").children().eq(n).children().eq(0).html());
-			console.log(legendData)
+//			legendData.push($(".list").children().eq(n).children().eq(0).html());
+//			console.log(legendData)
 			dataUnit.push($(".list").children().eq(n).children().eq(2).html())
 			dataFid.push(Number($(".list").children().eq(n).children().eq(3).html()))
 			console.log(dataFid)
@@ -137,9 +140,14 @@ function getChart(i){
 }
 //图表配置项以及实例化图表
 function initChart(){
-	var objData=[]; /*legendData=[]*//*obj=[]*/
+	var objData=[]; legendData=[];minData=[];maxData=[];
 	for(var j=0;j<chartArr.length;j++){
 		objData.push(chartArr[j].dataValues);	
+		legendData.push(chartArr[j].device_name+'-'+chartArr[j].data_name)
+		minData.push(chartArr[j].min_value)
+		maxData.push(chartArr[j].max_value)
+		console.log(maxData)
+		console.log(minData)
 	}
 	console.log(chartArr[0].dataTimes)
 	series=[];
@@ -150,7 +158,8 @@ function initChart(){
 		 yAxis.push({
 			type:'value',
 			splitLine: { show: false }, //去除网格中的坐标线
-
+//			min:0,
+//			max:100,
 			offset:60*j,
 			position:'left',
 			axisLabel: {
@@ -162,6 +171,8 @@ function initChart(){
             name: legendData[j],
             type: 'line',
             stack: '总量',
+            min:minData[j],
+			max:maxData[j],
             yAxisIndex:j,
 //          areaStyle:{ normal: {} },//是否显示阴影面积
             data: objData[j],
@@ -194,27 +205,13 @@ function initChart(){
 		    toolbox : {
 	            show :true,
 	            feature : {
-	                mark : {
-	                    show :true
-	                },
-	                dataView : {
-	                    show :true,
-	                    readOnly :true
-	                },
-	                magicType : {
-	                    show :true,
-	                    type : ['line','bar', 'stack','tiled']
-	                },
-	                restore : {
-	                    show :true
-	                },
 	                saveAsImage : {
 	                    show :true
 	                }
 	            }
 	        },
 		    grid: {
-				left: '10%',
+				left: '5%',
 				right: '10%',
 				top: '15%',
 				bottom: '12%',
@@ -344,7 +341,8 @@ $(document).ready(function() {
 				$("#chartsContent").html('')
 				chartArr=data;
 				for(var i=0;i<dataFid.length;i++){
-					initChart(dataFid[i],legendData);
+					initChart();
+//					initChart(dataFid[i],legendData);
 				}
 			}
 		})
@@ -412,6 +410,7 @@ function changeData(i){
 			chartArr=data;
 			for(var i=0;i<dataFid.length;i++){
 				initChart();
+//				initChart(dataFid[i],legendData);
 			}
 		}
 	})

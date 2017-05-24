@@ -216,7 +216,7 @@ function MQTTconnect(dataIds) {
 function onConnect() {
   console.log("onConnect");
   for(var i=0;i<data.length;i++){
-	  console.log(data[i]);
+//	  console.log(data[i]);
 	  topic=data[i]+"";
 	  client.subscribe(topic);
   }
@@ -248,43 +248,55 @@ function onMessageArrived(message) {
 	console.log(dataConfig.data_time)
 	for(var k=0;k<objId.length;k++){
 		for(var h=0;h<objId[k].length;h++){
-			console.log(dataId)
-			console.log(objId[k][h])
-			
-			var xdata3 = obj[k][h].dataValues;
-			console.log(xdata3)
+			console.log(obj)
+			console.log("推送的id===="+dataId)
+			console.log("推送的time===="+dataConfig.data_time)
+			console.log("推送的value===="+dataConfig.data_value)
 			
 			if(dataId==objId[k][h]){
 //				console.log("kk=------------"+k)
 //				console.log("objoo===="+obj[k][0].dataTimes);
+				//给满足条件的data_id所在的图表删除dataTimes的第一个值并添加推送过来的data_time
 				var xdata2 = obj[k][0].dataTimes;
 				console.log(xdata2)
 				xdata2.shift();
 				xdata2.push(dataConfig.data_time)
 				console.log(xdata2)
 				console.log(obj)
-//				for(var g=0;g<obj[k].length;g++){
-//					var ydata2=obj[k].dataValues
-//					console.log(ydata2)
-//
-//				}
-
+				//删除满足条件的图表里面的所有的dataValues的第一个值
+				for(var g=0;g<obj[k].length;g++){
+					var ydata3=obj[k][g].dataValues;
+					ydata3.shift();
+					console.log("ydata3=="+ydata3);
+				}
+				//给满足条件的data_id的dataValues添加推送过来的data_time
 				var ydata2 = obj[k][h].dataValues;
+				ydata2.push(dataConfig.data_value)
+				console.log(ydata2)
 				
+//				option.xAxis.data=xdata2
+//				option.series.data=ydata2
+				myChart.setOption({
+					xAxis:{
+						data:xdata2
+					},
+					series:[{
+						data:ydata2
+					}]
+				})
 				
-				
-				console.log("xdata2===="+xdata2);
-				console.log(k)
-				console.log("ydata2之前===="+ydata2);
-				ydata2.shift()
-				ydata2.push(dataConfig.data_value); 	
-			    console.log("ydata2-======"+ydata2);
+//				console.log("xdata2===="+xdata2);
+//				console.log(k)
+//				console.log("ydata2之前===="+ydata2);
+//				ydata2.shift()
+//				ydata2.push(dataConfig.data_value); 	
+//			    console.log("ydata2-======"+ydata2);
 			    
-			    /*option.xAxis[j].data=xdata2
-			    option.series[j].data=ydata2
-				myChart.setOption(option)*/
+//			    option.xAxis[j].data=xdata2
+//			    option.series[j].data=ydata2
+				myChart.setOption(option)
 			}
 		}
 		
-   }
+    }
 }
