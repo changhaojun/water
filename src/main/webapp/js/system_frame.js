@@ -324,6 +324,7 @@ function onConnectionLost(responseObject) {
 function onMessageArrived(message) {
   var topic = message.destinationName;
   var payload = JSON.parse(message.payloadString);
+  console.info(payload)
   toastr.options = {
 	  "closeButton":true,
 	  "debug":false,
@@ -339,7 +340,7 @@ function onMessageArrived(message) {
 	  "showMethod": "fadeIn",
 	  "hideMethod": "fadeOut"
 	}
-   toastr.error('告警!&nbsp;&nbsp;'+payload.whole_name+'&nbsp;&nbsp;&nbsp;&nbsp;当前值：'+payload.data_value);
+   toastr.error('告警!&nbsp;&nbsp;'+payload.whole_name+'&nbsp;&nbsp;&nbsp;&nbsp;当前值：'+payload.data_value+payload.data_unit);
    var alarmNum=$('.msgNum').text();
    $('.msgNum').text(Number(alarmNum)+1);
 }
