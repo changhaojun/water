@@ -52,11 +52,9 @@ function dataList(){
 	})
 }
 //数据列表
-
 function listData(data,i){
 	var str='';
 	//已关注，已设封面
-
 	if(selectedId.indexOf(data[i].data_id)!=-1 && selectedData.indexOf(data[i].data_id)!=-1){
 		str='<div class="dataList" id="'+data[i].data_id+'" >'+
 			'<div class="listTop normal" >'+
@@ -77,7 +75,6 @@ function listData(data,i){
 		'</div>'
 		$(".dataContent").append(str);
 		//已关注，没设封面
-
 	}else if(selectedId.indexOf(data[i].data_id)!=-1 && selectedData.indexOf(data[i].data_id)==-1){
 		str='<div class="dataList" id="'+data[i].data_id+'" >'+
 			'<div class="listTop normal">'+
@@ -98,7 +95,6 @@ function listData(data,i){
 		'</div>'
 		$(".dataContent").append(str);
 		//没关注，已设封面
-
 	}else if(selectedId.indexOf(data[i].data_id)==-1 && selectedData.indexOf(data[i].data_id)!=-1){
 		str='<div class="dataList" id="'+data[i].data_id+'" >'+
 			'<div class="listTop normal">'+
@@ -120,7 +116,6 @@ function listData(data,i){
 		$(".dataContent").append(str);
 	}
 	//没关注，没设封面
-
 	else{
 		str='<div class="dataList" id="'+data[i].data_id+'" >'+
 			'<div class="listTop normal">'+
@@ -144,7 +139,6 @@ function listData(data,i){
 }
 
 //获取已关注的数据
-
 var selectedId=[];
 function selectData(){
 	$.ajax({
@@ -166,7 +160,6 @@ function selectData(){
 	})
 }
 //获取已设封面的数据
-
 var selectedData=[];
 function selectId(){
 	$.ajax({
@@ -184,7 +177,6 @@ function selectId(){
 	})
 }
 //设封面
-
 $('.dataContent').delegate('.cover','click',function(){
 	var id=$(this).parent().parent().attr('id');
 	if($(this).hasClass('disabledLi')){
@@ -209,7 +201,6 @@ $('.dataContent').delegate('.cover','click',function(){
 	}
 })
 //设关注
-
 $('.dataContent').delegate('.focus1','click',function(){
 	var id=$(this).parent().parent().attr('id');
 	if($(this).hasClass('disabledLi')){
@@ -233,17 +224,14 @@ $('.dataContent').delegate('.focus1','click',function(){
 	}
 })
 //初始化提示框
-
 function toolTip(){
 	 $('[data-toggle="tooltip"]').tooltip();
 }
 //查看数据
-
 function look(dataId){
 	self.location.href="/finfosoft-water/runData/getCharts/"+dataId+"-"+thingId
 }
 //查询
-
 function searchThing(obj){
 	for(var i=0;i<dataLike.length;i++){
 		if(dataLike[i].title.search(obj.val())==-1){
@@ -259,7 +247,6 @@ function searchThing(obj){
 }
 
 //告警颜色设置
-
 function colorBg(data,index){
 	if(data==0){
 		$('.dataList').eq(index).addClass('grayBg')
@@ -271,19 +258,15 @@ function colorBg(data,index){
 }
 
 //订阅
-
 var client; 
 var topic;
 var data;
 function MQTTconnect(dataIds) {
 //  console.log("订阅程序开始执行");
-
     var mqttHost = '139.129.231.31';
 //	var mqttHost='192.168.1.114';
-
     var username="admin";
 //  var password="finfosoft123";
-
     var password="password";
 	 topic="mqtt_alarm_currentdata";
 	  client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
@@ -296,21 +279,16 @@ function MQTTconnect(dataIds) {
 			  }
 	  };	  
 	  // set callback handlers
-
 	  client.onConnectionLost = onConnectionLost;
-	  client.onMessageArrived = onMessageArrived;
-	  
+	  client.onMessageArrived = onMessageArrived; 
 	  if (username != null) {
 		  options.userName = username;
 		  options.password = password;
 	  }
 	  client.connect(options);  
 	  // connect the clien	
-
 }
-
 // called when the client connects
-
 function onConnect() {
   console.log("onConnect");
   for(var i=0;i<data.length;i++){
@@ -320,17 +298,13 @@ function onConnect() {
 	  client.subscribe(topic);
   }
 }
-
 // called when the client loses its connection
-
 function onConnectionLost(responseObject) {
   if (responseObject.errorCode !== 0) {
     console.log("onConnectionLost:" + responseObject.errorMessage);
   }
 }
-
 // called when a message arrives
-
 function onMessageArrived(message) {
   var topic = message.destinationName;
   var payload = message.payloadString;

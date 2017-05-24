@@ -70,14 +70,16 @@ body{
     border: 0;
     display: inline-block;
 }
-
+.dataContent{
+	height:auto;
+	overflow: hidden;
+}
 
 
 .dataContent .dataList{
 	width: 260px;
     height: 212px;
     background: #fff;
-    /*border-left: 8px solid #1ab394;*/
     margin-left: 20px;
     float: left;
     margin-top: 20px
@@ -118,7 +120,7 @@ body{
     color: white;
     line-height:30px;
     margin-top: -15px;
-    -display: none;
+    display: none;
 }
 .dataList  .listHr{
 	padding: 0;

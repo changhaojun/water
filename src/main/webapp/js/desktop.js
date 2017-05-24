@@ -85,7 +85,6 @@ function colorBg(data,id){
 		$('#'+id).addClass('redBg')
 	}
 }
-
 //图表配置项
 function chartInfo(data,i){
 	obj=[];objId=[];
@@ -186,12 +185,12 @@ var topic;
 var data;
 function MQTTconnect(dataIds) {
     console.log("订阅程序开始执行");
-//  var mqttHost = '139.129.231.31';
-//  var username="admin";
-//  var password="finfosoft123";
-	var mqttHost='192.168.1.114';
+    var mqttHost = '121.42.253.149';
     var username="admin";
-    var password="password";
+    var password="finfosoft123";
+//	var mqttHost='192.168.1.114';
+//  var username="admin";
+//  var password="password";
 	 topic="mqtt_alarm_currentdata";
 	  client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
 	 data = dataIds;  
@@ -245,20 +244,34 @@ function onMessageArrived(message) {
 	}else{
 		$('#'+dataId).addClass("redBg");
 	}
+	
+	console.log(dataConfig.data_time)
 	for(var k=0;k<objId.length;k++){
 		for(var h=0;h<objId[k].length;h++){
 			console.log(dataId)
 			console.log(objId[k][h])
+			
+			var xdata3 = obj[k][h].dataValues;
+			console.log(xdata3)
+			
 			if(dataId==objId[k][h]){
-				console.log("kk=------------"+k)
-				console.log("objoo===="+obj[k][0].dataTimes);
+//				console.log("kk=------------"+k)
+//				console.log("objoo===="+obj[k][0].dataTimes);
 				var xdata2 = obj[k][0].dataTimes;
+				console.log(xdata2)
 				xdata2.shift();
 				xdata2.push(dataConfig.data_time)
-				for(var g=0;g<obj[k].length;g++){
-					var ydata=obj[k]
-				}
+				console.log(xdata2)
+				console.log(obj)
+//				for(var g=0;g<obj[k].length;g++){
+//					var ydata2=obj[k].dataValues
+//					console.log(ydata2)
+//
+//				}
+
 				var ydata2 = obj[k][h].dataValues;
+				
+				
 				
 				console.log("xdata2===="+xdata2);
 				console.log(k)
