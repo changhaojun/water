@@ -338,9 +338,23 @@ document.addEventListener("drop", function( event ) {
   		'oldIndex':oldIndex,
   		'newIndex':newIndex
   	}
-  	console.info(index)
+  	changeOrder(dataIndex,index,saveDeskIndex)
 	dragged.removeAttr('dragged');
 })
-function updataIndex(){
-	
+function changeOrder(ruleDatas,index,callBack){
+	var thisData=ruleDatas[index.oldIndex];
+	if(index.oldIndex>index.newIndex){
+		ruleDatas.splice(index.newIndex,0,thisData);
+		ruleDatas.splice(index.oldIndex+1, 1);
+	}else{
+		ruleDatas.splice(index.newIndex+1,0,thisData);
+		ruleDatas.splice(index.oldIndex, 1);
+	}
+	callBack && callBack(ruleDatas);
+}
+function saveDeskIndex(arr){
+	console.info(arr)
+	for(var i=0;i<arr.length;i++){
+		
+	}
 }
