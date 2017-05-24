@@ -26,8 +26,6 @@ function entityList(){
 		   }
 			var str='';
 			for(var i=0;i<data.rows.length;i++){
-//				console.log(data.rows[0].run_data.data_times[0])
-//				console.log(data.rows.length);
 				if(data.rows[i].run_data){
 					str='<div class="dataList" style="cursor:pointer;" onclick="look(&apos;'+data.rows[i]._id+'&apos;)">'+
 							'<div class="listTop">'+
@@ -50,14 +48,7 @@ function entityList(){
 						xAxis:{
 							type:'category',
 							data: data.rows[i].run_data.data_times,  
-							show:false,
-							/*axisLabel: {
-	                            show: true,
-	                            textStyle: {
-	                                color: '#fff'
-	                            }
-	                       },*/
-	                       
+							show:false,   
 						},
 						yAxis:{
 							type:'value',
@@ -72,14 +63,7 @@ function entityList(){
 				                        {type : 'max', name: '最大值'},
 				                        {type : 'min', name: '最小值'}
 				                    ]
-		                		},
-		                		/*markline:{
-		                			data : [
-									[
-									    {name: '标线1起点', value: 100, x: 50, y: 20},
-									    {name: '标线1终点', x: 150, y: 120}
-									]
-		                		},*/
+		             	  },	
 			                	itemStyle : {  
 		                                normal : {  
 		                                	color:'#1ab394',
@@ -95,11 +79,80 @@ function entityList(){
 					var myChart=echarts.init(document.getElementById(data.rows[i]._id));
 					myChart.setOption(option)
 				}	
-
+				entityData(data,i)
 			}	
 		}
 	})
 }
+//
+function entityData(data,i){
+	var str='';
+	if(data.rows[i].run_data){
+		str='<div class="dataList" style="cursor:pointer;" onclick="look(&apos;'+data.rows[i]._id+'&apos;)">'+
+				'<div class="listTop">'+
+					'<span>'+data.rows[i].thing_name+'</span>'+							
+				'</div>'+
+				'<div class="listHr"></div>'+
+				'<div class="listContent">'+
+					'<div style="width:478px;margin:0 auto;" class="contentTop" id="'+data.rows[i]._id+'">'+
+					
+					'</div>'+
+					'<div class="contentBottom">'+
+//							'<span class="fa fa-clock-o">'+' '+data.rows[i].run_data.data_times[0].substring(0,7)+'&nbsp; &nbsp;&nbsp;&nbsp;'+'72h'+'</span>'+
+					'</div>'+
+				'</div>'+			
+			'</div>';
+			$(".dataContent").append(str);
+		chartInfo(data,i)
+	}
+}
+//图表配置项
+function chartInfo(data,i){
+	option={
+		tooltip:{
+			trigger:'axis'
+		},
+		xAxis:{
+			type:'category',
+			data: data.rows[i].run_data.data_times,  
+			show:false,
+		},
+		yAxis:{
+			type:'value',
+			show:false
+		},
+		series:[
+			{
+				type:'line',
+				data:data.rows[i].run_data.data_values,
+				markPoint : {
+                    data : [
+                        {type : 'max', name: '最大值'},
+                        {type : 'min', name: '最小值'}
+                    ]
+        		},
+        		markLine:{
+                    data:[
+                            [ {color:'#ccc', x: -10, y: 123},
+                                { x: 500, y: 123}
+                            ]
+                    ]
+               	},
+            	itemStyle : {  
+                    normal : {  
+                    	color:'#53b29e',
+                        lineStyle:{  
+                            color:'#53b29e' ,   
+                        }  
+                    }  
+                }
+			}
+		]
+	}
+	var myChart=echarts.init(document.getElementById(data.rows[i]._id));
+	myChart.setOption(option)
+}
+
 //查看实体数据
 function look(id){
 	console.log(id);
@@ -143,7 +196,7 @@ function ajaxRequest(){
 		$(".dataContent").html("");
 		$.ajax({
 			type: 'get',
-			url: 'http://192.168.1.114/v1/things',
+			url: globalurl+"/v1/runDatas",
 			dataType: "JSON",
 			crossDomain: true == !(document.all),
 			data:{
@@ -155,76 +208,8 @@ function ajaxRequest(){
 					getNewToken();
 					ajaxRequest();
 				}else{
-					var str='';
 					for(var i=0;i<data.rows.length;i++){
-						if(data.rows[i].run_data){
-							str='<div class="dataList">'+
-										'<div class="listTop">'+
-											'<span>'+data.rows[i].thing_name+'</span>'+								
-										'</div>'+
-										'<div class="listHr"></div>'+
-										'<div class="listContent">'+
-											'<div class="contentTop">'+
-												/*'<div class="Itext">'+data.datas[i].data_value+data.datas[i].data_unit+						
-												'</div>'+	*/					
-											'</div>'+
-											'<div class="contentBottom">'+
-												'<span class="fa fa-clock-o">'+' '+data.rows[i].run_data.data_times[0]+'&nbsp; &nbsp;&nbsp;&nbsp;'+'72h'+'</span>'+
-											'</div>'+
-										'</div>'+			
-									'</div>';
-						option={
-							tooltip:{
-								trigger:'axis'
-							},
-							xAxis:{
-								type:'category',
-								data: data.rows[i].run_data.data_times,  
-								show:false,
-								/*axisLabel: {
-		                            show: true,
-		                            textStyle: {
-		                                color: '#fff'
-		                            }
-		                       },*/
-		                       
-							},
-							yAxis:{
-								type:'value',
-								show:false
-							},
-							series:[
-								{
-									type:'line',
-									data:data.rows[i].run_data.data_values,
-									markPoint : {
-					                    data : [
-					                        {type : 'max', name: '最大值'},
-					                        {type : 'min', name: '最小值'}
-					                    ]
-			                		},
-			                		/*markline:{
-			                			data : [
-										[
-										    {name: '标线1起点', value: 100, x: 50, y: 20},
-										    {name: '标线1终点', x: 150, y: 120}
-										]
-			                		},*/
-				                	itemStyle : {  
-			                                normal : {  
-			                                	color:'#1ab394',
-			                                    lineStyle:{  
-			                                        color:'#1ab394' ,   
-			                                    }  
-			                                }  
-			                        }
-								}
-							]
-						}
-						$(".dataContent").append(str);
-						var myChart=echarts.init($('.contentTop')[i])
-						myChart.setOption(option)
-						}	
+						entityData(data,i);
 					}
 				}
 				

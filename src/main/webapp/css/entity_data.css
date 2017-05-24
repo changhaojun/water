@@ -176,4 +176,7 @@ body{
 	color:#d51b1c;
 }
 
-
+.dataList .disabledLi{
+	cursor: not-allowed!important;
+	background:#b3b3b3!important;
+}
