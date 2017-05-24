@@ -49,8 +49,7 @@ $.three = {
 	},
 	font: {
 		loader: null,
-		src: '/finfosoft-water/plugins/three/font/FZLanTingHeiS-UL-GB_Regular.json',
-//		src: '/finfosoft-water/plugins/three/font/font1.json',
+		src: '/finfosoft-water/plugins/three/font/FZLanTingHeiS-UL-GB_Regular.json'
 		size: 6,
 		depth: 2,
 		color: 0xffffff,

@@ -256,6 +256,7 @@ body *{
 	height: 100%;
 	background: url(../img/login/login_layer_close.png) no-repeat 10px 10px;
 	transition: 0.5s;
+	opacity: 1;
 }
 .selector-close:hover{
 	background-color: #24c5a4;
