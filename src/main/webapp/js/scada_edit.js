@@ -356,6 +356,12 @@ $.extend({
 		$('.selector-close').click(function() {
 			$('.selector').toggleWin(true);
 		});
+		$('.selectThing').find('input').searchThingName(function(data) {
+			$('.selectThing').find('.selector-list').refreshNameList(data);
+		});
+		$('.selectProcess').find('input').searchProcess(function(data) {
+			$('.selectProcess').find('.selector-list').refreshProcessList(data);
+		});
 	},
 	//打开选择实体列表
 	openSelectThingName: function() {

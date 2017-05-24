@@ -15,10 +15,10 @@ $.initData = {
 		scada_config: []
 	},
 	mqtt: { //MQTT订阅数据
-		host: '139.129.231.31',
-		port: 61623,
-		username: 'admin',
-		password: 'finfosoft123'
+		host: mqttHostIP,
+		port: portNum,
+		username: mqttName,
+		password: mqttWord
 	}
 }
 
@@ -70,10 +70,10 @@ $.extend({
 				$.initData.sentData.scada_model_id = data.scada.scada_model_id;
 				$.initData.sentData.description = data.scada.description;
 				$.initData.sentData.scada_config = data.scada.scada_config;
-				//数据标签渲染
 				//三维场景初始化
 				$.initThree.init(data.scadaModel.modelConfig, function() {
 					for (var i=0; i<$.initData.sentData.scada_config.length; i++) {
+						//数据标签渲染
 						$.initThree.initLabel(
 							$.initData.sentData.scada_config[i],
 							$.initData.sentData.scada_config[i].objPosition,

@@ -1,6 +1,10 @@
 $.ThreeCavs = $('#canv');
+$.loaderEl = $('.loader');
 
 $.three = {
+	modelsLoading: true,
+	fontLoading: true,
+	loadingStatus: 1,
 	scene: {
 		el: null
 	},
@@ -46,6 +50,7 @@ $.three = {
 	font: {
 		loader: null,
 		src: '/finfosoft-water/plugins/three/font/FZLanTingHeiS-UL-GB_Regular.json',
+//		src: '/finfosoft-water/plugins/three/font/font1.json',
 		size: 6,
 		depth: 2,
 		color: 0xffffff,
@@ -56,7 +61,6 @@ $.three = {
 		opacity: 0.8
 	},
 	labelGroup: new THREE.Object3D(),
-	loading: 0,
 	renderer: {
 		el: null,
 		clearColor: 0xffffff
@@ -188,6 +192,9 @@ $.initThree = {
 			});
 		});
 		if ($.three.model.count===models.length-1) {
+			$.three.modelsLoading = false;
+			$.three.loadingStatus++;
+			$.initThree.initLoading();
 			return;
 		} else {
 			$.three.model.count++;
@@ -217,6 +224,9 @@ $.initThree = {
 		$.three.font.loader = $.three.font.loader===null ? new THREE.FontLoader() : $.three.font.loader;
 		$.three.font.loader.load($.three.font.src, function(font) {
 			$.three.font.geometry = font;
+			$.three.fontLoading = false;
+			$.three.loadingStatus++;
+			$.initThree.initLoading();
 			callBack && callBack();
 		});
 	},
@@ -242,120 +252,112 @@ $.initThree = {
 			labelMessage = processName;
 		}
 		
-//		$.three.loading++;
-//		$.three.font.loader = $.three.font.loader===null ? new THREE.FontLoader() : $.three.font.loader;
-//		$.three.font.loader.load($.three.font.src, function(font) {
-			//text
-			var textGeo = new THREE.TextGeometry(labelMessage, {
-				font: $.three.font.geometry,
-				size:  $.three.font.size,
-				height: $.three.font.depth,
-				curveSegments: 10
-			});
-			var textMtl = new THREE.MeshPhongMaterial({
-				emissive: $.three.font.color,
-				transparent: true,
-				opacity: $.three.font.opacity
-			});
-			var text = new THREE.Mesh(textGeo, textMtl);
-			textGeo.computeBoundingBox();
-			textGeo.computeBoundingSphere();
-			var textLength = textGeo.boundingBox.max.x-textGeo.boundingBox.min.x;
-			var textHeight = textGeo.boundingBox.max.y-textGeo.boundingBox.min.y;
-			var textDepth = $.three.font.depth;
-			text.position.set(
-				-textGeo.boundingSphere.center.x,
-				-$.three.font.size/2,
-				-$.three.font.depth/2
+		//text
+		var textGeo = new THREE.TextGeometry(labelMessage, {
+			font: $.three.font.geometry,
+			size:  $.three.font.size,
+			height: $.three.font.depth,
+			curveSegments: 10
+		});
+		var textMtl = new THREE.MeshPhongMaterial({
+			emissive: $.three.font.color,
+			transparent: true,
+			opacity: $.three.font.opacity
+		});
+		var text = new THREE.Mesh(textGeo, textMtl);
+		textGeo.computeBoundingBox();
+		textGeo.computeBoundingSphere();
+		var textLength = textGeo.boundingBox.max.x-textGeo.boundingBox.min.x;
+		var textHeight = textGeo.boundingBox.max.y-textGeo.boundingBox.min.y;
+		var textDepth = $.three.font.depth;
+		text.position.set(
+			-textGeo.boundingSphere.center.x,
+			-$.three.font.size/2,
+			-$.three.font.depth/2
+		);
+		//plane
+		var labelPlaneLength = textLength+10;
+		var labelPlaneHeight = textHeight*1.2;
+		var labelPlaneDepth = textDepth*0.6;
+		
+		if ($.initThree.judgeLabelType(userData) == 'data') {
+			var labelPlaneColor = (function() {
+				switch (dataStatus) {
+					case 0:
+						return 0xcccccc;
+					case 1:
+						return 0x00aeff;
+					case 2:
+						return 0xff0000;
+				}
+			})();
+		} else if ($.initThree.judgeLabelType(userData) == 'process') {
+			var labelPlaneColor = (function() {
+				switch (processStatus) {
+					case 0:
+						return 0xcccccc;
+					case 1:
+						return 0x00aeff;
+				}
+			})();
+		}
+		
+		if ($.initThree.judgeLabelType(userData) == 'data') {
+			var labelPlaneGeo = new THREE.ExtrudeGeometry(
+				$.initThree.createDataLabelShape(0, 0, labelPlaneLength, labelPlaneHeight, labelPlaneHeight/5, labelPlaneHeight/4),
+				{
+					amount: labelPlaneDepth,
+					bevelEnabled: false
+				}
 			);
-			//plane
-			var labelPlaneLength = textLength+10;
-			var labelPlaneHeight = textHeight*1.2;
-			var labelPlaneDepth = textDepth*0.6;
-			
-			if ($.initThree.judgeLabelType(userData) == 'data') {
-				var labelPlaneColor = (function() {
-					switch (dataStatus) {
-						case 0:
-							return 0xcccccc;
-						case 1:
-							return 0x00aeff;
-						case 2:
-							return 0xff0000;
-					}
-				})();
-			} else if ($.initThree.judgeLabelType(userData) == 'process') {
-				var labelPlaneColor = (function() {
-					switch (processStatus) {
-						case 0:
-							return 0xcccccc;
-						case 1:
-							return 0x00aeff;
-					}
-				})();
-			}
-			
-			if ($.initThree.judgeLabelType(userData) == 'data') {
-				var labelPlaneGeo = new THREE.ExtrudeGeometry(
-					$.initThree.createDataLabelShape(0, 0, labelPlaneLength, labelPlaneHeight, labelPlaneHeight/5, labelPlaneHeight/4),
-					{
-						amount: labelPlaneDepth,
-						bevelEnabled: false
-					}
-				);
-			} else if ($.initThree.judgeLabelType(userData) == 'process') {
-				var labelPlaneGeo = new THREE.ExtrudeGeometry(
-					$.initThree.createMissionLabelShape(0, 0, labelPlaneLength, labelPlaneHeight),
-					{
-						amount: labelPlaneDepth,
-						bevelEnabled: false
-					}
-				);
-			}
-			var labelPlaneMtl = new THREE.MeshPhongMaterial({
-				color: labelPlaneColor,
-				transparent: true,
-				opacity: $.three.labelPlane.opacity
-			});
-			var labelPlane = new THREE.Mesh(labelPlaneGeo, labelPlaneMtl);
-			labelPlane.position.set(
-				-labelPlaneLength/2,
-				-labelPlaneHeight/2,
-				-labelPlaneDepth/2
+		} else if ($.initThree.judgeLabelType(userData) == 'process') {
+			var labelPlaneGeo = new THREE.ExtrudeGeometry(
+				$.initThree.createMissionLabelShape(0, 0, labelPlaneLength, labelPlaneHeight),
+				{
+					amount: labelPlaneDepth,
+					bevelEnabled: false
+				}
 			);
-			
-			//label
-			var label = new THREE.Object3D();
-			label.add(text, labelPlane);
-			if (oldPos) {
-				label.position.x = oldPos.x;
-				label.position.y = oldPos.y;
-				label.position.z = oldPos.z;
-			} else {
-				label.position.y = 40;
-			}
-			label.target = 'target';
-			
-			if ($.initThree.judgeLabelType(userData) == 'data') {
-				label.labelId = parseInt(dataId);
-				label.labelName = dataName;
-				label.labelValue = dataValue;
-				label.labelUnit = dataUnit;
-				label.labelType = portType;
-				label.labelStatus = dataStatus;
-			} else if ($.initThree.judgeLabelType(userData) == 'process') {
-				label.processId = processId;
-				label.processName = processName;
-				label.labelStatus = processStatus;
-			}
-			$.three.labelGroup.add(label);
-			$.initThree.rendererUpdata();
-			onSingleLabelLoaded && onSingleLabelLoaded(userData);
-//			$.three.loading--;
-//			if ($.three.loading===0) {
-//				onAllLabelLoaded && onAllLabelLoaded();
-//			}
-//		});
+		}
+		var labelPlaneMtl = new THREE.MeshPhongMaterial({
+			color: labelPlaneColor,
+			transparent: true,
+			opacity: $.three.labelPlane.opacity
+		});
+		var labelPlane = new THREE.Mesh(labelPlaneGeo, labelPlaneMtl);
+		labelPlane.position.set(
+			-labelPlaneLength/2,
+			-labelPlaneHeight/2,
+			-labelPlaneDepth/2
+		);
+		
+		//label
+		var label = new THREE.Object3D();
+		label.add(text, labelPlane);
+		if (oldPos) {
+			label.position.x = oldPos.x;
+			label.position.y = oldPos.y;
+			label.position.z = oldPos.z;
+		} else {
+			label.position.y = 40;
+		}
+		label.target = 'target';
+		
+		if ($.initThree.judgeLabelType(userData) == 'data') {
+			label.labelId = parseInt(dataId);
+			label.labelName = dataName;
+			label.labelValue = dataValue;
+			label.labelUnit = dataUnit;
+			label.labelType = portType;
+			label.labelStatus = dataStatus;
+		} else if ($.initThree.judgeLabelType(userData) == 'process') {
+			label.processId = processId;
+			label.processName = processName;
+			label.labelStatus = processStatus;
+		}
+		$.three.labelGroup.add(label);
+		$.initThree.rendererUpdata();
+		onSingleLabelLoaded && onSingleLabelLoaded(userData);
 	},
 	initRenderer: function() {
 		var renderer =  new THREE.WebGLRenderer({
@@ -532,6 +534,29 @@ $.initThree = {
 			return 'data';
 		} else if (data._id || data.process_id || data.processId) {
 			return 'process';
+		}
+	},
+	initLoading: function() {
+		if (!$.three.fontLoading && !$.three.modelsLoading) {
+			$.loaderEl.animate({
+				opacity: 0
+			}, 2000, 'swing', function() {
+				$.loaderEl.css('display', 'none');
+			});
+			$.loaderEl.find('.text').html('加载完成！('+$.three.loadingStatus+' / 3)').css({
+				'webkitAnimationName': 'color-text'+$.three.loadingStatus,
+				'animationName': 'color-text'+$.three.loadingStatus
+			});
+		} else if (!$.three.fontLoading) {
+			$.loaderEl.find('.text').html('模型加载中，请稍后('+$.three.loadingStatus+' / 3)').css({
+				'webkitAnimationName': 'color-text'+$.three.loadingStatus,
+				'animationName': 'color-text'+$.three.loadingStatus
+			});
+		} else if (!$.three.modelsLoading) {
+			$.loaderEl.find('.text').html('字体加载中，请稍后('+$.three.loadingStatus+' / 3)').css({
+				'webkitAnimationName': 'color-text'+$.three.loadingStatus,
+				'animationName': 'color-text'+$.three.loadingStatus
+			});
 		}
 	}
 }
