@@ -231,16 +231,16 @@ function look(dataId){
 }
 //查询
 function searchThing(obj){
-	$(".dataContent").html("");
 	for(var i=0;i<dataLike.length;i++){
-		if(dataLike[i].title.search(obj.val())!=-1){
-			listData(dataLike,i)
-			colorBg(dataLike[i].status,i);
+		if(dataLike[i].title.search(obj.val())==-1){
+			$('#'+dataLike[i].data_id).hide(500)
+		}else{
+			$('#'+dataLike[i].data_id).show(500)
 		}
 		dataId.push(dataLike[i].data_id)
 	}
 	toolTip()
-	MQTTconnect(dataId);
+//	MQTTconnect(dataId);
 }
 
 //告警颜色设置
@@ -250,7 +250,6 @@ function colorBg(data,index){
 	}else if(data==1){
 		$('.dataList').eq(index).addClass('greenBg')
 	}else{
-		alert(2)
 		$('.dataList').eq(index).addClass('redBg')
 	}
 }

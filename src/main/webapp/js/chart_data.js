@@ -22,8 +22,6 @@ $(function(){
 	selectData();//获取已关注的图表数据
 })
 
-
-
 function p(s) {	
     return s < 10 ? '0' + s: s;
 }
@@ -43,7 +41,6 @@ if(h>=12){
 }else{
 	flag="AM";
 }
-
 startTime=year+"$"+p(month)+"$"+(p(date))+"$"+(p(h-h))+":"+(p(m-m))+":"+(p(s-s));
 endTime=year+"$"+p(month)+"$"+(p(date))+"$"+(p(h))+":"+(p(m))+":"+(p(s));
 initstartTime=year+'-'+p(month)+"-"+p(date)+" AM "+p(h-h)+':'+p(m-m);
@@ -109,7 +106,6 @@ function getChart(i){
 		}
 	}   
 	//判断是否被关注
-	
 	for(var j=0;j<selectedId.length;j++){
 		if(selectedId[j].toString()==dataFid.toString()){
 			$('.chartContent span').addClass('disabledFa');
@@ -119,7 +115,7 @@ function getChart(i){
 			$('.chartContent span').removeClass('disabledFa');
 		}
 	}
-	
+	//获取数据
 	var data="{data_id:"+Number(i)+",start_time:'"+startTime+"',end_time:'"+endTime+"'}";
 	$.ajax({
 		url: globalurl+"/v1/runDatas",
@@ -132,34 +128,28 @@ function getChart(i){
 		async:false,
 		crossDomain: true == !(document.all),
 		success:function(data){
-			console.log(data)
 			if(data.length==0){
 				$(".chartsContent").html("<span class='nonedata'>暂无数据</span>");
 			}else{
 				chartArr.push(data);
-				console.log(chartArr)
 				initChart(i,legendData);
 			}
 		}
 	})
 }
-
+//图表配置项以及实例化图表
 function initChart(i,legendData){
 	var objData=[];obj=[]
 	for(var j=0;j<chartArr.length;j++){
-//			chartArr[j].dataValues
 		objData.push(chartArr[j].dataValues);	
 	}
-	//console.log(objData)
 	console.log(chartArr[0].dataTimes)
 	series=[];
 	yAxis=[];
-	for(var j=0;j<legendData.length;j++){
-		
+	for(var j=0;j<legendData.length;j++){	
 		//将请求到的数据添加到y轴的数据中	 
 		 yAxis.push({
 			type:'value',
-//			name: unitNme[j],
 			splitLine: { show: false }, //去除网格中的坐标线
 			offset:60*j,
 			position:'left',
@@ -173,7 +163,7 @@ function initChart(i,legendData){
             type: 'line',
             stack: '总量',
             yAxisIndex:j,
-           // areaStyle:{ normal: {} },
+//          areaStyle:{ normal: {} },//是否显示阴影面积
             data: objData[j],
             markPoint : {
                 data : [
@@ -188,7 +178,6 @@ function initChart(i,legendData){
             },
        });
 	}	
-
 	var myChart=echarts.init(document.getElementById('chartsContent'))
 	var option={
 			title:{
@@ -226,39 +215,38 @@ function initChart(i,legendData){
 	                    show :true
 	                }
 	            }
-	       },
-
-	    grid: {
-			left: '10%',
-			right: '10%',
-			top: '15%',
-			bottom: '12%',
-			containLabel: true
-		},
-		xAxis: {
-	        type: 'category',
-	        boundaryGap: false,
-	        data:chartArr[0].dataTimes
-	    },
-	    yAxis:yAxis,
-	    dataZoom:[
-        	//x轴缩放
-            {
-                type:'slider',
-                xAxisIndex:0,
-                start:20,
-                end:80,
-                height:30,
-            },
-            {
-                type:'inside',
-                xAxisIndex:0,
-                start:20,
-                end:80
-            }
-        ],
-		series:series		
-	};
+	        },
+		    grid: {
+				left: '10%',
+				right: '10%',
+				top: '15%',
+				bottom: '12%',
+				containLabel: true
+			},
+			xAxis: {
+		        type: 'category',
+		        boundaryGap: false,
+		        data:chartArr[0].dataTimes
+		    },
+		    yAxis:yAxis,
+		    dataZoom:[
+	        	//x轴缩放
+	            {
+	                type:'slider',
+	                xAxisIndex:0,
+	                start:20,
+	                end:80,
+	                height:30,
+	            },
+	            {
+	                type:'inside',
+	                xAxisIndex:0,
+	                start:20,
+	                end:80
+	            }
+	        ],
+			series:series		
+		};
 	myChart.setOption(option);
 }
 
@@ -268,39 +256,60 @@ $('.chartContent button').click(function(){
 })
 
 //设置关注
-$('.chartContent').delegate('focusr','click',function(){
+$('.chartContent').delegate('.focusr','click',function(){
+	var This=$(this)
 	if($(this).hasClass('disabledFa')){
 		layer.msg('已关注',{icon:2})
 	}else{
 		var data={};
-	data.data_id=dataFid
-	data.thing_id=thingId;
+		data.data_id=dataFid
+		data.thing_id=thingId;
+		$.ajax({
+			type:'post',
+			url: globalurl+"/v1/desktops",
+			dataType: "JSON",
+			async: false,
+			crossDomain: true == !(document.all),
+			data:{
+				access_token: accesstoken,
+				data:JSON.stringify(data)
+			},
+			success:function(data){
+				console.log(data)
+				if(data.code==200){
+					layer.msg('关注成功', {
+						icon: 1,
+						time:2000,
+					});
+					This.addClass('disabledFa');
+				}
+			}
+		})
+	}
+})
+//获取已关注的数据
+function selectData(){
 	$.ajax({
-		type:'post',
+		type:'get',
 		url: globalurl+"/v1/desktops",
-		dataType: "JSON",
+		dataType:'JSON',
 		async: false,
 		crossDomain: true == !(document.all),
 		data:{
 			access_token: accesstoken,
-			data:JSON.stringify(data)
+		    fields:"data_id",
+		    filter:JSON.stringify({"thing_id":thingId,"is_chart":1})
 		},
 		success:function(data){
 			console.log(data)
-			if(data.code==200){
-				layer.msg('关注成功', {
-					icon: 1,
-					time:2000,
-				});
+			for(var i=0;i<data.length;i++){
+				selectedId.push(data[i].data_id)
 			}
-			
+			console.log(selectedId)
+			console.log(selectedId[0])
 		}
 	})
-	}
-})
-
-
-
+}
 /*function focus1(id){
 	var data={};
 	data.data_id=dataFid
@@ -435,28 +444,4 @@ function changeData(i){
 	$("#reservationtime").val(initstartTime+" "+" - "+" "+initendTime);
 }
 
-//获取已关注的数据
-//var selectedId;
-//console.log(selectedId)
-function selectData(){
-	$.ajax({
-		type:'get',
-		url: globalurl+"/v1/desktops",
-		dataType:'JSON',
-		async: false,
-		crossDomain: true == !(document.all),
-		data:{
-			access_token: accesstoken,
-		    fields:"data_id",
-		    filter:JSON.stringify({"thing_id":thingId,"is_chart":1})
-		},
-		success:function(data){
-			console.log(data)
-			for(var i=0;i<data.length;i++){
-				selectedId.push(data[i].data_id)
-			}
-			console.log(selectedId)
-			console.log(selectedId[0])
-		}
-	})
-}
+
