@@ -16,7 +16,7 @@ $.initData = {
 	},
 	mqtt: { //MQTT订阅数据
 		host: mqttHostIP,
-		port: portNum,
+		port: Number(portNum),
 		username: mqttName,
 		password: mqttWord
 	}
