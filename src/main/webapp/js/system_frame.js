@@ -2,7 +2,8 @@
 	getNavData();
 	var companyId=$('#companyId').val();
 	getMsgNum();
-	var guid=guidGenerator();
+//	var guid=guidGenerator();
+//	saveGuid();
 	MQTTconnect();
 	$(".userName").append("欢迎你，"+user.fullname)
 var flag=-1;
@@ -288,16 +289,31 @@ function guidGenerator() {
 	return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 }
 
+function saveGuid(){
+	$.ajax({
+		type:"post",
+		url:globalurl+'/v1/guids',
+		async:true,
+		dataType:'JSON',
+		data:{
+			access_token:accesstoken,
+			data:'{"guid":"'+guid+'"}'
+		},
+		success:function(data){
+			console.info(data)
+			if(data.code==200){
+				MQTTconnect();
+			}
+		}
+	});
+}
 
 function MQTTconnect(){
 	console.log("订阅程序开始执行");
-//	var mqttHost = '139.129.231.31';
-//	var username = "admin";
-//	var password = "finfosoft123";
-	var mqttHost = '192.168.1.114';
-	var username = "admin";
-	var password = "password";
-	client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
+	var mqttHost = mqttHostIP;
+	var username = mqttName;
+	var password = mqttWord;
+	client = new Paho.MQTT.Client(mqttHost, Number(portNum), "server" + parseInt(Math.random() * 100, 10));
 	var options = {
 		timeout: 1000,
 		onSuccess: onConnect,
@@ -321,6 +337,7 @@ function MQTTconnect(){
 function onConnect() {
     console.log("onConnect");
     topic = companyId;
+    console.info("topic:"+topic)
     client.subscribe(topic);
 }
 

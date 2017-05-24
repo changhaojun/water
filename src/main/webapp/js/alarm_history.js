@@ -151,12 +151,9 @@ $('.cancelBtn').click(function(){
 
 function MQTTconnect(){
 	console.log("订阅程序开始执行");
-//	var mqttHost = '139.129.231.31';
-//	var username = "admin";
-//	var password = "finfosoft123";
-	var mqttHost = '192.168.1.114';
-	var username = "admin";
-	var password = "password";
+	var mqttHost = mqttHost;
+	var username = mqttName;
+	var password = mqttWord;
 	client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
 	var options = {
 		timeout: 1000,

@@ -7,6 +7,11 @@ var itemName="/finfosoft-water";
 var accesstoken;
 var refreshToken;
 
+var mqttHostIP="121.42.253.149"
+var mqttName="admin"
+var mqttWord="finfosoft123"
+var portNum='61623'
+
 //获取token
 var getToken=function(callBack){
 	$.ajax({
