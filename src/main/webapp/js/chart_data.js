@@ -13,8 +13,6 @@ var legendData=[];//存放每一个图标的lengend
 var dataUnit=[];
 var dataFid=[];
 var selectedId=[];
-var minData=[];
-var maxData=[];
 
 $(function(){
 	getToken();//刷新令牌
@@ -98,11 +96,8 @@ function getChart(i){
 	dataUnit=[];dataFid=[];
 	for(var n=0;n<$(".list").children().length;n++){
 		if($(".list").children().eq(n).hasClass('selectdLi')){
-//			legendData.push($(".list").children().eq(n).children().eq(0).html());
-//			console.log(legendData)
 			dataUnit.push($(".list").children().eq(n).children().eq(2).html())
 			dataFid.push(Number($(".list").children().eq(n).children().eq(3).html()))
-			console.log(dataFid)
 		}
 	}   
 	//判断是否被关注
@@ -140,26 +135,20 @@ function getChart(i){
 }
 //图表配置项以及实例化图表
 function initChart(){
-	var objData=[]; legendData=[];minData=[];maxData=[];
+	var objData=[]; legendData=[];
 	for(var j=0;j<chartArr.length;j++){
 		objData.push(chartArr[j].dataValues);	
 		legendData.push(chartArr[j].device_name+'-'+chartArr[j].data_name)
-		minData.push(chartArr[j].min_value)
-		maxData.push(chartArr[j].max_value)
-		console.log(maxData)
-		console.log(minData)
 	}
-	console.log(chartArr[0].dataTimes)
 	series=[];
 	yAxis=[];
-	for(var j=0;j<legendData.length;j++){	
-//	for(var j=0;j<chartArr.length;j++){
+	for(var j=0;j<chartArr.length;j++){
 		//将请求到的数据添加到y轴的数据中	 
 		 yAxis.push({
 			type:'value',
 			splitLine: { show: false }, //去除网格中的坐标线
-//			min:0,
-//			max:100,
+			min:0,
+			max:Math.ceil(chartArr[j].max_value),
 			offset:60*j,
 			position:'left',
 			axisLabel: {
@@ -170,9 +159,7 @@ function initChart(){
 		series.push({
             name: legendData[j],
             type: 'line',
-            stack: '总量',
-            min:minData[j],
-			max:maxData[j],
+//          smooth:true,//使折线平滑
             yAxisIndex:j,
 //          areaStyle:{ normal: {} },//是否显示阴影面积
             data: objData[j],
@@ -190,6 +177,7 @@ function initChart(){
        });
 	}	
 	var myChart=echarts.init(document.getElementById('chartsContent'))
+	myChart.showLoading();
 	var option={
 			title:{
 				text:''
@@ -243,6 +231,7 @@ function initChart(){
 			series:series		
 		};
 	myChart.setOption(option);
+	myChart.hideLoading();
 }
 
 $('.chartContent button').click(function(){
@@ -296,12 +285,9 @@ function selectData(){
 		    filter:JSON.stringify({"thing_id":thingId,"is_chart":1})
 		},
 		success:function(data){
-			console.log(data)
 			for(var i=0;i<data.length;i++){
 				selectedId.push(data[i].data_id)
 			}
-			console.log(selectedId)
-			console.log(selectedId[0])
 		}
 	})
 }
