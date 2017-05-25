@@ -188,14 +188,11 @@ var topic;
 var data;
 function MQTTconnect(dataIds) {
     console.log("订阅程序开始执行");
-    var mqttHost = '121.42.253.149';
-    var username="admin";
-    var password="finfosoft123";
-//	var mqttHost='192.168.1.114';
-//  var username="admin";
-//  var password="password";
+    var mqttHost = mqttHostIP;
+	var username = mqttName;
+	var password = mqttWord;
 	 topic="mqtt_alarm_currentdata";
-	  client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
+	  client = new Paho.MQTT.Client(mqttHost, Number(portNum), "server" + parseInt(Math.random() * 100, 10));
 	 data = dataIds;  
 	  var options = {
 			  timeout: 1000,
@@ -219,7 +216,6 @@ function MQTTconnect(dataIds) {
 function onConnect() {
   console.log("onConnect");
   for(var i=0;i<data.length;i++){
-	  console.log(data[i]);
 	  topic=data[i]+"";
 	  client.subscribe(topic);
   }
@@ -248,44 +244,35 @@ function onMessageArrived(message) {
 		$('#'+dataId).addClass("redBg");
 	}
 	
-	console.log(dataConfig.data_time)
 	for(var k=0;k<objId.length;k++){
 		for(var h=0;h<objId[k].length;h++){
-			console.log(dataId)
-			console.log(objId[k][h])
-			
-			var xdata3 = obj[k][h].dataValues;
-			console.log(xdata3)
 			
 			if(dataId==objId[k][h]){
-//				console.log("kk=------------"+k)
-//				console.log("objoo===="+obj[k][0].dataTimes);
+				//给满足条件的data_id所在的图表删除dataTimes的第一个值并添加推送过来的data_time
 				var xdata2 = obj[k][0].dataTimes;
 				console.log(xdata2)
 				xdata2.shift();
 				xdata2.push(dataConfig.data_time)
 				console.log(xdata2)
 				console.log(obj)
-//				for(var g=0;g<obj[k].length;g++){
-//					var ydata2=obj[k].dataValues
-//					console.log(ydata2)
-//
-//				}
-
+				//删除满足条件的图表里面的所有的dataValues的第一个值
+				for(var g=0;g<obj[k].length;g++){
+					var ydata3=obj[k][g].dataValues;
+					ydata3.shift();
+					console.log("ydata3=="+ydata3);
+				}
+				//给满足条件的data_id的dataValues添加推送过来的data_time
 				var ydata2 = obj[k][h].dataValues;
-				
-				
-				
-				console.log("xdata2===="+xdata2);
-				console.log(k)
-				console.log("ydata2之前===="+ydata2);
-				ydata2.shift()
-				ydata2.push(dataConfig.data_value); 	
-			    console.log("ydata2-======"+ydata2);
-			    
-			    /*option.xAxis[j].data=xdata2
-			    option.series[j].data=ydata2
-				myChart.setOption(option)*/
+				ydata2.push(dataConfig.data_value)
+				myChart.setOption({
+					xAxis:{
+						data:xdata2
+					},
+					series:[{
+						data:ydata2
+					}]
+				})
+				myChart.setOption(option)
 			}
 		}
 		
@@ -352,7 +339,7 @@ function changeOrder(ruleDatas,index,callBack){
 		ruleDatas.splice(index.oldIndex, 1);
 	}
 	callBack && callBack(ruleDatas);
-}
+  }
 function saveDeskIndex(arr){
 	for(var i=0;i<arr.length;i++){
 		delete arr[i].chart_data
