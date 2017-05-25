@@ -47,7 +47,9 @@ function getCharts(){
 								'</div>'+
 							'</div>';
 						$('.desktopContent').append(str);
-						chartInfo(data,i)
+						myChart=echarts.init(document.getElementById(data[i]._id))
+						chartInfo()
+//						chartInfo(data,i)
 					}else if(data[i].is_chart==0){
 						str='<div class="dataList dataBox" draggable="true" id="'+data[i].data_id+'">'+
 								'<div class="listTop">'+
@@ -87,7 +89,7 @@ function colorBg(data,id){
 	}
 }
 //图表配置项
-function chartInfo(data,i){
+function chartInfo(){
 	obj=[];objId=[];
 	for(var j=0;j<chartData.length;j++){
 		obj.push(chartData[j].chart_data);
@@ -154,7 +156,6 @@ function chartInfo(data,i){
 		},
 		series:series
 	}
-	myChart=echarts.init(document.getElementById(data[i]._id))
 	myChart.setOption(option)
 }
 
@@ -243,11 +244,17 @@ function onMessageArrived(message) {
 	}else{
 		$('#'+dataId).addClass("redBg");
 	}
-	
+console.log('推送的dataId======'+dataId)
+console.log('推送的dataTime====='+dataConfig.data_time)
+console.log('推送的dataValue====='+dataConfig.data_value)
 	for(var k=0;k<objId.length;k++){
 		for(var h=0;h<objId[k].length;h++){
 			
 			if(dataId==objId[k][h]){
+				
+console.log('满足条件的j===='+k)
+				
+				
 				//给满足条件的data_id所在的图表删除dataTimes的第一个值并添加推送过来的data_time
 				var xdata2 = obj[k][0].dataTimes;
 				xdata2.shift();
@@ -256,10 +263,15 @@ function onMessageArrived(message) {
 				for(var g=0;g<obj[k].length;g++){
 					var ydata3=obj[k][g].dataValues;
 					ydata3.shift();
+console.log('推送前的datavalue===='+ydata3)
 				}
 				//给满足条件的data_id的dataValues添加推送过来的data_time
 				var ydata2 = obj[k][h].dataValues;
 				ydata2.push(dataConfig.data_value)
+				
+console.log('添加后的datavalue====='+ydata2)				
+				
+			option.xAxis.data[k]=xdata2
 				myChart.setOption({
 					xAxis:{
 						data:xdata2
@@ -268,11 +280,9 @@ function onMessageArrived(message) {
 						data:ydata2
 					}]
 				})
-				myChart.setOption(option)
 			}
-		}
-		
-   }
+		}	
+    }
 }
 /*下面开始拖动*/
 $(document).delegate('.dataBox','dragstart',function(evetn){
