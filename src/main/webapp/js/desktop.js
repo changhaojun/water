@@ -250,16 +250,12 @@ function onMessageArrived(message) {
 			if(dataId==objId[k][h]){
 				//给满足条件的data_id所在的图表删除dataTimes的第一个值并添加推送过来的data_time
 				var xdata2 = obj[k][0].dataTimes;
-				console.log(xdata2)
 				xdata2.shift();
 				xdata2.push(dataConfig.data_time)
-				console.log(xdata2)
-				console.log(obj)
 				//删除满足条件的图表里面的所有的dataValues的第一个值
 				for(var g=0;g<obj[k].length;g++){
 					var ydata3=obj[k][g].dataValues;
 					ydata3.shift();
-					console.log("ydata3=="+ydata3);
 				}
 				//给满足条件的data_id的dataValues添加推送过来的data_time
 				var ydata2 = obj[k][h].dataValues;
