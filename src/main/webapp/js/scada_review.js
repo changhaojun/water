@@ -194,20 +194,22 @@ $.extend({
 			}
 		};
 		client.onMessageArrived = function(message) {
-			if (!isIssue) { //AO && DO && MO回调
+			if (!isIssue) { //AI && DI回调
 				$.onLabelValueChange(message);
-			} else { //AI && DI回调
+			} else { //AO && DO && MO回调
 				$.onIssueSuccess(message, data);
 			}
 		};
 		client.connect(options);
-		
 	},
 	//MQTT
 	onLabelValueChange: function(message) {
 		var dataId = Number(message.destinationName);
-		var payload = JSON.parse(message.payloadString);
 		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(dataId, $.initThree.judgeLabelType({data_id: dataId}))];
+		console.log(originLabel);
+//		var payload = typeof message.payloadString=='string' ? JSON.parse(message.payloadString) : message.payloadString;
+		var payload = JSON.parse(message.payloadString);
+		console.log(payload);
 		if (!originLabel) return;
 		var newData = {
 			data_id: dataId,
@@ -218,7 +220,6 @@ $.extend({
 			status: payload.status
 		};
 		var position = originLabel.position;
-		var payload = JSON.parse(message.payloadString);
 		$.three.labelGroup.remove(originLabel);
 		$.initThree.initLabel(newData, position);
 	},
@@ -386,11 +387,13 @@ $.extend({
 								data_value: data_value,
 								data_id: data_id
 							}, function() {
-								$.initMQTT({
-									data_value: data_value,
-									data_id: data_id,
-									port_type: port_type
-								}, true);
+//								$.onLabelValueChange({
+//									destinationName: data_id,
+//									payloadString: {
+//										data_value: data_value,
+//										status: label.labelStatus
+//									}
+//								});
 								$('.operation').toggleWin(true);
 								$('.MO').find('.confirm').unbind();
 								$.three.capturer.intersected = null;

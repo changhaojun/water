@@ -234,10 +234,10 @@ $.initThree = {
 		var labelMessage;
 		if ($.initThree.judgeLabelType(userData)=='data') {
 			var dataId = userData.data_id;
-			var dataName = userData.data_name ? userData.data_name : 'noName';
-			var dataValue = userData.data_value === 'null' || !userData.data_value ? 'noVal' : userData.data_value;
-			var dataUnit = userData.data_unit ? userData.data_unit : 'noUnit';
-			var dataStatus = userData.status ? userData.status : 1;
+			var dataName = userData.data_name;
+			var dataValue = userData.data_value;
+			var dataUnit = userData.data_unit;
+			var dataStatus = userData.status;
 			var portType = userData.port_type;
 			if (portType == 'AI' || portType == 'AO' || portType == 'MO') {
 				labelMessage = dataName + ':' + dataValue + dataUnit;
@@ -247,7 +247,7 @@ $.initThree = {
 		} else if ($.initThree.judgeLabelType(userData)=='process') {
 			var processId = userData._id ? userData._id : userData.process_id;
 			var processName = userData.process_name;
-			var processStatus = userData.status ? userData.status : 0;
+			var processStatus = userData.status;
 			labelMessage = processName;
 		}
 		
@@ -407,6 +407,7 @@ $.initThree = {
 					$.three.controller.transformController.detach($.three.capturer.intersected);
 				}
 				$.three.capturer.intersected = $.initThree.searchLabelFromChild(intersects[0].object);
+				console.log($.three.capturer.intersected)
 				isTransform && $.three.controller.transformController.attach($.three.capturer.intersected);
 				var oldPos = $.three.capturer.intersected.position;
 				selectLabelFn && selectLabelFn();
