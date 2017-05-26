@@ -117,7 +117,7 @@ $.extend({
 					var name = $(this).attr('scadaName');
 					var description = $(this).attr('scadaDescription');
 					if (id == $.initData.scadaId) {
-						$('.mainTitle').removeClass('active');
+						$('.mainTitle').addClass('active');
 					} else {
 						self.location.href = '/finfosoft-water/scada/review/'+id+'-'+name+'-'+description;
 					}
@@ -126,7 +126,7 @@ $.extend({
 		});
 		//页头正面列表点击交互
 		$('.mainTitle').find('.frontSide').find('button').click(function() {
-			$('.mainTitle').addClass('active');
+			$('.mainTitle').removeClass('active');
 		});
 	},
 	//令牌初始化

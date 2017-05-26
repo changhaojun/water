@@ -50,8 +50,9 @@ body *{
 	position: absolute;
 	left: 0;
 	top: 0;
-	-webkit-transform: translateZ(0.1px);
-			transform: translateZ(0.1px);
+	-webkit-transform: translateZ(-0.1px) rotateX(-180deg);
+			transform: translateZ(-0.1px) rotateX(-180deg);
+	
 }
 .mainTitle>.frontSide>button{
 	width: 100px;
@@ -78,8 +79,8 @@ body *{
 	position: absolute;
 	left: 0;
 	top: 0;
-	-webkit-transform: translateZ(-0.1px) rotateX(-180deg);
-			transform: translateZ(-0.1px) rotateX(-180deg);
+	-webkit-transform: translateZ(0.1px);
+			transform: translateZ(0.1px);
 }
 .mainTitle>.backSide>li{
 	border-right: 1px solid #e0e0e0;
