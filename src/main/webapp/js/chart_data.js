@@ -293,7 +293,14 @@ function selectData(){
 }
 //初始化提示框
 function toolTip(){
-	 $('[data-toggle="tooltip"]').tooltip();
+	$('[data-toggle="tooltip"]').tooltip();
+	topColor($('.fa'),'orange') 
+}
+function topColor(obj,color){
+	obj.on("mouseover",function(){
+		$(".tooltip-inner").css("background-color",color);
+		$(".tooltip.top .tooltip-arrow").css("border-top-color",color);
+	})
 }
 //点击时间获取图表；
 $(document).ready(function() {

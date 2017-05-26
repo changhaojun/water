@@ -109,7 +109,9 @@ $(document).ready(function() {
       timePicker: true,
       timePickerIncrement: 30,
       format: 'YY-MM-DD A h:mm '
-   }, function(start, end, label) {				        		
+   },function(){
+   		console.log(1)
+   } /*function(start, end, label) {
       start=new Date(start).getFullYear()+"$"+p(new Date(start).getMonth()+1)+"$"+p(new Date(start).getDate())+"$"+p(new Date(start).getHours())+":"+p(new Date(start).getMinutes())+":"+p(new Date(start).getSeconds());
 	  end=new Date(end).getFullYear()+"$"+p(new Date(end).getMonth()+1)+"$"+p(new Date(end).getDate())+"$"+p(new Date(end).getHours())+":"+p(new Date(end).getMinutes())+":"+p(new Date(end).getSeconds());			           
    	  startTime=start;
@@ -121,7 +123,7 @@ $(document).ready(function() {
    	  data.end_time=endTime
 // 	  var data="{data_id:'"+dataFid+"',start_time:'"+startTime+"',end_time:'"+endTime+"'}";
 		
-   })
+   }*/)
 })
 //点击时间按钮
 $('.taskList .listTop button').click(function(){

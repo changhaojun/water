@@ -46,7 +46,7 @@ html{
 	background: #fff;
     margin-left: 20px;
     margin-right: 20px;
-    padding: 20px 10px;
+    padding: 20px 10px 10px 10px;
 }
 #reservationtime{
 	border: 1px solid #ccc;
@@ -183,4 +183,30 @@ html{
 }
 option:hover{
 	background:#1ab394 !important;
+}
+/*列表样式*/
+#logList .trColor{
+	color:#1ab394;
+	border-left: 5px solid #1ab394;
+}
+.lssuedList table:nth-child(2) thead tr th:first-child{
+	padding-left:15px;
+}
+.lssuedList table:nth-child(2) tbody>tr td:first-child{
+	padding-left:15px;
+}
+.lssuedList table:nth-child(2) tr{
+	border-bottom: 1px solid #eee;
+}
+.fixed-table-pagination .pagination a{
+	padding: 4px 12px;
+}
+.fixed-table-pagination .pagination-info{
+	color:#999;
+}
+.fixed-table-container{
+	padding-left:0;
+}
+.fixed-table-pagination div.pagination .pagination{
+	margin-top: 5px;
 }

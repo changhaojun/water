@@ -6,11 +6,10 @@ var dataId=[];
 
 $(function(){
 	getToken(); //刷新令牌
-
 	selectData();
 	selectId();
 	dataList(); //加载数据列表
-
+	toolTip()
 })
 var searchBox=new Vue({
 	el:'.search',
@@ -226,6 +225,13 @@ $('.dataContent').delegate('.focus1','click',function(){
 //初始化提示框
 function toolTip(){
 	 $('[data-toggle="tooltip"]').tooltip();
+	 topColor($('.fa'),'orange')
+}
+function topColor(obj,color){
+	obj.on("mouseover",function(){
+		$(".tooltip-inner").css("background-color",color);
+		$(".tooltip.top .tooltip-arrow").css("border-top-color",color);
+	})
 }
 //查看数据
 function look(dataId){
@@ -242,10 +248,7 @@ function searchThing(obj){
 		dataId.push(dataLike[i].data_id)
 	}
 	toolTip()
-//	MQTTconnect(dataId);
-
 }
-
 //告警颜色设置
 function colorBg(data,index){
 	if(data==0){
