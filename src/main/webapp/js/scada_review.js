@@ -206,10 +206,8 @@ $.extend({
 	onLabelValueChange: function(message) {
 		var dataId = Number(message.destinationName);
 		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(dataId, $.initThree.judgeLabelType({data_id: dataId}))];
-		console.log(originLabel);
 //		var payload = typeof message.payloadString=='string' ? JSON.parse(message.payloadString) : message.payloadString;
 		var payload = JSON.parse(message.payloadString);
-		console.log(payload);
 		if (!originLabel) return;
 		var newData = {
 			data_id: dataId,
@@ -435,14 +433,16 @@ $.extend({
 		var year = now.getFullYear();
 		var month = now.getMonth()+1 < 10 ? '0'+(now.getMonth()+1) : now.getMonth()+1;
 		var date = now.getDate() < 10 ? '0'+now.getDate() : now.getDate(); 
-		var hour = now.getHours() < 10 ? '0'+now.getHours() : now.getHours();
+		var hourNow = now.getHours() < 10 ? '0'+now.getHours() : now.getHours();
+		var hourBefore = (hourNow-4)<10 ? '0'+(hourNow-4) : (hourNow-4);
 		var minute = now.getMinutes() < 10 ? '0'+now.getMinutes() : now.getMinutes();
 		var second = now.getSeconds() < 10 ? '0'+now.getSeconds() : now.getSeconds(); 
-		var flag = (function() { return hour >= 12 ? 'PM' : 'AM'; })();
-		var startDate = year + '-' + month + '-' + ((date-4)<10 ? '0'+(date-4) : (date-4)) + ' ' + flag + ' ' + hour + ':' + minute;
-		var endDate = year + '-' + month + '-' + date + ' ' + flag + ' ' + hour + ':' + minute;
-		var startDateSent = year + '$' + month + '$' + ((date-4)<10 ? '0'+(date-4) : (date-4)) + '$' + hour + ':' + minute + ':' + second;
-		var endDateSent = year + '$' + month + '$' + date + '$' + hour + ':' + minute + ':' + second;
+		var flagNow = (function() { return hourNow >= 12 ? 'PM' : 'AM'; })();
+		var flagBefore = (function() { return hourBefore >= 12 ? 'PM' : 'AM'; })();
+		var startDate = year + '-' + month + '-' + date + ' ' + flagBefore + ' ' + hourBefore + ':' + minute;
+		var endDate = year + '-' + month + '-' + date + ' ' + flagNow + ' ' + hourNow + ':' + minute;
+		var startDateSent = year + '$' + month + '$' + date + '$' + hourBefore + ':' + minute + ':' + second;
+		var endDateSent = year + '$' + month + '$' + date + '$' + hourNow + ':' + minute + ':' + second;
 		return {
 			startDate: startDate,
 			endDate: endDate,
@@ -460,6 +460,7 @@ $.extend({
 			start_time: time.startDateSent,
 			end_time: time.endDateSent
 		};
+		console.log(dataSent);
 		$.ajax({
 			type: "post",
 			url:  globalurl+"/v1/realtimeDatas",
@@ -579,26 +580,39 @@ $.extend({
 		};
         switch (chartType) {
         	case 'AI':
-        		option.legend = {
-	            	data:['最小值', '平均值', '最大值']
-	        	};
-	        	option.series = [
-	            	{
-		                name: '最小值',
-		                type: 'line',
-		                data: data.min_values
-	           		},
-	            	{
-		                name: '平均值',
-		                type: 'line',
-		                data: data.data_values
-	           		},
-	            	{
-		                name: '最大值',
-		                type: 'line',
-		                data: data.max_values
-	           		}
-	        	];
+        		if (typeof data.min_values === 'undefined' || typeof data.max_values === 'undefined') {
+        			option.legend = {
+		            	data:['数据']
+		        	};
+		        	option.series = [
+		            	{
+			                name: '数据',
+			                type: 'line',
+			                data: data.data_values
+		           		}
+		        	];
+        		} else {
+        			option.legend = {
+		            	data:['最小值', '平均值', '最大值']
+		        	};
+		        	option.series = [
+		            	{
+			                name: '最小值',
+			                type: 'line',
+			                data: data.min_values
+		           		},
+		            	{
+			                name: '平均值',
+			                type: 'line',
+			                data: data.data_values
+		           		},
+		            	{
+			                name: '最大值',
+			                type: 'line',
+			                data: data.max_values
+		           		}
+		        	];
+        		}	
         		break;
         	case 'DI':
         		option.grid.show = false;
@@ -671,7 +685,6 @@ $.extend({
 				data: JSON.stringify(newData)
 			},
 			success: function(data) {
-				console.log(data);
 				if (data.result == 1) {
 					layer.msg('已下发！', {icon: 1});
 					callBack && callBack();
