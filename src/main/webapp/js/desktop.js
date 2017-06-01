@@ -28,8 +28,9 @@ function getCharts(){
 			access_token: accesstoken
 		},
 		success:function(data){
+			console.log(data)
 			if(data.length==0){
-				$(".desktopContent").html("<p>暂无数据</p>");
+				$(".desktopContent").html("<p style='padding-left:20px;'>暂无数据</p>");
 			}else{
 				dataIndex=data
 				var  str=''
@@ -47,9 +48,8 @@ function getCharts(){
 								'</div>'+
 							'</div>';
 						$('.desktopContent').append(str);
-						myChart=echarts.init(document.getElementById(data[i]._id))
-						chartInfo()
-//						chartInfo(data,i)
+//						chartInfo()
+						chartInfo(data,i)
 					}else if(data[i].is_chart==0){
 						str='<div class="dataList dataBox" draggable="true" id="'+data[i].data_id+'">'+
 								'<div class="listTop">'+
@@ -89,7 +89,7 @@ function colorBg(data,id){
 	}
 }
 //图表配置项
-function chartInfo(){
+function chartInfo(data,i){
 	obj=[];objId=[];
 	for(var j=0;j<chartData.length;j++){
 		obj.push(chartData[j].chart_data);
@@ -156,6 +156,7 @@ function chartInfo(){
 		},
 		series:series
 	}
+    myChart=echarts.init(document.getElementById(data[i]._id))
 	myChart.setOption(option)
 }
 
@@ -247,38 +248,39 @@ function onMessageArrived(message) {
 console.log('推送的dataId======'+dataId)
 console.log('推送的dataTime====='+dataConfig.data_time)
 console.log('推送的dataValue====='+dataConfig.data_value)
-	for(var k=0;k<objId.length;k++){
-		for(var h=0;h<objId[k].length;h++){
+	for(var m=0;m<objId.length;m++){
+		for(var n=0;n<objId[m].length;n++){
 			
-			if(dataId==objId[k][h]){
+			if(dataId==objId[m][n]){
+				var id=($('.charts').eq(0).children().attr('id'))
 				
-console.log('满足条件的j===='+k)
+				
+				
+console.log('满足条件的m=============='+m)
 				
 				
 				//给满足条件的data_id所在的图表删除dataTimes的第一个值并添加推送过来的data_time
-				var xdata2 = obj[k][0].dataTimes;
+				var xdata2 = obj[m][0].dataTimes;
 				xdata2.shift();
 				xdata2.push(dataConfig.data_time)
 				//删除满足条件的图表里面的所有的dataValues的第一个值
-				for(var g=0;g<obj[k].length;g++){
-					var ydata3=obj[k][g].dataValues;
+				for(var g=0;g<obj[m].length;g++){
+					var ydata3=obj[m][g].dataValues;
 					ydata3.shift();
 console.log('推送前的datavalue===='+ydata3)
 				}
 				//给满足条件的data_id的dataValues添加推送过来的data_time
-				var ydata2 = obj[k][h].dataValues;
+				var ydata2 = obj[m][n].dataValues;
 				ydata2.push(dataConfig.data_value)
 				
-console.log('添加后的datavalue====='+ydata2)				
-				
-			option.xAxis.data[k]=xdata2
+console.log('添加后的datavalue====='+ydata2)					
 				myChart.setOption({
 					xAxis:{
 						data:xdata2
 					},
-					series:[{
-						data:ydata2
-					}]
+					series:{
+						data:ydata3
+					}
 				})
 			}
 		}	

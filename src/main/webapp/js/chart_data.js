@@ -192,9 +192,10 @@ function initChart(){
 		    },
 		    toolbox : {
 	            show :true,
+	            x:'96%',
 	            feature : {
 	                saveAsImage : {
-	                    show :true
+	                    show :true,
 	                }
 	            }
 	        },
@@ -335,7 +336,6 @@ $(document).ready(function() {
 				chartArr=data;
 				for(var i=0;i<dataFid.length;i++){
 					initChart();
-//					initChart(dataFid[i],legendData);
 				}
 			}
 		})

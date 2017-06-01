@@ -100,7 +100,7 @@ html{
 	padding-left:8px;	
 }
 .daterangepicker .ranges .input-mini{
-	width: 90px!important;
+	width: 105px!important;
 }
 .daterangepicker select{
 	border:1px solid #ccc;
@@ -183,4 +183,37 @@ html{
 }
 option:hover{
 	background:#1ab394 !important;
+}
+/*列表样式*/
+.taskList tbody>tr:nth-child(odd){
+	background: #f9f9f9;
+}
+.taskList tbody tr{
+	border-left: 5px solid transparent;
+}
+.taskList tbody tr:hover{
+	color:#1ab394;
+	border-left: 5px solid #1ab394;
+}
+
+.taskList table:nth-child(2) thead tr th:first-child{
+	padding-left:15px;
+}
+.taskList table:nth-child(2) tbody>tr td:first-child{
+	padding-left:15px;
+}
+.taskList table:nth-child(2) tr{
+	border-bottom: 1px solid #eee;
+}
+.fixed-table-pagination .pagination a{
+	padding: 4px 12px;
+}
+.fixed-table-pagination .pagination-info{
+	color:#999;
+}
+.fixed-table-container{
+	padding-left:0;
+}
+.fixed-table-pagination div.pagination .pagination{
+	margin-top: 5px;
 }

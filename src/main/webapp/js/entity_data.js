@@ -33,7 +33,7 @@ function dataList(){
 			console.log(data);
 			$(".dataContent").html("");
 			if(data.length==0){
-				$(".dataContent").html("<p>暂无数据</p>");
+				$(".dataContent").html("<p style='padding-left:20px;'>暂无数据</p>");
 			}
 			for(var i=0;i<data.length;i++){
 				data[i].title=data[i].device_name+"-"+data[i].data_name		

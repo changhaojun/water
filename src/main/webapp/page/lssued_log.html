@@ -30,8 +30,18 @@
 					<button onclick="changeList(-1)">24小时</button><button onclick="changeList(-2)">48小时</button><button onclick="changeList(-3)">72小时</button>
 					<hr />
 				</div>
-				<table class="table table-hover" id="logList">
-				</table>
+				<div class="lssuedTable">
+					<table class="table table-hover" id="logList">
+						<thead>
+							<th data-field="oper_time">日期</th>
+							<th data-field="oper_user">操作人</th>
+							<th data-field="address">地区</th>
+							<th data-field="oper_port">端口</th>
+							<th data-field="old_value">数值</th>
+							<th data-field="result" data-formatter="resultFormatter">结果</th>
+						</thead>
+					</table>
+				</div>
 			</div>
 		</div>
 	</body>
