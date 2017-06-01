@@ -186,6 +186,8 @@ window.deleteThing=function(value){
 					  deleteThing(value)
 				  }else if(data.code==400007){
 				  	layer.msg(data.error,{icon:2})
+				  }else if(data.code==400018){
+				  	layer.msg(data.error,{icon:2})
 				  }
 			  }
 		  })

@@ -130,6 +130,8 @@ window.deleteCol=function(value){
 				  }else if(data.code==400005){
 					  window.getNewToken()
 					  deleteCol(value)
+				  }else if(data.code==400018){
+				  	layer.msg(data.error,{icon:2})
 				  }
 			  }
 		  })
