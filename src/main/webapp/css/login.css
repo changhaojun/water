@@ -161,11 +161,11 @@ input{
 			width: 417px;
 		}
 		.right>h1{
-			margin: 0 auto;
-			width: 239px;
+			width: 100%;
 		}
 		.right>h1>img{
-			width: 239px;
+			width: 360px;
+			margin: 0 auto;
 		}
 		.right>.form{
 			margin-top: 88px;
