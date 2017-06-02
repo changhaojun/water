@@ -137,7 +137,6 @@ $(document).ready(function() {
       timePickerIncrement: 30,
       format: 'YYYY-MM-DD A h:mm '
    }, function(start, end, label) {	
-   	$('#logList').html('')
       start=new Date(start).getFullYear()+"$"+p(new Date(start).getMonth()+1)+"$"+p(new Date(start).getDate())+"$"+p(new Date(start).getHours())+":"+p(new Date(start).getMinutes())+":"+p(new Date(start).getSeconds());
 	  end=new Date(end).getFullYear()+"$"+p(new Date(end).getMonth()+1)+"$"+p(new Date(end).getDate())+"$"+p(new Date(end).getHours())+":"+p(new Date(end).getMinutes())+":"+p(new Date(end).getSeconds());			           
    	  startTime=start;
@@ -147,6 +146,7 @@ $(document).ready(function() {
 		data.end_time=endTime
 		data=JSON.stringify(data)
 		lssuedList()
+		$('.lssuedList .listTop button').removeClass('btnColor')
    })
 })
 

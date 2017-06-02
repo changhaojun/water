@@ -59,7 +59,9 @@ function getCharts(){
 								'<div class="listHr"></div>'+
 								'<div class="listContent">'+
 									'<div class="contentTop">'+
-										'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
+										'<div class="Itext">'+
+											'<span class="dataValue">'+data[i].data_value+'</span>'+
+											'<span>'+data[i].data_unit+'</span>'+
 										'</div>'+
 									'</div>'+
 									'<div class="contentBottom">'+
@@ -124,8 +126,8 @@ function chartInfo(data,i){
 			data:legendData
 		},
 		grid: {
-			left: '8%',
-			right: '5%',
+			left: '6%',
+			right: '2%',
 			top: '20%',
 			bottom: '8%',
 			containLabel: true
@@ -239,28 +241,26 @@ function onMessageArrived(message) {
 	$("#"+dataId).find('.dataTime').html(dataConfig.data_time)
 	$("#"+dataId).find('.dataValue').html(dataConfig.data_value)
 	if(dataConfig.status==1){
-		$('#'+dataId).addClass("greenBg");
+		$('#'+dataId).removeClass('grayBg').addClass("greenBg");
 	}else if(data==0){
 		$('#'+dataId).addClass("grayBg");
 	}else{
 		$('#'+dataId).addClass("redBg");
 	}
 console.log('推送的dataId======'+dataId)
+console.log(dataConfig)
 console.log('推送的dataTime====='+dataConfig.data_time)
 console.log('推送的dataValue====='+dataConfig.data_value)
 	for(var m=0;m<objId.length;m++){
 		for(var n=0;n<objId[m].length;n++){
-			
+			var ydata3;var xdata2;
 			if(dataId==objId[m][n]){
-				var id=($('.charts').eq(0).children().attr('id'))
-				
-				
-				
+				var id=($('.charts').eq(0).children().attr('id'))		
 console.log('满足条件的m=============='+m)
 				
 				
 				//给满足条件的data_id所在的图表删除dataTimes的第一个值并添加推送过来的data_time
-				var xdata2 = obj[m][0].dataTimes;
+				xdata2 = obj[m][0].dataTimes;
 				xdata2.shift();
 				xdata2.push(dataConfig.data_time)
 				//删除满足条件的图表里面的所有的dataValues的第一个值
@@ -270,21 +270,27 @@ console.log('满足条件的m=============='+m)
 console.log('推送前的datavalue===='+ydata3)
 				}
 				//给满足条件的data_id的dataValues添加推送过来的data_time
-				var ydata2 = obj[m][n].dataValues;
+				ydata2 = obj[m][n].dataValues;
 				ydata2.push(dataConfig.data_value)
 				
-console.log('添加后的datavalue====='+ydata2)					
+console.log('添加后的datavalue====='+ydata2)	
+				
+				option.xAxis.data[m]=xdata2
 				myChart.setOption({
-					xAxis:{
-						data:xdata2
-					},
-					series:{
-						data:ydata3
-					}
-				})
+						xAxis:{
+							data:xdata2
+						},
+						series:[{
+							type:'line',
+							data:ydata2
+						}]
+					})
+				
+				
 			}
 		}	
     }
+	
 }
 /*下面开始拖动*/
 $(document).delegate('.dataBox','dragstart',function(evetn){

@@ -149,7 +149,7 @@ function initChart(){
 			splitLine: { show: false }, //去除网格中的坐标线
 			min:0,
 			max:Math.ceil(chartArr[j].max_value),
-			offset:60*j,
+			offset:45*j,
 			position:'left',
 			axisLabel: {
 				formatter: '{value}'+dataUnit[j]
@@ -177,7 +177,6 @@ function initChart(){
        });
 	}	
 	var myChart=echarts.init(document.getElementById('chartsContent'))
-	myChart.showLoading();
 	var option={
 			title:{
 				text:''
@@ -232,7 +231,6 @@ function initChart(){
 			series:series		
 		};
 	myChart.setOption(option);
-	myChart.hideLoading();
 }
 
 $('.chartContent button').click(function(){
