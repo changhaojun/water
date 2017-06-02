@@ -149,7 +149,7 @@ function initChart(){
 			splitLine: { show: false }, //去除网格中的坐标线
 			min:0,
 			max:Math.ceil(chartArr[j].max_value),
-			offset:60*j,
+			offset:45*j,
 			position:'left',
 			axisLabel: {
 				formatter: '{value}'+dataUnit[j]
@@ -177,7 +177,6 @@ function initChart(){
        });
 	}	
 	var myChart=echarts.init(document.getElementById('chartsContent'))
-	myChart.showLoading();
 	var option={
 			title:{
 				text:''
@@ -192,9 +191,10 @@ function initChart(){
 		    },
 		    toolbox : {
 	            show :true,
+	            x:'96%',
 	            feature : {
 	                saveAsImage : {
-	                    show :true
+	                    show :true,
 	                }
 	            }
 	        },
@@ -231,7 +231,6 @@ function initChart(){
 			series:series		
 		};
 	myChart.setOption(option);
-	myChart.hideLoading();
 }
 
 $('.chartContent button').click(function(){
@@ -293,7 +292,14 @@ function selectData(){
 }
 //初始化提示框
 function toolTip(){
-	 $('[data-toggle="tooltip"]').tooltip();
+	$('[data-toggle="tooltip"]').tooltip();
+	topColor($('.fa'),'orange') 
+}
+function topColor(obj,color){
+	obj.on("mouseover",function(){
+		$(".tooltip-inner").css("background-color",color);
+		$(".tooltip.top .tooltip-arrow").css("border-top-color",color);
+	})
 }
 //点击时间获取图表；
 $(document).ready(function() {
@@ -328,7 +334,6 @@ $(document).ready(function() {
 				chartArr=data;
 				for(var i=0;i<dataFid.length;i++){
 					initChart();
-//					initChart(dataFid[i],legendData);
 				}
 			}
 		})
