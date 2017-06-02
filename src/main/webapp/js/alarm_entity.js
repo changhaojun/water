@@ -74,6 +74,7 @@ function searchThing(obj){
 }
 //动态创建DOM拼接
 function Dom(data,i){
+	console.info(data)
 	var oLi="";
 	str='<div class="alarmList" id="'+data.data_id+'">'+
 		'<div class="alarmTop">'+data.device_name+"-"+data.data_name+'</div>'+
