@@ -426,6 +426,8 @@ $.fn.extend({
 							},function(){
 								location.reload();
 							})
+						}else if(data.code==400018){
+						  	layer.msg(data.error,{icon:2})
 						}
 					}
 				});

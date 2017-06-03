@@ -417,29 +417,29 @@ $.fn.extend({
 		//弹窗内容有空
 		var openClose=0,openClose1=0;
 		$(".pop").find("input").each( function(i) {
-			
-			if($(this).val()==$(this).attr("data-info") ||$(this).val()=="" ||$(this).val()=="-"){
-				$(this).css("border","1px solid #f00");
-				$(this).val($(this).attr("data-info"));
-				layer.tips($(this).attr("data-info"),$(this),{
-					tips:1
-				});
-				$(this).focus(function(){
-					$(this).val("");
-					$(this).css("border","1px solid #1ab394");
-				})
-				openClose=-1;
-			}else if($(this).hasClass("number") && rangeReg.test($(this).val())==false){
-				$(this).css("border","1px solid #f00");
-				layer.tips('请输入数字',$(this),{
-					tips:1
-				});
-				//$(this).val("");
-				openClose=-1;
-			}else{
-				$(this).css("border","1px solid #ccc");	
+			if(!$(this).parent().hasClass('dataUnit')){
+				if($(this).val()==$(this).attr("data-info") ||$(this).val()=="" ||$(this).val()=="-"){
+					$(this).css("border","1px solid #f00");
+					$(this).val($(this).attr("data-info"));
+					layer.tips($(this).attr("data-info"),$(this),{
+						tips:1
+					});
+					$(this).focus(function(){
+						$(this).val("");
+						$(this).css("border","1px solid #1ab394");
+					})
+					openClose=-1;
+				}else if($(this).hasClass("number") && rangeReg.test($(this).val())==false){
+					$(this).css("border","1px solid #f00");
+					layer.tips('请输入数字',$(this),{
+						tips:1
+					});
+					//$(this).val("");
+					openClose=-1;
+				}else{
+					$(this).css("border","1px solid #ccc");	
+				}
 			}
-			
 		});
 		if(openClose==0 && openClose1==0){
 			editContent(j);

@@ -13,6 +13,7 @@ var legendData=[];//存放每一个图标的lengend
 var dataUnit=[];
 var dataFid=[];
 var selectedId=[];
+
 $(function(){
 	getToken();//刷新令牌
 	dataList();//获取device_name
@@ -92,14 +93,11 @@ function getChart(i){
 		});
 		return;
 	}
-	legendData=[];dataUnit=[];dataFid=[];
+	dataUnit=[];dataFid=[];
 	for(var n=0;n<$(".list").children().length;n++){
 		if($(".list").children().eq(n).hasClass('selectdLi')){
-			legendData.push($(".list").children().eq(n).children().eq(0).html());
-			console.log(legendData)
 			dataUnit.push($(".list").children().eq(n).children().eq(2).html())
 			dataFid.push(Number($(".list").children().eq(n).children().eq(3).html()))
-			console.log(dataFid)
 		}
 	}   
 	//判断是否被关注
@@ -137,21 +135,21 @@ function getChart(i){
 }
 //图表配置项以及实例化图表
 function initChart(){
-	var objData=[]; /*legendData=[]*//*obj=[]*/
+	var objData=[]; legendData=[];
 	for(var j=0;j<chartArr.length;j++){
 		objData.push(chartArr[j].dataValues);	
+		legendData.push(chartArr[j].device_name+'-'+chartArr[j].data_name)
 	}
-	console.log(chartArr[0].dataTimes)
 	series=[];
 	yAxis=[];
-	for(var j=0;j<legendData.length;j++){	
-//	for(var j=0;j<chartArr.length;j++){
+	for(var j=0;j<chartArr.length;j++){
 		//将请求到的数据添加到y轴的数据中	 
 		 yAxis.push({
 			type:'value',
 			splitLine: { show: false }, //去除网格中的坐标线
-
-			offset:60*j,
+			min:0,
+			max:Math.ceil(chartArr[j].max_value),
+			offset:45*j,
 			position:'left',
 			axisLabel: {
 				formatter: '{value}'+dataUnit[j]
@@ -161,7 +159,7 @@ function initChart(){
 		series.push({
             name: legendData[j],
             type: 'line',
-            stack: '总量',
+//          smooth:true,//使折线平滑
             yAxisIndex:j,
 //          areaStyle:{ normal: {} },//是否显示阴影面积
             data: objData[j],
@@ -193,28 +191,15 @@ function initChart(){
 		    },
 		    toolbox : {
 	            show :true,
+	            x:'96%',
 	            feature : {
-	                mark : {
-	                    show :true
-	                },
-	                dataView : {
-	                    show :true,
-	                    readOnly :true
-	                },
-	                magicType : {
-	                    show :true,
-	                    type : ['line','bar', 'stack','tiled']
-	                },
-	                restore : {
-	                    show :true
-	                },
 	                saveAsImage : {
-	                    show :true
+	                    show :true,
 	                }
 	            }
 	        },
 		    grid: {
-				left: '10%',
+				left: '5%',
 				right: '10%',
 				top: '15%',
 				bottom: '12%',
@@ -299,18 +284,22 @@ function selectData(){
 		    filter:JSON.stringify({"thing_id":thingId,"is_chart":1})
 		},
 		success:function(data){
-			console.log(data)
 			for(var i=0;i<data.length;i++){
 				selectedId.push(data[i].data_id)
 			}
-			console.log(selectedId)
-			console.log(selectedId[0])
 		}
 	})
 }
 //初始化提示框
 function toolTip(){
-	 $('[data-toggle="tooltip"]').tooltip();
+	$('[data-toggle="tooltip"]').tooltip();
+	topColor($('.fa'),'orange') 
+}
+function topColor(obj,color){
+	obj.on("mouseover",function(){
+		$(".tooltip-inner").css("background-color",color);
+		$(".tooltip.top .tooltip-arrow").css("border-top-color",color);
+	})
 }
 //点击时间获取图表；
 $(document).ready(function() {
@@ -344,7 +333,7 @@ $(document).ready(function() {
 				$("#chartsContent").html('')
 				chartArr=data;
 				for(var i=0;i<dataFid.length;i++){
-					initChart(dataFid[i],legendData);
+					initChart();
 				}
 			}
 		})
@@ -412,6 +401,7 @@ function changeData(i){
 			chartArr=data;
 			for(var i=0;i<dataFid.length;i++){
 				initChart();
+//				initChart(dataFid[i],legendData);
 			}
 		}
 	})

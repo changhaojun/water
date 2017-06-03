@@ -78,6 +78,7 @@ html{
 }
 .dataContent .dataList:hover{
 	background:rgba(256,256,256,0.5);
+	/*opacity: 0.5;*/
 }
 .dataContent .dataList a{
 	display: inline-block;
