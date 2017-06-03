@@ -191,17 +191,18 @@ $.initThree = {
 				object.rotation.set(objRotation._x, objRotation._y, objRotation._z);
 				$.three.scene.el.add(object);
 			});
+			if ($.three.model.count===models.length-1) {
+				$.three.modelsLoading = false;
+				$.three.loadingStatus++;
+				$.initThree.initLoading();
+				callBack && callBack();
+				return;
+			} else {
+				$.three.model.count++;
+				$.initThree.initObjects(models);
+			}
 		});
-		if ($.three.model.count===models.length-1) {
-			$.three.modelsLoading = false;
-			$.three.loadingStatus++;
-			$.initThree.initLoading();
-			callBack && callBack();
-			return;
-		} else {
-			$.three.model.count++;
-			$.initThree.initObjects(models);
-		}
+			
 	},
 	initGround: function() {
 		var size = $.three.ground.size;
