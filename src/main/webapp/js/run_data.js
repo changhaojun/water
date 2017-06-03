@@ -1,5 +1,4 @@
 
-
 //显示运行数据列表
 $(function(){
 	getToken();//刷新令牌
@@ -9,8 +8,6 @@ $(function(){
 function entityList(){
 	$.ajax({
 		type: "get",
-//		url: 'http://rapapi.org/mockjsdata/15031/v1/things-runData',
-//		url: 'http://192.168.1.114/v1/things',
 		url: globalurl+"/v1/runDatas",
 		dataType: "JSON",
 		async: false,
@@ -22,7 +19,7 @@ function entityList(){
 			console.log(data);
 			$(".dataContent").html("");
 			if(data.rows.length==0){
-		    	$(".dataContent").html("<p>暂无数据</p>");
+		    	$(".dataContent").html("<p style='padding-left:20px;'>暂无数据</p>");
 		   }
 			var str='';
 			for(var i=0;i<data.rows.length;i++){
@@ -31,13 +28,13 @@ function entityList(){
 		}
 	})
 }
-//
+//获取实体数据
 function entityData(data,i){
 	var str='';
 	if(data.rows[i].run_data){
 		str='<div class="dataList" style="cursor:pointer;" onclick="look(&apos;'+data.rows[i]._id+'&apos;)">'+
 				'<div class="listTop">'+
-					'<span>'+data.rows[i].thing_name+'</span>'+							
+					'<span>'+data.rows[i].thing_name+'-'+data.rows[i].device_name+'-'+data.rows[i].dataName+'</span>'+							
 				'</div>'+
 				'<div class="listHr"></div>'+
 				'<div class="listContent">'+
@@ -51,53 +48,69 @@ function entityData(data,i){
 			'</div>';
 			$(".dataContent").append(str);
 		chartInfo(data,i)
+	}else{
+		str='<div class="dataList">'+
+				'<div class="listTop">'+
+					'<span>'+data.rows[i].thing_name+'</span>'+							
+				'</div>'+
+				'<div class="listHr"></div>'+
+				'<div class="listContent">'+
+					'<div style="width:478px;margin:0 auto; text-align:center; padding-top:80px;" class="contentTop" id="'+data.rows[i]._id+'">'+
+						'暂无数据'+
+					'</div>'+
+				'</div>'+			
+			'</div>';
+			$(".dataContent").append(str);
+		chartInfo(data,i)	
 	}
 }
 //图表配置项
 function chartInfo(data,i){
-	option={
-		tooltip:{
-			trigger:'axis'
-		},
-		xAxis:{
-			type:'category',
-			data: data.rows[i].run_data.data_times,  
-			show:false,
-		},
-		yAxis:{
-			type:'value',
-			show:false
-		},
-		series:[
-			{
-				type:'line',
-				data:data.rows[i].run_data.data_values,
-				markPoint : {
-                    data : [
-                        {type : 'max', name: '最大值'},
-                        {type : 'min', name: '最小值'}
-                    ]
-        		},
-        		markLine:{
-                    data:[
-                            [ {color:'#ccc', x: -10, y: 123},
-                                { x: 500, y: 123}
-                            ]
-                    ]
-               	},
-            	itemStyle : {  
-                    normal : {  
-                    	color:'#53b29e',
-                        lineStyle:{  
-                            color:'#53b29e' ,   
-                        }  
-                    }  
-                }
-			}
-		]
+	if(data.rows[i].run_data){
+		option={
+			tooltip:{
+				trigger:'axis'
+			},
+			xAxis:{
+				type:'category',
+				data: data.rows[i].run_data.data_times,  
+				show:false,
+			},
+			yAxis:{
+				type:'value',
+				show:false
+			},
+			series:[
+				{
+					type:'line',
+					data:data.rows[i].run_data.data_values,
+					markPoint : {
+	                    data : [
+	                        {type : 'max', name: '最大值'},
+	                        {type : 'min', name: '最小值'}
+	                    ]
+	        		},
+	        		markLine:{
+	                    data:[
+	                            [ {color:'#ccc', x: -10, y: 123},
+	                                { x: 500, y: 123}
+	                            ]
+	                    ]
+	               	},
+	            	itemStyle : {  
+	                    normal : {  
+	                    	color:'#53b29e',
+	                        lineStyle:{  
+	                            color:'#53b29e' ,   
+	                        }  
+	                    }  
+	                }
+				}
+			]
+		}
+		var myChart=echarts.init(document.getElementById(data.rows[i]._id));
+		myChart.setOption(option)
 	}
-	var myChart=echarts.init(document.getElementById(data.rows[i]._id));
-	myChart.setOption(option)
 }
 
 //查看实体数据

@@ -75,11 +75,7 @@ function editFormatter(value,row,index){
 }
 //box状态列的格式化
 function statusFormatter(value,row,index){
-	if(value==1){
-		return "<span style='color:#2cb7c8;background:url(/finfosoft-water/img/box_info.png)no-repeat -20px 0px;padding-left:25px;'>在线</span>"
-	}else{
-		return "<span style='color:#a3a3a3;background:url(/finfosoft-water/img/box_info.png)no-repeat 0px 0px;padding-left:25px;'>离线</span>"
-	}
+		return "<span style='color:#2cb7c8;background:url(/finfosoft-water/img/box_info.png)no-repeat -20px 0px;padding-left:25px;'>正常</span>"
 }
 //表格数据获取的参数
 function queryParams(params) {	
@@ -130,6 +126,8 @@ window.deleteCol=function(value){
 				  }else if(data.code==400005){
 					  window.getNewToken()
 					  deleteCol(value)
+				  }else if(data.code==400018){
+				  	layer.msg(data.error,{icon:2})
 				  }
 			  }
 		  })

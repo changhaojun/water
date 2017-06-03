@@ -28,8 +28,9 @@ function getCharts(){
 			access_token: accesstoken
 		},
 		success:function(data){
+			console.log(data)
 			if(data.length==0){
-				$(".desktopContent").html("<p>暂无数据</p>");
+				$(".desktopContent").html("<p style='padding-left:20px;'>暂无数据</p>");
 			}else{
 				dataIndex=data
 				var  str=''
@@ -47,6 +48,7 @@ function getCharts(){
 								'</div>'+
 							'</div>';
 						$('.desktopContent').append(str);
+//						chartInfo()
 						chartInfo(data,i)
 					}else if(data[i].is_chart==0){
 						str='<div class="dataList dataBox" draggable="true" id="'+data[i].data_id+'">'+
@@ -57,7 +59,9 @@ function getCharts(){
 								'<div class="listHr"></div>'+
 								'<div class="listContent">'+
 									'<div class="contentTop">'+
-										'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
+										'<div class="Itext">'+
+											'<span class="dataValue">'+data[i].data_value+'</span>'+
+											'<span>'+data[i].data_unit+'</span>'+
 										'</div>'+
 									'</div>'+
 									'<div class="contentBottom">'+
@@ -122,8 +126,8 @@ function chartInfo(data,i){
 			data:legendData
 		},
 		grid: {
-			left: '8%',
-			right: '5%',
+			left: '6%',
+			right: '2%',
 			top: '20%',
 			bottom: '8%',
 			containLabel: true
@@ -154,7 +158,7 @@ function chartInfo(data,i){
 		},
 		series:series
 	}
-	myChart=echarts.init(document.getElementById(data[i]._id))
+    myChart=echarts.init(document.getElementById(data[i]._id))
 	myChart.setOption(option)
 }
 
@@ -165,6 +169,7 @@ $(function () { $("[data-toggle='tooltip']").tooltip(); });
 $('.desktopContent').delegate('.cancel','click',function(){
 	var id=$(this).attr('deleteId');
 	var This=$(this)
+	dataIndex.splice(This.index(),1);
 	$.ajax({
 		type:'delete',
 		url:globalurl+'/v1/desktops/'+id+'?access_token='+window.accesstoken,
@@ -175,6 +180,7 @@ $('.desktopContent').delegate('.cancel','click',function(){
 			if(data.code==200){
 				layer.msg(data.success,{icon:1})
 				This.parent().parent().remove();
+				saveDeskIndex(dataIndex)
 			}
 		}
 	})
@@ -186,14 +192,11 @@ var topic;
 var data;
 function MQTTconnect(dataIds) {
     console.log("订阅程序开始执行");
-    var mqttHost = '121.42.253.149';
-    var username="admin";
-    var password="finfosoft123";
-//	var mqttHost='192.168.1.114';
-//  var username="admin";
-//  var password="password";
+    var mqttHost = mqttHostIP;
+	var username = mqttName;
+	var password = mqttWord;
 	 topic="mqtt_alarm_currentdata";
-	  client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
+	  client = new Paho.MQTT.Client(mqttHost, Number(portNum), "server" + parseInt(Math.random() * 100, 10));
 	 data = dataIds;  
 	  var options = {
 			  timeout: 1000,
@@ -217,7 +220,6 @@ function MQTTconnect(dataIds) {
 function onConnect() {
   console.log("onConnect");
   for(var i=0;i<data.length;i++){
-	  console.log(data[i]);
 	  topic=data[i]+"";
 	  client.subscribe(topic);
   }
@@ -239,59 +241,59 @@ function onMessageArrived(message) {
 	$("#"+dataId).find('.dataTime').html(dataConfig.data_time)
 	$("#"+dataId).find('.dataValue').html(dataConfig.data_value)
 	if(dataConfig.status==1){
-		$('#'+dataId).addClass("greenBg");
+		$('#'+dataId).removeClass('grayBg').addClass("greenBg");
 	}else if(data==0){
 		$('#'+dataId).addClass("grayBg");
 	}else{
 		$('#'+dataId).addClass("redBg");
 	}
-	
-	console.log(dataConfig.data_time)
-	for(var k=0;k<objId.length;k++){
-		for(var h=0;h<objId[k].length;h++){
-			console.log(dataId)
-			console.log(objId[k][h])
-			
-			var xdata3 = obj[k][h].dataValues;
-			console.log(xdata3)
-			
-			if(dataId==objId[k][h]){
-//				console.log("kk=------------"+k)
-//				console.log("objoo===="+obj[k][0].dataTimes);
-				var xdata2 = obj[k][0].dataTimes;
-				console.log(xdata2)
+console.log('推送的dataId======'+dataId)
+console.log(dataConfig)
+console.log('推送的dataTime====='+dataConfig.data_time)
+console.log('推送的dataValue====='+dataConfig.data_value)
+	for(var m=0;m<objId.length;m++){
+		for(var n=0;n<objId[m].length;n++){
+			var ydata3;var xdata2;
+			if(dataId==objId[m][n]){
+				var id=($('.charts').eq(0).children().attr('id'))		
+console.log('满足条件的m=============='+m)
+				
+				
+				//给满足条件的data_id所在的图表删除dataTimes的第一个值并添加推送过来的data_time
+				xdata2 = obj[m][0].dataTimes;
 				xdata2.shift();
 				xdata2.push(dataConfig.data_time)
-				console.log(xdata2)
-				console.log(obj)
-//				for(var g=0;g<obj[k].length;g++){
-//					var ydata2=obj[k].dataValues
-//					console.log(ydata2)
-//
-//				}
-
-				var ydata2 = obj[k][h].dataValues;
+				//删除满足条件的图表里面的所有的dataValues的第一个值
+				for(var g=0;g<obj[m].length;g++){
+					var ydata3=obj[m][g].dataValues;
+					ydata3.shift();
+console.log('推送前的datavalue===='+ydata3)
+				}
+				//给满足条件的data_id的dataValues添加推送过来的data_time
+				ydata2 = obj[m][n].dataValues;
+				ydata2.push(dataConfig.data_value)
+				
+console.log('添加后的datavalue====='+ydata2)	
+				
+				option.xAxis.data[m]=xdata2
+				myChart.setOption({
+						xAxis:{
+							data:xdata2
+						},
+						series:[{
+							type:'line',
+							data:ydata2
+						}]
+					})
 				
 				
-				
-				console.log("xdata2===="+xdata2);
-				console.log(k)
-				console.log("ydata2之前===="+ydata2);
-				ydata2.shift()
-				ydata2.push(dataConfig.data_value); 	
-			    console.log("ydata2-======"+ydata2);
-			    
-			    /*option.xAxis[j].data=xdata2
-			    option.series[j].data=ydata2
-				myChart.setOption(option)*/
 			}
-		}
-		
-   }
+		}	
+    }
+	
 }
 /*下面开始拖动*/
 $(document).delegate('.dataBox','dragstart',function(evetn){
-//	dragged.addClass('grayBox');
 	$(this).attr('dragged','dragged')
 	oldIndex=$(this).index()
 	dragged=$(this)
@@ -338,9 +340,49 @@ document.addEventListener("drop", function( event ) {
   		'oldIndex':oldIndex,
   		'newIndex':newIndex
   	}
-  	console.info(index)
+  	changeOrder(dataIndex,index,saveDeskIndex)
 	dragged.removeAttr('dragged');
 })
-function updataIndex(){
-	
+function changeOrder(ruleDatas,index,callBack){
+	var thisData=ruleDatas[index.oldIndex];
+	if(index.oldIndex>index.newIndex){
+		ruleDatas.splice(index.newIndex,0,thisData);
+		ruleDatas.splice(index.oldIndex+1, 1);
+	}else{
+		ruleDatas.splice(index.newIndex+1,0,thisData);
+		ruleDatas.splice(index.oldIndex, 1);
+	}
+	callBack && callBack(ruleDatas);
+  }
+function saveDeskIndex(arr){
+	for(var i=0;i<arr.length;i++){
+		delete arr[i].chart_data
+		delete arr[i].data_id
+		delete arr[i].index
+		delete arr[i].is_chart
+		delete arr[i].thing_name
+		delete arr[i].data_name
+		delete arr[i].data_unit
+		delete arr[i].device_name
+		delete arr[i].port_type
+		delete arr[i].status
+		delete arr[i].data_value
+		delete arr[i].data_time
+		if(arr[i]._id){
+			arr[i].desktop_id=arr[i]._id
+		}
+		delete arr[i]._id
+		arr[i].index=i+1
+	}
+	$.ajax({
+		type:"put",
+		url:globalurl+"/v1/desktops",
+		async:true,
+		data:{
+			access_token:accesstoken,
+			data:JSON.stringify(arr)
+		},
+		success:function(data){
+		}
+	});
 }
