@@ -96,15 +96,17 @@ $.initThree = {
 		$.initThree.initScene();
 		$.initThree.initCamera();
 		$.initThree.initLight();
-		$.initThree.initObjects(models);
+		$.initThree.initObjects(models, function() {
+			$.initThree.initFont(function() {
+				afterFontLoaded && afterFontLoaded();
+				selectLabelFn && $.initThree.initRaycaster(selectLabelFn, isTransform);
+				isTransform && $.initThree.initTransformController();
+			});
+		});
 		$.initThree.initGround();
 		$.initThree.initRenderer();
 		$.initThree.initCameraController();
-		$.initThree.initFont(function() {
-			afterFontLoaded && afterFontLoaded();
-			selectLabelFn && $.initThree.initRaycaster(selectLabelFn, isTransform);
-			isTransform && $.initThree.initTransformController();
-		});
+			
 		$.initThree.initAnimation();
 		$.initThree.threeResize();
 	},
@@ -172,7 +174,7 @@ $.initThree = {
 		$.three.light.el.southLight = southLight;
 		$.three.light.el.northLight = northLight;
 	},
-	initObjects: function(models) {
+	initObjects: function(models, callBack) {
 		var model = models[$.three.model.count];
 		var objModelUrl = model.fileName;
 		var objMaterial = model.material;
@@ -194,6 +196,7 @@ $.initThree = {
 			$.three.modelsLoading = false;
 			$.three.loadingStatus++;
 			$.initThree.initLoading();
+			callBack && callBack();
 			return;
 		} else {
 			$.three.model.count++;
