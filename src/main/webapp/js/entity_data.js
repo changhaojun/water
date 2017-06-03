@@ -6,11 +6,10 @@ var dataId=[];
 
 $(function(){
 	getToken(); //刷新令牌
-
 	selectData();
 	selectId();
 	dataList(); //加载数据列表
-
+	toolTip()
 })
 var searchBox=new Vue({
 	el:'.search',
@@ -34,7 +33,7 @@ function dataList(){
 			console.log(data);
 			$(".dataContent").html("");
 			if(data.length==0){
-				$(".dataContent").html("<p>暂无数据</p>");
+				$(".dataContent").html("<p style='padding-left:20px;'>暂无数据</p>");
 			}
 			for(var i=0;i<data.length;i++){
 				data[i].title=data[i].device_name+"-"+data[i].data_name		
@@ -65,7 +64,9 @@ function listData(data,i){
 			'<div class="listHr"></div>'+
 			'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
 				'<div class="contentTop">'+
-					'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
+					'<div class="Itext">'+	
+						'<span class="dataValue">'+data[i].data_value+'</span>'+
+						'<span>'+data[i].data_unit+'</span>'+
 					'</div>'+						
 				'</div>'+
 				'<div class="contentBottom">'+
@@ -85,7 +86,9 @@ function listData(data,i){
 			'<div class="listHr"></div>'+
 			'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
 				'<div class="contentTop">'+
-					'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
+					'<div class="Itext">'+
+						'<span class="dataValue">'+data[i].data_value+'</span>'+
+						'<span>'+data[i].data_unit+'</span>'+
 					'</div>'+						
 				'</div>'+
 				'<div class="contentBottom">'+
@@ -105,7 +108,9 @@ function listData(data,i){
 			'<div class="listHr"></div>'+
 			'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
 				'<div class="contentTop">'+
-					'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
+					'<div class="Itext">'+
+						'<span class="dataValue">'+data[i].data_value+'</span>'+
+						'<span>'+data[i].data_unit+'</span>'+
 					'</div>'+						
 				'</div>'+
 				'<div class="contentBottom">'+
@@ -126,7 +131,9 @@ function listData(data,i){
 			'<div class="listHr"></div>'+
 			'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
 				'<div class="contentTop">'+
-					'<div class="Itext dataValue">'+data[i].data_value+data[i].data_unit+						
+					'<div class="Itext">'+
+						'<span class="dataValue">'+data[i].data_value+'</span>'+
+						'<span>'+data[i].data_unit+'</span>'+
 					'</div>'+						
 				'</div>'+
 				'<div class="contentBottom">'+
@@ -226,6 +233,13 @@ $('.dataContent').delegate('.focus1','click',function(){
 //初始化提示框
 function toolTip(){
 	 $('[data-toggle="tooltip"]').tooltip();
+	 topColor($('.fa'),'orange')
+}
+function topColor(obj,color){
+	obj.on("mouseover",function(){
+		$(".tooltip-inner").css("background-color",color);
+		$(".tooltip.top .tooltip-arrow").css("border-top-color",color);
+	})
 }
 //查看数据
 function look(dataId){
@@ -242,10 +256,7 @@ function searchThing(obj){
 		dataId.push(dataLike[i].data_id)
 	}
 	toolTip()
-//	MQTTconnect(dataId);
-
 }
-
 //告警颜色设置
 function colorBg(data,index){
 	if(data==0){
@@ -262,14 +273,12 @@ var client;
 var topic;
 var data;
 function MQTTconnect(dataIds) {
-//  console.log("订阅程序开始执行");
-    var mqttHost = '139.129.231.31';
-//	var mqttHost='192.168.1.114';
-    var username="admin";
-//  var password="finfosoft123";
-    var password="password";
+    console.log("订阅程序开始执行");
+    var mqttHost = mqttHostIP;
+	var username = mqttName;
+	var password = mqttWord;
 	 topic="mqtt_alarm_currentdata";
-	  client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
+	  client = new Paho.MQTT.Client(mqttHost, Number(portNum), "server" + parseInt(Math.random() * 100, 10));
 	 data = dataIds;  
 	  var options = {
 			  timeout: 1000,
@@ -292,8 +301,8 @@ function MQTTconnect(dataIds) {
 function onConnect() {
   console.log("onConnect");
   for(var i=0;i<data.length;i++){
-	  console.log("订阅第"+i+"个主题");
-	  console.log(data[i]);
+//	  console.log("订阅第"+i+"个主题");
+//	  console.log(data[i]);
 	  topic=data[i]+"";
 	  client.subscribe(topic);
   }
@@ -306,15 +315,18 @@ function onConnectionLost(responseObject) {
 }
 // called when a message arrives
 function onMessageArrived(message) {
-  var topic = message.destinationName;
-  var payload = message.payloadString;
-  console.log(payload)
-  var dataId=JSON.parse(message.payloadString)
-  for(var i=0;i<$(".dataList").length;i++){	
-  		if(dataId.data_id==$(".dataList").eq(i).attr("id")){
-  			$("#"+dataId.data_id+"").find(".listContent .dataTime").html(dataId.data_time);
-  			$("#"+dataId.data_id+"").find(".listContent .dataValue").html(dataId.data_value);
-  			colorBg(dataId.status,i);
-  		}
-  }
+	var topic = message.destinationName;
+    var payload = message.payloadString;
+	var dataConfig=JSON.parse(payload)
+    var dataId=dataConfig.data_id
+    console.log(dataConfig)
+	$("#"+dataId).find('.dataTime').html(dataConfig.data_time)
+	$("#"+dataId).find('.dataValue').html(dataConfig.data_value)
+	if(dataConfig.status==1){
+		$('#'+dataId).addClass("greenBg");
+	}else if(data==0){
+		$('#'+dataId).addClass("grayBg");
+	}else{
+		$('#'+dataId).addClass("redBg");
+	}
 }

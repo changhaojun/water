@@ -126,17 +126,18 @@ html{
 .alarmList .alarmContent{
 	width:100%;
 	height:114px;
-	
+	padding-top:30px;
 	text-align:center;	
 }
-.alarmList .alarmContent span:nth-child(1){
-	font-size:26px;
-	display: block;
+.alarmList .alarmContent span:nth-child(1),.alarmList .alarmContent span:nth-child(2){
+	font-size:26px;	
 	height:30px;
 	margin:25px 0;
 }
-.alarmList .alarmContent span:nth-child(2){
+
+.alarmList .alarmContent span:nth-child(3){
 	color:#78cbb7;
+	display: block;
 }
 .alarmFooter{
 	width:100%;	

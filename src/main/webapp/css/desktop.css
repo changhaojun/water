@@ -13,7 +13,7 @@ body{
     padding: 0 20px;
 }
 .chartcontent{
-	width:710px;
+	width:665px;
 	height:240px;
 	float:left;
 	background: #FFF!important;
@@ -28,12 +28,12 @@ body{
 	display: inline-block;
 }
 .desktopContent .dataList{
-	width: 360px;
+	width: 333px;
     height: 240px;
     background: #fff;
-    margin-right: 20px;
+    margin-right: 28px;
     float: left;
-    margin-top: 25px;
+    margin-top: 28px;
     border-radius: 4px;
 }
 .dataList .listTop{
@@ -61,7 +61,7 @@ body{
     height: 1px;
     background: #F3F3F4;
     margin-left: 10px;
-    width: 340px;
+    width: 315px;
 }
 .dataList .listContent{
 	    width: 100%;
@@ -108,15 +108,15 @@ body{
 	color:#d51b1c;
 }
 .desktopContent .charts{
-	width:740px;
+	width:695px;
     height:240px;
-    margin-right:20px; 
-    margin-top:25px;
+    margin-right:28px; 
+    margin-top:28px;
     background:#fff;
     border-radius: 4px; float:left;
 }
 .desktopContent .charts .del{
-	width:28px; 
+	width:30px; 
 	height:240px;
 	padding-top:5px; 
 	background:#fff; 

@@ -62,9 +62,10 @@ function getNavData(){
 						case "数据标签配置":iIcon = 'fa-edit';break;
 						case "组态":iIcon = 'fa-microchip';break;
 						case "实体":iIcon = 'fa-sitemap';break;
-						case "操作日志":iIcon = 'fa-file-text-o';break;
+//						case "操作日志":iIcon = 'fa-file-text-o';break;
 						case "任务配置":iIcon = 'fa-calendar';break;
 						case "运行数据":iIcon = 'fa-database';break;
+						case "操作日志":iIcon = 'fa-file-text-o';break;
 						default :break;
 					}
 					strNav=$('<li class="changeLi" data-type="" data-toggle="tooltip" data-placement="right"'+
