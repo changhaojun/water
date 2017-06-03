@@ -1,0 +1,219 @@
+html{
+	background:#f3f3f4 !important;
+}
+.taskLog{
+	width: 100%;
+    background: #f3f3f4;
+    float: left;
+    position: relative;
+}
+.logTop{
+	height: 65px;
+    margin-right: 20px;
+}
+.taskLog .logTop span{
+	font-size: 22px;
+    padding-top: 25px;
+    display: inline-block;
+}
+.taskLog .logTop span:nth-child(1){
+	margin-left: 20px;
+    color: #5d5d5d;
+}
+.taskLog .logTop span:nth-child(2){
+	margin-left: 5px;
+    margin-right: 5px;
+}
+.taskLog .logTop span:nth-child(3){
+	    color: #5d5d5d;
+    font-size: 14px;
+}
+.taskLog .logTop span:nth-child(3) i{
+	color: #1ab394;
+}
+.taskLog hr{
+	width: calc(100% - 40px);
+    margin-left: 20px;
+    /*margin-bottom: 0;*/
+    /*margin-top: 0;*/
+    height: 4px;
+    background: #e0e0e0;
+    border: 0;
+    display: inline-block;
+}
+
+.taskList{
+	background: #fff;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 20px 10px;
+}
+#reservationtime{
+	border: 1px solid #ccc;
+    width: 600px !important;
+    line-height: 35px;
+    text-align: center;
+    color: #9096a4;
+    cursor: pointer;
+}
+.taskList .listTop span{
+	color:#999;
+}
+.taskList .listTop button{
+	border: 1px solid #1AB394;
+    color: #1AB394;
+    padding: 7px 30px;
+    margin-left: 25px;
+    border-radius: 4px;
+}
+.taskList .listTop .btnColor{
+	background: #1AB394;
+	color:#fff;
+}
+.taskList .listTop hr{
+	height: 1px;
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 10px;
+    margin-top: 15px;
+}
+
+.taskList .listTop .dataTime input{
+    width: 600px;
+}
+.btn-small{
+	margin-top:20px;
+}
+.btn{
+	padding: 5px 12px;
+}
+.applyBtn{
+	background:#1ab394;
+	color:#fff;
+	margin-left:10px;
+}
+.daterangepicker.opensright .ranges{
+	width:582px;
+	height:50px;
+	float:left;
+	/*text-align:right;*/
+	padding-left:8px;	
+}
+.daterangepicker .ranges .input-mini{
+	width: 105px!important;
+}
+.daterangepicker select{
+	border:1px solid #ccc;
+	text-align:center;
+}
+.rangefooter{
+	height:290px;
+	width:580px;
+}
+.rangefooter .right{
+	display: inline-block !important;
+	float:left;
+	
+}
+.rangefooter .left{
+	display: inline-block !important;
+	float:right;
+    margin-right: 20px!important;
+}
+.nodata{
+	width:100%;
+	height:316px;
+	text-align:center;
+	font-size:24px;
+
+	line-height:316px;
+	background:#E5E5E5;
+	border-bottom:1px solid #ccc;
+	display:block;
+}
+.chartContent{
+	width:100%;
+	border-bottom:1px solid #ccc;
+}
+.contrastChart{
+	height:316px;
+	/*background:#de3;*/
+	margin:auto;
+	
+}
+#line{
+	width:800px;
+	height:316px;
+	margin:auto;
+	color:#1ab394;
+	text-align:center;
+	float:left;
+	margin-left:10px;
+}
+.closeChart{
+	font-size:28px;
+	color:#1ab394;
+	float:right;
+	cursor: pointer;
+	display: inline-block;
+	width:30px;
+	height:30px;
+}
+.dataChartBox{
+	text-align:center;
+	color:#acacac;
+	line-height:300px;
+}
+.hourselect,.minuteselect,.ampmselect{
+	padding-left:12px !important;
+	text-align: left !important;
+	
+}
+.hourselect option,.minuteselect option,.ampmselect option{
+	padding-left:12px !important;
+	width:50px !important;
+}
+.daterangepicker td.active{
+	background: #1ab394;
+	border-radius: 5px 5px;
+}
+.daterangepicker td.active:hover{
+	background: #1ab394;
+	border-radius: 5px 5px;
+}
+option:hover{
+	background:#1ab394 !important;
+}
+/*列表样式*/
+.taskList tbody>tr:nth-child(odd){
+	background: #f9f9f9;
+}
+.taskList tbody tr{
+	border-left: 5px solid transparent;
+}
+.taskList tbody tr:hover{
+	color:#1ab394;
+	border-left: 5px solid #1ab394;
+}
+
+.taskList table:nth-child(2) thead tr th:first-child{
+	padding-left:15px;
+}
+.taskList table:nth-child(2) tbody>tr td:first-child{
+	padding-left:15px;
+}
+.taskList table:nth-child(2) tr{
+	border-bottom: 1px solid #eee;
+}
+.fixed-table-pagination .pagination a{
+	padding: 4px 12px;
+}
+.fixed-table-pagination .pagination-info{
+	color:#999;
+}
+.fixed-table-container{
+	padding-left:0;
+}
+.fixed-table-pagination div.pagination .pagination{
+	margin-top: 5px;
+}
