@@ -373,6 +373,9 @@ $.extend({
 						initData.access_token = refreshToken;
 						$.doPortAjax();
 						return;
+					case 400018:
+						layer.msg(data.error,{icon: 2,});
+						break;
 				}
 			}
 		});

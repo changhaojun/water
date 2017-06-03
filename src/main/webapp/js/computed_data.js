@@ -294,6 +294,8 @@ $.extend({
 											self.location.href='/finfosoft-water/dataTag/computedEntry/'
 										}
 										})
+								}else if(data.code==400018){
+									layer.msg(data.error,{icon: 2,});
 								}
 							}
 					});
