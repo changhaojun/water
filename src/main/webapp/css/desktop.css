@@ -73,14 +73,14 @@ body{
     font-size: 30px;
     line-height: 136px;
     text-align: center;
-    /*color: #1ab394;*/
+    margin-top: 3px;
 }
 .dataList .listContent .contentBottom{
 	color: #afafaf;
     text-align: center;
     height: 30px;
 }
-.dataList .listTop span:nth-child(2){
+.dataList .listTop>span:nth-child(2){
 	display: none;
 }
 .dataList:hover span:nth-child(2){

@@ -104,12 +104,12 @@ body{
     float: left;
 }
 .dataList .listTop>span:nth-child(2){
-	margin-right: 5px;
+	margin-right: -10px;
     float: right;
     cursor: pointer;
 }
 .dataList .listTop>span:nth-child(3){
-	margin-right: 10px;
+	margin-right: 5px;
     float: right;
     cursor: pointer;
 }
@@ -136,11 +136,11 @@ body{
 }
 .dataList .contentTop .Itext{
 	width: 100%;
-    height: 136px;
+    height: 121px;
     font-size: 30px;
-    line-height: 136px;
+    line-height: 121px;
     text-align: center;
-    /*color: #1ab394;*/
+    margin-top: 15px;
 }
 .dataList .listContent .contentBottom{
 	color: #afafaf;

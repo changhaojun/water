@@ -69,7 +69,14 @@ function chartInfo(data,i){
 	if(data.rows[i].run_data){
 		option={
 			tooltip:{
-				trigger:'axis'
+				padding:10,
+				trigger:'axis',
+				formatter: function (params, ticket, callback) {  
+		            //x轴名称  
+		            var name = params[0].name  
+		            var value = params[0].value  
+		            return name + '<br />' + value  
+		       } 
 			},
 			xAxis:{
 				type:'category',
@@ -82,13 +89,31 @@ function chartInfo(data,i){
 			},
 			series:[
 				{
-					type:'line',
-					data:data.rows[i].run_data.data_values,
+					type: 'line',
+					data: data.rows[i].run_data.data_values,
 					markPoint : {
 	                    data : [
 	                        {type : 'max', name: '最大值'},
 	                        {type : 'min', name: '最小值'}
-	                    ]
+	                    ],
+	                    /*symbolSize: (function (values){
+	                    	var maxValue = 0;
+	                    	var maxIndex = 0;
+	                    	var mixValue = 0;
+	                    	var mixIndex = 0;
+	                    	for (var i=0; i<values.length; i++) {
+	                    		if (values[i] > maxValue) {
+	                    			maxValue = values[i];
+	                    			maxIndex = i;
+	                    		}
+	                    		if (values[i] < mixValue) {
+	                    			mixValue = values[i];
+	                    			mixIndex = i;
+	                    		}
+	                    	}
+	                    	var maxRadius = values[maxIndex].toString().length >= values[mixIndex].toString().length ? values[maxIndex].toString().length * 12.5 : values[mixIndex].toString().length * 12.5;
+	                    	return maxRadius;
+	                    })(data.rows[i].run_data.data_values)*/
 	        		},
 	        		markLine:{
 	                    data:[

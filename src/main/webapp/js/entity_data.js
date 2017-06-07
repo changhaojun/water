@@ -319,7 +319,6 @@ function onMessageArrived(message) {
     var payload = message.payloadString;
 	var dataConfig=JSON.parse(payload)
     var dataId=dataConfig.data_id
-    console.log(dataConfig)
 	$("#"+dataId).find('.dataTime').html(dataConfig.data_time)
 	$("#"+dataId).find('.dataValue').html(dataConfig.data_value)
 	if(dataConfig.status==1){

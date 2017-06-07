@@ -71,9 +71,11 @@ function taskList(){
 			});
 			$("#logList").bootstrapTable('load', allLogData);
 			$('#logList').bootstrapTable('refreshOptions',{pageNumber:1,pageSize:10});
+//			fn(data)
 		}
 	})
 }
+	
 //对结果列的格式化
 function resultFormatter(value,row,index){
 	if(value==1){
@@ -152,14 +154,11 @@ $(document).ready(function() {
 })
 
 
-
-
-
-
-
-
-
-
-
-
+//vue
+function fn(data){
+	var testVue=new Vue({
+		el:'#main',
+		data:data
+	})
+}
 

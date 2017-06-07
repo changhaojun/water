@@ -123,6 +123,7 @@ function getChart(i){
 		async:false,
 		crossDomain: true == !(document.all),
 		success:function(data){
+			console.log(data)
 			if(data.length==0){
 				$(".chartsContent").html("<span class='nonedata'>暂无数据</span>");
 			}else{
@@ -231,6 +232,7 @@ function initChart(){
 			series:series		
 		};
 	myChart.setOption(option);
+	window.onresize = myChart.resize;
 }
 
 $('.chartContent button').click(function(){
@@ -337,6 +339,7 @@ $(document).ready(function() {
 				}
 			}
 		})
+		$('.chartContent button').removeClass('btnColor')
    })
 })
 

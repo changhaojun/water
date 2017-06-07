@@ -9,7 +9,7 @@ var newData=[];
 var objId=[];
 var xdata;
 var dataIndex=[];
-var myChart;
+var myChart=[];
 var option;
 var dragged,moveDom,mouseX,centerS,oldIndex,newIndex;	
 $(function(){
@@ -30,9 +30,10 @@ function getCharts(){
 		success:function(data){
 			console.log(data)
 			if(data.length==0){
-				$(".desktopContent").html("<p style='padding-left:20px;'>暂无数据</p>");
+				$(".desktopContent").html("<p style='padding-top:20px;'>暂无数据</p>");
 			}else{
 				dataIndex=data
+				console.log(data)
 				var  str=''
 				chartData=[];
 				for(var i=0;i<data.length;i++){
@@ -40,7 +41,6 @@ function getCharts(){
 						chartData.push(data[i])
 						console.log(chartData);
 						thingName=data[i].thing_name
-						console.log(thingName)
 						str='<div class="charts dataBox" draggable="true">'+
 								'<div id="'+data[i]._id+'" class="chartcontent"></div>'+
 								'<div class="del">'+
@@ -48,7 +48,6 @@ function getCharts(){
 								'</div>'+
 							'</div>';
 						$('.desktopContent').append(str);
-//						chartInfo()
 						chartInfo(data,i)
 					}else if(data[i].is_chart==0){
 						str='<div class="dataList dataBox" draggable="true" id="'+data[i].data_id+'">'+
@@ -90,8 +89,10 @@ function colorBg(data,id){
 		$('#'+id).addClass('redBg')
 	}
 }
+var aa=[]
 //图表配置项
 function chartInfo(data,i){
+	console.log(i)
 	obj=[];objId=[];
 	for(var j=0;j<chartData.length;j++){
 		obj.push(chartData[j].chart_data);
@@ -117,7 +118,8 @@ function chartInfo(data,i){
 			textStyle:{
 				color:'#999',
 				fontSize:'16px'
-			}	
+			},
+			x:'10px'
 		},
 		tooltip:{
 			trigger:'axis'
@@ -147,7 +149,11 @@ function chartInfo(data,i){
 			type:'value',
 			splitLine: { show: false }, //去除网格中的坐标线
 			axisLabel: {
-				formatter: '{value}'
+//				formatter: '{value}',
+				show:false
+			},
+			axisTick:{
+				show:false
 			},
 			axisLine:{
                 lineStyle:{
@@ -158,8 +164,10 @@ function chartInfo(data,i){
 		},
 		series:series
 	}
-    myChart=echarts.init(document.getElementById(data[i]._id))
-	myChart.setOption(option)
+    myChart[i]=echarts.init(document.getElementById(data[i]._id))
+	myChart[i].setOption(option)
+	aa.push(myChart[i])
+	console.log(aa)
 }
 
 //初始化提示框
@@ -238,6 +246,7 @@ function onMessageArrived(message) {
     var payload = message.payloadString;
 	var dataConfig=JSON.parse(payload)
     var dataId=dataConfig.data_id
+    //数据标签推送
 	$("#"+dataId).find('.dataTime').html(dataConfig.data_time)
 	$("#"+dataId).find('.dataValue').html(dataConfig.data_value)
 	if(dataConfig.status==1){
@@ -247,18 +256,12 @@ function onMessageArrived(message) {
 	}else{
 		$('#'+dataId).addClass("redBg");
 	}
-console.log('推送的dataId======'+dataId)
-console.log(dataConfig)
-console.log('推送的dataTime====='+dataConfig.data_time)
-console.log('推送的dataValue====='+dataConfig.data_value)
+	//图表推送
+	var series=[]
 	for(var m=0;m<objId.length;m++){
 		for(var n=0;n<objId[m].length;n++){
 			var ydata3;var xdata2;
-			if(dataId==objId[m][n]){
-				var id=($('.charts').eq(0).children().attr('id'))		
-console.log('满足条件的m=============='+m)
-				
-				
+			if(dataId==objId[m][n]){	
 				//给满足条件的data_id所在的图表删除dataTimes的第一个值并添加推送过来的data_time
 				xdata2 = obj[m][0].dataTimes;
 				xdata2.shift();
@@ -267,30 +270,23 @@ console.log('满足条件的m=============='+m)
 				for(var g=0;g<obj[m].length;g++){
 					var ydata3=obj[m][g].dataValues;
 					ydata3.shift();
-console.log('推送前的datavalue===='+ydata3)
+					series.push({
+						data:ydata3
+					})
 				}
-				//给满足条件的data_id的dataValues添加推送过来的data_time
+				//给满足条件的data_id的dataValues添加推送过来的data_value
 				ydata2 = obj[m][n].dataValues;
 				ydata2.push(dataConfig.data_value)
 				
-console.log('添加后的datavalue====='+ydata2)	
-				
-				option.xAxis.data[m]=xdata2
-				myChart.setOption({
+				aa[m].setOption({
 						xAxis:{
 							data:xdata2
 						},
-						series:[{
-							type:'line',
-							data:ydata2
-						}]
-					})
-				
-				
+						series:series
+				})
 			}
 		}	
-    }
-	
+   }
 }
 /*下面开始拖动*/
 $(document).delegate('.dataBox','dragstart',function(evetn){
