@@ -160,6 +160,7 @@ $.extend({
 				access_token: $.initData.token.access
 			},
 			success: function(data) {
+				console.log(data);
 				callBack && callBack(data);
 			}
 		});
@@ -234,7 +235,7 @@ $.extend({
 			data_value: data.data_value,
 			data_unit: originLabel.labelUnit,
 			port_type: originLabel.labelType,
-			status: originLabel.status
+			status: originLabel.labelStatus
 		};
 		var position = originLabel.position;
 		$.three.labelGroup.remove(originLabel);
@@ -415,7 +416,14 @@ $.extend({
 //							port_type: port_type
 //						}, true);
 //						$('.operation').toggleWin(true);
-//						$.three.capturer.intersected = null;
+						var position = label.position;
+						$.three.labelGroup.remove(label);
+						$.initThree.initLabel({
+							_id: processId,
+							process_name: processName,
+							status: 1
+						}, position);
+						$.three.capturer.intersected = null;
 					});
 				},
 				btn2: function() {
@@ -460,7 +468,6 @@ $.extend({
 			start_time: time.startDateSent,
 			end_time: time.endDateSent
 		};
-		console.log(dataSent);
 		$.ajax({
 			type: "post",
 			url:  globalurl+"/v1/realtimeDatas",
@@ -691,22 +698,6 @@ $.extend({
 				}
 			}
 		});
-	},
-	onAOConfirm: function(label, newVal, callBack) {
-		var originLabel = label;
-		if (!originLabel) return;
-		var newData = {
-			data_id: originLabel.labelId,
-			data_name: originLabel.labelName,
-			data_value: newVal,
-			data_unit: originLabel.labelUnit,
-			port_type: originLabel.labelType,
-			status: originLabel.status
-		};
-		var position = originLabel.position;
-		$.three.labelGroup.remove(originLabel);
-		$.initThree.initLabel(newData, position);
-		callBack && callBack();
 	}
 });
 

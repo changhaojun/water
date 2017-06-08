@@ -30,7 +30,7 @@ function doajax(data){
 		async:false,
 		crossDomain: true == !(document.all),
 		success: function(data) {
-//			console.log(data)
+			console.log(data)
 			if(data.code==400005){
 				window.getNewToken();
 				alarmList();
@@ -74,12 +74,21 @@ function searchThing(obj){
 }
 //动态创建DOM拼接
 function Dom(data,i){
-	console.info(data)
+	if(data.data_value==undefined){
+		data.data_value="暂无数据";
+	}
+	if(data.data_time==undefined){
+		data.data_time="";
+	}
+	if(data.data_unit==undefined||data.data_unit=="-"){
+		data.data_unit="";
+	}
 	var oLi="";
 	str='<div class="alarmList" id="'+data.data_id+'">'+
 		'<div class="alarmTop">'+data.device_name+"-"+data.data_name+'</div>'+
 		'<div class="alarmContent">'+
-			'<span class="dataValue">'+data.data_value+data.data_unit+'</span>'+
+			'<span class="dataValue">'+data.data_value+'</span>'+
+			'<span>'+data.data_unit+'</span>'+
 			'<span class="dataTime">'+data.data_time+'</span>'+
 		'</div>'+
 		'<div class="alarmFooter">'+
@@ -442,7 +451,13 @@ function onMessageArrived(message) {
   var dataConfig=JSON.parse(payload)
   var dataId=dataConfig.data_id
   console.info(dataConfig)
-	$('#'+dataId).find('.dataValue').text(dataConfig.data_value);
+  var dataValue;
+  if(dataConfig.port_type=="DO"||dataConfig.port_type=="DI"){
+  	dataValue=dataConfig.battery.split('$')[dataConfig.data_value]
+  }else{
+  	dataValue=dataConfig.data_value
+  }
+	$('#'+dataId).find('.dataValue').text(dataValue);
 	$('#'+dataId).find('.dataTime').text(dataConfig.data_time);
 	if(dataConfig.status==1){
 		$('#'+dataId).addClass("greenBg");

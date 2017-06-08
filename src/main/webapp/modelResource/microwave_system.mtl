@@ -8,28 +8,30 @@
 #  
 #  ==========================================================================
 
-newmtl AS-03.1
-Ka 1.000000 1.000000 1.000000
-Kd 0.258065 0.255932 0.255932
+newmtl __
+Kd 0.263041 0.681063 0.860215
+illum 1
+
+newmtl Plastic_Dot_Grid_White-sml
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 0.971350 0.933884
 illum 1
 
 newmtl __.1
 Kd 0.800000 0.800000 0.800000
 illum 1
-map_Kd biaopan.png
+map_Kd microwave_system.jpg
 
 newmtl AS-03
 Ka 1.000000 1.000000 1.000000
-Kd 0.655914 0.655914 0.655914
 illum 1
 
-newmtl __
-Kd 0.623656 0.103084 0.103084
+newmtl Plastic_Dot_Grid_White-sml.2
+Ka 0.000000 0.000000 0.000000
+Kd 0.140762 0.404692 0.774194
 illum 1
 
-newmtl 123
-Kd 0.158624 0.160402 0.161290
-illum 1
-
-newmtl default_Mat
+newmtl Plastic_Dot_Grid_White-sml.1
+Ka 0.000000 0.000000 0.000000
+Kd 0.774194 0.140762 0.140762
 illum 1
