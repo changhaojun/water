@@ -166,7 +166,7 @@ function show(value,dataName){
 	  shadeClose: true,
 	  shade: 0.8,
 	  scrollbar: false,
-	  area: ['873px', '90%'],
+	  area: ['873px', '71%'],
 	  content: '/finfosoft-water/dataTag/dataChart/'+value+'-'+dataName+'-'+deviceId+'-'+deviceName
 	}); 
 }
