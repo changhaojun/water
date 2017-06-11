@@ -500,9 +500,7 @@ $.fn.extend({
 									});
 									nullInput3=-1;
 								}else{
-									device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName 
-											+  "','mobile':'" + mobile +"','status': 1 ,'communication':" + communication 
-											+",'is_remind':1,'remind_interval':"+warningSpace+",'protocal':'A','remind_delay':"+delayTime+",'device_kind':1}";
+									device = "{'device_code':'" + deviceCode + "','device_name':'"+ deviceName + "','mobile':'" + mobile +"','status': 1 ,'communication':" + communication+",'is_remind':1,'remind_interval':"+warningSpace+",'protocal':'A','remind_delay':"+delayTime+",'device_kind':1}";
 									$.ajax({
 										type:"post",
 										datatype:"json",

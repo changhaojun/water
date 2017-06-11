@@ -28,18 +28,15 @@ function getCharts(){
 			access_token: accesstoken
 		},
 		success:function(data){
-			console.log(data)
 			if(data.length==0){
 				$(".desktopContent").html("<p style='padding-top:20px;'>暂无数据</p>");
 			}else{
 				dataIndex=data
-				console.log(data)
 				var  str=''
 				chartData=[];
 				for(var i=0;i<data.length;i++){
 					if(data[i].is_chart==1){
 						chartData.push(data[i])
-						console.log(chartData);
 						thingName=data[i].thing_name
 						str='<div class="charts dataBox" draggable="true">'+
 								'<div id="'+data[i]._id+'" class="chartcontent"></div>'+
@@ -92,7 +89,6 @@ function colorBg(data,id){
 var aa=[]
 //图表配置项
 function chartInfo(data,i){
-	console.log(i)
 	obj=[];objId=[];
 	for(var j=0;j<chartData.length;j++){
 		obj.push(chartData[j].chart_data);
@@ -167,7 +163,6 @@ function chartInfo(data,i){
     myChart[i]=echarts.init(document.getElementById(data[i]._id))
 	myChart[i].setOption(option)
 	aa.push(myChart[i])
-	console.log(aa)
 }
 
 //初始化提示框

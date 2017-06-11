@@ -18460,7 +18460,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 
 	    };
-
 	    module.exports = Draggable;
 
 

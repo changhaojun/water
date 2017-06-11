@@ -9,6 +9,7 @@ import com.finfosoft.water.globalConfig.GlobalConfigController;
 import com.finfosoft.water.thing.ThingController;
 import com.finfosoft.water.login.LoginController;
 import com.finfosoft.water.operatelog.OperateLogController;
+import com.finfosoft.water.power.PowerController;
 import com.finfosoft.water.rundata.RunDataController;
 import com.finfosoft.water.scada.ScadaController;
 import com.finfosoft.water.task.TaskController;
@@ -46,6 +47,7 @@ public class WaterConfig extends JFinalConfig{
 		me.add("/runData",RunDataController.class,"/");
 		me.add("/desktop",DesktopController.class,"/");
 		me.add("/log",OperateLogController.class,"/");
+		me.add("/power",PowerController.class,"/");
 	}
 
 	@Override
