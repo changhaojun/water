@@ -294,7 +294,10 @@ $.extend({
 			url:"/finfosoft-water/json/y_"+$.allData.year+".json",
 			async:false,
 			success:function(data){
-				$.allData.powerData=JSON.parse(data); 
+				console.info(data)
+//				$.allData.powerData=JSON.parse(data); 
+				$.allData.powerData= eval('(' + data + ')'); 
+				console.info($.allData.powerData)
 			}
 		});
 	},
