@@ -294,10 +294,12 @@ $.extend({
 			url:"/finfosoft-water/json/y_"+$.allData.year+".json",
 			async:false,
 			success:function(data){
-				console.info(data)
-//				$.allData.powerData=JSON.parse(data); 
-				$.allData.powerData= eval('(' + data + ')'); 
-				console.info($.allData.powerData)
+				if( typeof data =='string'){
+					$.allData.powerData=JSON.parse(data); 
+					
+				}else{
+					$.allData.powerData=data
+				}
 			}
 		});
 	},
@@ -308,7 +310,11 @@ $.extend({
 			url:"/finfosoft-water/json/y_"+year+".json",
 			async:false,
 			success:function(data){
-				$.allData.lastYearPowerData =JSON.parse(data); 
+				if( typeof data =='string'){
+					$.allData.lastYearPowerData =JSON.parse(data); 
+				}else{
+					$.allData.lastYearPowerData =data; 
+				}
 				$.calcCompany()
 			}
 		});
