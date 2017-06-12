@@ -25,6 +25,8 @@ $.allData={
 	companyLine:{},
 	chartArr:{},
 	nowMonth:'',
+	name:['再生水泵房','高效沉淀池','污泥回流','转盘滤池'],
+	index:0
 };
 $.fn.extend({
 	drawCompany:function(companyData){
@@ -82,27 +84,7 @@ $.fn.extend({
 		        }
             ],
             yAxis: {},
-            series:[ {
-            	name:legendData[1],
-				type:'line',
-	            itemStyle: {
-	                normal: {
-	                    color: 'rgb(255, 70, 131)'
-	                }
-	            },
-	            areaStyle: {
-	                normal: {
-	                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-	                        offset: 0,
-	                        color: 'rgb(255, 158, 68)'
-	                    }, {
-	                        offset: 1,
-	                        color: 'rgb(255, 70, 131)'
-	                    }])
-	                }
-	            },
-				data:seriesData[2017]
-            },
+            series:[ 
             {
             	name:legendData[0],
 				type:'line',
@@ -123,8 +105,27 @@ $.fn.extend({
 	                }
 	            },
 				data:seriesData[2016]
-            }
-            ]
+            },{
+            	name:legendData[1],
+				type:'line',
+	            itemStyle: {
+	                normal: {
+	                    color: 'rgb(255, 70, 131)'
+	                }
+	            },
+	            areaStyle: {
+	                normal: {
+	                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+	                        offset: 0,
+	                        color: 'rgb(255, 158, 68)'
+	                    }, {
+	                        offset: 1,
+	                        color: 'rgb(255, 70, 131)'
+	                    }])
+	                }
+	            },
+				data:seriesData[2017]
+            }]
         };
         $.allData.companyLine.setOption(option);
         $.allData.companyLine.on("dataZoom", function(param){
@@ -231,27 +232,7 @@ $.fn.extend({
 		        }
             ],
             yAxis: {},
-            series:[ {
-            	name:legendData[1],
-				type:'line',
-	            itemStyle: {
-	                normal: {
-	                    color: 'rgb(255, 70, 131)'
-	                }
-	            },
-	            areaStyle: {
-	                normal: {
-	                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-	                        offset: 0,
-	                        color: 'rgb(255, 158, 68)'
-	                    }, {
-	                        offset: 1,
-	                        color: 'rgb(255, 70, 131)'
-	                    }])
-	                }
-	            },
-				data:seriesData[2017]
-            },
+            series:[ 
             {
             	name:legendData[0],
 				type:'line',
@@ -272,8 +253,27 @@ $.fn.extend({
 	                }
 	            },
 				data:seriesData[2016]
-            }
-            ]
+            },{
+            	name:legendData[1],
+				type:'line',
+	            itemStyle: {
+	                normal: {
+	                    color: 'rgb(255, 70, 131)'
+	                }
+	            },
+	            areaStyle: {
+	                normal: {
+	                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+	                        offset: 0,
+	                        color: 'rgb(255, 158, 68)'
+	                    }, {
+	                        offset: 1,
+	                        color: 'rgb(255, 70, 131)'
+	                    }])
+	                }
+	            },
+				data:seriesData[2017]
+            }]
         };
         
         $.allData.chartArr[workshop].setOption(option);
@@ -367,18 +367,12 @@ $.extend({
 		}
 		
 		for(var workshop in $.allData.workLineData){
-			var title='车间'+workshop.substring(8)+'电耗环比分析'
+			var title=$.allData.name[$.allData.index]+"电耗环比分析"
 			$('#'+workshop).showWorkLine($.allData.workLineData[workshop],workshop,title)
+			$.allData.index++
 		}
 	},
 	updataDataZoom:function(param){
-//		if(name!='company'){
-//			$.allData.companyLine.dispatchAction({
-//			    type: 'dataZoom',
-//			    start:param.start,
-//			    end: param.end
-//			});
-//		}
 		for(var work in $.allData.chartArr){
 			$.allData.chartArr[work].dispatchAction({
 			    type: 'dataZoom',
