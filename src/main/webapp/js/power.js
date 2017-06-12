@@ -328,6 +328,7 @@ $.extend({
 	},
 	getWorksDatas:function(){
 		var num=1
+		$.allData.index=0
 		for(var works in $.allData.powerData){
 			if(works!="company"){
 				var workSum=0;
@@ -336,10 +337,13 @@ $.extend({
 				}
 				$.allData.barsData["workshop"+num]={}
 				$.allData.barsData["workshop"+num].value=workSum
-				$.allData.barsData["workshop"+num].name="车间"+num
+				$.allData.barsData["workshop"+num].name=$.allData.name[$.allData.index]
+				$.allData.index
+				$.allData.index++
 				num++
 			}
 		}
+		$.allData.index=0
 		$('#workshopsBar').showShopBar($.creatDom)
 	},
 	creatDom:function(){
