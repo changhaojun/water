@@ -87,6 +87,108 @@ function getChart(i){
 		$("#"+i+"").removeClass("disabledIcon").addClass("selectdIcon");
 		$("#"+i+"").parent("div").removeClass("disabledLi").addClass("selectdLi");
 		$("#"+i+"").html("已选");
+		
+		dataUnit=[];dataFid=[];
+		for(var n=0;n<$(".list").children().length;n++){
+			if($(".list").children().eq(n).hasClass('selectdLi')){
+				dataUnit.push($(".list").children().eq(n).children().eq(2).html())
+				dataFid.push(Number($(".list").children().eq(n).children().eq(3).html()))
+			}
+		}
+		
+		var data="{data_id:"+Number(i)+",start_time:'"+startTime+"',end_time:'"+endTime+"'}";
+		$.ajax({
+			url: globalurl+"/v1/runDatas",
+			type:"post",
+			dataType:"JSON",
+			data:{
+				access_token: accesstoken,
+				data:data
+			},
+			async:false,
+			crossDomain: true == !(document.all),
+			success:function(data){
+				console.log(data)
+				if(data.length==0){
+					$(".chartsContent").html("<span class='nonedata'>暂无数据</span>");
+				}else{
+					if(data.dataTimes.length==0 ||data.dataValues.length==0){
+						layer.msg('该时段暂无数据',{icon:0,time:2000})
+					}else{
+						chartArr.push(data);
+						console.log(chartArr)
+						initChart();
+					}
+				}
+			}
+		})
+	}else{
+		$("#"+i+"").prev().addClass("disabledFont").removeClass("selectdFont");
+		$("#"+i+"").addClass("disabledIcon").removeClass("selectdIcon");
+		$("#"+i+"").parent("div").addClass("disabledLi").removeClass("selectdLi");
+		$("#"+i+"").html("+");
+		
+		var del1=$("#"+i+"").attr('id')
+		var del=del1*1
+		for(var j=0;j<dataFid.length;j++){
+			if(del==dataFid[j]){
+				dataFid.splice(j,1)
+				console.log(dataFid)
+			}
+		}
+		var data={};
+		data.data_id=dataFid
+	  	data.start_time=startTime
+	  	data.end_time=endTime
+		
+		$.ajax({
+			url: globalurl+"/v1/runDatas",
+			type:"post",
+			dataType:"JSON",
+			data:{
+				access_token: accesstoken,
+				data:JSON.stringify(data)
+			},
+			async:false,
+			crossDomain: true == !(document.all),
+			success:function(data){
+				console.log(data)
+				$("#chartsContent").html('')
+				chartArr=data;
+				for(var i=0;i<dataFid.length;i++){
+					if(data[i].dataTimes.length==0 || data[i].dataValues.length==0){
+						layer.msg('该时段暂无数据',{icon:0,time:2000})
+					}else{
+						initChart();
+	//					initChart(dataFid[i],legendData);	
+					}
+				}
+			}
+		})
+	}
+	
+	//判断是否被关注
+	for(var j=0;j<selectedId.length;j++){
+		if(selectedId[j].toString()==dataFid.toString()){
+			$('.chartContent span').addClass('disabledFa');
+			break
+		}
+		else{
+			$('.chartContent span').removeClass('disabledFa');
+		}
+	}
+	//获取数据
+	
+}
+
+
+/*function getChart(i){
+	console.info("i:"+i)
+	if($("#"+i+"").html()=="+"){
+		$("#"+i+"").prev().removeClass("disabledFont").addClass("selectdFont");
+		$("#"+i+"").removeClass("disabledIcon").addClass("selectdIcon");
+		$("#"+i+"").parent("div").removeClass("disabledLi").addClass("selectdLi");
+		$("#"+i+"").html("已选");
 	}else{
 		layer.msg('该数据已添加过', {
 			icon : 7
@@ -133,7 +235,7 @@ function getChart(i){
 			}
 		}
 	})
-}
+}*/
 //图表配置项以及实例化图表
 function initChart(){
 	var objData=[]; legendData=[];
@@ -303,8 +405,9 @@ function topColor(obj,color){
 		$(".tooltip.top .tooltip-arrow").css("border-top-color",color);
 	})
 }
+
 //点击时间获取图表；
-$(document).ready(function() {
+$(document).ready(function() {	
    $('#reservationtime').daterangepicker({
       timePicker: true,
       timePickerIncrement: 30,
@@ -335,7 +438,11 @@ $(document).ready(function() {
 				$("#chartsContent").html('')
 				chartArr=data;
 				for(var i=0;i<dataFid.length;i++){
-					initChart();
+					if(data[i].dataTimes.length==0 || data[i].dataValues.length==0){
+						layer.msg('该时段暂无数据',{icon:0,time:2000})
+					}else{
+						initChart();
+					}
 				}
 			}
 		})
@@ -403,8 +510,12 @@ function changeData(i){
 			$("#chartsContent").html('')
 			chartArr=data;
 			for(var i=0;i<dataFid.length;i++){
-				initChart();
-//				initChart(dataFid[i],legendData);
+				if(data[i].dataTimes.length==0 || data[i].dataValues.length==0){
+					layer.msg('该时段暂无数据',{icon:0,time:2000})
+				}else{
+					initChart();
+//					initChart(dataFid[i],legendData);	
+				}
 			}
 		}
 	})
