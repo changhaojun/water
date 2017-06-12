@@ -156,7 +156,8 @@ $.fn.extend({
 			code: $('input').filter('[name=verificationCode]').val() === '请输入验证码' ? '' : $('input').filter('[name=verificationCode]').val(),
 			client_id: 'admin',
 			client_secret: 'admin',
-			address: $.address
+//			address: $.address
+			address: '陕西省西安市'
 		};
 		if(!$.couldSubmit($('.form input'))) {
 			return;
