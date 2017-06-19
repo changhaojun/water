@@ -1,6 +1,4 @@
 var thingId=$('#thingId').val()//获取实体的id
-
-	console.log("thing_id:"+$('#thingId').val());	
 var dataLike;
 var dataId=[];
 

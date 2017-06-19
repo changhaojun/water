@@ -169,7 +169,7 @@ function give(value){
 		data="{'device_id':'"+value+"','guid':'"+guid+"'}";
 		data={'data':data};
 		$.ajax({
-			url:globalurl+"/v1/homes",
+			url:globalurl+"/v1/homes?access_token="+accesstoken,
 			data:data,
 			dataType: 'JSON',
 			type: 'POST',

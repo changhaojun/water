@@ -176,14 +176,13 @@ function show(value,dataName){
  */
 function give(id){
 	onoff=$(".dial").val();
-	console.log(onoff)
 	var guid=guidGenerator();	
 	layer.confirm("<font size='2'>确认下发？</font>", {icon:7},function(index){
 		layer.close(index);
 		data="{'data_id':"+id+",'data_value':"+onoff+",'guid':'"+guid+"'}";
 		data={'data':data};
 		$.ajax({
-			url:globalurl+"/v1/homes",
+			url:globalurl+"/v1/homes?access_token="+accesstoken,
 			data:data,
 			dataType: 'JSON',
 			type: 'POST',
@@ -224,7 +223,7 @@ function clickBtn(id,dataValue,i){
     	data="{'data_id':"+dataId+",'data_value':"+onoff+",'guid':'"+guid+"'}";    	 
 		data={'data':data};	
 		$.ajax({
-			url:globalurl+"/v1/homes",
+			url:globalurl+"/v1/homes?access_token="+accesstoken,
 			data:data,
 			dataType: 'JSON',
 			type: 'POST',
