@@ -679,6 +679,7 @@ $.fn.extend({
 			if($(".collector input").val()!=collector_id){
 				//发生更改
 				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
+				'"port_num":'+dataInfo[i].port_num+','+
 				'"oper_type":'+dataInfo[i].oper_type+','+
 				'"port_name":"'+dataInfo[i].port_name+'",'+
 				'"collect_range_high":"'+rangeHigh+'",'+
@@ -697,6 +698,7 @@ $.fn.extend({
 			}else{
 				//未发生更改
 				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
+				'"port_num":'+dataInfo[i].port_num+','+
 				'"oper_type":'+dataInfo[i].oper_type+','+
 				'"port_name":"'+dataInfo[i].port_name+'",'+
 				'"collect_range_high":"'+rangeHigh+'",'+

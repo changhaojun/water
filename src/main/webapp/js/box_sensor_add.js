@@ -594,6 +594,7 @@ $.fn.extend({
 				realLow="-"
 			}
 			dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
+			'"port_num":'+dataInfo[i].port_num+','+
 			'"oper_type":'+dataInfo[i].oper_type+','+
 			'"port_name":"'+dataInfo[i].port_name+'",'+
 			'"collect_range_high":"'+rangeHigh+'",'+
