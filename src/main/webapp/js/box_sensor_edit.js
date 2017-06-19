@@ -6,6 +6,7 @@ var j=0;
 var dataId=[],collectorArr=[],collectorArr1=[];
 var flag=0;
 var idOnOff=0;//判断采集器id是否乱写
+var collectorChange=false;
 $.fn.extend({
 	//智能input
 	'smartInput': function (callback){
@@ -692,6 +693,7 @@ $.fn.extend({
 				dataConfigJson=JSON.parse(dataConfigJson);
 				dataConfig.push(dataConfigJson);
 				data=JSON.stringify(dataConfig);
+				collectorChange=true
 			}else{
 				//未发生更改
 				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
@@ -732,6 +734,14 @@ $.fn.extend({
 								self.location.href='/finfosoft-water/dataTag/box/'
 							}
 						});
+					}else if(data.code==400018){
+						var str=""
+						if(collectorChange){
+							str="采集器ID已修改！"
+						}
+						layer.msg(str+data.error,{
+							icon:2
+						})
 					}
 				}
 			});
