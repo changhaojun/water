@@ -115,7 +115,7 @@ $.fn.extend({
 			crossDomain: true == !(document.all),
 			url:globalurl+"/v1/devices/"+editId+"?access_token="+accesstoken,
 			success:function(data){
-				console.log(data)
+			//	console.log(data)
 				if(data.code==400005){
 						getNewToken();
 						getEquipment();
@@ -593,13 +593,23 @@ $.fn.extend({
 											data:device
 										},
 										success:function(data){
-											//console.log(data)
+										//	console.log(data)
+											if (data.code===200) {
+												layer.msg('保存成功！', {
+													icon: 1,
+													time:3000,
+													end:function(){
+														self.location.href='/finfosoft-water/dataTag/box/'
+													}
+												});
+											}
 											for(var i=0;i<collectorArr.length;i++){
 												if($(".list input").val()==collectorArr[i]){
 													idOnOff=1;
 												}
 											}
 											if(idOnOff==1){
+												//console.log(idOnOff)
 												save();
 											}else{
 												layer.tips('请重新选择采集器ID！',$(".list input"),{
@@ -628,12 +638,22 @@ $.fn.extend({
 						success:function(data){
 							//console.log(data)
 							//dataId=data._id;
+								if (data.code===200) {
+									layer.msg('保存成功！', {
+										icon: 1,
+										time:3000,
+										end:function(){
+											self.location.href='/finfosoft-water/dataTag/box/'
+										}
+									});
+								}
 							for(var i=0;i<collectorArr.length;i++){
 								if($(".list input").val()==collectorArr[i]){
 									idOnOff=1;
 								}
 							}
 							if(idOnOff==1){
+								//console.log(idOnOff)
 								save();
 							}else{
 								layer.tips('请重新选择采集器ID！',$(".list input"),{
