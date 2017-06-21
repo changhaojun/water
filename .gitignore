@@ -1,4 +1,4 @@
-/lanyue-manage.log
-/._lanyue-manage.log*.tmp
-/lanyue-water.log
 /target
+/.settings
+/.classpath
+*.log
