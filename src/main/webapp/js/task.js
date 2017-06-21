@@ -822,7 +822,7 @@ $.extend({
 			$.taskData.selectControlTag=$(this).val();
 			var thisId=$(this).val();
 			if($(this).val()!=0&&$(this).val()!=''){
-				if(($.taskData.controlTagList[thisId].low_battery==undefined)||($.taskData.controlTagList[thisId].low_battery=='')){
+				if(($.taskData.controlTagList[thisId].low_battery==undefined)||($.taskData.controlTagList[thisId].low_battery=='')||($.taskData.controlTagList[thisId].low_battery=='-')){
 					$('.ioAction').show();
 					if($.taskData.ruleBox.target_data_id!=''){
 						$('#inputAction').val($.taskData.ruleBox.action);
