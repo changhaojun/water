@@ -49,7 +49,7 @@ function entityData(data,i){
 			$(".dataContent").append(str);
 		chartInfo(data,i)
 	}else{
-		str='<div class="dataList">'+
+		str='<div class="dataList" style="cursor:pointer;" onclick="look(&apos;'+data.rows[i]._id+'&apos;)">'+
 				'<div class="listTop">'+
 					'<span>'+data.rows[i].thing_name+'</span>'+							
 				'</div>'+
