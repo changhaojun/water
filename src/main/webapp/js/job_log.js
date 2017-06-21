@@ -78,6 +78,7 @@ function taskList(){
 	
 //对结果列的格式化
 function resultFormatter(value,row,index){
+	console.log(value)
 	if(value==1){
 		return "<span style='color:#1AB394;'>成功</span>"
 	}else{
