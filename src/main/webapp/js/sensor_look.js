@@ -33,7 +33,6 @@ function listBox(){
 		},
 		success: function(data) {
 			$(".sensorContent").html("");
-			console.log(data)
 			if(data.code==400005){
 		    		getNewToken();
 		    		listBox();
@@ -271,7 +270,6 @@ function space(obj){
 }
 
 function MQTTconnect(guid){
-	console.log("订阅程序开始执行");
 	var mqttHost = mqttHostIP;
 	var username = mqttName;
 	var password = mqttWord;
@@ -312,14 +310,38 @@ function onMessageArrived(message) {
   var topic = message.destinationName;
   var payload = JSON.parse(message.payloadString);
   var result='',iconR=2
-  console.info(payload)
-  if(payload.result==0){
-  	result='下发失败'
-  	iconR=2
-  }else{
-  	result='下发成功'
-  	iconR=1
-  }
+  console.info(payload);
+  for(var i=0;i<$(".lookList").length;i++){
+	if((payload.data_id==$(".lookList").eq(i).attr("id"))&&(payload.result==0)){
+		if(payload.port_type=='AO'){			
+			$(".dial").val(payload.old_value);
+			new Finfosoft.Ring({
+				el: '.board-ring'+i,
+				startDeg: 150,
+				endDeg: 30,
+				lineWidth: 20,
+				mainColor: '#1ab394'
+			});	
+		}else if(payload.port_type=="DO"){
+			if($(".circle"+i+"").css("left")=="0px"){
+				$(".circle"+i+"").animate({"left":"25px"});
+			}else{
+				$(".circle"+i+"").animate({"left":"0px"});
+			}
+			if($(".circle"+i+"").css("left")=="25px"){
+				$(".circle"+i+"").animate({"left":"0px"});
+			}else{
+				$(".circle"+i+"").animate({"left":"25px"});
+			}
+		}
+		result='下发失败'
+  		iconR=2
+	}else if(payload.result==1){
+		console.log(123)
+		result='下发成功'
+  		iconR=1
+	}
+}
 layer.msg(payload.data_name+result,{
 	icon:iconR
 })
