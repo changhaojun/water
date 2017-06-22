@@ -195,6 +195,7 @@ function give(value){
 				});
 		    }
 		});
+		MQTTconnect(guid)
 	});
 }
 //控制量guid
@@ -208,16 +209,63 @@ function space(obj){
 	obj.val(obj.val().replace(/\s/g, ''))
 }
 
+function MQTTconnect(guid){
+	console.log("订阅程序开始执行");
+	var mqttHost = mqttHostIP;
+	var username = mqttName;
+	var password = mqttWord;
+	var client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
+	var options = {
+		timeout: 1000,
+		onSuccess: function(){
+			console.log("onConnect");
+		   	topic = guid;
+		    client.subscribe(topic);
+		},
+		onFailure: function(message) {
+			setTimeout(MQTTconnect, 10000000);
+		}
+	};
+	// set callback handlers
+	client.onConnectionLost = onConnectionLost;
+	client.onMessageArrived = onMessageArrived;
+	
+	if(username != null) {
+		options.userName = username;
+		options.password = password;
+	}
+	client.connect(options);
+	// connect the clien
+}
 
+// called when the client connects
+//function onConnect(client,guid) {
+//  console.log("onConnect");
+//  topic = guid;
+//  client.subscribe(topic);
+//}
 
+// called when the client loses its connection
+function onConnectionLost(responseObject) {
+  if (responseObject.errorCode !== 0) {
+    console.log("onConnectionLost:" + responseObject.errorMessage);
+  }
+}
 
-
-
-
-
-
-
-
-
-
-
+// called when a message arrives
+function onMessageArrived(message) {
+  var topic = message.destinationName;
+  var payload = JSON.parse(message.payloadString);
+  var result='',iconR=2
+  console.info(payload)
+  if(payload.result==0){
+  	result='下发失败'
+  	iconR=2
+  }else{
+  	result='下发成功'
+  	iconR=1
+  }
+  layer.msg(payload.device_name+result,{
+  	icon:iconR
+  })
+}
