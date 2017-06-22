@@ -165,7 +165,7 @@ function show(value,dataName){
 	  shadeClose: true,
 	  shade: 0.8,
 	  scrollbar: false,
-	  area: ['873px', '90%'],
+	  area: ['873px', '65%'],
 	  content: '/finfosoft-water/dataTag/dataChart/'+value+'-'+dataName+'-'+deviceId+'-'+deviceName
 	}); 
 }
@@ -338,7 +338,7 @@ function onMessageArrived(message) {
   		iconR=2
 	}else if(payload.result==1){
 		console.log(123)
-		result='下发成功'
+		result='下发成功';
   		iconR=1
 	}
 }
