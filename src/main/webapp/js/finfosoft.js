@@ -116,7 +116,7 @@ Finfosoft.Ring.prototype = {
 			dis.y += obj.offsetTop;
 			obj = obj.offsetParent;
 		}
-		console.log(dis.x,dis.y);
+//		console.log(dis.x,dis.y);
 		return dir==='left' ? dis.x : dis.y;
 	},
 	

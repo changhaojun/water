@@ -46,7 +46,7 @@ function listBox(){
 		    	for(var i=0;i<data.datas.length;i++){	    		
 		    		//以开关展示
 		    		if(data.datas[i].oper_type==2&&data.datas[i].data_type==3){
-		    			str='<div class="lookList  normal">'+
+		    			str='<div class="lookList  normal" id="'+data.datas[i].data_id+'">'+
 								'<div class="listTop">'+
 									'<span>'+deviceName+'-'+data.datas[i].data_name+'</span>'+
 									'<span class="fa fa-area-chart" data-toggle="tooltip" data-placement="top" "tooltip" data-placement="top" title="数据" onclick="show(&apos;'+data.datas[i].data_id+'&apos;,&apos;'+data.datas[i].data_name+'&apos;)"></span>'+
@@ -83,7 +83,7 @@ function listBox(){
 		    			if (data.datas[i].data_value===''||data.datas[i].data_value===null) {
 		    				data.datas[i].data_value = 0;
 		    			}
-		    			str='<div class="lookList  normal">'+
+		    			str='<div class="lookList  normal" id="'+data.datas[i].data_id+'">'+
 								'<div class="listTop">'+
 									'<span>'+deviceName+'-'+data.datas[i].data_name+'</span>'+
 									'<span class="fa fa-area-chart" data-toggle="tooltip" data-placement="top" "tooltip" data-placement="top" title="数据" onclick="show(&apos;'+data.datas[i].data_id+'&apos;,&apos;'+data.datas[i].data_name+'&apos;)" ></span>'+
@@ -116,7 +116,7 @@ function listBox(){
 						});			
 				//数据展示
 		    		}else{
-		    			str='<div class="lookList  normal">'+
+		    			str='<div class="lookList  normal" id="'+data.datas[i].data_id+'">'+
 								'<div class="listTop">'+
 									'<span>'+deviceName+'-'+data.datas[i].data_name+'</span>'+
 									'<span class="fa fa-area-chart" data-toggle="tooltip" data-placement="top" "tooltip" data-placement="top" title="数据" onclick="show(&apos;'+data.datas[i].data_id+'&apos;,&apos;'+data.datas[i].data_name+'&apos;)" ></span>'+
@@ -195,11 +195,7 @@ function give(id){
 					layer.msg('已下发', {
 						icon : 1
 					});
-//					window.top.MQTTconnect(guid);
-				}else{
-					layer.msg('下发失败', {
-						icon : 2
-					});
+					MQTTconnect(guid)
 				}
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -216,8 +212,6 @@ function clickBtn(id,dataValue,i){
 	dataId=id;
 	onoff=dataValue;	
 	var guid=guidGenerator();
-	console.log("guid:"+guid);
-	
 	layer.confirm("<font size='2'>确认下发？</font>",{icon:7},function(index){
 		layer.close(index);
     	data="{'data_id':"+dataId+",'data_value':"+onoff+",'guid':'"+guid+"'}";    	 
@@ -236,7 +230,6 @@ function clickBtn(id,dataValue,i){
 						layer.msg('已下发', {
 						icon : 1
 					});
-//					window.top.MQTTconnect(guid);
 						if(onoff){
 							$(".Iopen"+i+"").addClass("Iactive");
 							$(".Iclose"+i+"").removeClass("Iactive");
@@ -246,10 +239,7 @@ function clickBtn(id,dataValue,i){
 							$(".Iopen"+i+"").removeClass("Iactive");
 							$(".circle"+i+"").animate({"left":"25px"});
 						}
-				}else{
-					layer.msg('下发失败', {
-						icon : 2
-					});
+						MQTTconnect(guid)
 				}
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -269,6 +259,68 @@ function guidGenerator() {
 	return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 }			
 
+//控制量guid
+function guidGenerator() {
+	var S4 = function() {
+	return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+	};
+	return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}
+function space(obj){
+	obj.val(obj.val().replace(/\s/g, ''))
+}
+
+function MQTTconnect(guid){
+	console.log("订阅程序开始执行");
+	var mqttHost = mqttHostIP;
+	var username = mqttName;
+	var password = mqttWord;
+	var client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
+	var options = {
+		timeout: 1000,
+		onSuccess: function(){
+			console.log("onConnect");
+		   	topic = guid;
+		    client.subscribe(topic);
+		},
+		onFailure: function(message) {
+			setTimeout(MQTTconnect, 10000000);
+		}
+	};
+	// set callback handlers
+	client.onConnectionLost = onConnectionLost;
+	client.onMessageArrived = onMessageArrived;
+	
+	if(username != null) {
+		options.userName = username;
+		options.password = password;
+	}
+	client.connect(options);
+	// connect the clien
+}
 
 
+// called when the client loses its connection
+function onConnectionLost(responseObject) {
+  if (responseObject.errorCode !== 0) {
+    console.log("onConnectionLost:" + responseObject.errorMessage);
+  }
+}
 
+// called when a message arrives
+function onMessageArrived(message) {
+  var topic = message.destinationName;
+  var payload = JSON.parse(message.payloadString);
+  var result='',iconR=2
+  console.info(payload)
+  if(payload.result==0){
+  	result='下发失败'
+  	iconR=2
+  }else{
+  	result='下发成功'
+  	iconR=1
+  }
+layer.msg(payload.data_name+result,{
+	icon:iconR
+})
+}
