@@ -194,7 +194,6 @@ var client;
 var topic;
 var data;
 function MQTTconnect(dataIds) {
-    console.log("订阅程序开始执行");
     var mqttHost = mqttHostIP;
 	var username = mqttName;
 	var password = mqttWord;
@@ -221,7 +220,7 @@ function MQTTconnect(dataIds) {
 
 // called when the client connects
 function onConnect() {
-  console.log("onConnect");
+
   for(var i=0;i<data.length;i++){
 	  topic=data[i]+"";
 	  client.subscribe(topic);
@@ -231,7 +230,7 @@ function onConnect() {
 // called when the client loses its connection
 function onConnectionLost(responseObject) {
   if (responseObject.errorCode !== 0) {
-    console.log("onConnectionLost:" + responseObject.errorMessage);
+  
   }
 }
 

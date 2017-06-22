@@ -115,7 +115,7 @@ function addUser(){
 			addoRole.push($(".addRole ul .cheacked").eq(index).attr("rolename_id"));
 		})
 		addoRole += "";
-		console.log(addoRole);
+	
 	if ($("#addText").val() == "请输入邮箱") {
 		$(".addaccountError").css("display", "block");
 		$(".addaccountError").html("邮箱不能为空");
@@ -200,7 +200,6 @@ function modify(_id){
 				$(".modifyState #modifyInvalid").addClass("stats")
 			}
 			$(data.roles).each(function(index, ele) {
-//				console.log($(".modifyRole ul li").eq(index).html())
 				for(i=0;i<$(".modifyRole ul li").length;i++){
 					if (ele == $(".modifyRole ul li").eq(i).html()) {
 						$(".modifyRole ul li").eq(i).removeClass("disabled").addClass("cheacked")
@@ -337,7 +336,6 @@ function event(obj, str) {
 			obj.val("");
 		}
 	},"keyup":function(event){
-//		console.log(123);
 		if(event.keyCode==32){
 			obj.val(obj.val().replace(/\s/g, ''))
 		}
@@ -368,7 +366,6 @@ function blank(obj1, obj2, str1, str2, Var) {
 			obj1.val("");
 		}
 	},"keyup":function(event){
-		console.log(123);
 		if(event.keyCode==32){
 			obj1.val(obj1.val().replace(/\s/g, ''));
 		}

@@ -22,9 +22,7 @@ function DevList(){
 			access_token:window.accesstoken
 		},
 		crossDomain: true == !(document.all),
-		success: function(data) {
-			console.log(data)
-			
+		success: function(data) {		
 			if(data.code==400005){
 				window.getNewToken()
 				DevList();
@@ -64,9 +62,7 @@ function addClass(){
 	
 }
 //选择设备
-function selectDev(id){
-	console.log($("#"+id+"").html())
-	
+function selectDev(id){	
 		if($("#"+id+"").html()=="+"){
 		$("#"+id+"").prev().removeClass("disabledFont").addClass("selectdFont");
 		$("#"+id+"").removeClass("disabledIcon").addClass("selectdIcon");
@@ -89,7 +85,6 @@ function saveDevice(){
 		Idata={"device_id":decviceId};
 		data.push(Idata);
 	}	
-	console.log(data)
 	$.ajax({
 		url:globalurl+"/v1/things/"+thingId+"/thingDatas",
 		dataType: 'JSON',
@@ -101,7 +96,6 @@ function saveDevice(){
 		},
 		crossDomain: true == !(document.all),
 		success: function(data) {
-			console.log(data)
 			if(data.code==400005){
 				window.getNewToken()
 				saveDevice();
@@ -167,7 +161,6 @@ function doAjax(data){
 				async:false,
 				crossDomain: true == !(document.all),
 				success:function(data){
-//					console.log(data)
 					if(data.code==400005){
 						window.getNewToken()
 						screenDev();
@@ -176,7 +169,6 @@ function doAjax(data){
 					}else{
 						var screenList="";			
 						for(var i=0;i<data.rows.length;i++){
-		//						console.log(data.rows[i]._id+","+selectedId[i])
 							if(selectedId.indexOf(data.rows[i]._id)!=-1){					
 								screenList='<div class="selectdLi" onclick="selectDev(&apos;'+data.rows[i]._id+'&apos;)">'+
 								'<div class="selectdFont">'+data.rows[i].device_name+'</div>'+

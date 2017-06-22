@@ -38,14 +38,14 @@ window.getDTUList=function(){
 		    striped: true,//条纹
 //		    ajaxOptions:"",//公司ID
 		    onLoadSuccess:function(value){
-		    	console.log(value);
+		 
 		    	if(value.code==400005||value.code==500){
 		    		window.getNewToken();
 		    		$('#dtuList').bootstrapTable("refresh",queryParams)
 		    	}
 		    	toolTip();//顶部提示框
 		    	$("#dtuList tbody>tr").each(function(i,ele){
-						console.log(1)
+		
 								$(this).mouseover(function(){
 									$(this).addClass("borderColor").siblings().removeClass("borderColor");
 								});
@@ -99,7 +99,7 @@ function queryParams(params) {
 			filter:'{"protocal":"P","company_id":"'+companyId+'"}'
 		};
 	}else{
-		console.log(searchBox.searchCollectorId)
+	
 	    return {
 	    	pageNumber:0,
 	    	pageSize:params.limit,
@@ -210,7 +210,7 @@ function space(obj){
 }
 
 function MQTTconnect(guid){
-	console.log("订阅程序开始执行");
+
 	var mqttHost = mqttHostIP;
 	var username = mqttName;
 	var password = mqttWord;
@@ -218,7 +218,7 @@ function MQTTconnect(guid){
 	var options = {
 		timeout: 1000,
 		onSuccess: function(){
-			console.log("onConnect");
+
 		   	topic = guid;
 		    client.subscribe(topic);
 		},
@@ -257,7 +257,6 @@ function onMessageArrived(message) {
   var topic = message.destinationName;
   var payload = JSON.parse(message.payloadString);
   var result='',iconR=2
-  console.info(payload)
   if(payload.result==0){
   	result='下发失败'
   	iconR=2

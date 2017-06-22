@@ -2,7 +2,6 @@ var client;
 var topic;
 var realTime;
 function MQTTconnect(dataId) {
-  console.log("订阅程序开始执行");
   var mqttHost = '192.168.1.114';
   var username="admin";
   var password="password";

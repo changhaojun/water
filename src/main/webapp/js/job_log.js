@@ -35,7 +35,7 @@ function taskList(){
 	data.start_time=startTime
 	data.end_time=endTime
 	data=JSON.stringify(data)
-	console.log(startTime)
+
 	$.ajax({
 		type:'get',
 		dataType:'JSON',
@@ -47,7 +47,7 @@ function taskList(){
 		},
 		async:false,
 		success:function(data){
-			console.log(data)
+	
 			for(var i=0;i<data.rows.length;i++){
 				var taskData={
 					"oper_time":(data.rows[i].oper_time),
@@ -78,7 +78,7 @@ function taskList(){
 	
 //对结果列的格式化
 function resultFormatter(value,row,index){
-	console.log(value)
+
 	if(value==1){
 		return "<span style='color:#1AB394;'>成功</span>"
 	}else{

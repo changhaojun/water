@@ -30,7 +30,6 @@ function doajax(data){
 		async:false,
 		crossDomain: true == !(document.all),
 		success: function(data) {
-			console.log(data)
 			if(data.code==400005){
 				window.getNewToken();
 				alarmList();
@@ -52,7 +51,6 @@ function doajax(data){
 			}	
 		},
 		error:function(data){
-			console.log(data)
 		}
 	});
 }
@@ -169,7 +167,6 @@ function addData(_id,Iindex,dataIndex){
 			});
 		}else if(text.test($("#dataMin").val())||text.test($("#dataMax").val())){ 
 			if(($("#dataMin").val().indexOf("-")==-1&&$("#dataMax").val().indexOf("-")==-1&&Number($("#dataMin").val())>=Number($("#dataMax").val())&&$("#dataMax").val()!="")||($("#dataMin").val().indexOf("-")==0&&$("#dataMax").val().indexOf("-")==0&&Number($("#dataMin").val().split("-")[1])<=Number($("#dataMax").val().split("-")[1])&&$("#dataMax").val()!="")||($("#dataMin").val().indexOf("-")==-1&&$("#dataMax").val().indexOf("-")==0&&$("#dataMax").val()!=""&&$("#dataMin").val()!="")){
-				console.log($("#dataMin").val()+$("#dataMax").val())
 				layer.tips('最大值不能比最小值小', $("#dataMax"), {
 				  tips: [1, '#ff787c'],
 				  time: 2000
@@ -182,7 +179,6 @@ function addData(_id,Iindex,dataIndex){
 			}
 			
 		}else{
-			console.log(111)
 			layer.tips('最大值或者最小值格式不正确', $("#dataMax"), {
 				  tips: [1, '#ff787c'],
 				  time: 2000
@@ -281,7 +277,6 @@ layer.alert('<input type="text" id="dataMin" value="'+min+'" onkeyup="if(event.k
 			});
 		}else if(text.test($("#dataMin").val())||text.test($("#dataMax").val())){
 			if(($("#dataMin").val().indexOf("-")==-1&&$("#dataMax").val().indexOf("-")==-1&&Number($("#dataMin").val())>=Number($("#dataMax").val())&&$("#dataMax").val()!="")||($("#dataMin").val().indexOf("-")==0&&$("#dataMax").val().indexOf("-")==0&&Number($("#dataMin").val().split("-")[1])<=Number($("#dataMax").val().split("-")[1])&&$("#dataMax").val()!="")||($("#dataMin").val().indexOf("-")==-1&&$("#dataMax").val().indexOf("-")==0&&$("#dataMax").val()!=""&&$("#dataMin").val()!="")){
-				console.log($("#dataMin").val()+$("#dataMax").val())
 				layer.tips('最大值不能比最小值小', $("#dataMax"), {
 				  tips: [1, '#ff787c'],
 				  time: 2000
@@ -305,7 +300,6 @@ function alarmDel(_id,min,max,Iindex,dataIndex){
 	var Iindex=Iindex;
 	var dataIndex=dataIndex;
 	layer.confirm("<font size='2'>确定清除该数据？</font>", {icon:7,skin:'del-class'}, function(index){
-		console.log($(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft").html())
 			if($(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft").html()=="未配置"){
 				var IdataMin=JSON.stringify("");
 				var IdataMax=JSON.stringify("");
@@ -384,7 +378,6 @@ function ajax(data){
 					}
 				},
 				error: function(data) {
-					console.log(data)
 					layer.msg("添加失败", {
 						icon : 2,
 						time:1000
@@ -404,7 +397,6 @@ var client;
 var topic;
 var data;
 function MQTTconnect(dataIds) {
-  console.log("订阅程序开始执行");
 	var mqttHost = mqttHostIP;
 	var username = mqttName;
 	var password = mqttWord;
@@ -430,10 +422,7 @@ function MQTTconnect(dataIds) {
 }
 // called when the client connects
 function onConnect() {
-  console.log("onConnect");
   for(var i=0;i<data.length;i++){
-	  console.log("订阅第"+i+"个主题");
-	  console.log(data[i]);
 	  topic=data[i]+"";
 	  client.subscribe(topic);
   }
@@ -441,7 +430,6 @@ function onConnect() {
 // called when the client loses its connection
 function onConnectionLost(responseObject) {
   if (responseObject.errorCode !== 0) {
-    console.log("onConnectionLost:" + responseObject.errorMessage);
   }
 }
 // called when a message arrives
@@ -450,7 +438,6 @@ function onMessageArrived(message) {
   var payload = message.payloadString;
   var dataConfig=JSON.parse(payload)
   var dataId=dataConfig.data_id
-  console.info(dataConfig)
   var dataValue;
   if(dataConfig.port_type=="DO"||dataConfig.port_type=="DI"){
   	dataValue=dataConfig.battery.split('$')[dataConfig.data_value]

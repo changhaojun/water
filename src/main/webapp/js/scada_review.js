@@ -160,7 +160,7 @@ $.extend({
 				access_token: $.initData.token.access
 			},
 			success: function(data) {
-				console.log(data);
+
 				callBack && callBack(data);
 			}
 		});
@@ -191,7 +191,7 @@ $.extend({
 		};
 		client.onConnectionLost = function(responseObject) {
 			if(responseObject.errorCode !== 0) {
-				console.log("onConnectionLost:" + responseObject.errorMessage);
+	
 			}
 		};
 		client.onMessageArrived = function(message) {

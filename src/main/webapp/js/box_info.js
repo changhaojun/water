@@ -38,9 +38,7 @@ window.getDTUList=function(){
 		    pageList:[10,15,20, 25],
 		    queryParams: queryParams,
 		    striped: true,//条纹
-//		    ajaxOptions:"",//公司ID
 		    onLoadSuccess:function(value){
-				console.log(value)
 		    	if(value.code==400005){
 		    		window.getNewToken();
 		    		getDTUList();
@@ -174,7 +172,6 @@ function give(value){
 			type: 'POST',
 			crossDomain: true == !(document.all),
 			success: function(data) {
-				console.info(data)
 				if(data.code==400005){
 					  window.getNewToken()
 					  give(value);
@@ -256,7 +253,6 @@ function onMessageArrived(message) {
   var topic = message.destinationName;
   var payload = JSON.parse(message.payloadString);
   var result='',iconR=2
-  console.info(payload)
   if(payload.result==0){
   	result='下发失败'
   	iconR=2

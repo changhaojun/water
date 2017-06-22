@@ -59,7 +59,6 @@ function dataList(){
 		async:false,
 		crossDomain: true == !(document.all),
 		success:function(data){
-			console.log(data)
 			if(data.length==0){
 				$(".list").html("<span class='nonedata'>暂无数据</span>");
 			}else{
@@ -81,7 +80,6 @@ function dataList(){
 
 //当前图表以及点击添加生成图表
 function getChart(i){
-	console.info("i:"+i)
 	if($("#"+i+"").html()=="+"){
 		$("#"+i+"").prev().removeClass("disabledFont").addClass("selectdFont");
 		$("#"+i+"").removeClass("disabledIcon").addClass("selectdIcon");
@@ -108,7 +106,7 @@ function getChart(i){
 			async:false,
 			crossDomain: true == !(document.all),
 			success:function(data){
-				console.log(data)
+
 				if(data.length==0){
 					$(".chartsContent").html("<span class='nonedata'>暂无数据</span>");
 				}else{
@@ -116,7 +114,7 @@ function getChart(i){
 						layer.msg('该时段暂无数据',{icon:0,time:2000})
 					}else{
 						chartArr.push(data);
-						console.log(chartArr)
+			
 						initChart();
 					}
 				}
@@ -133,7 +131,7 @@ function getChart(i){
 		for(var j=0;j<dataFid.length;j++){
 			if(del==dataFid[j]){
 				dataFid.splice(j,1)
-				console.log(dataFid)
+		
 			}
 		}
 		var data={};
@@ -152,7 +150,7 @@ function getChart(i){
 			async:false,
 			crossDomain: true == !(document.all),
 			success:function(data){
-				console.log(data)
+				
 				$("#chartsContent").html('')
 				chartArr=data;
 				for(var i=0;i<dataFid.length;i++){
@@ -362,7 +360,7 @@ $('.chartContent').delegate('.focusr','click',function(){
 				data:JSON.stringify(data)
 			},
 			success:function(data){
-				console.log(data)
+			
 				if(data.code==200){
 					layer.msg('关注成功', {
 						icon: 1,
@@ -417,7 +415,7 @@ $(document).ready(function() {
 	  end=new Date(end).getFullYear()+"$"+p(new Date(end).getMonth()+1)+"$"+p(new Date(end).getDate())+"$"+p(new Date(end).getHours())+":"+p(new Date(end).getMinutes())+":"+p(new Date(end).getSeconds());			           
    	  startTime=start;
    	  endTime=end;
-   	  console.log(startTime)
+  
    	  var data={};
    	  data.data_id=dataFid
    	  data.start_time=startTime
@@ -434,7 +432,7 @@ $(document).ready(function() {
 			async:false,
 			crossDomain: true == !(document.all),
 			success:function(data){
-				console.log(data)
+			
 				$("#chartsContent").html('')
 				chartArr=data;
 				for(var i=0;i<dataFid.length;i++){
@@ -489,8 +487,8 @@ function changeData(i){
 	var end=GetDateStr(0)
 	startTime=start;
    	endTime=end;
-		console.log(startTime)
-		console.log(endTime)	
+	
+	
 	var data={};
 		data.data_id=dataFid
 	  	data.start_time=startTime
@@ -506,7 +504,7 @@ function changeData(i){
 		async:false,
 		crossDomain: true == !(document.all),
 		success:function(data){
-			console.log(data)
+	
 			$("#chartsContent").html('')
 			chartArr=data;
 			for(var i=0;i<dataFid.length;i++){

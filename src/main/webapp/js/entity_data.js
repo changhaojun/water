@@ -28,7 +28,7 @@ function dataList(){
 			filter:JSON.stringify({"oper_type":1})
 		},
 		success:function(data){
-			console.log(data);
+
 			$(".dataContent").html("");
 			if(data.length==0){
 				$(".dataContent").html("<p style='padding-left:20px;'>暂无数据</p>");
@@ -271,7 +271,6 @@ var client;
 var topic;
 var data;
 function MQTTconnect(dataIds) {
-    console.log("订阅程序开始执行");
     var mqttHost = mqttHostIP;
 	var username = mqttName;
 	var password = mqttWord;
