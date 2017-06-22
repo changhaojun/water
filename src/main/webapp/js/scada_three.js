@@ -411,7 +411,7 @@ $.initThree = {
 					$.three.controller.transformController.detach($.three.capturer.intersected);
 				}
 				$.three.capturer.intersected = $.initThree.searchLabelFromChild(intersects[0].object);
-				console.log($.three.capturer.intersected)
+		
 				isTransform && $.three.controller.transformController.attach($.three.capturer.intersected);
 				var oldPos = $.three.capturer.intersected.position;
 				selectLabelFn && selectLabelFn();

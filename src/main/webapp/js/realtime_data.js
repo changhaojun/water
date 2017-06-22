@@ -3,13 +3,12 @@ var deviceId=$("#deviceId").val()//设备Id
 var startTime;
 var endTime;
 var arrLi=[];
-console.log(dataId);
+
 
 $(function(){
 	toolTip();
 	getToken();	//刷新令牌
 	chartDivArr.push(parseInt(dataId));//push当前的dataId;
-	console.log(chartDivArr)
 	currentChart(dataId);//初始化第一次图表;
 	contrastData();//初始化对比数据项列表;
 })
@@ -64,7 +63,7 @@ function currentChart(dataId){
 			data:data
 		},
 		success: function(data) {
-			console.log(dataId)
+	
 			var chartType="";
 			if(data.code==400005){
 				getNewToken();
@@ -106,7 +105,7 @@ function contrastData(){
 			"filter":"{'device_id':'"+deviceId+"'}"			
 		},
 		success: function(data) {
-			console.log(data);
+		
 			if(data.code==400005){
 				getNewToken();
 				contrastData()
@@ -137,7 +136,7 @@ function getChart(dataId){
 }
 // 指定图表的配置项和数据
 function initChart(data,chartType){	
-	console.log(data);
+
 	var legendData=[];
 	var chartSeries=[];
 	for(var i=0;i<chartDivArr.length;i++){						

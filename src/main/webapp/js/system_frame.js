@@ -301,7 +301,7 @@ function saveGuid(){
 			data:'{"guid":"'+guid+'"}'
 		},
 		success:function(data){
-			console.info(data)
+	
 			if(data.code==200){
 				MQTTconnect();
 			}
@@ -310,7 +310,6 @@ function saveGuid(){
 }
 
 function MQTTconnect(){
-	console.log("订阅程序开始执行");
 	var mqttHost = mqttHostIP;
 	var username = mqttName;
 	var password = mqttWord;
@@ -336,16 +335,14 @@ function MQTTconnect(){
 
 // called when the client connects
 function onConnect() {
-    console.log("onConnect");
     topic = companyId;
-    console.info("topic:"+topic)
     client.subscribe(topic);
 }
 
 // called when the client loses its connection
 function onConnectionLost(responseObject) {
   if (responseObject.errorCode !== 0) {
-    console.log("onConnectionLost:" + responseObject.errorMessage);
+
   }
 }
 
@@ -353,7 +350,6 @@ function onConnectionLost(responseObject) {
 function onMessageArrived(message) {
   var topic = message.destinationName;
   var payload = JSON.parse(message.payloadString);
-  console.info(payload)
   toastr.options = {
 	  "closeButton":true,
 	  "debug":false,

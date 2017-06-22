@@ -277,7 +277,6 @@ function MQTTconnect(guid){
 	var options = {
 		timeout: 1000,
 		onSuccess: function(){
-			console.log("onConnect");
 		   	topic = guid;
 		    client.subscribe(topic);
 		},
@@ -301,7 +300,6 @@ function MQTTconnect(guid){
 // called when the client loses its connection
 function onConnectionLost(responseObject) {
   if (responseObject.errorCode !== 0) {
-    console.log("onConnectionLost:" + responseObject.errorMessage);
   }
 }
 
@@ -310,7 +308,7 @@ function onMessageArrived(message) {
   var topic = message.destinationName;
   var payload = JSON.parse(message.payloadString);
   var result='',iconR=2
-  console.info(payload);
+
   for(var i=0;i<$(".lookList").length;i++){
 	if((payload.data_id==$(".lookList").eq(i).attr("id"))&&(payload.result==0)){
 		if(payload.port_type=='AO'){			
@@ -337,7 +335,6 @@ function onMessageArrived(message) {
 		result='下发失败'
   		iconR=2
 	}else if(payload.result==1){
-		console.log(123)
 		result='下发成功';
   		iconR=1
 	}

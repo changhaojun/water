@@ -39,7 +39,7 @@ window.getEntityList=function(){
 		    queryParams: queryParams,
 		    striped: true,//条纹
 		    onLoadSuccess:function(value){
-				console.log(value)
+			
 		    	if(value.code==400005){
 		    		window.getNewToken();
 		    		getEntityList();		    	
@@ -133,7 +133,7 @@ function addEntity(){
 		}else{
 			 data="{'thing_name':'"+$("#addentityName").val()+"'}";
 			 data={"data":data,"access_token":window.accesstoken};
-			 console.log(data)
+		
 			$.ajax({
 				url:globalurl+"/v1/things",
 				data:data,
@@ -141,7 +141,6 @@ function addEntity(){
 				type: 'POST',
 				crossDomain: true == !(document.all),
 				success: function(data) {
-					console.log(data);
 					if(data.code==400005){
 						  window.getNewToken()
 						  addEntity();
@@ -157,7 +156,6 @@ function addEntity(){
 					}
 				},
 				error: function(data) {
-					console.log(data)
 					layer.msg("添加失败", {
 						icon : 2
 					});
@@ -210,7 +208,7 @@ function modify(value){
 					modify(value);
 				}else{
 					layer.confirm('<input type="text" id="modifyentityName" value="'+data.thing_name+'" onkeyup="if(event.keyCode==32){space($(this))}"/>',{title:"修改实体"}, function(index){
-					console.log($("#modifyentityName").val())
+		
 					if($("#modifyentityName").val()==""){
 						layer.tips('实体名称不能为空', $("#modifyentityName"), {
 							  tips: [1, '#ff787c'],
@@ -229,7 +227,7 @@ function modify(value){
 							type: 'put',
 							crossDomain: true == !(document.all),
 							success: function(data) {
-								console.log(data)
+		
 								if(data.code==400005){
 									  window.getNewToken()
 									  modify(value);

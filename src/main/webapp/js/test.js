@@ -37,6 +37,5 @@ function onConnectionLost(responseObject) {
 function onMessageArrived(message) {
 	var topic = message.destinationName;
 	var payload = message.payloadString;
-	console.log(JSON.parse(payload));
 //	console.log("onMessageArrived:" + "=topic=" + topic + "==message==++=" + message.payloadString);
 }

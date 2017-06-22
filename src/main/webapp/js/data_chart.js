@@ -104,7 +104,7 @@ function changeDate(){
 			m=j;
 		}
 	}
-	console.log(startDay)
+
 	$.ajax({
 		type:"get",
 		dataType:"json",
@@ -118,7 +118,7 @@ function changeDate(){
 			tag_id:idArr[m]
 		},
 		success:function(data){
-			console.log(data)
+	
 			if(data.code==400003){
 				console.log(54546)
 				layer.msg('该段时间内没有数据,请重新选择！', {
@@ -127,7 +127,7 @@ function changeDate(){
 				});
 				echarts.init(document.getElementById('chartContent')).clear();
 			}else{
-				console.log(76767)
+	
 				chartArr.push(data)
 				initChart(data,m,legendData)
 			}
@@ -158,10 +158,10 @@ function changeHour(){
 			tag_id:idArr[m]
 		},
 		success:function(data){
-			console.log(data)
+		
 			if(data.length>0){
 				if(data.code==400003){
-					console.log(54546)
+					
 					layer.msg('该段时间内没有数据,请重新选择！', {
 							icon: 2,
 							time:3000,
@@ -169,7 +169,7 @@ function changeHour(){
 					echarts.init(document.getElementById('chartContent')).clear();
 				}else{
 					
-					console.log(76767)
+				
 					chartArr.push(data)
 					initChart(data,m,legendData)
 				}
@@ -212,7 +212,7 @@ function chartData(i){
 			end_time:endTime,
 		},
 		success:function(data){
-		console.log(data)
+	
 			chartArr.push(data)
 //			console.log(chartArr)
 			maxMin.push(data[data.length-1]);
@@ -356,6 +356,6 @@ function initChart(data,i,legendData){
 	};
 	myChart.setOption(option,true);
 	myChart.hideLoading();
-	console.log(series)
+
 }
 

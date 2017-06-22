@@ -114,7 +114,6 @@ $.fn.extend({
 					conditions:value
 				},
 				success:function(data){
-//					console.log(data);
 					
 					if(data.code==400005){
 						getNewToken();
@@ -132,7 +131,6 @@ $.fn.extend({
 					
 				},
 				error:function(data){
-//					console.log(data)
 					
 				}
 			});
@@ -159,8 +157,7 @@ $.fn.extend({
 				data:data
 			},
 			success:function(data) {
-				
-//				console.log(data);
+
 				$(".detialData tbody").empty();
 				pngName=(data.collector_model.split("-"))[1].toLowerCase();
 				imgName="dtu_"+pngName+".png";

@@ -35,7 +35,7 @@ function lssuedList(){
 	data.start_time=startTime
 	data.end_time=endTime
 	data=JSON.stringify(data)
-	console.log(startTime)
+
 	$.ajax({
 		type:'get',
 		dataType:'JSON',
@@ -47,7 +47,7 @@ function lssuedList(){
 		},
 		async:false,
 		success:function(data){
-			console.log(data)
+
 			for(var i=0;i<data.rows.length;i++){
 				var lssuedData={
 					"oper_time":(data.rows[i].oper_time),
