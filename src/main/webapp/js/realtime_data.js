@@ -63,7 +63,7 @@ function currentChart(dataId){
 			data:data
 		},
 		success: function(data) {
-	
+			console.log(data)
 			var chartType="";
 			if(data.code==400005){
 				getNewToken();
@@ -90,6 +90,9 @@ $(document).ready(function() {
     		  end=new Date(end).getFullYear()+"$"+p(new Date(end).getMonth()+1)+"$"+p(new Date(end).getDate())+"$"+p(new Date(end).getHours())+":"+p(new Date(end).getMinutes())+":"+p(new Date(end).getSeconds());			           
            	  startTime=start;
            	  endTime=end;
+           	  for(var i=0;i<chartDivArr.length;i++){
+           	 	currentChart(chartDivArr[i]);
+           	 }
            });
 });
 //获取对比数据
