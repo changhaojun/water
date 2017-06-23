@@ -289,7 +289,34 @@ $.fn.extend({
 		if($(".collector input").val()!=""){
 			layer.confirm('<font size="2">更换采集器ID会导致当前设备的数据全部清空！是否继续？</font>', function(index){
   					layer.close(index);
-  					$('.collector input').val($('.list ul li').eq(i).text());
+  					validatePort(i)
+  				
+			});
+		}
+	}
+	
+	function validatePort(i){
+				$.ajax({
+				type: "put",
+				url: globalurl+"/v1/collectors",
+				async: true,
+				data: {
+					access_token:accesstoken,
+					device_id: $('#deviceId').val()
+				},
+				success: function(data) {
+					if(data.code==200){
+						changeCollector(i)
+					}else if(data.code==400){
+						layer.msg(data.fail,{icon:2})
+						$(".collector input").val(collector_id)
+					}
+				}
+			});
+		}
+	
+	function changeCollector(i){
+		$('.collector input').val($('.list ul li').eq(i).text());
   					
 					$('.collector ul').hide();
 					optionValue=$(".collector input").val();
@@ -333,10 +360,7 @@ $.fn.extend({
 							}
 						}
 					});
-  				
-			});
-		}
-	}	
+	}
 	//点击编辑数据同步到弹窗
 	function editClick(i){
 		$('.pop').filter('.step1').removeClass('hidden');
