@@ -262,6 +262,8 @@ $.fn.extend({
 			$('.timingBox').hide();
 			$('.triggerText').show();
 			$('.addConditionBtn').show();
+			$('.timing').hide()
+			$('.timing').addCustomAttr()
 			$('.timingBox').addCustomAttr();
 			$(".eventBox").removeCustomAttr();
 			$('.addConditionBox').removeCustomAttr();
@@ -271,6 +273,8 @@ $.fn.extend({
 			$(".eventBox").hide();
 			$('.triggerText').show();
 			$('.addConditionBtn').hide();
+			$('.timing').hide()
+			$('.timing').addCustomAttr()
 			$(".eventBox").addCustomAttr();
 			$('.addConditionBox').addCustomAttr();
 			$('.timingBox').removeCustomAttr();
@@ -280,6 +284,19 @@ $.fn.extend({
 			$('.timingBox').hide();
 			$('.triggerText').hide();
 			$('.addConditionBtn').hide();
+			$('.timing').hide()
+			$('.timing').addCustomAttr()
+			$(".eventBox").addCustomAttr();
+			$('.addConditionBox').addCustomAttr();
+			$('.timingBox').addCustomAttr();
+		}else if(selectType=='定时触发'){
+			$(".eventBox").hide();
+			$(".addEventBox").hide();
+			$('.timingBox').hide();
+			$('.triggerText').hide();
+			$('.addConditionBtn').hide();
+			$('.timing').show();
+			$('.timing').removeCustomAttr();
 			$(".eventBox").addCustomAttr();
 			$('.addConditionBox').addCustomAttr();
 			$('.timingBox').addCustomAttr();
@@ -640,6 +657,9 @@ $.fn.extend({
 				This.next().css('display','none')
 			}
 		}
+	},
+	saveTime:function(){
+//		$(this).
 	}
 });
 
@@ -930,8 +950,20 @@ $.extend({
 		$('.startTime').focus(function(){
 			$(this).timeBox().showBox()
 		})
-		$('.startTime').blur(function(){
-			$(this).timeBox().hideBox()
+		
+		$('.saveTime').click(function(){
+			$('.timeBox input').each(function(){
+				if($(this).attr("isCheck")!="false"){
+					var overEach=$(this).formCheckFoo();
+					if(overEach==false){
+						return false;
+					}
+				}
+			})
+			
+			if($.taskData.inputCheck){
+				$(this).saveTime()
+			}
 		})
 		
 		$(".compareThing").keyup(function(){
@@ -945,7 +977,6 @@ $.extend({
 				$(this).next().hide();
 			}
 		});
-		
 		$(".compareTag").change(function(){
 			$.taskData.selectEventTag=$(this).val();
 		});

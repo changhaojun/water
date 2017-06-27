@@ -101,17 +101,31 @@
 						<hr />
 					</div>
 					<div class="timingBox" hidden="hidden">
-						<!--<div class="row">
+						<div class="row">
 							<div class="col-xs-6">
-								触发周期：
-								<select class="controls chioceCycle">
+								开始时间：
+								<input class="controls" placeholder="请输入开始时间" id="datetimepicker" type="text" value="" readonly class="form_datetime" isCheck="false">
+							</div>
+							<div class="col-xs-6">
+								时间间隔：
+								<div class="control-group">
+									<input id="timeInterval" num-limit="limit" placeholder="请输入时间间隔" type="text" class="control-group-input" isCheck="false">
+									<div class="control-group-addon">分</div>
+								</div>
+							</div>
+						</div>
+						<hr />
+					</div>
+					<div class="timing" hidden="hidden">
+						<div class="row">
+							<div class="col-xs-6">
+								触发周期：<select class="controls chioceCycle">
 									<option value="everyDay">每日</option>
 									<option value="everyWeek">每周</option>
 								</select>
 							</div>
 							<div class="col-xs-6 weekBox">
-								选择星期:
-								<select class="controls">
+								选择星期:<select class="controls">
 									<option value="0">周日</option>
 									<option value="1">周一</option>
 									<option value="2">周二</option>
@@ -121,30 +135,19 @@
 									<option value="6">周六</option>
 								</select>
 							</div>
-						</div>-->
+						</div>
 						<div class="row">
 							<div class="col-xs-6">
-								开始时间：
-								<input class="controls" placeholder="请输入开始时间" id="datetimepicker" type="text" value="" readonly class="form_datetime" isCheck="false">
-								<!--<input class="controls startTime" placeholder="请输入开始时间" isCheck="false"/>-->
-								<!--<div class="timeBox">
+								开始时间：<input class="controls startTime" placeholder="请输入开始时间" isCheck="false" />
+								<div class="timeBox">
 									<div class="timeArrow"></div>
 									<div class="timeContent">
 										时间：&nbsp;<input placeholder="时/24小时制"/>:<input placeholder="分"/>
 										<button class="saveTime">确定</button>
 									</div>
-								</div>-->
-							</div>
-							<div class="col-xs-6">
-								时间间隔：
-<!--								<input type="text" placeholder="请输入时间间隔" class="controls" id="timeInterval" isCheck="false"/>-->
-								<div class="control-group">
-									<input id="timeInterval" num-limit="limit" placeholder="请输入时间间隔" type="text" class="control-group-input" isCheck="false">
-									<div class="control-group-addon">分</div>
 								</div>
 							</div>
 						</div>
-						<hr />
 					</div>
 					<div class="addConditionBox">
 						

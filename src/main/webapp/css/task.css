@@ -9,8 +9,11 @@ body{
 .weekBox{
 	display: none;
 }
+.timing{
+	padding: 0 20px;
+}
 .timeBox{
-	/*display: none;*/
+	display: none;
     border: 1px solid #000;
     padding: 15px;
     background: #fff;
