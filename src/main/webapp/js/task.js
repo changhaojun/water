@@ -13,7 +13,7 @@ $.taskData = {
 		technologyTools:'<div class="technologyTools tools"><span class="fa fa-wrench toolsEdit" data-toggle="tooltip" data-placement="top" title="修改工艺名称"></span><span class="fa fa-trash-o toolsDelete" data-toggle="tooltip" data-placement="top" title="删除工艺"></span></div>',
 		missionBox:'<div class="missionBox row"></div>',
 		missionTools:'<span class="missionTools tools"><span class="fa fa-wrench missionToolsEdit" data-toggle="tooltip" data-placement="top" title="修改"></span><span class="fa fa-trash-o missionToolsDelete" data-toggle="tooltip" data-placement="top" title="删除"></span></span>',
-		addConditionBox:'<div class="addEventBox"><div class="row"><div class="col-xs-6">实体名称：<input class="controls conditionThing" placeholder="请输入触发条件的实体名" /><ul class="conditionThingList" hidden="hidden"></ul></div><div class="col-xs-6">采集端口：<select class="controls conditionTag" ></select></div><span class="closeBox" data-toggle="tooltip" data-placement="top" title="删除">x</span></div><div class="row"><div class="col-xs-6">比较符：&nbsp;&nbsp;<select class="controls compareOper"><option value="gt">></option><option value="lt"><</option><option value="eq">=</option></select></div><div class="col-xs-6">基准值：&nbsp;&nbsp;<input class="controls compareValue" num-limit="limit" placeholder="请输入基准值"/></div></div><hr /></div>'
+		addConditionBox:'<div class="addEventBox"><div class="row"><div class="col-xs-6">实体名称：<input class="controls conditionThing" placeholder="请输入触发条件的实体名" /><ul class="conditionThingList" hidden="hidden"></ul></div><div class="col-xs-6">采集端口：<select class="controls conditionTag" ></select></div><span class="closeBox" data-toggle="tooltip" data-placement="top" title="删除">x</span></div><div class="row"><div class="col-xs-6">比较符：&nbsp;&nbsp;<select class="controls compareOper"><option value="gt">></option><option value="lt"><</option><option value="eq">=</option></select></div></div><div class="row"><div class="col-xs-6">实体名称：<input class="controls compareThing" placeholder="请输入触发条件的实体名" /><ul class="compareThingList" hidden="hidden"></ul></div><div class="col-xs-6">采集端口：<select class="controls compareTag" >	</select></div></div><hr /></div>'
 	},
 	selectTaskId:'',		//点击工艺后获取该工艺的ID
 	stepNum:'1',			//工艺名称上自增的数字
@@ -111,7 +111,7 @@ $.fn.extend({
 						default:
 							operStr='等于';
 					}
-					$(this).find('.content1').append(conditions[i].thing_name+':'+conditions[i].data_name+'&nbsp;'+operStr+'&nbsp;'+conditions[i].compare_value+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
+					$(this).find('.content1').append(conditions[i].thing_name+':'+conditions[i].data_name+'&nbsp;'+operStr+'&nbsp;'+conditions[i].compare_data_name+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
 				}
 			}
 		}else if(typeName=='时间周期触发'){
@@ -330,6 +330,8 @@ $.fn.extend({
 				parent.attr('thing_id',$(this).attr("value"));
 			}else if(parent.attr("id")=="controlThingList"){
 				$.taskData.selectControlThing=$(this).attr("value");
+			}else if(parent.attr('class')=='compareThingList'){
+				parent.attr('thing_id',$(this).attr("value"));
 			}
 			if($(this).attr("value")!=0){
 				parent.getConditionTagList();
@@ -340,7 +342,7 @@ $.fn.extend({
 		}
 	},
 	getConditionTagList:function(triggerCondition){		//选择实体后获取该实体下标签的列表
-		var tagSelect;
+		var tagSelect,sendFilter;
 		if($(this).is('UL')){
 			tagSelect=$(this).parent().next().find("select");
 		}else{
@@ -350,16 +352,21 @@ $.fn.extend({
 		if(tagSelect.attr("class")=="controls conditionTag"){
 			thingId=$(this).attr('thing_id');
 			operType=1;
+			sendFilter='{"oper_type":'+operType+'}'
 		}else if(tagSelect.attr("id")=="controlTag"){
 			thingId=$.taskData.selectControlThing;
 			operType=2;
+			sendFilter='{"oper_type":'+operType+'}'
+		}else if(tagSelect.hasClass('compareTag')){
+			thingId=$(this).attr('thing_id');
+			sendFilter='{"port_type":"CD","port_type_1":"MO"}'
 		}
 		$.ajax({
 			type:"get",
 			url:globalurl+"/v1/missionDataTags?access_token="+$.taskData.access_token+"&thing_id="+thingId,
 			async:false,
 			data:{
-				filter:'{"oper_type":'+operType+'}'
+				filter:sendFilter
 			},success:function(data){
 				tagSelect.empty();
 				if(data.length>0){
@@ -500,14 +507,16 @@ $.fn.extend({
 			conditionData.thing_id=$('.eventBox').find('.conditionThingList').attr('thing_id');
 			conditionData.data_id=Number($('.eventBox').find('.conditionTag').val());
 			conditionData.compare_oper=$('.eventBox').find('.compareOper').val();
-			conditionData.compare_value=Number($('.eventBox').find('.compareValue').val());
+			conditionData.compare_data_id=Number($('.eventBox').find('.compareTag').val());
+			conditionData.compare_data_name=$('.eventBox').find('.compareTag').text()
 			$.taskData.processBox.trigger_conditions.push(conditionData);
 			$('.addConditionBox .addEventBox').each(function(){
 				conditionData={};
 				conditionData.thing_id=$(this).find('.conditionThingList').attr('thing_id');
 				conditionData.data_id=Number($(this).find('.conditionTag').val());
 				conditionData.compare_oper=$(this).find('.compareOper').val();
-				conditionData.compare_value=Number($(this).find('.compareValue').val());
+				conditionData.compare_data_id=Number($(this).find('.compareTag').val());
+				conditionData.compare_data_name=$(this).find('.compareTag').text();
 				$.taskData.processBox.trigger_conditions.push(conditionData);
 			})
 		}else if($('.timingBox').css('display')=='block'){
@@ -613,6 +622,24 @@ $.fn.extend({
 				callBack && callBack(sendIndex);
 			});
 		})
+	},
+	showWeek:function(){
+		if($(this).val()=='everyWeek'){
+			$(this).parent().next().css('display','block');
+		}else{
+			$(this).parent().next().css('display','none');
+		}
+	},
+	timeBox:function(){
+		var This=$(this)
+		return {
+			showBox:function(){
+				This.next().css('display','block')
+			},
+			hideBox:function(){
+				This.next().css('display','none')
+			}
+		}
 	}
 });
 
@@ -634,7 +661,7 @@ $.extend({
  		$.saveProcess();
  		$('#datetimepicker').datetimepicker({
  			language:'zh-CN',
- 			format: "yyyy-MM-dd  hh:ii",
+ 			format: "hh:ii",
 	        autoclose: true,
 	        todayBtn: true,
 	        pickerPosition: "bottom-left"
@@ -898,6 +925,34 @@ $.extend({
 		$("ul").delegate("li","click",function(){
 			$(this).changeConditionThing();
 		});
+		
+		$('.startTime').focus(function(){
+			$(this).timeBox().showBox()
+		})
+		$('.startTime').blur(function(){
+			$(this).timeBox().hideBox()
+		})
+		
+		$(".compareThing").keyup(function(){
+			$.taskData.selectEventThing=0;
+			$(this).getThing();
+		});
+		
+		$(".compareThing").blur(function(){
+			if($.taskData.selectEventThing!=0&&$(this).val()==""){
+				$(this).next().empty();
+				$(this).next().hide();
+			}
+		});
+		
+		$(".compareTag").change(function(){
+			$.taskData.selectEventTag=$(this).val();
+		});
+		
+		$('.chioceCycle').change(function(){
+			$(this).showWeek()
+		})
+		
 		$("#compareOper").change(function(){
 			$.taskData.compare_oper=$(this).val();
 		});
@@ -957,4 +1012,3 @@ $.extend({
 	}
 });
 $.init();
-
