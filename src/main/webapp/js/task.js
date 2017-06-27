@@ -541,6 +541,14 @@ $.fn.extend({
 			conditionData.begin_time=$('#datetimepicker').val();
 			conditionData.cycle_time=Number($('#timeInterval').val());
 			$.taskData.processBox.trigger_conditions.push(conditionData);
+		}else if($('.timing').css('display')=='block'){
+			conditionData={};
+			conditionData.cycle=$('.chioceCycle').val();
+			if($('.chioceCycle').val()=='everyWeek'){
+				conditionData.cycle_week=$('.weekList').val()
+			}
+			conditionData.start_time=$('.startTime').val();
+			$.taskData.processBox.trigger_conditions.push(conditionData)
 		}
 		var sendData,sendType;
 		if($.taskData.isEditTechnology){
@@ -659,7 +667,10 @@ $.fn.extend({
 		}
 	},
 	saveTime:function(){
-//		$(this).
+//		console.info($($(this).siblings('input')[0]).val())
+		var startTime=$($(this).siblings('input')[0]).val()+':'+$($(this).siblings('input')[1]).val()
+		$('.startTime').val(startTime)
+		$(this).parent().parent().css('display','none')
 	}
 });
 

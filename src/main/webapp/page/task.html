@@ -125,7 +125,7 @@
 								</select>
 							</div>
 							<div class="col-xs-6 weekBox">
-								选择星期:<select class="controls">
+								选择星期:<select class="controls weekList">
 									<option value="0">周日</option>
 									<option value="1">周一</option>
 									<option value="2">周二</option>
@@ -138,15 +138,16 @@
 						</div>
 						<div class="row">
 							<div class="col-xs-6">
-								开始时间：<input class="controls startTime" placeholder="请输入开始时间" isCheck="false" />
+								开始时间：<input class="controls startTime" placeholder="请输入开始时间" isCheck="false" readonly/>
 								<div class="timeBox">
 									<div class="timeArrow"></div>
 									<div class="timeContent">
-										时间：&nbsp;<input placeholder="时/24小时制"/>:<input placeholder="分"/>
+										时间：&nbsp;<input placeholder="时/24小时制"/>：<input placeholder="分"/>
 										<button class="saveTime">确定</button>
 									</div>
 								</div>
 							</div>
+							
 						</div>
 					</div>
 					<div class="addConditionBox">
