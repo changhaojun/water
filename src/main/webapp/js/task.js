@@ -138,7 +138,7 @@ $.fn.extend({
 					for(var i=0;i<data.rows.length;i++){
 						This.showMissionsDom(data.rows[i]);
 					}
-					$.dragMission();//拖动任务
+//					$.dragMission();//拖动任务
 					$('.missionBox').hover(function(){
 						$(this).showTools();
 					},function(){
@@ -667,6 +667,7 @@ $.extend({
 	        pickerPosition: "bottom-left"
  		});
  		$.conditionBox();	//控制条件BOX
+   		$.dragMission();
 	},
 	addNode:function(){
 		$(".taskTree-add").click(function(){
