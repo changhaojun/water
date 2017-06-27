@@ -160,7 +160,6 @@ $.extend({
 				access_token: $.initData.token.access
 			},
 			success: function(data) {
-
 				callBack && callBack(data);
 			}
 		});
@@ -191,7 +190,7 @@ $.extend({
 		};
 		client.onConnectionLost = function(responseObject) {
 			if(responseObject.errorCode !== 0) {
-	
+				console.log("onConnectionLost:" + responseObject.errorMessage);
 			}
 		};
 		client.onMessageArrived = function(message) {
@@ -207,8 +206,8 @@ $.extend({
 	onLabelValueChange: function(message) {
 		var dataId = Number(message.destinationName);
 		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(dataId, $.initThree.judgeLabelType({data_id: dataId}))];
-//		var payload = typeof message.payloadString=='string' ? JSON.parse(message.payloadString) : message.payloadString;
-		var payload = JSON.parse(message.payloadString);
+		var payload = typeof message.payloadString=='string' ? JSON.parse(message.payloadString) : message.payloadString;
+//		var payload = JSON.parse(message.payloadString);
 		if (!originLabel) return;
 		var newData = {
 			data_id: dataId,
@@ -229,6 +228,11 @@ $.extend({
 			return;
 		}
 		if (!originLabel) return;
+		if (payload.result == 0) {
+			return;
+		}
+		console.log(message);
+		layer.msg('下发成功！', {icon: 1});
 		var newData = {
 			data_id: originLabel.labelId,
 			data_name: originLabel.labelName,
@@ -324,7 +328,7 @@ $.extend({
 					$('.DO').find('.realtime').html(time.endDate);
 					var onOff = new Finfosoft.OnOff({
 						el: '.finfosoft-onOff',
-						status: label.labelValue=='noVal' ? 0 : label.labelValue,
+						status: !label.labelValue ? 0 : label.labelValue,
 						onChanged: function(status) {
 							layer.confirm('是否确定下发？', {
 								btn: ['确定','取消']
@@ -382,17 +386,18 @@ $.extend({
 							var data_value = $('.MO').find('.newVal').val();
 							var	data_id = label.labelId;
 							var port_type = label.labelType;
-							$.issueAjax({
+							console.log(data_value);
+							$.moAjax({
 								data_value: data_value,
 								data_id: data_id
 							}, function() {
-//								$.onLabelValueChange({
-//									destinationName: data_id,
-//									payloadString: {
-//										data_value: data_value,
-//										status: label.labelStatus
-//									}
-//								});
+								$.onLabelValueChange({
+									destinationName: data_id,
+									payloadString: {
+										data_value: data_value,
+										status: label.labelStatus
+									}
+								});
 								$('.operation').toggleWin(true);
 								$('.MO').find('.confirm').unbind();
 								$.three.capturer.intersected = null;
@@ -693,6 +698,24 @@ $.extend({
 			},
 			success: function(data) {
 				if (data.result == 1) {
+					callBack && callBack();
+				}
+			}
+		});
+	},
+	moAjax: function(newData, callBack) {
+		$.ajax({
+			type: "put",
+			dataType: "json",
+			url: $.initData.globalurl+"/v1/manualEnters",
+			async: true,
+			crossDomain: true == !(document.all),
+			data: {
+				access_token: $.initData.token.access,
+				data: JSON.stringify(newData)
+			},
+			success: function(data) {
+				if (data.code == 200) {
 					layer.msg('已下发！', {icon: 1});
 					callBack && callBack();
 				}
