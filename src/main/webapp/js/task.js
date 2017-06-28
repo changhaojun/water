@@ -806,6 +806,15 @@ $.extend({
 				$('#datetimepicker').val(processData.trigger_conditions[0].begin_time);
 				$('#timeInterval').val(processData.trigger_conditions[0].cycle_time);
 			}
+		}else if(processData.trigger_name=="定时触发"){
+			if(processData.trigger_conditions.length>0){
+				$('.chioceCycle').val(processData.trigger_conditions[0].cycle)
+				if(processData.trigger_conditions[0].cycle_week){
+					$('.chioceCycle').showWeek();
+					$('.weekList').val(processData.trigger_conditions[0].cycle_week)
+				}
+				$('.startTime').val(processData.trigger_conditions[0].start_time)
+			}
 		}
 		$('#triggerType').changeTriggerTypeAction(processData.trigger_name);
 		$.addProcessBox=layer.open({
