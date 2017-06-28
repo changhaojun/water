@@ -383,10 +383,9 @@ $.extend({
 						layer.confirm('是否确定下发？', {
 							btn: ['确定','取消'] //按钮
 						}, function(){
-							var data_value = $('.MO').find('.newVal').val();
+							var data_value = parseFloat($('.MO').find('.newVal').val());
 							var	data_id = label.labelId;
 							var port_type = label.labelType;
-							console.log(data_value);
 							$.moAjax({
 								data_value: data_value,
 								data_id: data_id
