@@ -116,6 +116,18 @@ $.fn.extend({
 			}
 		}else if(typeName=='时间周期触发'){
 			$(this).find('.content1').append('开始时间:'+conditions[0].begin_time+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间间隔:'+conditions[0].cycle_time+'分钟')
+		}else if(typeName=='定时触发'){
+			var cycleStr='';
+			if(conditions[0].cycle=='everyWeek'){
+				var weekDay=conditions[0].cycle_week
+				if(conditions[0].cycle_week=='0'){
+					cycle_week='日'
+				}
+				cycleStr='每周'+weekDay
+			}else{
+				cycleStr='每日'
+			}
+			$(this).find('.content1').append(`触发周期:${cycleStr}&nbsp;${conditions[0].start_time}`)
 		}else{
 			$(this).find('.content1').append('人工触发没有触发条件')
 		}
