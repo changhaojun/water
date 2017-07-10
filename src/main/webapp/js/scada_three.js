@@ -122,7 +122,7 @@ $.initThree = {
 			$.three.camera.near,
 			$.three.camera.far
 		);
-		camera.position.set(100, 100, 500);
+		camera.position.set(0, 300, 600);
 		camera.lookAt(new THREE.Vector3(0, 0, 0));
 		$.three.scene.el.add(camera);
 		$.three.camera.el = camera;
