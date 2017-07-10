@@ -342,7 +342,7 @@ $.initThree = {
 			label.position.y = oldPos.y;
 			label.position.z = oldPos.z;
 		} else {
-			label.position.y = 40;
+			label.position.y = 120;
 		}
 		label.target = 'target';
 		
