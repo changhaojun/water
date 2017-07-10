@@ -1,0 +1,73 @@
+#  ==========================================================================
+#  Wavefront Material file
+#  Exported by Red-i Productions' "Riptide Pro"
+#  (a commercial plugin for Cinema 4D PC & Mac, R9.6 or later)
+#  
+#  Red-i Productions
+#  http://skinprops.com
+#  
+#  ==========================================================================
+
+newmtl __
+Kd 0.800000 0.800000 0.800000
+illum 1
+
+newmtl default_Mat
+illum 1
+
+newmtl 123
+Kd 0.227495 0.534613 0.688172
+illum 1
+
+newmtl Red_Wine.1
+Ka 0.032397 0.122066 0.140000
+Kd 0.074647 0.493024 0.645161
+illum 1
+
+newmtl Red_Wine.4
+Ka 0.032397 0.122066 0.140000
+Kd 0.499067 0.748138 0.838710
+illum 1
+
+newmtl Red_Wine.3
+Ka 0.140000 0.000000 0.000000
+Kd 0.398827 0.448355 0.473118
+illum 1
+
+newmtl AS-03
+Ka 1.000000 1.000000 1.000000
+Kd 0.655914 0.655914 0.655914
+illum 1
+
+newmtl Glossy_Grey.1
+Ka 0.016536 0.023333 0.014656
+Kd 0.125220 0.451613 0.082111
+illum 1
+
+newmtl Yellow
+Kd 1.000000 0.766667 0.000000
+illum 1
+
+newmtl 456
+Kd 0.800000 0.800000 0.800000
+illum 1
+
+newmtl Red_Glossy
+Kd 0.781177 0.000000 0.000000
+illum 1
+
+newmtl Glossy_Grey
+Ka 0.031613 0.031613 0.031613
+Kd 0.086022 0.082635 0.082635
+illum 1
+
+newmtl Water.1
+Kd 0.800000 0.800000 0.800000
+Tf 1.000000 0.908136 0.456662
+illum 1
+d 0.450000
+Ni 3.143333
+
+newmtl Checker_Blue
+Kd 1.000000 0.000000 0.550000
+illum 1
