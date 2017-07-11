@@ -230,6 +230,7 @@ $.fn.extend({
 				url:globalurl+"/v1/processes?access_token="+$.taskData.access_token+"&process_id="+technologyId,
 				async:false,
 				success:function(data){
+					console.info(data)
 					var titleMsg='修改工艺';
 					$('.addConditionBox').empty();
 					$.taskData.processBox=data;
@@ -370,7 +371,7 @@ $.fn.extend({
 			}
 		}
 	},
-	getConditionTagList:function(triggerCondition){		//选择实体后获取该实体下标签的列表
+	getConditionTagList:function(){		//选择实体后获取该实体下标签的列表
 		var tagSelect,sendFilter;
 		if($(this).is('UL')){
 			tagSelect=$(this).parent().next().find("select");
@@ -537,7 +538,7 @@ $.fn.extend({
 			conditionData.data_id=Number($('.eventBox').find('.conditionTag').val());
 			conditionData.compare_oper=$('.eventBox').find('.compareOper').val();
 			conditionData.compare_data_id=Number($('.eventBox').find('.compareTag').val());
-			conditionData.compare_data_name=$('.eventBox').find('.compareTag').text()
+			conditionData.compare_thing_id=$('.compareThing').next().attr('thing_id');
 			$.taskData.processBox.trigger_conditions.push(conditionData);
 			$('.addConditionBox .addEventBox').each(function(){
 				conditionData={};
@@ -545,7 +546,7 @@ $.fn.extend({
 				conditionData.data_id=Number($(this).find('.conditionTag').val());
 				conditionData.compare_oper=$(this).find('.compareOper').val();
 				conditionData.compare_data_id=Number($(this).find('.compareTag').val());
-				conditionData.compare_data_name=$(this).find('.compareTag').text();
+				conditionData.compare_thing_id=$(this).find('.compareThing').next().attr('thing_id');
 				$.taskData.processBox.trigger_conditions.push(conditionData);
 			})
 		}else if($('.timingBox').css('display')=='block'){
@@ -782,21 +783,29 @@ $.extend({
 		if(processData.trigger_name=="事件触发"){
 			if(processData.trigger_conditions.length>0){
 				var thing_name=processData.trigger_conditions[0].thing_name;
+				var compare_thing_name=processData.trigger_conditions[0].compare_thing_name;
 				$('.eventBox').find('.conditionThing').val(thing_name);
 				$('.eventBox').find('.conditionThingList').attr('thing_id',processData.trigger_conditions[0].thing_id);
-				$('.eventBox').find('.conditionThingList').getConditionTagList(processData.trigger_conditions[0]);
+				$('.eventBox').find('.conditionThingList').getConditionTagList();
 				$('.eventBox').find('.conditionTag').val(processData.trigger_conditions[0].data_id);
 				$('.eventBox').find('.compareOper').val(processData.trigger_conditions[0].compare_oper);
-				$('.eventBox').find('.compareValue').val(processData.trigger_conditions[0].compare_value);
+//				$('.eventBox').find('.compareValue').val(processData.trigger_conditions[0].compare_value);
+				$('.eventBox').find('.compareThing').val(compare_thing_name);
+				$('.eventBox').find('.compareThingList').attr('thing_id',processData.trigger_conditions[0].compare_thing_id)
+				$('.eventBox').find('.compareThingList').getConditionTagList();
+				$('.eventBox').find('.compareTag').val(processData.trigger_conditions[0].compare_data_id)
 				for(var i=1;i<processData.trigger_conditions.length;i++){
 					$('.addConditionBtn').click();
 					var thing_name=processData.trigger_conditions[i].thing_name;
 					$('.addEventBox').eq(i-1).find('.conditionThing').val(thing_name);
 					$('.addEventBox').eq(i-1).find('.conditionThingList').attr('thing_id',processData.trigger_conditions[i].thing_id);
-					$('.addEventBox').eq(i-1).find('.conditionThingList').getConditionTagList(processData.trigger_conditions[i]);
+					$('.addEventBox').eq(i-1).find('.conditionThingList').getConditionTagList();
 					$('.addEventBox').eq(i-1).find('.conditionTag').val(processData.trigger_conditions[i].data_id);
 					$('.addEventBox').eq(i-1).find('.compareOper').val(processData.trigger_conditions[i].compare_oper);
-					$('.addEventBox').eq(i-1).find('.compareValue').val(processData.trigger_conditions[i].compare_value);
+					$('.addEventBox').eq(i-1).find('.compareThing').val(compare_thing_name);
+					$('.addEventBox').eq(i-1).find('.compareThingList').attr('thing_id',processData.trigger_conditions[i].compare_thing_id)
+					$('.addEventBox').eq(i-1).find('.compareThingList').getConditionTagList();
+					$('.addEventBox').eq(i-1).find('.compareTag').val(processData.trigger_conditions[i].compare_data_id)
 				}
 			}
 		}else if(processData.trigger_name=="时间周期触发"){

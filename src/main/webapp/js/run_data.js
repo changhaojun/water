@@ -16,7 +16,6 @@ function entityList(){
 			access_token: accesstoken
 		},
 		success:function(data){
-
 			$(".dataContent").html("");
 			if(data.rows.length==0){
 		    	$(".dataContent").html("<p style='padding-left:20px;'>暂无数据</p>");
