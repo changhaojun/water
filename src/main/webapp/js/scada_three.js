@@ -48,7 +48,7 @@ $.three = {
 		}
 	},
 	font: {
-		loader: null,
+		loader: new THREE.FontLoader(),
 		src: '/finfosoft-water/plugins/three/font/FZLanTingHeiS-UL-GB_Regular.json',
 		size: 6,
 		depth: 2,
@@ -60,6 +60,7 @@ $.three = {
 		opacity: 0.8
 	},
 	labelGroup: new THREE.Object3D(),
+	modelGroup: new THREE.Object3D(),
 	renderer: {
 		el: null,
 		clearColor: 0xffffff
@@ -114,6 +115,7 @@ $.initThree = {
 		var scene = new THREE.Scene();
 		$.three.scene.el = scene;
 		$.three.scene.el.add($.three.labelGroup);
+		$.three.scene.el.add($.three.modelGroup);
 	},
 	initCamera: function() {
 		var camera = new THREE.PerspectiveCamera(
@@ -177,28 +179,33 @@ $.initThree = {
 	initObjects: function(models, callBack) {
 		var model = models[$.three.model.count];
 		var objModelUrl = model.fileName;
-		var objMaterial = model.material;
+//		var objMaterial = model.material;
 		var objPosition = model.objPosition;
 		var objRotation = model.objRotation;
+		var objScale = model.objScale;
 		$.three.model.mtlLoader = new THREE.MTLLoader();
 		$.three.model.mtlLoader.setTexturePath($.three.model.path+'img/');
 		$.three.model.mtlLoader.load($.three.model.path+objModelUrl+'.mtl', function(material) {
 			$.three.model.objLoader = new THREE.OBJLoader();
 			$.three.model.objLoader.setMaterials( material );
 			$.three.model.objLoader.load($.three.model.path+objModelUrl+'.obj', function(object) {
-				object.scale.set(0.1,0.1,0.1)
 				object.position.set(objPosition.x, objPosition.y, objPosition.z);
-				object.rotation.set(objRotation._x, objRotation._y, objRotation._z);
-				$.three.scene.el.add(object);
+				object.rotation.set(objRotation.x, objRotation.y, objRotation.z);
+				object.scale.set(objScale.x, objScale.y, objScale.z);
+//				$.three.scene.el.add(object);
+				$.three.modelGroup.add(object);
 				if ($.three.model.count===models.length-1) {
 					$.three.modelsLoading = false;
 					$.three.loadingStatus++;
 					$.initThree.initLoading();
+					if ($.three.model.count > 10) {
+						$.three.modelGroup.scale.set(0.1, 0.1, 0.1);
+					}
 					callBack && callBack();
 					return;
 				} else {
 					$.three.model.count++;
-					$.initThree.initObjects(models);
+					$.initThree.initObjects(models, callBack);
 				}
 			});
 		});
@@ -224,7 +231,7 @@ $.initThree = {
 		$.three.ground.el = ground;
 	},
 	initFont: function(callBack) {
-		$.three.font.loader = $.three.font.loader===null ? new THREE.FontLoader() : $.three.font.loader;
+//		$.three.font.loader = $.three.font.loader===null ? new THREE.FontLoader() : $.three.font.loader;
 		$.three.font.loader.load($.three.font.src, function(font) {
 			$.three.font.geometry = font;
 			$.three.fontLoading = false;

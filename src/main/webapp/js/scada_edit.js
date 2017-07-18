@@ -300,6 +300,7 @@ $.extend({
 				access_token: $.initData.token.access
 			},
 			success: function(data) {
+				console.log(data);
 				callBack && callBack(data);
 			}
 		});

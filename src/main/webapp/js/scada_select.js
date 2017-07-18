@@ -42,6 +42,7 @@ $.extend({
 				})
 			},
 			success: function(data) {
+				console.log(data);
 				$.initData.infoMap = data;
 				if ($.initData.infoMap.length == 0) {
 					$.initData.pageStatus = 'nodata';
@@ -51,6 +52,26 @@ $.extend({
 				callBack && callBack();
 			}
 		});
+//		$.ajax({
+//			type: "get",
+//			url: "http://192.168.1.108:8012/v1/templateModels",
+////			url: "http://121.42.253.149:18823/v1/templateModels",
+//			async: true,
+//			data: {
+//				access_token: $.initData.access_token,
+//				filter: JSON.stringify({template_system: 1})
+//			},
+//			success: function(data) {
+//				console.log(data);
+//				$.initData.infoMap = data.rows;
+//				if ($.initData.infoMap.length == 0) {
+//					$.initData.pageStatus = 'nodata';
+//				} else {
+//					$.initData.pageStatus = '';
+//				}
+//				callBack && callBack();
+//			}
+//		});
 	},
 	initVue: function() {
 		$.vue = new Vue({

@@ -28,8 +28,9 @@
 				<p class="nodata" v-cloak v-show="pageStatus == 'nodata'">没有找到相关模板！</p>
 				<ul>
 					<li v-cloak v-for="info in infoMap" class="pull-left" v-on:click="confirmModel(info._id)">
-						<img v-bind:src="info.modelImg" alt="" />
+						<!--<img v-bind:src="info.modelImg" alt="" />-->
 						<p>{{ info.modelName }}</p>
+						<!--<p>{{ info.template_name }}</p>-->
 					</li>
 				</ul>
 			</div>
