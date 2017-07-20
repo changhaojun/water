@@ -285,11 +285,11 @@
 					</dd>
 					<dd class="clearfix dataEdit" v-if="newPort.port_name=='D'">
 						<label for="new_low_battery">低电平</label>
-						<input id="new_low_battery" type="text" v-model="newPort.low_battery" datasrc="newPort.low_battery" v-bind:empty="!newPort.low_battery&&newPort.low_battery!==0 ? true : false" num-limit="limit" warning="请输入低电平" placeholder="请输入低电平"/>
+						<input id="new_low_battery" type="text" v-model="newPort.low_battery" datasrc="newPort.low_battery" v-bind:empty="!newPort.low_battery&&newPort.low_battery!==0 ? true : false"  warning="请输入低电平" placeholder="请输入低电平"/>
 					</dd>
 					<dd class="clearfix dataEdit" v-if="newPort.port_name=='D'">
 						<label for="new_high_battery">高电平</label>
-						<input id="new_high_battery" type="text" v-model="newPort.high_battery" datasrc="newPort.high_battery" v-bind:empty="!newPort.high_battery&&newPort.high_battery!==0 ? true : false" num-limit="limit" warning="请输入高电平" placeholder="请输入高电平"/>
+						<input id="new_high_battery" type="text" v-model="newPort.high_battery" datasrc="newPort.high_battery" v-bind:empty="!newPort.high_battery&&newPort.high_battery!==0 ? true : false"  warning="请输入高电平" placeholder="请输入高电平"/>
 					</dd>
 					<dt>
 						<button @click="saveNewPort($event)">保存</button>
@@ -351,11 +351,11 @@
 					</dd>
 					<dd class="clearfix dataEdit" v-if="newPort.port_name=='D'">
 						<label for="edit_low_battery">低电平</label>
-						<input id="edit_low_battery" type="text" v-model="newPort.low_battery" datasrc="newPort.low_battery" v-bind:empty="!newPort.low_battery&&newPort.low_battery!==0 ? true : false" num-limit="limit" warning="请输入低电平" placeholder="请输入低电平"/>
+						<input id="edit_low_battery" type="text" v-model="newPort.low_battery" datasrc="newPort.low_battery" v-bind:empty="!newPort.low_battery&&newPort.low_battery!==0 ? true : false"  warning="请输入低电平" placeholder="请输入低电平"/>
 					</dd>
 					<dd class="clearfix dataEdit" v-if="newPort.port_name=='D'">
 						<label for="edit_high_battery">高电平</label>
-						<input id="edit_high_battery" type="text" v-model="newPort.high_battery" datasrc="newPort.high_battery" v-bind:empty="!newPort.high_battery&&newPort.high_battery!==0 ? true : false" num-limit="limit" warning="请输入高电平" placeholder="请输入高电平"/>
+						<input id="edit_high_battery" type="text" v-model="newPort.high_battery" datasrc="newPort.high_battery" v-bind:empty="!newPort.high_battery&&newPort.high_battery!==0 ? true : false"  warning="请输入高电平" placeholder="请输入高电平"/>
 					</dd>
 					<dt>
 						<button @click="saveEditPort($event)">保存</button>
