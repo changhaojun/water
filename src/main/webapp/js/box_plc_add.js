@@ -84,6 +84,7 @@ var $extend = $.fn.extend({
 	//非数字限制输入
 	numOnly: function() {
 		$(this).keyup(function() {
+			if(!$(this).attr('num-limit')) return false;
 			$(this).val($(this).val().replace(/[^0-9-]/g, ''));
 			eval('initData.'+$(this).attr('datasrc')+'=Number($(this).val())');
 		});
