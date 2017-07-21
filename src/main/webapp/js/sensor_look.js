@@ -32,7 +32,6 @@ function listBox(){
 			access_token: accesstoken
 		},
 		success: function(data) {
-			console.log(data)
 			$(".sensorContent").html("");
 			if(data.code==400005){
 		    		getNewToken();
@@ -45,7 +44,7 @@ function listBox(){
 		    	deviceId=data.device._id
 		    	for(var i=0;i<data.datas.length;i++){	    		
 		    		//以开关展示
-		    		if(data.datas[i].port_type=="DO"||(type="P"&&data.datas[i].port_type=="DI")){
+		    		if(data.datas[i].port_type=="DO"){
 		    			str='<div class="lookList  normal" id="'+data.datas[i].data_id+'">'+
 								'<div class="listTop">'+
 									'<span>'+deviceName+'-'+data.datas[i].data_name+'</span>'+
@@ -115,7 +114,7 @@ function listBox(){
 					//		initVal: this.input.value
 						});			
 				//数据展示
-		    		}else{
+		    		}else{	    			
 		    			str='<div class="lookList  normal" id="'+data.datas[i].data_id+'">'+
 								'<div class="listTop">'+
 									'<span>'+deviceName+'-'+data.datas[i].data_name+'</span>'+
@@ -132,7 +131,13 @@ function listBox(){
 									'</div>'+
 								'</div>'+			
 							'</div>'
+						
 						$(".sensorContent").append(str);
+						if(type="P"&&data.datas[i].port_type=="DI"&&data.datas[i].data_value==1){
+								$(".Itext").html("开")
+		    			}else if(type="P"&&data.datas[i].port_type=="DI"&&data.datas[i].data_value==0){
+		    					$(".Itext").html("关");
+		    			}
 		    		}
 		    		if(data.datas[i].status==1||data.datas[i].status==undefined){
 		    			$(".lookList").css({"border-left-color":"#1ab394","color":"#1ab394"});
