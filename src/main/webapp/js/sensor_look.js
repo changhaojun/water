@@ -32,6 +32,7 @@ function listBox(){
 			access_token: accesstoken
 		},
 		success: function(data) {
+			console.log(data)
 			$(".sensorContent").html("");
 			if(data.code==400005){
 		    		getNewToken();
@@ -44,7 +45,7 @@ function listBox(){
 		    	deviceId=data.device._id
 		    	for(var i=0;i<data.datas.length;i++){	    		
 		    		//以开关展示
-		    		if(data.datas[i].oper_type==2&&data.datas[i].data_type==3){
+		    		if(data.datas[i].port_type=="DO"||(type="P"&&data.datas[i].port_type=="DI")){
 		    			str='<div class="lookList  normal" id="'+data.datas[i].data_id+'">'+
 								'<div class="listTop">'+
 									'<span>'+deviceName+'-'+data.datas[i].data_name+'</span>'+
@@ -54,12 +55,12 @@ function listBox(){
 								'<div class="listContent">'+
 									'<div class="contentTop">'+
 										'<div class="on-off">'+
-											'<button type="button" class="Iopen Iopen'+i+' Iactive" onclick="Iopen('+i+','+data.datas[i].data_id+')">'+data.datas[i].onText+'</button>'+
+											'<button type="button" class="Iopen Iopen'+i+' Iactive" onclick="Iopen('+i+','+data.datas[i].data_id+')">'+data.datas[i].high_battery+'</button>'+
 											'<div class="off">'+
 												'<div class="circle circle'+i+'">'+				
 												'</div>'+
 											'</div>'+
-											'<button type="button" class="Iclose Iclose'+i+'" onclick="Iclose('+i+','+data.datas[i].data_id+')">'+data.datas[i].offText+'</button>'+
+											'<button type="button" class="Iclose Iclose'+i+'" onclick="Iclose('+i+','+data.datas[i].data_id+')">'+data.datas[i].low_battery+'</button>'+
 										'</div>'+							
 									'</div>'+
 									'<div class="contentBottom">'+
@@ -78,7 +79,7 @@ function listBox(){
 							$(".circle"+i+"").css({"left":"0px"});
 			    		}
 				//仪表盘展示
-		    		}else if((type=="A"&&data.datas[i].oper_type==2&&data.datas[i].data_type==0)||(type=="A"&&data.datas[i].oper_type==2&&data.datas[i].data_type==1)||(type=="P"&&data.datas[i].oper_type==2)){
+		    		}else if((type="A"&&data.datas[i].port_type=="AO")||(type="P"&&data.datas[i].port_type=="AO")){
 		    			if (data.datas[i].data_value===''||data.datas[i].data_value===null) {
 		    				data.datas[i].data_value = 0;
 		    			}
