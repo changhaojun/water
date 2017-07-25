@@ -205,7 +205,7 @@ $.extend({
 		$.inputChain();
 		$.doSubmit();
 		$.sentCode();
-		$('input').limitSpacing();		//输入框去除空格
+//		$('input').limitSpacing();		//输入框去除空格
 		$.pop();
 	},
 	//主体->动态居中
