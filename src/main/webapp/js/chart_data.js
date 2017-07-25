@@ -40,9 +40,15 @@ if(h>=12){
 }else{
 	flag="AM";
 }
-startTime=year+"$"+p(month)+"$"+(p(date))+"$"+(p(h-h))+":"+(p(m-m))+":"+(p(s-s));
+//startTime=year+"$"+p(month)+"$"+(p(date))+"$"+(p(h-h))+":"+(p(m-m))+":"+(p(s-s));
+//endTime=year+"$"+p(month)+"$"+(p(date))+"$"+(p(h))+":"+(p(m))+":"+(p(s));
+//initstartTime=year+'-'+p(month)+"-"+p(date)+" AM "+p(h-h)+':'+p(m-m);
+//initendTime=year+'-'+p(month)+"-"+p(date)+" "+flag+" "+p(h)+':'+p(m);
+
+
+startTime=GetDateStr1(4,1)
 endTime=year+"$"+p(month)+"$"+(p(date))+"$"+(p(h))+":"+(p(m))+":"+(p(s));
-initstartTime=year+'-'+p(month)+"-"+p(date)+" AM "+p(h-h)+':'+p(m-m);
+initstartTime=GetDateStr1(4)
 initendTime=year+'-'+p(month)+"-"+p(date)+" "+flag+" "+p(h)+':'+p(m);
 $("#reservationtime").val(initstartTime+" "+" - "+" "+initendTime);
 
@@ -415,7 +421,6 @@ $(document).ready(function() {
 	  end=new Date(end).getFullYear()+"$"+p(new Date(end).getMonth()+1)+"$"+p(new Date(end).getDate())+"$"+p(new Date(end).getHours())+":"+p(new Date(end).getMinutes())+":"+p(new Date(end).getSeconds());			           
    	  startTime=start;
    	  endTime=end;
-  
    	  var data={};
    	  data.data_id=dataFid
    	  data.start_time=startTime
@@ -520,3 +525,22 @@ function changeData(i){
 	var initstartTime=GetDateStr2(i)
 	$("#reservationtime").val(initstartTime+" "+" - "+" "+initendTime);
 }
+
+
+//获取当前时间的前几小时
+function GetDateStr1(n,state) { 
+				var dd = new Date();  
+					dd=new Date(dd.getTime() - n*60*60*1000); //获取前n小时的日期
+				var y = dd.getFullYear(); 
+				var m = dd.getMonth()+1;//获取当前月份的日期 
+				var d = dd.getDate(); 
+				var h=dd.getHours();
+
+				var mm=dd.getMinutes();
+				var s=dd.getSeconds();
+				if(state){
+					return y+"$"+p(m)+"$"+p(d)+"$"+p(h)+":"+p(mm)+":"+p(s); 
+				}else{
+					return y+"-"+p(m)+"-"+p(d)+" AM "+p(h)+":"+p(mm); 
+				}	
+			}
