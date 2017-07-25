@@ -3,7 +3,8 @@ $.RegEsp = {
 	email: /^[a-zA-Z0-9]+@\w+(\.[a-zA-Z]+){1,2}$/,
 	password: /^.{6,16}$/,
 	verificationCode: /.+/,
-	popUrl: /^\w+@/
+	popUrl: /^\w+@/,
+	trim: /(^\s+)|(\s+$)/g
 }
 
 //面向对象的插件方法
@@ -128,8 +129,9 @@ $.fn.extend({
 		return $(this);
 	},
 	//正则表达式验证提示
-	testRegEsp: function(re,callBack) {
-		if(re.test($(this).val())) {
+	testRegEsp: function(re,callBack,value) {
+		!value && (value = $(this).val());
+		if(re.test(value)) {
 			$(this).attr('isright', 'true');
 			callBack && callBack.call($(this));
 		} else {
@@ -151,7 +153,7 @@ $.fn.extend({
 	doLogin: function(hook) {
 		var This = this;
 		$.userInfo = {
-			username: $('input').filter('[name=username]').val(),
+			username: $('input').filter('[name=username]').val().replace($.RegEsp.trim, ''),
 			password: $('input').filter('[name=password]').val(),
 			code: $('input').filter('[name=verificationCode]').val() === '请输入验证码' ? '' : $('input').filter('[name=verificationCode]').val(),
 			client_id: 'admin',
@@ -225,6 +227,12 @@ $.extend({
 		});
 		//username环境下，回车选中password
 		$('input').filter('[name=username]').smartInput('text',function() {
+//			console.log($(this).val().replace($.RegEsp.trim, function($1, $2, $3) {
+//				console.log($1+'$1');
+//				console.log($2+'$2');
+//				console.log($3+'$3');
+//			}));
+//			$(this).val( $(this).val().replace($.RegEsp.trim, '') );
 			$(this).testRegEsp($.RegEsp.email,function() {
 				$(this).hideCode({
 					trueCase: function() {
@@ -236,7 +244,7 @@ $.extend({
 						$('input').filter('[name=verificationCode]').attr('isright','false');
 					}
 				});
-			});
+			}, $(this).val().replace($.RegEsp.trim, ''));
 		}).enterKey(function() {
 			$('input').filter('[name=password]').focus();
 		});
@@ -254,7 +262,7 @@ $.extend({
 		});
 		//pop-username环境下，回车提交
 		$('input').filter('[name=pop-username]').smartInput('text', function() {
-			$(this).testRegEsp($.RegEsp.email);
+			$(this).testRegEsp($.RegEsp.email, '', $(this).val().replace($.RegEsp.trim, ''));
 		}).enterKey(function() {
 			$.popSubmit();
 		});
