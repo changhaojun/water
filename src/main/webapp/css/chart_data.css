@@ -82,7 +82,8 @@ body{
     color: #b3b3b3;
     border: 1px solid #b3b3b3;
     line-height: 32px;
-    cursor: not-allowed;
+    /*cursor: not-allowed;*/
+    cursor: pointer;
     border-radius: 2px 2px;
 }
 .list .selectdLi .selectdFont{
@@ -103,7 +104,8 @@ body{
     color: #fff;
     text-align: center;
     font-size: 12px;
-    cursor: not-allowed;
+    /*cursor: not-allowed;*/
+    cursor: pointer;
     line-height: 33px;
 }
 .list .disabledLi{

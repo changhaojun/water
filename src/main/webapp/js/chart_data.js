@@ -99,7 +99,8 @@ function getChart(i){
 				dataFid.push(Number($(".list").children().eq(n).children().eq(3).html()))
 			}
 		}
-		
+		console.log(dataUnit)
+		console.log(dataFid)
 		var data="{data_id:"+Number(i)+",start_time:'"+startTime+"',end_time:'"+endTime+"'}";
 		$.ajax({
 			url: globalurl+"/v1/runDatas",
@@ -112,15 +113,15 @@ function getChart(i){
 			async:false,
 			crossDomain: true == !(document.all),
 			success:function(data){
-
+				console.log(data)
 				if(data.length==0){
-					$(".chartsContent").html("<span class='nonedata'>暂无数据</span>");
+					layer.msg('该时段暂无数据',{icon:0,time:2000})
 				}else{
 					if(data.dataTimes.length==0 ||data.dataValues.length==0){
 						layer.msg('该时段暂无数据',{icon:0,time:2000})
 					}else{
 						chartArr.push(data);
-			
+						console.log(chartArr)
 						initChart();
 					}
 				}
@@ -137,9 +138,11 @@ function getChart(i){
 		for(var j=0;j<dataFid.length;j++){
 			if(del==dataFid[j]){
 				dataFid.splice(j,1)
-		
+				dataUnit.splice(j,1)
 			}
 		}
+		console.log(dataUnit)
+		console.log(dataFid)
 		var data={};
 		data.data_id=dataFid
 	  	data.start_time=startTime
@@ -156,16 +159,22 @@ function getChart(i){
 			async:false,
 			crossDomain: true == !(document.all),
 			success:function(data){
-				
-				$("#chartsContent").html('')
-				chartArr=data;
-				for(var i=0;i<dataFid.length;i++){
-					if(data[i].dataTimes.length==0 || data[i].dataValues.length==0){
-						layer.msg('该时段暂无数据',{icon:0,time:2000})
-					}else{
-						initChart();
-	//					initChart(dataFid[i],legendData);	
+				console.log(data)
+				echarts.init(document.getElementById('chartsContent')).clear();
+				chartArr=[];
+				if(data.length==0){
+					layer.msg('该时段暂无数据',{icon:0,time:2000})
+				}else{
+					
+					for(var i=0;i<dataFid.length;i++){
+						if(data[i].dataTimes.length==0 || data[i].dataValues.length==0){
+
+						}else{
+							chartArr.push(data[i]);
+						}
 					}
+					console.log(chartArr)
+					initChart();
 				}
 			}
 		})
@@ -181,164 +190,119 @@ function getChart(i){
 			$('.chartContent span').removeClass('disabledFa');
 		}
 	}
-	//获取数据
-	
 }
 
-
-/*function getChart(i){
-	console.info("i:"+i)
-	if($("#"+i+"").html()=="+"){
-		$("#"+i+"").prev().removeClass("disabledFont").addClass("selectdFont");
-		$("#"+i+"").removeClass("disabledIcon").addClass("selectdIcon");
-		$("#"+i+"").parent("div").removeClass("disabledLi").addClass("selectdLi");
-		$("#"+i+"").html("已选");
-	}else{
-		layer.msg('该数据已添加过', {
-			icon : 7
-		});
-		return;
-	}
-	dataUnit=[];dataFid=[];
-	for(var n=0;n<$(".list").children().length;n++){
-		if($(".list").children().eq(n).hasClass('selectdLi')){
-			dataUnit.push($(".list").children().eq(n).children().eq(2).html())
-			dataFid.push(Number($(".list").children().eq(n).children().eq(3).html()))
-		}
-	}   
-	//判断是否被关注
-	for(var j=0;j<selectedId.length;j++){
-		if(selectedId[j].toString()==dataFid.toString()){
-			$('.chartContent span').addClass('disabledFa');
-			break
-		}
-		else{
-			$('.chartContent span').removeClass('disabledFa');
-		}
-	}
-	//获取数据
-	var data="{data_id:"+Number(i)+",start_time:'"+startTime+"',end_time:'"+endTime+"'}";
-	$.ajax({
-		url: globalurl+"/v1/runDatas",
-		type:"post",
-		dataType:"JSON",
-		data:{
-			access_token: accesstoken,
-			data:data
-		},
-		async:false,
-		crossDomain: true == !(document.all),
-		success:function(data){
-			console.log(data)
-			if(data.length==0){
-				$(".chartsContent").html("<span class='nonedata'>暂无数据</span>");
-			}else{
-				chartArr.push(data);
-				console.log(chartArr)
-				initChart();
-			}
-		}
-	})
-}*/
 //图表配置项以及实例化图表
 function initChart(){
-	var objData=[]; legendData=[];
-	for(var j=0;j<chartArr.length;j++){
-		objData.push(chartArr[j].dataValues);	
-		legendData.push(chartArr[j].device_name+'-'+chartArr[j].data_name)
-	}
-	series=[];
-	yAxis=[];
-	for(var j=0;j<chartArr.length;j++){
-		//将请求到的数据添加到y轴的数据中	 
-		 yAxis.push({
-			type:'value',
-			splitLine: { show: false }, //去除网格中的坐标线
-			min:0,
-			max:Math.ceil(chartArr[j].max_value),
-			offset:45*j,
-			position:'left',
-			axisLabel: {
-				formatter: '{value}'+dataUnit[j]
-			}
-		});
-		//遍历每一个标签看是否被选中，如果选中绘制折线，没有选中不绘制折线
-		series.push({
-            name: legendData[j],
-            type: 'line',
-//          smooth:true,//使折线平滑
-            yAxisIndex:j,
-//          areaStyle:{ normal: {} },//是否显示阴影面积
-            data: objData[j],
-            markPoint : {
-                data : [
-                    {type : 'max', name: '最大值'},
-                    {type : 'min', name: '最小值'}
-                ]
-            },
-            markLine : {
-                data : [
-                    {type : 'average', name: '平均值'},
-                ]
-            },
-       });
-	}	
-	var myChart=echarts.init(document.getElementById('chartsContent'))
-	var option={
-			title:{
-				text:''
-			},
-			tooltip: {
-				trigger: 'axis'
-			},
-			legend: {
-		        data:legendData,
-		        x:'50px',
-		        y:'top'
-		    },
-		    toolbox : {
-	            show :true,
-	            x:'96%',
-	            feature : {
-	                saveAsImage : {
-	                    show :true,
-	                }
-	            }
-	        },
-		    grid: {
-				left: '5%',
-				right: '10%',
-				top: '15%',
-				bottom: '12%',
-				containLabel: true
-			},
-			xAxis: {
-		        type: 'category',
-		        boundaryGap: false,
-		        data:chartArr[0].dataTimes
-		    },
-		    yAxis:yAxis,
-		    dataZoom:[
-	        	//x轴缩放
-
-	            {
-	                type:'slider',
-	                xAxisIndex:0,
-	                start:20,
-	                end:80,
-	                height:30,
+	console.log(chartArr)
+	if(chartArr.length==0){
+		layer.msg('该时段暂无数据',{
+			icon:0,
+			time:2000
+		})
+	}else{
+		var objData=[]; legendData=[];
+		for(var j=0;j<chartArr.length;j++){
+			objData.push(chartArr[j].dataValues);	
+			legendData.push(chartArr[j].device_name+'-'+chartArr[j].data_name)
+		}
+		series=[];
+		yAxis=[];
+		for(var j=0;j<chartArr.length;j++){
+			//将请求到的数据添加到y轴的数据中	 
+			 yAxis.push({
+				type:'value',
+				splitLine: { show: false }, //去除网格中的坐标线
+				min:0,
+				max:Math.ceil(chartArr[j].max_value),
+				offset:45*j,
+				position:'left',
+				axisLabel: {
+					formatter: '{value}'+dataUnit[j]
+				}
+			});
+			//遍历每一个标签看是否被选中，如果选中绘制折线，没有选中不绘制折线
+			series.push({
+	            name: legendData[j],
+	            type: 'line',
+	//          smooth:true,//使折线平滑
+	            yAxisIndex:j,
+	//          areaStyle:{ normal: {} },//是否显示阴影面积
+	            data: objData[j],
+	            markPoint : {
+	                data : [
+	                    {type : 'max', name: '最大值'},
+	                    {type : 'min', name: '最小值'}
+	                ]
 	            },
-	            {
-	                type:'inside',
-	                xAxisIndex:0,
-	                start:20,
-	                end:80
-	            }
-	        ],
-			series:series		
-		};
-	myChart.setOption(option);
-	window.onresize = myChart.resize;
+	            markLine : {
+	                data : [
+	                    {type : 'average', name: '平均值'},
+	                ]
+	            },
+	       });
+		}	
+		console.log(series)
+		console.log(yAxis)
+		console.log(legendData)
+		console.log(j)
+		var myChart=echarts.init(document.getElementById('chartsContent'))
+		var option={
+				title:{
+					text:''
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+			        data:legendData,
+			        x:'50px',
+			        y:'top'
+			    },
+			    toolbox : {
+		            show :true,
+		            x:'96%',
+		            feature : {
+		                saveAsImage : {
+		                    show :true,
+		                }
+		            }
+		        },
+			    grid: {
+					left: '5%',
+					right: '10%',
+					top: '15%',
+					bottom: '12%',
+					containLabel: true
+				},
+				xAxis: {
+			        type: 'category',
+			        boundaryGap: false,
+			        data:chartArr[0].dataTimes
+			    },
+			    yAxis:yAxis,
+			    dataZoom:[
+		        	//x轴缩放
+		            {
+		                type:'slider',
+		                xAxisIndex:0,
+		                start:20,
+		                end:80,
+		                height:30,
+		            },
+		            {
+		                type:'inside',
+		                xAxisIndex:0,
+		                start:20,
+		                end:80
+		            }
+		        ],
+				series:series		
+			};
+		myChart.setOption(option);
+		window.onresize = myChart.resize;
+	}
+	
 }
 
 $('.chartContent button').click(function(){
@@ -425,6 +389,9 @@ $(document).ready(function() {
    	  data.data_id=dataFid
    	  data.start_time=startTime
    	  data.end_time=endTime
+   	  
+   	  
+   	  console.log(dataFid)
 // 	  var data="{data_id:'"+dataFid+"',start_time:'"+startTime+"',end_time:'"+endTime+"'}";
 		$.ajax({
 			url: globalurl+"/v1/runDatas",
@@ -437,15 +404,21 @@ $(document).ready(function() {
 			async:false,
 			crossDomain: true == !(document.all),
 			success:function(data){
-			
-				$("#chartsContent").html('')
-				chartArr=data;
-				for(var i=0;i<dataFid.length;i++){
-					if(data[i].dataTimes.length==0 || data[i].dataValues.length==0){
-						layer.msg('该时段暂无数据',{icon:0,time:2000})
-					}else{
-						initChart();
+				console.log(data)
+				echarts.init(document.getElementById('chartsContent')).clear();
+				chartArr=[];
+				if(data.length==0){
+					layer.msg('该时段暂无数据',{icon:0,time:2000})
+				}else{	
+					for(var i=0;i<dataFid.length;i++){
+						if(data[i].dataTimes.length==0 || data[i].dataValues.length==0){
+
+						}else{
+							chartArr.push(data[i]);
+						}
 					}
+					console.log(chartArr)
+					initChart();
 				}
 			}
 		})
@@ -510,15 +483,31 @@ function changeData(i){
 		crossDomain: true == !(document.all),
 		success:function(data){
 	
-			$("#chartsContent").html('')
-			chartArr=data;
-			for(var i=0;i<dataFid.length;i++){
-				if(data[i].dataTimes.length==0 || data[i].dataValues.length==0){
-					layer.msg('该时段暂无数据',{icon:0,time:2000})
-				}else{
-					initChart();
-//					initChart(dataFid[i],legendData);	
+//			$("#chartsContent").html('')
+//			chartArr=data;
+//			for(var i=0;i<dataFid.length;i++){
+//				if(data[i].dataTimes.length==0 || data[i].dataValues.length==0){
+//					layer.msg('该时段暂无数据',{icon:0,time:2000})
+//				}else{
+//					initChart();	
+//				}
+//			}
+
+			console.log(data)
+			echarts.init(document.getElementById('chartsContent')).clear();
+			chartArr=[];
+			if(data.length==0){
+				layer.msg('该时段暂无数据',{icon:0,time:2000})
+			}else{	
+				for(var i=0;i<dataFid.length;i++){
+					if(data[i].dataTimes.length==0 || data[i].dataValues.length==0){
+
+					}else{
+						chartArr.push(data[i]);
+					}
 				}
+				console.log(chartArr)
+				initChart();
 			}
 		}
 	})
