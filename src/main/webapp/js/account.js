@@ -170,7 +170,7 @@ function addUser(){
 				layer.msg(data.success, {
 					icon: 1,
 					end: function() {
-					self.location.href='/finfosoft-water/user'
+					self.location.href='/user'
 				}})
 			}
 			}
@@ -287,7 +287,7 @@ function sureModify() {
 					layer.msg(data.success, {
 						icon: 1,
 						end: function() {
-						self.location.href='/finfosoft-water/user'
+						self.location.href='/user'
 					}})
 				}
 				}

@@ -459,7 +459,7 @@ $.extend({
 						layer.msg('保存成功！', {
 							icon: 1,
 							end: function() {
-								self.location.href='/finfosoft-water/scada'
+								self.location.href='/scada'
 							}
 						});
 					}

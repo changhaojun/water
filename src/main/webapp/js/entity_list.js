@@ -116,11 +116,11 @@ function topColor(obj,color){
 }
 //绑定实体事件
 function bind(value,thingName){
-	self.location.href="/finfosoft-water/thing/bindDatas/"+value+"-"+thingName;
+	self.location.href="/thing/bindDatas/"+value+"-"+thingName;
 }
 //警告实体事件
 function alarm(value,thingName){
-	self.location.href="/finfosoft-water/thing/alarmDatas/"+value+"-"+thingName;
+	self.location.href="/thing/alarmDatas/"+value+"-"+thingName;
 }
 //添加数据事件
 function addEntity(){

@@ -40,12 +40,6 @@ if(h>=12){
 }else{
 	flag="AM";
 }
-//startTime=year+"$"+p(month)+"$"+(p(date))+"$"+(p(h-h))+":"+(p(m-m))+":"+(p(s-s));
-//endTime=year+"$"+p(month)+"$"+(p(date))+"$"+(p(h))+":"+(p(m))+":"+(p(s));
-//initstartTime=year+'-'+p(month)+"-"+p(date)+" AM "+p(h-h)+':'+p(m-m);
-//initendTime=year+'-'+p(month)+"-"+p(date)+" "+flag+" "+p(h)+':'+p(m);
-
-
 startTime=GetDateStr1(4,1)
 endTime=year+"$"+p(month)+"$"+(p(date))+"$"+(p(h))+":"+(p(m))+":"+(p(s));
 initstartTime=GetDateStr1(4)
@@ -99,8 +93,6 @@ function getChart(i){
 				dataFid.push(Number($(".list").children().eq(n).children().eq(3).html()))
 			}
 		}
-		console.log(dataUnit)
-		console.log(dataFid)
 		var data="{data_id:"+Number(i)+",start_time:'"+startTime+"',end_time:'"+endTime+"'}";
 		$.ajax({
 			url: globalurl+"/v1/runDatas",
@@ -113,7 +105,6 @@ function getChart(i){
 			async:false,
 			crossDomain: true == !(document.all),
 			success:function(data){
-				console.log(data)
 				if(data.length==0){
 					layer.msg('该时段暂无数据',{icon:0,time:2000})
 				}else{
@@ -121,7 +112,6 @@ function getChart(i){
 						layer.msg('该时段暂无数据',{icon:0,time:2000})
 					}else{
 						chartArr.push(data);
-						console.log(chartArr)
 						initChart();
 					}
 				}
@@ -141,8 +131,6 @@ function getChart(i){
 				dataUnit.splice(j,1)
 			}
 		}
-		console.log(dataUnit)
-		console.log(dataFid)
 		var data={};
 		data.data_id=dataFid
 	  	data.start_time=startTime
@@ -159,7 +147,6 @@ function getChart(i){
 			async:false,
 			crossDomain: true == !(document.all),
 			success:function(data){
-				console.log(data)
 				echarts.init(document.getElementById('chartsContent')).clear();
 				chartArr=[];
 				if(data.length==0){
@@ -173,7 +160,6 @@ function getChart(i){
 							chartArr.push(data[i]);
 						}
 					}
-					console.log(chartArr)
 					initChart();
 				}
 			}
@@ -194,7 +180,6 @@ function getChart(i){
 
 //图表配置项以及实例化图表
 function initChart(){
-	console.log(chartArr)
 	if(chartArr.length==0){
 		layer.msg('该时段暂无数据',{
 			icon:0,
@@ -241,11 +226,7 @@ function initChart(){
 	                ]
 	            },
 	       });
-		}	
-		console.log(series)
-		console.log(yAxis)
-		console.log(legendData)
-		console.log(j)
+		}
 		var myChart=echarts.init(document.getElementById('chartsContent'))
 		var option={
 				title:{
@@ -330,7 +311,6 @@ $('.chartContent').delegate('.focusr','click',function(){
 				data:JSON.stringify(data)
 			},
 			success:function(data){
-			
 				if(data.code==200){
 					layer.msg('关注成功', {
 						icon: 1,
@@ -389,10 +369,6 @@ $(document).ready(function() {
    	  data.data_id=dataFid
    	  data.start_time=startTime
    	  data.end_time=endTime
-   	  
-   	  
-   	  console.log(dataFid)
-// 	  var data="{data_id:'"+dataFid+"',start_time:'"+startTime+"',end_time:'"+endTime+"'}";
 		$.ajax({
 			url: globalurl+"/v1/runDatas",
 			type:"post",
@@ -404,7 +380,6 @@ $(document).ready(function() {
 			async:false,
 			crossDomain: true == !(document.all),
 			success:function(data){
-				console.log(data)
 				echarts.init(document.getElementById('chartsContent')).clear();
 				chartArr=[];
 				if(data.length==0){
@@ -417,7 +392,6 @@ $(document).ready(function() {
 							chartArr.push(data[i]);
 						}
 					}
-					console.log(chartArr)
 					initChart();
 				}
 			}
@@ -482,18 +456,6 @@ function changeData(i){
 		async:false,
 		crossDomain: true == !(document.all),
 		success:function(data){
-	
-//			$("#chartsContent").html('')
-//			chartArr=data;
-//			for(var i=0;i<dataFid.length;i++){
-//				if(data[i].dataTimes.length==0 || data[i].dataValues.length==0){
-//					layer.msg('该时段暂无数据',{icon:0,time:2000})
-//				}else{
-//					initChart();	
-//				}
-//			}
-
-			console.log(data)
 			echarts.init(document.getElementById('chartsContent')).clear();
 			chartArr=[];
 			if(data.length==0){
@@ -506,7 +468,6 @@ function changeData(i){
 						chartArr.push(data[i]);
 					}
 				}
-				console.log(chartArr)
 				initChart();
 			}
 		}
@@ -515,21 +476,20 @@ function changeData(i){
 	$("#reservationtime").val(initstartTime+" "+" - "+" "+initendTime);
 }
 
-
 //获取当前时间的前几小时
 function GetDateStr1(n,state) { 
-				var dd = new Date();  
-					dd=new Date(dd.getTime() - n*60*60*1000); //获取前n小时的日期
-				var y = dd.getFullYear(); 
-				var m = dd.getMonth()+1;//获取当前月份的日期 
-				var d = dd.getDate(); 
-				var h=dd.getHours();
+	var dd = new Date();  
+		dd=new Date(dd.getTime() - n*60*60*1000); //获取前n小时的日期
+	var y = dd.getFullYear(); 
+	var m = dd.getMonth()+1;//获取当前月份的日期 
+	var d = dd.getDate(); 
+	var h=dd.getHours();
 
-				var mm=dd.getMinutes();
-				var s=dd.getSeconds();
-				if(state){
-					return y+"$"+p(m)+"$"+p(d)+"$"+p(h)+":"+p(mm)+":"+p(s); 
-				}else{
-					return y+"-"+p(m)+"-"+p(d)+" AM "+p(h)+":"+p(mm); 
-				}	
-			}
+	var mm=dd.getMinutes();
+	var s=dd.getSeconds();
+	if(state){
+		return y+"$"+p(m)+"$"+p(d)+"$"+p(h)+":"+p(mm)+":"+p(s); 
+	}else{
+		return y+"-"+p(m)+"-"+p(d)+" AM "+p(h)+":"+p(mm); 
+	}	
+}

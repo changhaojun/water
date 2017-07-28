@@ -49,7 +49,7 @@ function getNavData(){
 					if(data[i].is_navigation>0){
 						var navURL="javascript:;"
 						if(data[i].is_navigation==1){
-							navURL="/finfosoft-water"+data[i].resource_url;
+							navURL=data[i].resource_url;
 						}
 						var dataJson='{"resourceName":"'+data[i].resource_name+'","resourceUrl":"'+navURL+'","dataNum":"'+i+'"}';
 						dataJson=JSON.parse(dataJson);
@@ -79,7 +79,7 @@ function getNavData(){
 						for(var t=0;t<data[m].children_resource.length;t++){
 							if(data[m].children_resource[t].is_navigation>0){
 								var childData=data[m].children_resource[t];
-								childStr+='<li><a class="J_menuItem" href="/finfosoft-water'+childData.resource_url+'" data-index="0" target="iframe0">'+childData.resource_name+'</a></li>';
+								childStr+='<li><a class="J_menuItem" href="'+childData.resource_url+'" data-index="0" target="iframe0">'+childData.resource_name+'</a></li>';
 							}
 						}
 						$(".changeLi .nav_list").eq(j).append(childStr);

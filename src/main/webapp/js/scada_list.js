@@ -102,19 +102,19 @@ function topColor(obj,color){
 
 //添加数据事件
 function addEntity(){
-	self.location.href="/finfosoft-water/scada/select/";
+	self.location.href="/scada/select/";
 }
 
 function reviewScada(){
 	var id = $(this).parents('tr').attr('id');
 	var name = $(this).parents('tr').find('td').eq(0).html();
 	var description = $(this).parents('tr').find('td').eq(1).html();
-	self.location.href = '/finfosoft-water/scada/review/'+id+'-'+name+'-'+description;
+	self.location.href = '/scada/review/'+id+'-'+name+'-'+description;
 }
 
 function editScada(){
 	var id = $(this).parents('tr').attr('id');
-	self.location.href = '/finfosoft-water/scada/edit/'+id;
+	self.location.href = '/scada/edit/'+id;
 }
 
 //删除一条数据

@@ -140,7 +140,7 @@ function chartInfo(data,i){
 //查看实体数据
 function look(id){
 
-	self.location.href="/finfosoft-water/runData/getDatas/"+id	
+	self.location.href="/runData/getDatas/"+id	
 }
 
 //input 失焦、获焦判断

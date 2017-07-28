@@ -63,7 +63,6 @@ $.extend({
 		$.initToken('get', function() {
 			$.initTitle();
 			$.initAjax(function(data) {
-				console.info(data)
 				//数据流初始化
 				$.initData.thingName = data.scada.thing_name;
 				$.initData.sentData.thing_id = data.scada.thing_id;
@@ -120,7 +119,7 @@ $.extend({
 					if (id == $.initData.scadaId) {
 						$('.mainTitle').addClass('active');
 					} else {
-						self.location.href = '/finfosoft-water/scada/review/'+id+'-'+name+'-'+description;
+						self.location.href = '/scada/review/'+id+'-'+name+'-'+description;
 					}
 				});
 			}

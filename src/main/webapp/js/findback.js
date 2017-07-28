@@ -102,7 +102,7 @@ $.fn.extend({
 					$('.step1').addClass('hidden');
 					$('.step2').removeClass('hidden');
 					setTimeout(function() {
-						self.location.href = '/finfosoft-water/';
+						self.location.href = '/';
 					},2000);
 				}
 			}

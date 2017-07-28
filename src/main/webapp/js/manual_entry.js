@@ -75,7 +75,7 @@ function editFormatter(value,row,index){
 }
 //box状态列的格式化
 function statusFormatter(value,row,index){
-	return "<span style='color:#2cb7c8;background:url(/finfosoft-water/img/box_info.png)no-repeat -20px 0px;padding-left:25px;'>正常</span>"
+	return "<span style='color:#2cb7c8;background:url(/img/box_info.png)no-repeat -20px 0px;padding-left:25px;'>正常</span>"
 }
 //表格数据获取的参数
 function queryParams(params) {	
@@ -104,11 +104,11 @@ function topColor(obj,color){
 }
 //修改数据事件
 function modify(value){
-	self.location.href="/finfosoft-water/dataTag/addManual/"+value;
+	self.location.href="/dataTag/addManual/"+value;
 }
 //添加数据事件
 function addmanual(){
-	self.location.href="/finfosoft-water/dataTag/addManual/";
+	self.location.href="/dataTag/addManual/";
 }
 //删除一条数据
 window.deleteCol=function(value){

@@ -40,7 +40,7 @@ $.three = {
 	model: {
 		mtlLoader: null,
 		objLoader: null,
-		path: '/finfosoft-water/modelResource/',
+		path: '/modelResource/',
 		count: 0,
 		material: {
 			specular: 0xffffff,
@@ -49,7 +49,7 @@ $.three = {
 	},
 	font: {
 		loader: new THREE.FontLoader(),
-		src: '/finfosoft-water/plugins/three/font/FZLanTingHeiS-UL-GB_Regular.json',
+		src: '/plugins/three/font/FZLanTingHeiS-UL-GB_Regular.json',
 		size: 6,
 		depth: 2,
 		color: 0xffffff,

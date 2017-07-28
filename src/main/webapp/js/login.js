@@ -307,7 +307,7 @@ $.extend({
 	//登陆成功->跳转页面
 	loginSuccess: function(data) {
 		$.ajax({
-			url: '/finfosoft-water/login',
+			url: '/login',
 			type: 'post',
 			dataType: 'json',
 			crossDomain: true == !(document.all),
@@ -315,7 +315,7 @@ $.extend({
 				data: JSON.stringify(data)
 			},
 			success: function(data) {
-				self.location.href = "/finfosoft-water/frame";
+				self.location.href = "/frame";
 			}
 		});
 	},

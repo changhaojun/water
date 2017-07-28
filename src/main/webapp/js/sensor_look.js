@@ -172,7 +172,7 @@ function show(value,dataName){
 	  shade: 0.8,
 	  scrollbar: false,
 	  area: ['873px', '65%'],
-	  content: '/finfosoft-water/dataTag/dataChart/'+value+'-'+dataName+'-'+deviceId+'-'+deviceName
+	  content: '/dataTag/dataChart/'+value+'-'+dataName+'-'+deviceId+'-'+deviceName
 	}); 
 }
 /**

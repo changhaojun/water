@@ -103,7 +103,7 @@ function saveDevice(){
 				layer.msg(data.success, {
 					icon : 1,
 					end: function() {
-						self.location.href='/finfosoft-water/thing/'
+						self.location.href='/thing/'
 					}
 				});
 			}else{

@@ -230,7 +230,6 @@ $.fn.extend({
 				url:globalurl+"/v1/processes?access_token="+$.taskData.access_token+"&process_id="+technologyId,
 				async:false,
 				success:function(data){
-					console.info(data)
 					var titleMsg='修改工艺';
 					$('.addConditionBox').empty();
 					$.taskData.processBox=data;
@@ -680,7 +679,6 @@ $.fn.extend({
 		}
 	},
 	saveTime:function(){
-//		console.info($($(this).siblings('input')[0]).val())
 		var startTime=$($(this).siblings('input')[0]).val()+':'+$($(this).siblings('input')[1]).val()
 		$('.startTime').val(startTime)
 		$(this).parent().parent().css('display','none')
@@ -789,7 +787,6 @@ $.extend({
 				$('.eventBox').find('.conditionThingList').getConditionTagList();
 				$('.eventBox').find('.conditionTag').val(processData.trigger_conditions[0].data_id);
 				$('.eventBox').find('.compareOper').val(processData.trigger_conditions[0].compare_oper);
-//				$('.eventBox').find('.compareValue').val(processData.trigger_conditions[0].compare_value);
 				$('.eventBox').find('.compareThing').val(compare_thing_name);
 				$('.eventBox').find('.compareThingList').attr('thing_id',processData.trigger_conditions[0].compare_thing_id)
 				$('.eventBox').find('.compareThingList').getConditionTagList();
@@ -894,7 +891,6 @@ $.extend({
 		
 	},
 	sendChanged:function(data,missionId){
-		//delete data._id;
 		var sendeData={data:JSON.stringify(data)}
 		$.ajax({
 			type:'put',

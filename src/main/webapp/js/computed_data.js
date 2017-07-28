@@ -291,7 +291,7 @@ $.extend({
 									layer.msg(data.success,{
 										icon:1,
 										end:function(){
-											self.location.href='/finfosoft-water/dataTag/computedEntry/'
+											self.location.href='/dataTag/computedEntry/'
 										}
 										})
 								}else if(data.code==400018){

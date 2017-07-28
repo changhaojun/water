@@ -47,7 +47,6 @@ function lssuedList(){
 		},
 		async:false,
 		success:function(data){
-			console.log(data)
 			for(var i=0;i<data.rows.length;i++){
 				var lssuedData={
 					"oper_time":(data.rows[i].oper_time),

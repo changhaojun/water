@@ -110,7 +110,7 @@ $.extend({
 									layer.msg(data.success,{
 										icon:1,
 										end:function(){
-											self.location.href='/finfosoft-water/dataTag/manualEntry/'
+											self.location.href='/dataTag/manualEntry/'
 										}
 										})
 								}else if(data.code==400018){

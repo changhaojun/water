@@ -81,9 +81,9 @@ function editFormatter(value,row,index){
 //box状态列的格式化
 function statusFormatter(value,row,index){
 	if(value==1){
-		return "<span style='background:url(/finfosoft-water/img/box_info.png)no-repeat -20px 0px;float:left;width:20px;height:20px;'></span><i style='margin-left:10px;color:#2cb7c8;'>在线</i>"
+		return "<span style='background:url(/img/box_info.png)no-repeat -20px 0px;float:left;width:20px;height:20px;'></span><i style='margin-left:10px;color:#2cb7c8;'>在线</i>"
 	}else{
-		return "<span style='background:url(/finfosoft-water/img/box_info.png)no-repeat 0px 0px;float:left;width:20px;height:20px;'></span><i style='margin-left:10px;color:#a3a3a3;'>离线</i>"
+		return "<span style='background:url(/img/box_info.png)no-repeat 0px 0px;float:left;width:20px;height:20px;'></span><i style='margin-left:10px;color:#a3a3a3;'>离线</i>"
 	}
 }
 //表格数据获取的参数
@@ -127,11 +127,11 @@ function topColor(obj,color){
 }
 //查看plc
 function look(value){
-	self.location.href="/finfosoft-water/dataTag/getDatas/"+value+"-P";
+	self.location.href="/dataTag/getDatas/"+value+"-P";
 }
 //修改plc
 function modify(value){
-	self.location.href="/finfosoft-water/dataTag/editPlc/"+value;
+	self.location.href="/dataTag/editPlc/"+value;
 }
 //添加plc
 function addPlc(){

@@ -3,7 +3,6 @@
 //var globalurl="http://192.168.1.103:8081";
 //var globalurl="http://192.168.1.114";
 var globalurl="http://121.42.253.149:18808";
-var itemName="/finfosoft-water";
 var accesstoken;
 var refreshToken;
 
@@ -15,7 +14,7 @@ var portNum='61623'
 //获取token
 var getToken=function(callBack){
 	$.ajax({
-		url:itemName+'/frame/getToken',
+		url:'/frame/getToken',
 		dataType : 'JSON',
 		type : 'GET',
 		async:false,
@@ -45,7 +44,7 @@ var getNewToken=function(callBack){
 				refreshToken=data.refresh_token;
 				callBack && callBack();
 				$.ajax({
-					url:itemName+"/frame/saveToken",
+					url:"/frame/saveToken",
 					data:data,
 					dataType:"JSON",
 					async:false,

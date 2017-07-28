@@ -367,7 +367,7 @@ $.extend({
 						layer.msg('保存成功！',{
 							icon: 1,
 							end: function() {
-								self.location.href='/finfosoft-water/dataTag/plc/'
+								self.location.href='/dataTag/plc/'
 							}
 						});
 						break;

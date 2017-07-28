@@ -241,7 +241,7 @@ function topColor(obj,color){
 }
 //查看数据
 function look(dataId){
-	self.location.href="/finfosoft-water/runData/getCharts/"+dataId+"-"+thingId
+	self.location.href="/runData/getCharts/"+dataId+"-"+thingId
 }
 //查询
 function searchThing(obj){

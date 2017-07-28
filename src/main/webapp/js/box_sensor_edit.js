@@ -623,7 +623,7 @@ $.fn.extend({
 													icon: 1,
 													time:3000,
 													end:function(){
-														self.location.href='/finfosoft-water/dataTag/box/'
+														self.location.href='/dataTag/box/'
 													}
 												});
 											}
@@ -667,7 +667,7 @@ $.fn.extend({
 										icon: 1,
 										time:3000,
 										end:function(){
-											self.location.href='/finfosoft-water/dataTag/box/'
+											self.location.href='/dataTag/box/'
 										}
 									});
 								}
@@ -777,7 +777,7 @@ $.fn.extend({
 							icon: 1,
 							time:3000,
 							end:function(){
-								self.location.href='/finfosoft-water/dataTag/box/'
+								self.location.href='/dataTag/box/'
 							}
 						});
 					}else if(data.code==400018){
@@ -817,7 +817,7 @@ $.fn.extend({
 				skin: 'layui-layer-demo', //样式类名
 				anim: 2,
 				shadeClose: true, //开启遮罩关闭
-				content: "<img class='imgName' src='/finfosoft-water/img/box_sensor/"+imgName+"'/>"
+				content: "<img class='imgName' src='/img/box_sensor/"+imgName+"'/>"
 			});
 		}
 	}

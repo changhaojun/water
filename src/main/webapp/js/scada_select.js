@@ -16,7 +16,7 @@ var $extend = $.fn.extend({
 		}
 	},
 	confirmModel: function(modelId) {
-		self.location.href = '/finfosoft-water/scada/add/'+modelId;
+		self.location.href = '/scada/add/'+modelId;
 	}
 });
 
@@ -42,7 +42,6 @@ $.extend({
 				})
 			},
 			success: function(data) {
-				console.log(data);
 				$.initData.infoMap = data;
 				if ($.initData.infoMap.length == 0) {
 					$.initData.pageStatus = 'nodata';
@@ -52,7 +51,7 @@ $.extend({
 				callBack && callBack();
 			}
 		});
-//		$.ajax({
+		//		$.ajax({
 //			type: "get",
 //			url: "http://192.168.1.108:8012/v1/templateModels",
 ////			url: "http://121.42.253.149:18823/v1/templateModels",

@@ -291,7 +291,7 @@ $.extend({
 	getcompanyData:function(){
 		$.ajax({
 			type:"get",
-			url:"/finfosoft-water/json/y_"+$.allData.year+".json",
+			url:"/json/y_"+$.allData.year+".json",
 			async:false,
 			success:function(data){
 				if( typeof data =='string'){
@@ -307,7 +307,7 @@ $.extend({
 		var year=$.allData.year-1
 		$.ajax({
 			type:"get",
-			url:"/finfosoft-water/json/y_"+year+".json",
+			url:"/json/y_"+year+".json",
 			async:false,
 			success:function(data){
 				if( typeof data =='string'){

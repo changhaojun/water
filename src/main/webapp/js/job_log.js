@@ -47,7 +47,6 @@ function taskList(){
 		},
 		async:false,
 		success:function(data){
-			console.log(data)
 			for(var i=0;i<data.rows.length;i++){
 				var taskData={
 					"oper_time":(data.rows[i].oper_time),
