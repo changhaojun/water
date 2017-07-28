@@ -66,7 +66,7 @@ function queryParams(params){
 		pageNumber:isSearch ? 0 : params.offset,//第几页
 		pageSize:params.limit,//每页的条数
 		access_token:access_token,
-		filter:'{"company_id":"'+company_id+'"}',
+		filter:'{"company_id":"'+company_id+'","handle_result":1}',
 		like:'{"alarm_name":"'+$('#searchId').val()+'"}',
 		sorts:'{"start_time":"desc"}'
 	};
