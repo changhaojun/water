@@ -7,11 +7,6 @@ MAINTAINER niuzhifa "1944044667@qq.com"
 #打包后的war包放入到容器中
 ADD  target/finfosoft-water-0.0.1-SNAPSHOT.war /home/app/webapps
 
-#因为项目有二级目录，所以自定义jetty-webapp.xml
-
-RUN rm /home/app/jetty/webapps/jetty-webapp.xml
-ADD jetty-webapp.xml /home/app/jetty/webapps
-
 #改名
 RUN  mv /home/app/webapps/finfosoft-water-0.0.1-SNAPSHOT.war /home/app/webapps/app.war
 
