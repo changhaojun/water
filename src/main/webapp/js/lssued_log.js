@@ -47,14 +47,14 @@ function lssuedList(){
 		},
 		async:false,
 		success:function(data){
-
+			console.log(data)
 			for(var i=0;i<data.rows.length;i++){
 				var lssuedData={
 					"oper_time":(data.rows[i].oper_time),
 					"oper_user":(data.rows[i].oper_user),
 					"address":(data.rows[i].address),
 					"oper_port":(data.rows[i].oper_port),
-					"old_value":(data.rows[i].old_value),
+					"new_value":(data.rows[i].new_value),
 					"result":(data.rows[i].result)
 				}
 				allLogData.push(lssuedData)

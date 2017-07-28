@@ -47,7 +47,7 @@ function taskList(){
 		},
 		async:false,
 		success:function(data){
-	
+			console.log(data)
 			for(var i=0;i<data.rows.length;i++){
 				var taskData={
 					"oper_time":(data.rows[i].oper_time),
@@ -55,7 +55,7 @@ function taskList(){
 					"address":(data.rows[i].address),
 					"process_name":(data.rows[i].process_name),
 					"oper_port":(data.rows[i].oper_port),
-					"old_value":(data.rows[i].old_value),
+					"new_value":(data.rows[i].new_value),
 					"result":(data.rows[i].result)
 				}
 				allLogData.push(taskData)
