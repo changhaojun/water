@@ -274,7 +274,7 @@ function getMsgNum(){
 		datatype:'json',
 		data:{
 			access_token:accesstoken,
-//			filter:'{"company_id":"'+$('#companyId').val()+'"}'
+			filter:'{"company_id":"'+$('#companyId').val()+'","handle_result":null}'
 		},
 		success:function(data){
 			$('.msgNum').text(data.untreated)
