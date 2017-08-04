@@ -1,0 +1,56 @@
+html{
+	background:#f3f3f4 !important;
+	}
+.accountBox{
+	width:100%;		
+	background:#f3f3f4;
+	float:left;
+	position: relative;	
+}
+/*账户top区域*/
+.accountBox .accountTop{
+	
+	height:65px;
+	margin-right:20px;	
+}
+.accountBox .accountTop span{
+	font-size:22px;
+	padding-top:25px;
+	display: inline-block;
+}
+.accountBox .accountTop span:nth-child(1){	
+	margin-left:20px;
+	color:#5d5d5d;	
+}
+.accountBox .accountTop span:nth-child(2){
+	margin-left:5px;
+	margin-right:5px;
+}
+.accountBox .accountTop span:nth-child(3){
+	color:#1ab394;	
+}
+/*账户搜索*/
+.accountBox .accountTop .search{
+	border:1px solid #c1c1c1;
+	background:#fff;
+	float:right;
+	border-radius: 5px 5px;
+	width:360px;
+	padding:0;
+	height:36px;
+	font-size:14px;
+	margin-top:25px;
+}
+.accountBox .accountTop .search input:nth-child(1){
+	color:#1AB394;
+	width:321px;
+	padding-left:12px;
+	height:36px;
+	border-radius: 5px 5px;
+}
+.accountBox .accountTop .search i:nth-child(2){
+	color:#1AB394;
+	line-height:36px;
+	font-size:14px;
+	cursor: pointer;
+}
