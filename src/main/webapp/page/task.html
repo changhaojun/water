@@ -55,6 +55,13 @@
 						</select>
 					</div>
 				</div>
+				<div class="row targetProcess">
+					<div class="col-xs-12">
+						关联工艺：<input type="text" placeholder="请输入关联工艺名称" class="targetProcessName" />
+						<ul class="targetProcessList" hidden="hidden">
+						</ul>
+					</div>
+				</div>
 				<hr>
 				<span class="triggerText">触发条件</span>
 				<button class="addConditionBtn" isBtn="true">添加触发条件</button>
@@ -81,10 +88,6 @@
 									<option value='eq'>=</option>
 								</select>
 							</div>
-							<!--<div class="col-xs-6">
-								基准值：&nbsp;&nbsp;
-								<input class="controls compareValue" num-limit="limit" placeholder="请输入基准值"/>
-							</div>-->
 						</div>
 						<div class="row">
 							<div class="col-xs-6">

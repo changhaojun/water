@@ -43,18 +43,19 @@ $.taskData = {
 		process_name:'',
 		trigger_type:'58ef46b543929a10708f2b08',
 		company_id:$("#companyId").val(),
-		status:0,
+		status:1,
 		trigger_conditions:[],
-		action_times:1,
-		mobile:''
+		action_times:1
 	},
-	ruleIndexBox:[]
+	ruleIndexBox:[],
+	selectEventProcess:''
 };
 
 $.fn.extend({
 	addTechnology:function(){	//添加工艺
 		$.taskData.processBox.process_name='';
 		$.taskData.processBox.trigger_type='58ef46b543929a10708f2b08';
+		$.taskData.processBox.trigger_name='事件触发';
 		$.taskData.processBox.status=0;
 		$.taskData.processBox.trigger_conditions=[];
 		$.taskData.processBox.action_times=1;
@@ -274,8 +275,10 @@ $.fn.extend({
 			$('.timingBox').hide();
 			$('.triggerText').show();
 			$('.addConditionBtn').show();
-			$('.timing').hide()
-			$('.timing').addCustomAttr()
+			$('.targetProcess').hide();
+			$('.targetProcess').addCustomAttr();
+			$('.timing').hide();
+			$('.timing').addCustomAttr();
 			$('.timingBox').addCustomAttr();
 			$(".eventBox").removeCustomAttr();
 			$('.addConditionBox').removeCustomAttr();
@@ -285,6 +288,8 @@ $.fn.extend({
 			$(".eventBox").hide();
 			$('.triggerText').show();
 			$('.addConditionBtn').hide();
+			$('.targetProcess').hide();
+			$('.targetProcess').addCustomAttr();
 			$('.timing').hide()
 			$('.timing').addCustomAttr()
 			$(".eventBox").addCustomAttr();
@@ -296,6 +301,8 @@ $.fn.extend({
 			$('.timingBox').hide();
 			$('.triggerText').hide();
 			$('.addConditionBtn').hide();
+			$('.targetProcess').hide();
+			$('.targetProcess').addCustomAttr();
 			$('.timing').hide()
 			$('.timing').addCustomAttr()
 			$(".eventBox").addCustomAttr();
@@ -307,11 +314,26 @@ $.fn.extend({
 			$('.timingBox').hide();
 			$('.triggerText').hide();
 			$('.addConditionBtn').hide();
+			$('.targetProcess').hide();
+			$('.targetProcess').addCustomAttr();
 			$('.timing').show();
 			$('.timing').removeCustomAttr();
 			$(".eventBox").addCustomAttr();
 			$('.addConditionBox').addCustomAttr();
 			$('.timingBox').addCustomAttr();
+		}else if(selectType=='异常处理'){
+			$(".eventBox").show();
+			$(".addEventBox").show();
+			$('.timingBox').hide();
+			$('.triggerText').show();
+			$('.addConditionBtn').show();
+			$('.targetProcess').show();
+			$('.targetProcess').removeCustomAttr();
+			$('.timing').hide()
+			$('.timing').addCustomAttr()
+			$('.timingBox').addCustomAttr();
+			$(".eventBox").removeCustomAttr();
+			$('.addConditionBox').removeCustomAttr();
 		}
 		layer.iframeAuto($.lyAddRuleBox);
 	},
@@ -324,6 +346,44 @@ $.fn.extend({
 		$(this).find('input').each(function(){
 			$(this).attr("isCheck","true");
 		})
+	},
+	getTargetProcess:function(){
+		var selectUl=$(this).next();
+		$.ajax({
+			type:"get",
+			url:globalurl+"/v1/processes?access_token="+$.taskData.access_token,
+			async:true,
+			data:{
+				like:'{"process_name":"'+$(this).val()+'"}'
+			},
+			success:function(data){
+				selectUl.show();
+				selectUl.empty();
+				if(data.rows.length>0){
+					for(var i=0;i<data.rows.length;i++){
+						selectUl.append($('<li class="processLi" value="'+data.rows[i]._id+'">'+data.rows[i].process_name+'</li>'));
+					}
+					selectUl.css("border-color","#E7E7E7");
+				}else{
+					selectUl.append($('<li class="processLi" value=0>未查询到工艺！</li>'));
+					selectUl.css("border-color","red");
+				}
+			}
+		});
+	},
+	changeConditionProcess:function(){		//再工艺列表中选择工艺
+		var parent=$(this).parent();
+		var parentInput=parent.prev();
+		var classType=$(this).attr('class');
+		if(classType=="processLi"){
+			$.taskData.selectEventProcess=$(this).attr("value");
+			parent.attr('process_id',$(this).attr("value"));
+			if($(this).attr("value")!=0){
+				parentInput.val($(this).text());
+				parent.empty();
+				parent.hide();
+			}
+		}
 	},
 	getThing:function(){		//获取触发条件的实体列表
 		var selectUl=$(this).next();
@@ -562,11 +622,16 @@ $.fn.extend({
 			conditionData.start_time=$('.startTime').val();
 			$.taskData.processBox.trigger_conditions.push(conditionData)
 		}
+		
+		if($('.targetProcess').css('display')=='block'){
+			$.taskData.processBox.target_process_id=$.taskData.selectEventProcess;
+		}
+		delete $.taskData.processBox.trigger_name;
 		var sendData,sendType;
 		if($.taskData.isEditTechnology){
 			var processId=$.taskData.processBox._id
 			delete $.taskData.processBox._id;
-			delete $.taskData.processBox.trigger_name;
+//			delete $.taskData.processBox.trigger_name;
 			sendType='PUT'
 			sendData={data:JSON.stringify($.taskData.processBox),process_id:processId}
 		}else{
@@ -1029,6 +1094,22 @@ $.extend({
 			$(this).parent().parent().remove();
 			$('.layui-layer-content').css('height','inherit');
 		});
+		
+		$(".targetProcessName").keyup(function(){
+			$.taskData.selectEventProcess=0;
+			$(this).getTargetProcess();
+		});
+		
+		$(".targetProcessName").blur(function(){
+			if($.taskData.selectEventProcess!=0&&$(this).val()==""){
+				$(this).next().empty();
+				$(this).next().hide();
+			}
+		});
+		$("ul").delegate("li","click",function(){
+			$(this).changeConditionProcess();
+		});
+		
 		$('[data-toggle="tooltip"]').tooltip();
 	},
 	saveRule:function(){		//点击保存规则
