@@ -44,6 +44,7 @@ $.taskData = {
 		trigger_type:'58ef46b543929a10708f2b08',
 		company_id:$("#companyId").val(),
 		status:1,
+		is_remind:0,
 		trigger_conditions:[],
 		action_times:1
 	},
@@ -56,10 +57,9 @@ $.fn.extend({
 		$.taskData.processBox.process_name='';
 		$.taskData.processBox.trigger_type='58ef46b543929a10708f2b08';
 		$.taskData.processBox.trigger_name='事件触发';
-		$.taskData.processBox.status=0;
+		$.taskData.processBox.status=1;
 		$.taskData.processBox.trigger_conditions=[];
 		$.taskData.processBox.action_times=1;
-		$.taskData.processBox.mobile='';
 		var This = $(this);
 		$('.addConditionBox').empty();
 		$.taskData.isEditTechnology=false;
@@ -98,7 +98,7 @@ $.fn.extend({
 		$(this).find('.content1').empty();
 		$(this).find('.content2').empty();
 		$(this).find('.content1').append('触发条件:&nbsp;&nbsp;&nbsp;&nbsp;')
-		if(typeName=='事件触发'){
+		if(typeName=='事件触发'||typeName=='异常处理'){
 			if(conditions.length>0){
 				for(var i=0;i<conditions.length;i++){
 					var operStr;
@@ -747,6 +747,13 @@ $.fn.extend({
 		var startTime=$($(this).siblings('input')[0]).val()+':'+$($(this).siblings('input')[1]).val()
 		$('.startTime').val(startTime)
 		$(this).parent().parent().css('display','none')
+	},
+	remindBtnStatus:function(){
+		$(this).addClass('greenBtn');
+		$(this).removeClass('grayBtn');
+		$(this).siblings().addClass('grayBtn');
+		$(this).siblings().removeClass('greenBtn');
+		$.taskData.processBox.is_remind=$(this).attr('value')
 	}
 });
 
@@ -766,6 +773,8 @@ $.extend({
 		$('input').filter('[num-limit=limit]').numOnly();		//数字限制输入
  		$('[data-toggle="tooltip"]').tooltip();
  		$.saveProcess();
+ 		$.isRemind();
+ 		$('.remindBtn').find('.activeBtn').remindBtnStatus();
  		$('#datetimepicker').datetimepicker({
  			language:'zh-CN',
  			format: "yyyy-MM-dd hh:ii",
@@ -845,7 +854,50 @@ $.extend({
 		$('.actionTimes').val(processData.action_times);
 		if(processData.trigger_name=="事件触发"){
 			if(processData.trigger_conditions.length>0){
-				var thing_name=processData.trigger_conditions[0].thing_name;
+				$.showEventBoxData(processData)
+			}
+		}else if(processData.trigger_name=="时间周期触发"){
+			$('.timingBox').show();
+			$('.eventBox').hide();
+			if(processData.trigger_conditions.length>0){
+				$('#datetimepicker').val(processData.trigger_conditions[0].begin_time);
+				$('#timeInterval').val(processData.trigger_conditions[0].cycle_time);
+			}
+		}else if(processData.trigger_name=="定时触发"){
+			if(processData.trigger_conditions.length>0){
+				$('.chioceCycle').val(processData.trigger_conditions[0].cycle)
+				if(processData.trigger_conditions[0].cycle_week){
+					$('.chioceCycle').showWeek();
+					$('.weekList').val(processData.trigger_conditions[0].cycle_week)
+				}
+				$('.startTime').val(processData.trigger_conditions[0].start_time)
+			}
+		}else if(processData.trigger_name=="异常处理"){
+			if(processData.trigger_conditions.length>0){
+				$('.targetProcessName').val(processData.target_process_name)
+				$.showEventBoxData(processData)
+			}
+		}
+		$('#triggerType').changeTriggerTypeAction(processData.trigger_name);
+		$.addProcessBox=layer.open({
+			type: 1,
+			title: titleMsg,
+			shadeClose: false,
+			shade: 0.8,
+			area: ['680px'],
+			content: $('.addProcess') //iframe的url
+		})
+	},
+	isRemind:function(){
+		$('.remindBtn span').each(function(){
+			$(this).click(function(){
+				$(this).remindBtnStatus()
+			})
+		})
+	}
+	,
+	showEventBoxData:function(processData){
+			var thing_name=processData.trigger_conditions[0].thing_name;
 				var compare_thing_name=processData.trigger_conditions[0].compare_thing_name;
 				$('.eventBox').find('.conditionThing').val(thing_name);
 				$('.eventBox').find('.conditionThingList').attr('thing_id',processData.trigger_conditions[0].thing_id);
@@ -869,33 +921,6 @@ $.extend({
 					$('.addEventBox').eq(i-1).find('.compareThingList').getConditionTagList();
 					$('.addEventBox').eq(i-1).find('.compareTag').val(processData.trigger_conditions[i].compare_data_id)
 				}
-			}
-		}else if(processData.trigger_name=="时间周期触发"){
-			$('.timingBox').show();
-			$('.eventBox').hide();
-			if(processData.trigger_conditions.length>0){
-				$('#datetimepicker').val(processData.trigger_conditions[0].begin_time);
-				$('#timeInterval').val(processData.trigger_conditions[0].cycle_time);
-			}
-		}else if(processData.trigger_name=="定时触发"){
-			if(processData.trigger_conditions.length>0){
-				$('.chioceCycle').val(processData.trigger_conditions[0].cycle)
-				if(processData.trigger_conditions[0].cycle_week){
-					$('.chioceCycle').showWeek();
-					$('.weekList').val(processData.trigger_conditions[0].cycle_week)
-				}
-				$('.startTime').val(processData.trigger_conditions[0].start_time)
-			}
-		}
-		$('#triggerType').changeTriggerTypeAction(processData.trigger_name);
-		$.addProcessBox=layer.open({
-			type: 1,
-			title: titleMsg,
-			shadeClose: false,
-			shade: 0.8,
-			area: ['680px'],
-			content: $('.addProcess') //iframe的url
-		})
 	},
 	addRule:function(){	//点击添加动作时弹窗
 		$(".addRule").click(function(){
