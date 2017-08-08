@@ -31,7 +31,7 @@ public class WaterConfig extends JFinalConfig{
 		me.setDevMode(true);
 		me.setViewType(ViewType.FREE_MARKER);
 		me.setBaseViewPath("/page");
-	}
+	} 
 
 	@Override
 	public void configRoute(Routes me) {

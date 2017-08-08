@@ -24,7 +24,7 @@ public class ReportController extends Controller{
 	public void index(){
 		render("report_list.html");
 	}
-	
+	 
 	/**
 	 * 
 	 * @Title: reportForm

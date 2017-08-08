@@ -1,6 +1,6 @@
 var allData={
 	access_token:'',
-}
+};
 $.fn.extend({
 	showReportList:function(dataList){
 		for(var i=0;i<dataList.length;i++){
