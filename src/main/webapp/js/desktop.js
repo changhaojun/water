@@ -41,7 +41,7 @@ function getCharts(){
 						str='<div class="charts dataBox" draggable="true">'+
 								'<div id="'+data[i]._id+'" class="chartcontent"></div>'+
 								'<div class="del">'+
-									'<span class="fa fa-remove cancel" data-toggle="tooltip" data-placement="top" deleteId="'+data[i]._id+'" title="删除"></span>'+
+									'<span class="cancel" data-toggle="tooltip" data-placement="top" deleteId="'+data[i]._id+'" title="删除"></span>'+
 								'</div>'+
 							'</div>';
 						$('.desktopContent').append(str);
@@ -50,7 +50,7 @@ function getCharts(){
 						str='<div class="dataList dataBox" draggable="true" id="'+data[i].data_id+'">'+
 								'<div class="listTop">'+
 									'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+
-									'<span class="fa fa-remove cancel" data-toggle="tooltip" data-placement="top" deleteId="'+data[i]._id+'" title="删除"></span>'+
+									'<span class="cancel" data-toggle="tooltip" data-placement="top" deleteId="'+data[i]._id+'" title="删除"></span>'+
 								'</div>'+
 								'<div class="listHr"></div>'+
 								'<div class="listContent">'+
@@ -113,15 +113,17 @@ function chartInfo(data,i){
 			text:thingName,
 			textStyle:{
 				color:'#999',
-				fontSize:'16px'
+				fontSize:'18px'
 			},
-			x:'10px'
+			x:'10px',
+			top:'15'
 		},
 		tooltip:{
 			trigger:'axis'
 		},
 		legend:{
-			data:legendData
+			data:legendData,
+			top:'15'
 		},
 		grid: {
 			left: '6%',
