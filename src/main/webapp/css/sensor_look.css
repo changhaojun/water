@@ -15,17 +15,25 @@ body{
 .look .lookTop>span:nth-child(1)
 ,.look .lookTop>span:nth-child(2)
 ,.look .lookTop>span:nth-child(3){
-	font-size:22px;
+	font-size:16px;
 	padding-top:25px;
 	display: inline-block;
 	
 }
 .look .lookTop>span:nth-child(1){
+	font-size:22px;
 	margin-left:20px;
 	color:#5d5d5d;
 }
 .look .lookTop .Etype{
-	color:#1ab394;		
+	color:#000;
+}
+.look .lookTop .Etype a{
+	color:#000;
+}
+.look .lookTop .Etype b{	
+	font-weight: 100;
+	color:#1ab394;
 }
 .look .right{
 	font-size:14px;
@@ -107,6 +115,11 @@ body{
 	position: relative;
 	top:-10px;
 	left:5px
+}
+.lookList .listContent .contentTop #give:hover{
+	opacity:0.7;
+	filter:alpha(opacity=70);
+	-moz-opacity: 0.7;
 }
 .lookList .listContent .contentBottom{
 	color:#afafaf;
@@ -209,6 +222,7 @@ body{
 	margin-left:20px !important;
 	border:1px solid #1ab394 !important;
 	color:#1ab394 !important;
+	background:#fff !important;
 }
 .layui-layer-dialog .layui-layer-content font{
 		color:#FFAE5B !important;

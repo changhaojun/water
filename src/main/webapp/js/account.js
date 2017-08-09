@@ -7,6 +7,16 @@ $(function(){
 	allList();
 	showTips();
 	setRole();
+	//聚焦失焦颜色变化
+	function changeBorderColor(othis){
+			othis.focus(function() {
+				$(this).css('borderColor', '#1ab394');
+			});
+//			othis.blur(function() {
+//				$(this).css('borderColor', '#e5e6e7');
+//			});
+	}
+	changeBorderColor($(".accountMask input"));
 })
 function allList(){
 	var searchFilter='{"company_code":"'+companyCode+'"}';
@@ -342,15 +352,17 @@ function event(obj, str) {
 	}})
 	obj.on("blur", function() {
 		if (obj.val() == "") {
-			obj.val(str);
-		
-		
+			obj.val(str);	
 		}
 		if (obj.val() != "") {
 			$(".adduserError").html("");
 			$(".modifyuserError").html("");
+		
 			$(".adduserError").css("display", "none");
 			$(".modifyuserError").css("display", "none");	
+		}
+		if(obj!=$("#searchId")){
+			obj.css('border', '1px solid #e5e6e7');
 		}
 	})
 }
@@ -373,14 +385,17 @@ function blank(obj1, obj2, str1, str2, Var) {
 	obj1.on("blur", function() {
 		if (obj1.val() == "") {
 			obj1.val(str1);
+			obj1.css('border', '1px solid #e5e6e7');
 		} else {
 			if (!Var.test(obj1.val())) {
 				obj2.css("display", "block");
 				obj2.html(str2);
 				obj2.css("color", "#fff");
+				obj1.css('border', '1px solid #ff787b');
 			} else {
 				obj2.html("");
 				obj2.css("display", "none");
+				obj1.css('border', '1px solid #e5e6e7');
 			}
 		}
 	})
@@ -477,4 +492,5 @@ function ajaxRequest() {
 //按搜索图标进行查找
 $(".fa-search").on("click", function() {
 	ajaxRequest();	
-})
+});
+

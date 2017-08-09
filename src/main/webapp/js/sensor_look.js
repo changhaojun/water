@@ -13,10 +13,12 @@ function toolTip(){
 //初始化头部
 if(type=="A"){
 	$(".sensorTop .Itype").html("查看传感器  / ");
-	$(".sensorTop .Etype").html("Look Sensor");
+	$(".sensorTop .Etype a").html("接入传感器");
+	$(".sensorTop .Etype a").attr("href","/dataTag/box")
 }else{
 	$(".sensorTop .Itype").html("查看PLC  / ");
-	$(".sensorTop .Etype").html("Look PLC");
+	$(".sensorTop .Etype a").html("接入PLC");
+	$(".sensorTop .Etype a").attr("href","/dataTag/plc")
 }
 //每隔十秒刷新一次
 //var time=setInterval(listBox,10000)

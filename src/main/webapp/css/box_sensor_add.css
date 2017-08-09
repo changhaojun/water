@@ -24,17 +24,21 @@ body{
 }
 .boxAccess .boxHeader h3{
 	font: 20px/20px "微软雅黑";
-	font-weight: 100;
+	font-weight: 100;	
+	float: left;	
+}
+.boxAccess .boxHeader h3 span:nth-child(1){
 	color:#5d5d5d ;
-	float: left;
 }
 .boxAccess .boxHeader h4{
-	float: right;
 	font: 14px/20px "微软雅黑";
 	font-size: 14px;
 	font-weight: 100;
 }
-.boxAccess .boxHeader span{
+.boxAccess .boxHeader h4 a{
+	color:#5d5d5d;
+}
+.boxAccess .boxHeader h4 span:nth-last-child(1){
 	color: #1ab394;
 }
 /*================主要内容部分=================*/
@@ -184,6 +188,11 @@ body{
 	width: 300px;
 	background: #1ab394;
 	border-radius: 3px;
+}
+.saveSettings button:hover{
+	opacity:0.7;
+	filter:alpha(opacity=70);
+	-moz-opacity: 0.7;
 }
 .pop-mask{
 	width: 100%;

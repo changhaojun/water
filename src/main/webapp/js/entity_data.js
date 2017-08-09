@@ -7,7 +7,8 @@ $(function(){
 	selectData();
 	selectId();
 	dataList(); //加载数据列表
-	toolTip()
+	toolTip();
+	showDisplay();
 })
 var searchBox=new Vue({
 	el:'.search',
@@ -140,6 +141,7 @@ function listData(data,i){
 			'</div>'+			
 		'</div>'
 		$(".dataContent").append(str);
+		showDisplay()
 	}
 }
 
@@ -326,3 +328,14 @@ function onMessageArrived(message) {
 		$('#'+dataId).addClass("redBg");
 	}
 }
+function showDisplay(){
+	$(".dataList").hover(function(){
+		console.log(123)
+		$(this).find(".focus1").css("display","inline-block");
+		$(this).find(".cover").css("display","inline-block");
+	},function(){
+		$(this).find(".focus1").css("display","none");
+		$(this).find(".cover").css("display","none");
+	})
+}
+

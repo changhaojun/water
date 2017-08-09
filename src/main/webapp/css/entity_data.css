@@ -44,7 +44,7 @@ body{
     border-radius: 5px 5px;
     width: 360px;
     padding: 0;
-    height: 36px;
+    height: 35px;
     font-size: 14px;
     margin-top: 25px;
 }
@@ -52,14 +52,19 @@ body{
     color: #1AB394;
     width: 321px;
     padding-left: 12px;
-    height: 36px;
+    height: 35px;
     border-radius: 5px 5px;
 }
 .entityData .dataTop .search i{
     color: #1AB394;
-    line-height: 36px;
+    line-height: 35px;
     font-size: 14px;
     cursor: pointer;
+}
+.entityData .dataTop .search i:hover{
+	opacity:0.7;
+	filter:alpha(opacity=70);
+	-moz-opacity: 0.7;
 }
 /*Hr*/
 .entityData hr {
@@ -87,12 +92,12 @@ body{
 .dataContent .dataList:hover{
 	background:rgba(256,256,256,0.5)
 }
-.dataContent .dataList:hover span:nth-child(2){
+/*.dataContent .dataList:hover span:nth-child(2){
 	display: inline-block;
 }
 .dataContent .dataList:hover span:nth-child(3){
 	display: inline-block;
-}
+}*/
 .dataList .listTop{
 	width: 100%;
     font-size: 14px;
@@ -101,25 +106,31 @@ body{
 }
 .dataList .listTop>span:nth-child(1){
 	margin-left: 10px;
-    float: left;
+	float:left;
+	width:68%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	
 }
-.dataList .listTop>span:nth-child(2){
-	margin-right: -10px;
-    float: right;
+.dataList .listTop .focus1{
+	/*margin-right: px;*/
     cursor: pointer;
+     float:right;
 }
-.dataList .listTop>span:nth-child(3){
-	margin-right: 5px;
-    float: right;
+.dataList .listTop .cover{
+	margin-right:8px;
     cursor: pointer;
+    float:right;
 }
-.dataList .listTop>span:nth-child(2),.dataList .listTop>span:nth-child(3){
+
+.dataList .listTop .focus1,.dataList .listTop .cover{
 	background: orange;
     border-radius: 35px;
     padding: 0px 9px;
     color: white;
     line-height:30px;
-    margin-top: -15px;
+    margin-top: -10px;
     display: none;
 }
 .dataList  .listHr{

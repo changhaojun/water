@@ -19,7 +19,7 @@ body{
 	background: #FFF!important;
 }
 .desktopContent .charts .del span{
-	font-size: 20px;
+	font-size: 26px;
     color: #1ab394;
     cursor: pointer;
 	display: none;
@@ -49,8 +49,8 @@ body{
 .dataList .listTop>span:nth-child(2){
 	margin-right: 10px;
     float: right;
-    line-height: 40px;
-    font-size: 20px;
+    line-height: 30px;
+    font-size: 26px;
     color: #1ab394;
     cursor: pointer;
     margin-top: 3px

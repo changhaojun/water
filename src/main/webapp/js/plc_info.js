@@ -135,7 +135,7 @@ function modify(value){
 }
 //添加plc
 function addPlc(){
-	self.location.href=itemName+"/dataTag/addPlc/";
+	self.location.href="/dataTag/addPlc/";
 }
 //删除一条数据
 window.deleteCol=function(value){

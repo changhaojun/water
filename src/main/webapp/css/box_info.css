@@ -14,20 +14,23 @@ html{
 	margin-right:20px;	
 }
 .accountBox .accountTop span{
-	font-size:22px;
+	
 	padding-top:25px;
 	display: inline-block;
 }
 .accountBox .accountTop span:nth-child(1){	
 	margin-left:20px;
 	color:#5d5d5d;	
+	font-size:22px;
 }
 .accountBox .accountTop span:nth-child(2){
 	margin-left:5px;
 	margin-right:5px;
+	font-size:16px;
 }
 .accountBox .accountTop span:nth-child(3){
 	color:#1ab394;
+	font-size:16px;
 		
 }
 /*账户按钮*/
@@ -45,7 +48,9 @@ html{
 	margin-right:20px;
 }
 .accountBox .accountTop .btn-primary:hover{
-	background:#1ab380;
+	opacity:0.7;
+	filter:alpha(opacity=70);
+	-moz-opacity: 0.7;
 }
 /*账户搜索*/
 .accountBox .accountTop .search{
@@ -63,14 +68,19 @@ html{
 	color:#1AB394;
 	width:321px;
 	padding-left:12px;
-	height:36px;
+	height:35px;
 	border-radius: 5px 5px;
 }
 .accountBox .accountTop .search i:nth-child(2){
 	color:#1AB394;
-	line-height:36px;
-	font-size:14px;
+	line-height:35px;
+	font-size:16px;
 	cursor: pointer;
+}
+.accountBox .accountTop .search i:nth-child(2):hover{
+	opacity:0.7;
+	filter:alpha(opacity=70);
+	-moz-opacity: 0.7;
 }
 .accountBox hr{
 	width:100%;
@@ -152,6 +162,7 @@ html{
 	margin-left:20px !important;
 	border:1px solid #1ab394 !important;
 	color:#1ab394 !important;
+	background:#fff !important;
 }
 .layui-layer-dialog .layui-layer-content font{
 		color:#FFAE5B !important;

@@ -14,7 +14,7 @@ html{
 	margin-right:20px;	
 }
 .alarmEntity .alarmTop span{
-	font-size:22px;
+	
 	padding-top:25px;
 	display: inline-block;
 	float:left;
@@ -22,6 +22,7 @@ html{
 .alarmEntity .alarmTop span:nth-child(1){	
 	margin-left:20px;
 	color:#5d5d5d;	
+	font-size:22px;
 }
 .alarmEntity .alarmTop span:nth-child(2){
 	margin-left:5px;
@@ -29,6 +30,13 @@ html{
 	margin-top:10px;
 }
 .alarmEntity .alarmTop span:nth-child(3){
+	
+	margin-top:10px;	
+}
+.alarmEntity .alarmTop span:nth-child(3) a{
+	color:#5d5d5d;
+}
+.alarmEntity .alarmTop span:nth-child(4){
 	color:#1ab394;
 	margin-top:10px;	
 }

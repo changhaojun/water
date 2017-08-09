@@ -53,17 +53,23 @@ input:disabled{
 }
 .boxAccess .boxHeader h3{
 	font: 20px/20px "微软雅黑";
-	font-weight: 500;
-	color:#5d5d5d;
+	font-weight: 500;	
 	float: left;
 }
+.boxAccess .boxHeader h3 span:nth-child(1){
+	color:#5d5d5d;
+}
+
 .boxAccess .boxHeader h4{
-	float: right;
 	font: 14px/20px "微软雅黑";
 	font-size: 14px;
 	font-weight: 500;
+	line-height: 24px;
 }
-.boxAccess .boxHeader span:nth-last-child(1){
+.boxAccess .boxHeader h4 a{
+  color: #5d5d5d;
+}
+.boxAccess .boxHeader h4 span:nth-last-child(1){
 	color: #1ab394;
 }
 /*================主要内容部分=================*/

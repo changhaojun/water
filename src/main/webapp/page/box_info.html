@@ -15,9 +15,9 @@
 		<input type="text" id="companyId" hidden="hidden" value=${companyId} />
 		<div class="accountBox boxInfo">
 			<div class="accountTop boxTop">
+					<span>接入传感器&nbsp;/&nbsp;</span>
+					<span>当前位置：</span>
 					<span>接入传感器</span>
-					<span>/</span>
-					<span>Access Sensor</span>
 					<span class="search">
 						<input v-model="searchCollectorId" type="text" placeholder="请输入关键字查找" id="searchId" onkeypress="if(event.keyCode==13) {searchCollectot();return false;}" onkeyup="if(event.keyCode==32){space($(this))}"/>
 						<i class="fa fa-search" onclick="searchCollectot()"></i>
