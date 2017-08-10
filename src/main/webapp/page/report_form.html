@@ -15,11 +15,17 @@
 			<label>选择日期</label>
 			<input type="text" class="date" />
 			<button class="today">今天</button>
-			<button>昨天</button>
-			<button>前天</button>
+			<button class="yesterday">昨天</button>
+			<button class="beforeYesterday">前天</button>
+			<div class="tools excel_o">
+				<a href='' id="excel_o"><i class="fa fa-file-excel-o"></i>导出</a>
+			</div>
+			<div class="tools print">
+				<i class="fa fa-print"></i>打印
+			</div>
 		</div>
 		<div class="tableContent">
-			<table class="table table-bordered">
+			<table class="table table-bordered" id="reportForm">
 				
 			</table>
 		</div>
@@ -33,5 +39,8 @@
 	<script src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
 	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://cdn.bootcss.com/bootstrap-daterangepicker/2.1.24/daterangepicker.min.js"></script>
+	<script src="https://cdn.bootcss.com/printThis/1.9.0/printThis.min.js"></script>
+	<!--<script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>-->
+	<script src="/plugins/table2excel/jquery.table2excel.js"></script>
 	<script type="text/javascript" src="/js/report_form.js" ></script>
 </html>
