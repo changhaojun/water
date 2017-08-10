@@ -110,7 +110,12 @@ $.extend({
 						listDom += "<li scadaId='"+data.rows[i]._id+"' scadaName='"+data.rows[i].scada_name+"' scadaDescription='"+data.rows[i].description+"'>"+data.rows[i].scada_name+"</li>";
 					}
 				});
-				$('.mainTitle').find('.backSide').html(listDom);;
+				$('.mainTitle').find('.backSide').html(listDom);
+//				console.log($('.mainTitle').find('.backSide').children('[scadaName=全场工艺]'));
+				if ($('.mainTitle').find('.backSide').children('[scadaName=全场工艺]')) {
+					$('.mainTitle').find('.backSide').children('[scadaName=全场工艺]').prependTo($('.mainTitle').find('.backSide'));
+				}
+				
 				//页头背面标签点击交互
 				$('.mainTitle').find('.backSide').children().click(function() {
 					var id = $(this).attr('scadaId');
