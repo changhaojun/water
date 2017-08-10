@@ -1,0 +1,71 @@
+body{
+	background:#f3f3f4 !important;
+	font-family: "微软雅黑" !important;
+}
+
+.portTiile{
+	width: calc(100% - 40px);
+	height: 70px;
+	margin:20px;
+	padding-top: 20px;
+	padding-left: 20px;
+	background: #fff;
+    color: #909090;
+    font-size: 12px;
+}
+.date{
+	margin-left: 20px;
+    border: 1px solid #e6e6e6;
+    width: 586px;
+    height: 34px;
+    padding-left: 10px;
+    color: #8b91a1;
+}
+.portTiile button{
+	width: 104px;
+    height: 35px;
+    border: 1px solid #1ab394;
+    text-align: center;
+    border-radius: 5px 5px;
+    background-color: #fff;
+    color: #1c9c83;
+    margin: 0 20px;
+}
+button:hover{
+	filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.7; /*Firefox私有，透明度50%*/
+	opacity:0.7;/*其他，透明度50%*/
+}
+.today{
+	 background-color: #1ab394 !important;
+	 color: #fff !important;
+}
+.tableContent{
+	margin:20px;
+	background-color: #fff;
+}
+.table{
+	font-size: 14px;
+}
+.tableTitle{
+	text-align: center;
+	font-size: 18px;
+}
+.onlyReadDate{
+	text-align: center;
+}
+.onlyReadTitle{
+	text-align: center;
+	font-size: 18px;
+	color:#1ab394;
+	vertical-align: middle;
+}
+.onlyRead{
+	max-width: 130px;
+	font-size:16px ;
+	color:#1ab394;
+}
+
+.write{
+  		width: 200px;
+  	}

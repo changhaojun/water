@@ -12,6 +12,37 @@ body{
 .timing{
 	padding: 0 20px;
 }
+.controlBtn{
+	height: 33px;
+	margin-left: 16px;
+    padding: 6px 0;
+	color: #1ab394;
+	border: 1px solid #1ab394;
+	border-radius: 3px;
+	text-align: center;
+}
+.controlBtn span{
+	height: 33px;
+	padding: 6px 15px;
+	display: inline-block;
+	height: 100%;
+	cursor: pointer;
+}
+
+.controlBtn span:nth-child(2){
+	margin-left: -5px;
+}
+.white{
+	background-color: #fff;
+	border: 1px solid #1ab394;
+	color: #1ab394;
+}
+.greenBtn{
+	background-color: #1ab394;
+	
+	color: #fff;
+}
+
 .timeBox{
 	display: none;
     border: 1px solid #ABABAC;

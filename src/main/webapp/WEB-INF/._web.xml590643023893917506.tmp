@@ -18,7 +18,7 @@
 	</filter-mapping>
 	<context-param>
 		<param-name>org.eclipse.jetty.servlet.SessionCookie</param-name>
-		<param-value>WATERESSION</param-value>
+		<param-value>WATERSESSION</param-value>
 	</context-param>
 	<context-param>
 		<param-name>org.eclipse.jetty.servlet.SessionIdPathParameterName</param-name>
