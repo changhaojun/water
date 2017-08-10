@@ -24,15 +24,15 @@ $.three = {
 			midLight: null
 		},
 		hex: 0xffffff,
-		intensity: 1,
-		distance: 1600,
-		scrope: 500,
-		height: 500
+		intensity: 1.8,
+		distance: 8000,
+		scrope: 4000,
+		height: 1000
 	},
 	ground: {
 		el: null,
-		size: 1000,
-		step: 50,
+		size: 4000,
+		step: 200,
 		color: 0x000000,
 		opacity: 0.3,
 		transparent: true
@@ -71,7 +71,7 @@ $.three = {
 		rotateSpeed: 0.05,
 		zoomSpeed: 1,
 		minDistance: 100,
-		maxDistance: 3000,
+		maxDistance: 6000,
 		enableDamping: true,
 		dampingFactor: 0.2,
 		maxPolarAngle: Math.PI / 2,
@@ -184,7 +184,7 @@ $.initThree = {
 		var objRotation = model.objRotation;
 		var objScale = model.objScale;
 		$.three.model.mtlLoader = new THREE.MTLLoader();
-		$.three.model.mtlLoader.setTexturePath($.three.model.path+'img/');
+		$.three.model.mtlLoader.setTexturePath($.three.model.path+'texture/');
 		$.three.model.mtlLoader.load($.three.model.path+objModelUrl+'.mtl', function(material) {
 			$.three.model.objLoader = new THREE.OBJLoader();
 			$.three.model.objLoader.setMaterials( material );
@@ -243,6 +243,7 @@ $.initThree = {
 	initLabel: function(data, oldPos, onSingleLabelLoaded) {
 		var userData = typeof data === 'string' ? JSON.parse(data) : data;
 		var labelMessage;
+		var isBiggerLabel = false;
 		if ($.initThree.judgeLabelType(userData)=='data') {
 			var dataId = userData.data_id;
 			var dataName = userData.data_name;
@@ -260,13 +261,18 @@ $.initThree = {
 			var processName = userData.process_name;
 			var processStatus = userData.status;
 			labelMessage = processName;
+		} else if ($.initThree.judgeLabelType(userData)=='anchor') {
+			var scadaId = userData.scada_id;
+			var scadaName = userData.scada_name;
+			labelMessage = scadaName;
+			isBiggerLabel = true;
 		}
 		
 		//text
 		var textGeo = new THREE.TextGeometry(labelMessage, {
 			font: $.three.font.geometry,
-			size:  $.three.font.size,
-			height: $.three.font.depth,
+			size:  !isBiggerLabel ? $.three.font.size : $.three.font.size * 8,
+			height: !isBiggerLabel ? $.three.font.depth : $.three.font.depth * 8,
 			curveSegments: 10
 		});
 		var textMtl = new THREE.MeshPhongMaterial({
@@ -282,13 +288,13 @@ $.initThree = {
 		var textDepth = $.three.font.depth;
 		text.position.set(
 			-textGeo.boundingSphere.center.x,
-			-$.three.font.size/2,
-			-$.three.font.depth/2
+			!isBiggerLabel ? -$.three.font.size/2 : -$.three.font.size*8/2,
+			!isBiggerLabel ? -$.three.font.depth/2 : -$.three.font.depth*8/2
 		);
 		//plane
-		var labelPlaneLength = textLength+10;
-		var labelPlaneHeight = textHeight*1.2;
-		var labelPlaneDepth = textDepth*0.6;
+		var labelPlaneLength = textLength + 10;
+		var labelPlaneHeight = textHeight * 1.2;
+		var labelPlaneDepth = textDepth * 0.6;
 		
 		if ($.initThree.judgeLabelType(userData) == 'data') {
 			var labelPlaneColor = (function() {
@@ -310,6 +316,8 @@ $.initThree = {
 						return 0x00aeff;
 				}
 			})();
+		} else if ($.initThree.judgeLabelType(userData) == 'anchor') {
+			var labelPlaneColor = 0xff4400;
 		}
 		
 		if ($.initThree.judgeLabelType(userData) == 'data') {
@@ -328,6 +336,12 @@ $.initThree = {
 					bevelEnabled: false
 				}
 			);
+		} else if ($.initThree.judgeLabelType(userData) == 'anchor') {
+			var labelPlaneGeo = new THREE.CubeGeometry(
+				labelPlaneLength,
+				labelPlaneHeight,
+				labelPlaneDepth
+			);
 		}
 		var labelPlaneMtl = new THREE.MeshPhongMaterial({
 			color: labelPlaneColor,
@@ -335,11 +349,13 @@ $.initThree = {
 			opacity: $.three.labelPlane.opacity
 		});
 		var labelPlane = new THREE.Mesh(labelPlaneGeo, labelPlaneMtl);
-		labelPlane.position.set(
-			-labelPlaneLength/2,
-			-labelPlaneHeight/2,
-			-labelPlaneDepth/2
-		);
+		if (!isBiggerLabel) {
+			labelPlane.position.set(
+				-labelPlaneLength/2,
+				-labelPlaneHeight/2,
+				-labelPlaneDepth/2
+			);
+		}
 		
 		//label
 		var label = new THREE.Object3D();
@@ -364,6 +380,9 @@ $.initThree = {
 			label.processId = processId;
 			label.processName = processName;
 			label.labelStatus = processStatus;
+		} else if ($.initThree.judgeLabelType(userData) == 'anchor') {
+			label.scadaId = scadaId;
+			label.scadaName = scadaName;
 		}
 		$.three.labelGroup.add(label);
 		$.initThree.rendererUpdata();
@@ -494,6 +513,8 @@ $.initThree = {
 				index = i;
 			} else if (type == 'process' && $.three.labelGroup.children[i].processId == id) {
 				index = i;
+			} else if (type == 'anchor' && $.three.labelGroup.children[i].scadaId == id) {
+				index = i;
 			}
 		}
 		return index;
@@ -534,7 +555,14 @@ $.initThree = {
 					status: $.three.labelGroup.children[i].labelStatus,
 					objPosition: $.three.labelGroup.children[i].position,
 					objRotation: $.three.labelGroup.children[i].rotation
-				})
+				});
+			} else if ($.initThree.judgeLabelType($.three.labelGroup.children[i]) == 'anchor') {
+				labels.push({
+					scada_id: $.three.labelGroup.children[i].scadaId,
+					scada_name: $.three.labelGroup.children[i].scadaName,
+					objPosition: $.three.labelGroup.children[i].position,
+					objRotation: $.three.labelGroup.children[i].rotation
+				});
 			}
 				
 		}
@@ -545,6 +573,8 @@ $.initThree = {
 			return 'data';
 		} else if (data._id || data.process_id || data.processId) {
 			return 'process';
+		} else if (data.scada_id || data.scadaId) {
+			return 'anchor';
 		}
 	},
 	initLoading: function() {

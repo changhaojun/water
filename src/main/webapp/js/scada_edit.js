@@ -164,6 +164,26 @@ $.fn.extend({
 			}
 		});
 	},
+	//ajax查询所有工艺锚点
+	searchAnchor: function(callBack) {
+		var val = $(this).val();
+		$.ajax({
+			type: "get",
+			dataType: "json",
+			url: $.initData.globalurl+"/v1/scadas",
+			async: true,
+			crossDomain: true == !(document.all),
+			data: {
+				access_token: $.initData.token.access,
+				like: JSON.stringify({
+					scada_name: val
+				})
+			},
+			success: function(data) {
+				callBack && callBack(data);
+			}
+		});
+	},
 	//刷新实体名称列表
 	refreshNameList: function(data) {
 		$(this).html('');
@@ -214,6 +234,25 @@ $.fn.extend({
 			});
 		} else {
 			liDom += '<li style="color: #ff787b;">未查询到对应工艺!</li>';
+			$(this).html(liDom);
+		}
+		$(this).parents('.selector').resetScrollBar();
+	},
+	//刷新工艺锚点列表
+	refreshAnchorList: function(data) {
+		$(this).html('');
+		var liDom = '';
+		console.log(data);;
+		if (data.rows.length > 0) {
+			$.each(data.rows, function(i) {
+				liDom += "<li primary='"+JSON.stringify(data.rows[i])+"'>"+data.rows[i].scada_name+"</li>";
+			});
+			$(this).html(liDom);
+			$(this).children().click(function() {
+				$.selectAnchor(JSON.parse($(this).attr('primary')));
+			});
+		} else {
+			liDom += '<li style="color: #ff787b;">未查询到对应工艺锚点!</li>';
 			$(this).html(liDom);
 		}
 		$(this).parents('.selector').resetScrollBar();
@@ -354,6 +393,16 @@ $.extend({
 				});
 			});
 		});
+		$('.anchor').click(function() {
+			$('.selectAnchor').toggleWin();
+			$('.selectAnchor').find('.selector-body').stayCenter($('.selectAnchor'));
+			$('.selectAnchor').resetScrollBar();
+			$('.selectAnchor').find('input').keyup(function() {
+				$(this).searchAnchor(function(data) {
+					$('.selectAnchor').find('.selector-list').refreshAnchorList(data);
+				});
+			});
+		});
 		$('.selector-close').click(function() {
 			$('.selector').toggleWin(true);
 		});
@@ -362,6 +411,9 @@ $.extend({
 		});
 		$('.selectProcess').find('input').searchProcess(function(data) {
 			$('.selectProcess').find('.selector-list').refreshProcessList(data);
+		});
+		$('.selectAnchor').find('input').searchAnchor(function(data) {
+			$('.selectAnchor').find('.selector-list').refreshAnchorList(data);
 		});
 	},
 	//打开选择实体列表
@@ -412,6 +464,22 @@ $.extend({
 		}
 		$('.selector').toggleWin(true);
 		$.initThree.initLabel(data);
+	},
+	//选择锚点
+	selectAnchor: function(data) {
+		var output = {
+			scada_id: data._id,
+			scada_name: data.scada_name
+		};
+		if ($.initThree.searchLabelFromId(output.scada_id, $.initThree.judgeLabelType(output))>-1) {
+			layer.msg('请勿绑定重复的工艺锚点标签！', {
+				icon: 2,
+				time: 1000
+			});
+			return false;
+		}
+		$('.selector').toggleWin(true);
+		$.initThree.initLabel(output);
 	},
 	//保存情景
 	saveScada: function(callBack) {

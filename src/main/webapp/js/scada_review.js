@@ -180,6 +180,7 @@ $.extend({
 					client.subscribe(data.data_id.toString());
 				} else { //任务订阅
 					//任务订阅预留接口
+//					return;
 				}
 			},
 			onFailure: function(message) {
@@ -406,37 +407,54 @@ $.extend({
 					break;
 			}
 		} else {
-			var processId = label.processId;
-			var processName = label.processName;
-			layer.confirm('是否确定执行<span style="color: red;">'+processName+'</span>？', {
-				btn: ['确定','取消'],
-				btn1: function() {
-					$.issueAjax({
-						process_id: processId
-					}, function() {
-//						$.initMQTT({
-//							data_value: data_value,
-//							data_id: data_id,
-//							port_type: port_type
-//						}, true);
-//						$('.operation').toggleWin(true);
-						var position = label.position;
-						$.three.labelGroup.remove(label);
-						$.initThree.initLabel({
-							_id: processId,
-							process_name: processName,
-							status: 1
-						}, position);
+			if (label.processId) {
+				var processId = label.processId;
+				var processName = label.processName;
+				layer.confirm('是否确定执行<span style="color: red;">'+processName+'</span>？', {
+					btn: ['确定','取消'],
+					btn1: function() {
+						$.issueAjax({
+							process_id: processId
+						}, function() {
+	//						$.initMQTT({
+	//							data_value: data_value,
+	//							data_id: data_id,
+	//							port_type: port_type
+	//						}, true);
+	//						$('.operation').toggleWin(true);
+							var position = label.position;
+							$.three.labelGroup.remove(label);
+							$.initThree.initLabel({
+								_id: processId,
+								process_name: processName,
+								status: 1
+							}, position);
+							$.three.capturer.intersected = null;
+						});
+					},
+					btn2: function() {
 						$.three.capturer.intersected = null;
-					});
-				},
-				btn2: function() {
-					$.three.capturer.intersected = null;
-				},
-				cancel: function() {
-					$.three.capturer.intersected = null;
-				}
-			});
+					},
+					cancel: function() {
+						$.three.capturer.intersected = null;
+					}
+				});
+			} else if (label.scadaId) {
+				var scadaId = label.scadaId;
+				var scadaName = label.scadaName;
+				layer.confirm('是否跳转至<span style="color: red;">'+scadaName+'</span>组态界面？', {
+					btn: ['确定','取消'],
+					btn1: function() {
+						$('.mainTitle').find('.backSide').children('[scadaid='+ scadaId +']').click();
+					},
+					btn2: function() {
+						$.three.capturer.intersected = null;
+					},
+					cancel: function() {
+						$.three.capturer.intersected = null;
+					}
+				});
+			}
 		}
 			
 	},
