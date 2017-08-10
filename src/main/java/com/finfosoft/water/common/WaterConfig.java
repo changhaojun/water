@@ -49,7 +49,7 @@ public class WaterConfig extends JFinalConfig{
 		me.add("/desktop",DesktopController.class,"/");
 		me.add("/log",OperateLogController.class,"/");
 		me.add("/power",PowerController.class,"/");
-		me.add("/report",ReportController.class,"/");  //报表
+		me.add("/report",ReportController.class,"/");  //报表  
 	}
 
 	@Override
