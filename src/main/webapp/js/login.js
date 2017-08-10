@@ -5,7 +5,7 @@ $.RegEsp = {
 	verificationCode: /.+/,
 	popUrl: /^\w+@/,
 	trim: /(^\s+)|(\s+$)/g
-}
+};
 
 //面向对象的插件方法
 $.fn.extend({
@@ -179,6 +179,12 @@ $.fn.extend({
 			success: function(data) {
 				if(data.code == 200) {
 					$.loginSuccess(data);
+					if (localStorage.isSave === 'true') {
+						localStorage.userInfo = JSON.stringify({
+							username: $.userInfo.username,
+							password: $.userInfo.password
+						});
+					}
 				} else {
 					This.html('登录').css({
 						'letterSpacing': 14,
@@ -209,6 +215,7 @@ $.extend({
 		$.sentCode();
 //		$('input').limitSpacing();		//输入框去除空格
 		$.pop();
+		$.rememberUser();
 	},
 	//主体->动态居中
 	keepMainCenter: function() {
@@ -446,6 +453,33 @@ $.extend({
 				$.timeOnOff = false;
 			}
 		},1000);
+	},
+	//工具类->记住用户信息
+	rememberUser: function (){
+		if (localStorage.isSave === 'true') {
+			if (!localStorage.userInfo) {
+				localStorage.isSave = 'false';
+			} else {
+				var userInfo = JSON.parse(localStorage.userInfo);
+				userInfo.username && $('.username').find('input').attr('isright', 'true').val(userInfo.username);
+				userInfo.password && $('.password').find('input').attr({
+					'isright': 'true',
+					'type': 'password'
+				}).val(userInfo.password);
+				$('.remember').addClass('active');
+			}
+		} else {
+			localStorage.userInfo && ( localStorage.userInfo = '' );
+		}
+		$('.remember').click(function() {
+			if ($(this).hasClass('active')) {
+				$(this).removeClass('active');
+				localStorage.isSave = 'false';
+			} else {
+				$(this).addClass('active');
+				localStorage.isSave = 'true';
+			}
+		});
 	}
 });
 

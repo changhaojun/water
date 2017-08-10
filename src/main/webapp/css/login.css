@@ -161,6 +161,7 @@ input{
 			width: 417px;
 		}
 		.right>h1{
+			margin-top: 22px;
 			width: 100%;
 		}
 		.right>h1>img{
@@ -212,6 +213,7 @@ input{
 			font-size: 16px;
 		}
 		.right>.form>.username{
+			margin-bottom: 18px;
 			position: relative;
 		}
 		/*.right>.form>.username>.tip{
@@ -229,29 +231,42 @@ input{
 			left: 14px;
 			top: 25px;
 		}*/
-		.right>.form>.forget{
-			margin-bottom: 136px;
+		.right>.form>.password{
+			margin-bottom: 18px;
 			position: relative;
 		}
-		.right>.form>.forget>input{
+		.right>.form>.password>input{
 			margin: 0;
 		}
 		.right>.form>.code{
+			margin-bottom: 18px;
 			width: 100%;
-			position: absolute;
-			left: 0;
-			bottom: 128px;
+			position: relative;
 		}
 		.right>.form>.code>input{
 			margin: 0;
 		}
-		.right>.form>.forget>p,
 		.right>.form>.code>p{
 			line-height: 35px;
 			position: absolute;
 			right: 0;
 			top: 0;
 			cursor: pointer;
+		}
+		.right>.form>.tool{
+			width: 100%;
+			height: 18px;
+			line-height: 18px;
+		}
+		.right>.form>.tool>.remember.active .selectedIcon{
+			background-position: -48px 0;
+		}
+		.right>.form>.tool .selectedIcon{
+			margin-right: 4px;
+			width: 18px;
+			height: 18px;
+			background: url(../img/select_btn.png) no-repeat;
+			background-position: -24px 0;
 		}
 		.right input{
 			display: block;
@@ -264,12 +279,12 @@ input{
 			font-size: 15px;
 			line-height: 34px;
 		}
-		.right input:nth-of-type(1){
+		/*.right input:nth-of-type(1){
 			margin-bottom: 18px;
 		}
 		.right input:nth-of-type(2){
 			margin-bottom: 30px;
-		}
+		}*/
 		.right a:hover{
 			color: #1ab394;
 		}
@@ -277,7 +292,6 @@ input{
 			color: #1ab394;
 		}
 		.right>.form>button{
-			margin: 0 auto;
 			display: block;
 			width: 253px;
 			height: 45px;
@@ -289,6 +303,9 @@ input{
 			letter-spacing: 14px;
 			border-radius: 22.5px;
 			transition: 0.5s;
+			position: absolute;
+    		left: calc( (100% - 253px)/2 );
+   			bottom: -112px;
 		}
 		.right>.form>button:hover{
 			background: #24c5a4;
