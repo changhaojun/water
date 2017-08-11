@@ -234,6 +234,7 @@ $.fn.extend({
 					var titleMsg='修改工艺';
 					$('.addConditionBox').empty();
 					$.taskData.processBox=data;
+					$.taskData.selectEventProcess=data.target_process_id
 					$.showAddProcessBox(data,titleMsg);
 				}
 			});
@@ -644,12 +645,16 @@ $.fn.extend({
 			async:false,
 			data:sendData,
 			success:function(data){
-				layer.msg(data.success,{
-					icon:1,
-					time:2000
-				},function(){
-					location.reload();
-				})
+				if(data.code==200){
+					layer.msg(data.success,{
+						icon:1,
+						time:2000
+					},function(){
+						location.reload();
+					})
+				}else{
+					layer.msg(data.error,{icon:2})
+				}
 			}
 		});
 	},
