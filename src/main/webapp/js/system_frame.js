@@ -66,6 +66,7 @@ function getNavData(){
 						case "任务配置":iIcon = 'fa-calendar';break;
 						case "运行数据":iIcon = 'fa-database';break;
 						case "操作日志":iIcon = 'fa-file-text-o';break;
+						case "数据报表":iIcon = 'fa fa-table';break;
 						default :break;
 					}
 					strNav=$('<li class="changeLi" data-type="" data-toggle="tooltip" data-placement="right"'+
