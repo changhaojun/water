@@ -96,8 +96,26 @@ $.extend({
                 firstDay : 1
             }
      },function(start, end, label){
-     		$('.date').val(end.format('YYYY-MM-DD'))
-      		$.getForm(end.format('YYYY-MM-DD'))
+     		var newDate=new Date();
+     		var selectDay=end.format('YYYY-MM-DD')
+     		$('.date').val(selectDay)
+     		var yesterday=$.formatDate(newDate,1);
+     		var beforeYesterday=$.formatDate(newDate,2);
+     		if(selectDay==allData.today){
+     			$('.today').click();
+     		}
+     		else if(selectDay==yesterday){
+     			$('.yesterday').click();
+     		}else if(selectDay==beforeYesterday){
+     			$('.beforeYesterday').click();
+     		}else{
+     			$.getForm(end.format('YYYY-MM-DD'))
+     			$('.portTiile').find('button').each(function(){
+     				if($(this).hasClass('activeBtn')){
+     					$(this).removeClass('activeBtn');
+     				}
+     			})
+     		}
      });
 	},
 	editClick:function(){
