@@ -115,13 +115,15 @@ function chartInfo(data,i){
 				color:'#999',
 				fontSize:'16px'
 			},
-			x:'10px'
+			x:'10px',
+			padding:[20,0,0,10]
 		},
 		tooltip:{
 			trigger:'axis'
 		},
 		legend:{
-			data:legendData
+			data:legendData,
+			padding:[20,0,0,0]
 		},
 		grid: {
 			left: '6%',
