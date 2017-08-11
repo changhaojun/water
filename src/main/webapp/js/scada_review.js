@@ -112,8 +112,8 @@ $.extend({
 				});
 				$('.mainTitle').find('.backSide').html(listDom);
 //				console.log($('.mainTitle').find('.backSide').children('[scadaName=全场工艺]'));
-				if ($('.mainTitle').find('.backSide').children('[scadaName=全场工艺]')) {
-					$('.mainTitle').find('.backSide').children('[scadaName=全场工艺]').prependTo($('.mainTitle').find('.backSide'));
+				if ($('.mainTitle').find('.backSide').children('[scadaName=全厂工艺]')) {
+					$('.mainTitle').find('.backSide').children('[scadaName=全厂工艺]').prependTo($('.mainTitle').find('.backSide'));
 				}
 				
 				//页头背面标签点击交互

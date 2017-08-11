@@ -1,5 +1,7 @@
 package com.finfosoft.water.frame;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSON;
@@ -19,8 +21,10 @@ public class FrameController extends Controller{
 		Record user=getSessionAttr(Constants.SESSION_USER);
 		Record company=getSessionAttr(Constants.SESSION_COMPANY);
 		String companyId=company.get("companyId");
+		List<Record> urls = (List<Record>) user.get("resources");
 		setAttr("companyId", companyId);
 		setAttr("user",JSON.toJSON(user));
+		setAttr("urls", urls);
 		render("index.html");
 	}
 	
