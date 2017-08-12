@@ -40,7 +40,9 @@ public class ReportController extends Controller{
 	 */
 	public void reportForm(){
 		String reportId=getPara(0);
+		String type=getPara(1);
 		setAttr("reportId", reportId);
+		setAttr("type", type);
 		render("report_form.html");
 	}
 }

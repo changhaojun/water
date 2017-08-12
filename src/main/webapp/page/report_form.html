@@ -12,17 +12,31 @@
 	<body>
 	</body>
 		<div class="portTiile">
-			<label>选择日期</label>
-			<input type="text" class="date" />
-			<button class="today">今天</button>
-			<button class="yesterday">昨天</button>
-			<button class="beforeYesterday">前天</button>
-			<div class="tools excel_o">
-				<a href='' id="excel_o"><i class="fa fa-file-excel-o"></i>导出</a>
+			<div class="dateBox">
+				<label>选择日期</label>
+				<input type="text" class="date" />
 			</div>
-			<div class="tools print">
-				<i class="fa fa-print"></i>打印
+			<#if type=='day'>
+				<div class="chioceBox">
+					<button class="today">今天</button>
+					<button class="yesterday">昨天</button>
+					<button class="beforeYesterday">前天</button>
+				</div>
+			<#elseif type=='month'>
+				<div class="chioceBox">
+					<button class="thisMonth">本月</button>
+					<button class="lastMonth">上月</button>
+				</div>
+			</#if>
+			<div class="toolsBox">
+				<div class="tools excel_o">
+					<a href='' id="excel_o"><i class="fa fa-file-excel-o"></i>导出</a>
+				</div>
+				<div class="tools print">
+					<i class="fa fa-print"></i>打印
+				</div>
 			</div>
+			
 		</div>
 		<div class="tableContent">
 			<table class="table table-bordered" id="reportForm">
@@ -31,6 +45,7 @@
 		</div>
 
 	<script>
+		var type='${type}'
 		var reportId='${reportId}'
 	</script>
 	<script type="text/javascript" src="/js/public_resources.js" ></script>

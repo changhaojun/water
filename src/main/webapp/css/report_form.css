@@ -16,10 +16,14 @@ body{
 .date{
 	margin-left: 20px;
     border: 1px solid #e6e6e6;
-    width: 586px;
+    width: calc(100% - 80px);
     height: 34px;
     padding-left: 10px;
     color: #8b91a1;
+}
+.dateBox,.chioceBox{
+	width: 40%;
+	float: left;
 }
 .portTiile button{
 	width: 104px;

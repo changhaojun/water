@@ -37,17 +37,22 @@ $.extend({
 		$.today();
 		$.dateInputInit();
 		$.chioseDay();
-		$('.today').click();
+		if(type=='day'){
+			$('.today').click();
+		}else{
+			$('.thisMonth').click();
+		}
 		$.toolsClick();
 	},
 	today:function(){
 		var dateObj=new Date();
 		allData.today=$.formatDate(dateObj)
 	},
-	formatDate:function(date,dayoffset){
+	formatDate:function(date,dayoffset,monthOffset){
 		dayoffset=dayoffset?dayoffset:0;
+		monthOffset=monthOffset?monthOffset:0;
 		var y = date.getFullYear();  
-	    var m = date.getMonth() + 1;  
+	    var m = date.getMonth() + 1-monthOffset;  
 	    m = m < 10 ? '0' + m : m;  
 	    var d = date.getDate()-dayoffset;  
 	    d = d < 10 ? ('0' + d) : d;  
@@ -68,7 +73,8 @@ $.extend({
 				}else{
 					var html=decodeURI(data.form_html);
 					$('.table').append(html);
-					if(allData.today==data.save_time||data.save_time==undefined){
+					var splitDate=allData.today.split('-')[0]+'-'+allData.today.split('-')[1]
+					if(splitDate==data.save_time||allData.today==data.save_time||data.save_time==undefined){
 						$.editClick();
 					}
 					allData.filename=data.form_name;
@@ -98,24 +104,46 @@ $.extend({
      },function(start, end, label){
      		var newDate=new Date();
      		var selectDay=end.format('YYYY-MM-DD')
-     		$('.date').val(selectDay)
-     		var yesterday=$.formatDate(newDate,1);
-     		var beforeYesterday=$.formatDate(newDate,2);
-     		if(selectDay==allData.today){
-     			$('.today').click();
+     		if(type=='day'){
+     			$('.date').val(selectDay)
+     			var yesterday=$.formatDate(newDate,1);
+     			var beforeYesterday=$.formatDate(newDate,2);
+     			if(selectDay==allData.today){
+     				$('.today').click();
+     			}
+     			else if(selectDay==yesterday){
+     				$('.yesterday').click();
+     			}else if(selectDay==beforeYesterday){
+     				$('.beforeYesterday').click();
+     			}else{
+     				$.getForm(end.format('YYYY-MM-DD'))
+     				$('.portTiile').find('button').each(function(){
+     					if($(this).hasClass('activeBtn')){
+     						$(this).removeClass('activeBtn');
+     					}
+     				})
+     			}
+     		}else if(type=='month'){
+     			var splitDate=selectDay.split('-')[0]+'-'+selectDay.split('-')[1]
+     			$('.date').val(splitDate)
+     			var thisMonth=$.formatDate(newDate)
+     			var newThisMonth=thisMonth.split('-')[0]+'-'+thisMonth.split('-')[1]
+     			var lastMonth=$.formatDate(newDate,0,1)
+     			var newLastMonth=lastMonth.split('-')[0]+'-'+lastMonth.split('-')[1]
+     			if(splitDate==newThisMonth){
+     				$('.thisMonth').click()
+     			}else if(splitDate==newLastMonth){
+     				$('.lastMonth').click();
+     			}else{
+     				$.getForm(end.format('YYYY-MM'))
+     				$('.portTiile').find('button').each(function(){
+     					if($(this).hasClass('activeBtn')){
+     						$(this).removeClass('activeBtn');
+     					}
+     				})
+     			}
      		}
-     		else if(selectDay==yesterday){
-     			$('.yesterday').click();
-     		}else if(selectDay==beforeYesterday){
-     			$('.beforeYesterday').click();
-     		}else{
-     			$.getForm(end.format('YYYY-MM-DD'))
-     			$('.portTiile').find('button').each(function(){
-     				if($(this).hasClass('activeBtn')){
-     					$(this).removeClass('activeBtn');
-     				}
-     			})
-     		}
+     		
      });
 	},
 	editClick:function(){
@@ -132,13 +160,19 @@ $.extend({
 			switch(buttomClass)
 			{
 				case 'today':
-					$.fastGetForm().todayForm()
+					$.fastGetForm().todayForm();
 					break;
 				case 'yesterday':
-					$.fastGetForm().yesterdayForm()
+					$.fastGetForm().yesterdayForm();
 					break;
 				case 'beforeYesterday':
-					$.fastGetForm().beforeYesterdayForm()
+					$.fastGetForm().beforeYesterdayForm();
+					break;
+				case 'thisMonth':
+					$.fastGetForm().thisMonthForm();
+					break;
+				case 'lastMonth':
+					$.fastGetForm().lastMonthForm();
 					break;
 			}
 		})
@@ -147,18 +181,30 @@ $.extend({
 		var newDate=new Date();
 		return {
 			todayForm:function(){
-				$('.date').val(allData.today)
+				$('.date').val(allData.today);
 				$.getForm(allData.today);
 			},
 			yesterdayForm:function(){
-				var yesterday=$.formatDate(newDate,1);
-				$('.date').val(yesterday)
+				var yesterday=$.formatDate(newDate,1,0);
+				$('.date').val(yesterday);
 				$.getForm(yesterday);
 			},
 			beforeYesterdayForm:function(){
-				var beforeYesterday=$.formatDate(newDate,2);
-				$('.date').val(beforeYesterday)
+				var beforeYesterday=$.formatDate(newDate,2,0);
+				$('.date').val(beforeYesterday);
 				$.getForm(beforeYesterday);
+			},
+			thisMonthForm:function(){
+				var thisMonth=$.formatDate(newDate)
+				var sendDate=thisMonth.split('-')[0]+'-'+thisMonth.split('-')[1];
+				$('.date').val(sendDate);
+				$.getForm(sendDate);
+			},
+			lastMonthForm:function(){
+				var lastMonth=$.formatDate(newDate,0,1)
+				var sendDate=lastMonth.split('-')[0]+'-'+lastMonth.split('-')[1];
+				$('.date').val(sendDate);
+				$.getForm(sendDate);
 			}
 		}
 	},
@@ -204,12 +250,18 @@ $.extend({
 	},
 	saveForm:function(){
 		var tableStr=$('.table')[0].innerHTML
+		var save_time;
+		if(type=='day'){
+			save_time=allData.today
+		}else if(type=='month'){
+			save_time=allData.today.split("-")[0]+"-"+allData.today.split("-")[1]
+		}
 		$.ajax({
 			type:"post",
 			url:globalurl+"/v1/forms/",
 			async:true,
 			data:{
-				data:'{"form_html":"'+encodeURI(tableStr)+'","form_name":"'+allData.filename+'","form_template_id":"'+reportId+'"}'
+				data:'{"form_html":"'+encodeURI(tableStr)+'","form_name":"'+allData.filename+'","form_template_id":"'+reportId+'","save_time":"'+save_time+'"}'
 			},
 			success:function(data){
 			}

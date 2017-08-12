@@ -4,13 +4,14 @@ var allData={
 $.fn.extend({
 	showReportList:function(dataList){
 		for(var i=0;i<dataList.length;i++){
-			var boxDom='<span class="reportBox" id="'+dataList[i]._id+'">'+dataList[i].form_name+'</span>'
+			var boxDom='<span class="reportBox" id="'+dataList[i]._id+'" type="'+dataList[i].type+'">'+dataList[i].form_name+'</span>'
 			$(this).append(boxDom)
 		}
 	},
 	editReport:function(){
 		var reportId=$(this).attr('id');
-		self.location.href="/report/reportForm/"+reportId;
+		var type=$(this).attr('type');
+		self.location.href="/report/reportForm/"+reportId+"-"+type;
 	}
 });
 $.extend({
