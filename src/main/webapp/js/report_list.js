@@ -11,7 +11,8 @@ $.fn.extend({
 	editReport:function(){
 		var reportId=$(this).attr('id');
 		var type=$(this).attr('type');
-		self.location.href="/report/reportForm/"+reportId+"-"+type;
+		var name=$(this).text()
+		self.location.href="/report/reportForm/"+reportId+"-"+type+'-'+name;
 	}
 });
 $.extend({

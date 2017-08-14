@@ -2,14 +2,58 @@ body{
 	background:#f3f3f4 !important;
 	font-family: "微软雅黑" !important;
 }
-
+.top{
+	height: 65px;
+    margin-right: 20px;
+}
+.top span{
+	font-size: 22px;
+    padding-top: 25px;
+    display: inline-block;
+}
+.top span:nth-child(1){
+	margin-left: 20px;
+    color: #5d5d5d;
+}
+.top span:nth-child(2){
+	margin-left: 5px;
+    margin-right: 5px;
+}
+.top span:nth-child(3){
+	    color: #5d5d5d;
+    font-size: 14px;
+}
+.top span:nth-child(3) i{
+	color: #1ab394;
+}
+.bigHr{
+	width: calc(100% - 40px);
+    margin-left: 20px;
+    height: 4px;
+    background: #e0e0e0;
+    border: 0;
+    display: inline-block;
+}
+.reportContent{
+	background: #fff;
+	height: calc(100% - 110px);
+}
+.reportContent hr{
+	width: calc(100% - 40px);
+    margin: 20px;
+    margin-bottom: 30px;
+    height: 1px;
+    background: #5f5e5e;
+    border: 0;
+    display: inline-block;
+}
 .portTiile{
 	width: calc(100% - 40px);
 	height: 70px;
-	margin:20px;
+	margin:0 20px;
 	padding-top: 20px;
 	padding-left: 20px;
-	background: #fff;
+	/*background: #fff;*/
     color: #909090;
     font-size: 12px;
 }
@@ -21,8 +65,13 @@ body{
     padding-left: 10px;
     color: #8b91a1;
 }
+.dateBox{
+	width: 30%;
+}
+.chioceBox{
+	width: 50%;
+}
 .dateBox,.chioceBox{
-	width: 40%;
 	float: left;
 }
 .portTiile button{
@@ -45,8 +94,8 @@ button:hover{
 	 color: #fff !important;
 }
 .tableContent{
-	margin:20px;
-	background-color: #fff;
+	margin:0 20px 20px 20px;
+	/*background-color: #fff;*/
 }
 .table{
 	font-size: 14px;

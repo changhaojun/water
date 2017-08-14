@@ -11,6 +11,13 @@
 	</head>
 	<body>
 	</body>
+	<div class="top">
+			<a href="/report"><span>数据报表</span></a>
+			<span>/</span>
+			<span>当前位置：<i>${name}</i></span>
+	</div>
+	<hr class="bigHr" />
+	<div class="reportContent">
 		<div class="portTiile">
 			<div class="dateBox">
 				<label>选择日期</label>
@@ -38,11 +45,13 @@
 			</div>
 			
 		</div>
+		<hr />
 		<div class="tableContent">
 			<table class="table table-bordered" id="reportForm">
 				
 			</table>
 		</div>
+	</div>
 
 	<script>
 		var type='${type}'
