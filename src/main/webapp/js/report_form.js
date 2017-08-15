@@ -141,7 +141,7 @@ $.extend({
      			}else if(selectDay==newLastMonth){
      				$('.lastMonth').click();
      			}else{
-     				$.getForm(end.format('YYYY-MM'))
+     				$.getForm(selectDay)
      				$('.portTiile').find('button').each(function(){
      					if($(this).hasClass('activeBtn')){
      						$(this).removeClass('activeBtn');
