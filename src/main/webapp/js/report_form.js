@@ -42,15 +42,14 @@ $.fn.extend({
 });
 $.extend({
 	init:function(){
-//		$.getToday();
+		$.getToday();
 		$.dateInputInit();
-//		$.onChangeDate();
 		$.chioseDay();
-//		if(type=='day'){
-//			$('.today').click();
-//		}else{
-//			$('.thisMonth').click();
-//		}
+		if(type=='day'){
+			$('.today').click();
+		}else{
+			$('.thisMonth').click();
+		}
 	},
 	getToday:function(){
 		allData.today=$.formatDate(allData.newDate)
@@ -112,8 +111,7 @@ $.extend({
 			maxView:allData.dateSetting.maxView,
 			todayHighlight:true,
 			autoclose:true
-		}).on('changeDate', function(ev){
-			console.info(ev)
+		}).on('hide', function(ev){
      		var selectDay=$('.date').val()
      		if(type=='day'){
    				var yesterday=$.formatDate(allData.newDate,1);
@@ -133,69 +131,26 @@ $.extend({
      					}
      				})
      			}
-//   		}else if(type=='month'){
-//   			var thisMonth=$.formatDate(allData.newDate)
-//   			var newThisMonth=thisMonth.split('-')[0]+'-'+thisMonth.split('-')[1]
-//   			var lastMonth=$.formatDate(allData.newDate,0,1)
-//   			var newLastMonth=lastMonth.split('-')[0]+'-'+lastMonth.split('-')[1]
-//   			if(selectDay==newThisMonth){
-//   				$('.thisMonth').click()
-//   			}else if(selectDay==newLastMonth){
-//   				$('.lastMonth').click();
-//   			}else{
-//   				$.getForm(end.format('YYYY-MM'))
-//   				$('.portTiile').find('button').each(function(){
-//   					if($(this).hasClass('activeBtn')){
-//   						$(this).removeClass('activeBtn');
-//   					}
-//   				})
-//   			}
-     		}
-		})
-	},
-	onChangeDate:function(){
-//		$('.date').change(function(){
-			var selectDay=$('#datetimepicker').val()
-			console.info(selectDay)
-//			var selectDay=$('.date').val()
-     		if(type=='day'){
-   				var yesterday=$.formatDate(allData.newDate,1);
-     			var beforeYesterday=$.formatDate(allData.newDate,2);
-     			if(selectDay==allData.today){
-	   				$('.today').click();
-     			}
-     			else if(selectDay==yesterday){
-     				$('.yesterday').click();
-     			}else if(selectDay==beforeYesterday){
-     				$('.beforeYesterday').click();
+     		}else if(type=='month'){
+     			var thisMonth=$.formatDate(allData.newDate)
+     			var newThisMonth=thisMonth.split('-')[0]+'-'+thisMonth.split('-')[1]
+     			var lastMonth=$.formatDate(allData.newDate,0,1)
+     			var newLastMonth=lastMonth.split('-')[0]+'-'+lastMonth.split('-')[1]
+     			if(selectDay==newThisMonth){
+     				$('.thisMonth').click()
+     			}else if(selectDay==newLastMonth){
+     				$('.lastMonth').click();
      			}else{
-     				$.getForm(selectDay)
+     				$.getForm(end.format('YYYY-MM'))
      				$('.portTiile').find('button').each(function(){
      					if($(this).hasClass('activeBtn')){
      						$(this).removeClass('activeBtn');
      					}
      				})
      			}
-//   		}else if(type=='month'){
-//   			var thisMonth=$.formatDate(allData.newDate)
-//   			var newThisMonth=thisMonth.split('-')[0]+'-'+thisMonth.split('-')[1]
-//   			var lastMonth=$.formatDate(allData.newDate,0,1)
-//   			var newLastMonth=lastMonth.split('-')[0]+'-'+lastMonth.split('-')[1]
-//   			if(selectDay==newThisMonth){
-//   				$('.thisMonth').click()
-//   			}else if(selectDay==newLastMonth){
-//   				$('.lastMonth').click();
-//   			}else{
-//   				$.getForm(end.format('YYYY-MM'))
-//   				$('.portTiile').find('button').each(function(){
-//   					if($(this).hasClass('activeBtn')){
-//   						$(this).removeClass('activeBtn');
-//   					}
-//   				})
-//   			}
      		}
-//		})
-	},
+		})
+},
 	editClick:function(){
 		$('.write').click(function(){
 			$(this).editInner();
@@ -210,36 +165,27 @@ $.extend({
 			switch(buttomClass)
 			{
 				case 'today':
-				console.info(1)
 					$.fastGetForm().todayForm();
 					break;
 				case 'yesterday':
-				console.info(2)
 					$.fastGetForm().yesterdayForm();
 					break;
 				case 'beforeYesterday':
-				console.info(3)
 					$.fastGetForm().beforeYesterdayForm();
 					break;
 				case 'thisMonth':
-				console.info(4)
 					$.fastGetForm().thisMonthForm();
 					break;
 				case 'lastMonth':
-				console.info(5)
 					$.fastGetForm().lastMonthForm();
 					break;
 			}
 		})
 	},
 	fastGetForm:function(){
-		$.getToday();
 		return {
 			todayForm:function(){
-//				console.info(allData.today)
-//				$('#datetimepicker').datetimepicker('setEndDate', '2012-01-01');
 				$('#datetimepicker').val(allData.today);
-				$.onChangeDate();
 				$.getForm(allData.today);
 			},
 			yesterdayForm:function(){
