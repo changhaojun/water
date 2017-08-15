@@ -64,9 +64,11 @@ body{
     height: 34px;
     padding-left: 10px;
     color: #8b91a1;
+    display: initial !important;
 }
 .dateBox{
 	width: 30%;
+	position: relative;
 }
 .chioceBox{
 	width: 50%;

@@ -1,6 +1,14 @@
 var allData={
 	today:'',
 	filename:'',
+	dateSetting:{
+		format:'yyyy-mm-dd',
+		startView:2,
+		minView:2,
+		maxView:4,
+	},
+	obj:'',
+	newDate:new Date()
 };
 $.fn.extend({
 	editInner:function(){
@@ -34,19 +42,18 @@ $.fn.extend({
 });
 $.extend({
 	init:function(){
-		$.today();
+//		$.getToday();
 		$.dateInputInit();
+//		$.onChangeDate();
 		$.chioseDay();
-		if(type=='day'){
-			$('.today').click();
-		}else{
-			$('.thisMonth').click();
-		}
-		$.toolsClick();
+//		if(type=='day'){
+//			$('.today').click();
+//		}else{
+//			$('.thisMonth').click();
+//		}
 	},
-	today:function(){
-		var dateObj=new Date();
-		allData.today=$.formatDate(dateObj)
+	getToday:function(){
+		allData.today=$.formatDate(allData.newDate)
 	},
 	formatDate:function(date,dayoffset,monthOffset){
 		dayoffset=dayoffset?dayoffset:0;
@@ -84,67 +91,110 @@ $.extend({
 		});
 	},
 	dateInputInit:function(){
-		$('.date').daterangepicker({
-            singleDatePicker: true,
-            startDate: moment().startOf('day'),
-            todayHighlight:true,
-            initialDate:new Date(),
-			maxDate: moment(),
-			locale : {
-				format : 'YYYY-MM-DD',
-                applyLabel : '确定',
-                cancelLabel : '取消',
-                fromLabel : '起始时间',
-                toLabel : '结束时间',
-                customRangeLabel : '自定义',
-                daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
-                monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月' ],
-                firstDay : 1
-            }
-     },function(start, end, label){
-     		var newDate=new Date();
-     		var selectDay=end.format('YYYY-MM-DD')
+		if(type=='day'){
+			allData.dateSetting.format='yyyy-mm-dd';
+			allData.dateSetting.startView=2;
+			allData.dateSetting.minView=2;
+			allData.dateSetting.maxView=4;
+		}else if(type=='month'){
+			allData.dateSetting.format='yyyy-mm';
+			allData.dateSetting.startView=3;
+			allData.dateSetting.minView=3;
+			allData.dateSetting.maxView=4;
+		}
+		allData.obj=$('#datetimepicker').datetimepicker({
+			format:allData.dateSetting.format,
+			language:'zh-CN',
+			initialDate:allData.newDate,
+			endDate:allData.newDate,
+			startView:allData.dateSetting.startView,
+			minView:allData.dateSetting.minView,
+			maxView:allData.dateSetting.maxView,
+			todayHighlight:true,
+			autoclose:true
+		}).on('changeDate', function(ev){
+			console.info(ev)
+     		var selectDay=$('.date').val()
      		if(type=='day'){
-     			$('.date').val(selectDay)
-     			var yesterday=$.formatDate(newDate,1);
-     			var beforeYesterday=$.formatDate(newDate,2);
+   				var yesterday=$.formatDate(allData.newDate,1);
+     			var beforeYesterday=$.formatDate(allData.newDate,2);
      			if(selectDay==allData.today){
-     				$('.today').click();
+	   				$('.today').click();
      			}
      			else if(selectDay==yesterday){
      				$('.yesterday').click();
      			}else if(selectDay==beforeYesterday){
      				$('.beforeYesterday').click();
      			}else{
-     				$.getForm(end.format('YYYY-MM-DD'))
+     				$.getForm(selectDay)
      				$('.portTiile').find('button').each(function(){
      					if($(this).hasClass('activeBtn')){
      						$(this).removeClass('activeBtn');
      					}
      				})
      			}
-     		}else if(type=='month'){
-     			var splitDate=selectDay.split('-')[0]+'-'+selectDay.split('-')[1]
-     			$('.date').val(splitDate)
-     			var thisMonth=$.formatDate(newDate)
-     			var newThisMonth=thisMonth.split('-')[0]+'-'+thisMonth.split('-')[1]
-     			var lastMonth=$.formatDate(newDate,0,1)
-     			var newLastMonth=lastMonth.split('-')[0]+'-'+lastMonth.split('-')[1]
-     			if(splitDate==newThisMonth){
-     				$('.thisMonth').click()
-     			}else if(splitDate==newLastMonth){
-     				$('.lastMonth').click();
-     			}else{
-     				$.getForm(end.format('YYYY-MM'))
-     				$('.portTiile').find('button').each(function(){
-     					if($(this).hasClass('activeBtn')){
-     						$(this).removeClass('activeBtn');
-     					}
-     				})
-     			}
+//   		}else if(type=='month'){
+//   			var thisMonth=$.formatDate(allData.newDate)
+//   			var newThisMonth=thisMonth.split('-')[0]+'-'+thisMonth.split('-')[1]
+//   			var lastMonth=$.formatDate(allData.newDate,0,1)
+//   			var newLastMonth=lastMonth.split('-')[0]+'-'+lastMonth.split('-')[1]
+//   			if(selectDay==newThisMonth){
+//   				$('.thisMonth').click()
+//   			}else if(selectDay==newLastMonth){
+//   				$('.lastMonth').click();
+//   			}else{
+//   				$.getForm(end.format('YYYY-MM'))
+//   				$('.portTiile').find('button').each(function(){
+//   					if($(this).hasClass('activeBtn')){
+//   						$(this).removeClass('activeBtn');
+//   					}
+//   				})
+//   			}
      		}
-     		
-     });
+		})
+	},
+	onChangeDate:function(){
+//		$('.date').change(function(){
+			var selectDay=$('#datetimepicker').val()
+			console.info(selectDay)
+//			var selectDay=$('.date').val()
+     		if(type=='day'){
+   				var yesterday=$.formatDate(allData.newDate,1);
+     			var beforeYesterday=$.formatDate(allData.newDate,2);
+     			if(selectDay==allData.today){
+	   				$('.today').click();
+     			}
+     			else if(selectDay==yesterday){
+     				$('.yesterday').click();
+     			}else if(selectDay==beforeYesterday){
+     				$('.beforeYesterday').click();
+     			}else{
+     				$.getForm(selectDay)
+     				$('.portTiile').find('button').each(function(){
+     					if($(this).hasClass('activeBtn')){
+     						$(this).removeClass('activeBtn');
+     					}
+     				})
+     			}
+//   		}else if(type=='month'){
+//   			var thisMonth=$.formatDate(allData.newDate)
+//   			var newThisMonth=thisMonth.split('-')[0]+'-'+thisMonth.split('-')[1]
+//   			var lastMonth=$.formatDate(allData.newDate,0,1)
+//   			var newLastMonth=lastMonth.split('-')[0]+'-'+lastMonth.split('-')[1]
+//   			if(selectDay==newThisMonth){
+//   				$('.thisMonth').click()
+//   			}else if(selectDay==newLastMonth){
+//   				$('.lastMonth').click();
+//   			}else{
+//   				$.getForm(end.format('YYYY-MM'))
+//   				$('.portTiile').find('button').each(function(){
+//   					if($(this).hasClass('activeBtn')){
+//   						$(this).removeClass('activeBtn');
+//   					}
+//   				})
+//   			}
+     		}
+//		})
 	},
 	editClick:function(){
 		$('.write').click(function(){
@@ -152,56 +202,64 @@ $.extend({
 		})
 	},
 	chioseDay:function(){		//选择时间
-		$('.portTiile').delegate('button','click',function(){
+		$('.portTiile').delegate('button','click',function(ev){
+			ev.stopPropagation();
 			var buttomClass=$(this).attr('class');
 			$(this).addClass('activeBtn');
 			$(this).siblings().removeClass('activeBtn');
-			var This=$(this);
 			switch(buttomClass)
 			{
 				case 'today':
+				console.info(1)
 					$.fastGetForm().todayForm();
 					break;
 				case 'yesterday':
+				console.info(2)
 					$.fastGetForm().yesterdayForm();
 					break;
 				case 'beforeYesterday':
+				console.info(3)
 					$.fastGetForm().beforeYesterdayForm();
 					break;
 				case 'thisMonth':
+				console.info(4)
 					$.fastGetForm().thisMonthForm();
 					break;
 				case 'lastMonth':
+				console.info(5)
 					$.fastGetForm().lastMonthForm();
 					break;
 			}
 		})
 	},
 	fastGetForm:function(){
-		var newDate=new Date();
+		$.getToday();
 		return {
 			todayForm:function(){
-				$('.date').val(allData.today);
+//				console.info(allData.today)
+//				$('#datetimepicker').datetimepicker('setEndDate', '2012-01-01');
+				$('#datetimepicker').val(allData.today);
+				$.onChangeDate();
 				$.getForm(allData.today);
 			},
 			yesterdayForm:function(){
-				var yesterday=$.formatDate(newDate,1,0);
+				var yesterday=$.formatDate(allData.newDate,1,0);
 				$('.date').val(yesterday);
 				$.getForm(yesterday);
 			},
 			beforeYesterdayForm:function(){
-				var beforeYesterday=$.formatDate(newDate,2,0);
+				var beforeYesterday=$.formatDate(allData.newDate,2,0);
 				$('.date').val(beforeYesterday);
 				$.getForm(beforeYesterday);
 			},
 			thisMonthForm:function(){
-				var thisMonth=$.formatDate(newDate)
+				var thisMonth=$.formatDate(allData.newDate)
 				var sendDate=thisMonth.split('-')[0]+'-'+thisMonth.split('-')[1];
 				$('.date').val(sendDate);
 				$.getForm(sendDate);
 			},
 			lastMonthForm:function(){
-				var lastMonth=$.formatDate(newDate,0,1)
+				var lastMonth=$.formatDate(allData.newDate,0,1)
 				var sendDate=lastMonth.split('-')[0]+'-'+lastMonth.split('-')[1];
 				$('.date').val(sendDate);
 				$.getForm(sendDate);
@@ -220,6 +278,7 @@ $.extend({
 	tableTools:function(){		//打印导出工具
 		return{
 			print:function(){
+//手写打印功能
 //				var headDom=$('head')[0].outerHTML; 
 //				var newWin= window.open("","","_self");//新打开一个空窗口
 //				newWin.document.write(headDom+$('.table')[0].outerHTML);
@@ -229,6 +288,7 @@ $.extend({
 //			    	 newWin.print();//打印
 //			    	 newWin.close();//关闭窗口
 //			    },300)	
+
 				$('.tableContent').printThis({ 
 				    debug: false, 
 				    importCSS: true, 
