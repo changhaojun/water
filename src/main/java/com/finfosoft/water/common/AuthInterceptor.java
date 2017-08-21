@@ -29,18 +29,21 @@ public class AuthInterceptor implements Interceptor{
 
 		log.info("验证用户令牌");
 		if (token==null) {
+			log.info("令牌错误");
 			controller.redirect("/");
 			return;
 		}
  
 		log.info("验证用户登陆");
 		if (!checkLogin(user)) {
+			log.info("未登陆");
 			controller.redirect("/");
 			return;
 		}
 		
 		log.info("验证页面权限");
 		if (!checkPrivilege(user, uri)) {
+			log.info("权限不足");
 			controller.redirect("/");
 			return;
 		}
@@ -70,10 +73,10 @@ public class AuthInterceptor implements Interceptor{
 	 */
 	private boolean checkPrivilege(Record user, String url) {
 		// 判断指定url是否需要进行鉴权
-		boolean ifAuth = authService.isAuthUrl(url);
-		if (!ifAuth) {
-			return true;
-		}
+//		boolean ifAuth = authService.isAuthUrl(url);
+//		if (!ifAuth) {
+//			return true;
+//		}
 		// 检测用户是否有此url的访问权限
 		List<Record> urls = (List<Record>) user.get("resources");
 		if (urls.contains(url)) {

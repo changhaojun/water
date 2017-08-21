@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/layer/skin/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstarp/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-datepicker/css/datepicker.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/layer/skin/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/chart_data.css"/>
+	</head>
+	<body>
+		<input id="dataId" value="${dataId}" hidden="hidden" />
+		<input id="thingId" value="${thingId}"  hidden="hidden"/>
+		<div class="chartData">
+			<div class="dataTop">
+				<span>运行数据</span>
+				<span>/</span>
+				<span>当前位置：选择实体 > <i>运行图表</i></span>
+			</div>
+			<hr>
+			<div class="mainData">
+				<div class="dataContent">
+					<div class="top"> 
+						<span>请选择对比项</span>
+						<hr/>
+					</div>
+					<div class="list">
+						
+					</div>
+					<hr/>
+				</div>
+				<div class="chartContent">
+					<div class="chartTop">
+						<span>选择日期</span>&nbsp;&nbsp;&nbsp;
+						<input type="text" name="reservation" id="reservationtime"class="span4"/>
+						<button onclick="changeData(-1)">24小时</button><button onclick="changeData(-2)">48小时</button><button onclick="changeData(-3)">72小时</button>
+						<hr />
+						<!--<span class="out">导出Excel</span>--><span class="fa fa-plus-square pull-right focusr" data-toggle="tooltip" data-placement="top"  title="关注"></span>
+					</div>
+					<div id="chartsContent"></div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/bootstarp/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/moment.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script src="/js/echarts.js" type="text/javascript" charset="utf-8"></script>-->
+	<script src="https://cdn.bootcss.com/echarts/3.6.1/echarts.min.js"></script>
+	<script src="/js/chart_data.js?1.05" type="text/javascript" charset="utf-8"></script>
+</html>

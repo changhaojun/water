@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="/plugins/bootstarp/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="/css/box_plc_add.css?1.0" />
+	</head>
+
+	<body>
+		<div>
+			<input type="text" id="deviceId" hidden="hidden" value="${deviceId}"/>
+		</div>
+		<div id="vue">
+			<div class="boxAccess">
+				<div class="boxHeader">
+					<h3>
+						<span>编辑PLC /</span>
+						<h4>
+							<span>当前位置：</span>
+							<a href="/dataTag/plc">接入PLC</a>
+							<span>&nbsp;></span>
+							<span>编辑PLC</span>
+						</h4>
+					</h3>
+					
+				</div>
+				<!--主要内容部分-->
+				<div class="dataInfo">
+					<div class="boxContent clearfix">
+						<div class="equipment">
+							<i class="fa fa-book"></i>&nbsp;设备信息
+						</div>
+						<div class="dataCircle">
+							<label for="device_code">设备编号</label>
+							<input type="text" id="device_code" class="textInput" v-model="deviceData.device_code" datasrc="deviceData.device_code" v-bind:empty="!deviceData.device_code&&deviceData.device_code!==0 ? true : false" warning="请输入设备编号" placeholder="请输入设备编号"/>
+						</div>
+						<div class="dataCircle">
+							<label for="device_name">设备名称</label>
+							<input id="device_name" type="text" class="textInput" v-model="deviceData.device_name" datasrc="deviceData.device_name" v-bind:empty="!deviceData.device_name&&deviceData.device_name!==0 ? true : false" warning="请输入设备名称" placeholder="请输入设备名称"/>
+						</div>
+						<div class="dataCircle">
+							<label>掉线提醒</label>
+							<p class="controlBtn">
+								<span v-bind:class="{ activeBtn : deviceData.is_remind }" @click="remindOnOff(1)">开启</span>
+								<span v-bind:class="{ activeBtn : !deviceData.is_remind }" @click="remindOnOff(0)">关闭</span>
+							</p>
+							<em>注 : 开启提醒后即可进行相关设置。</em>
+						</div>
+						<div class="dataCircle">
+							<label for="mobile">联系电话</label>
+							<input id="mobile" type="text" class="textInput" v-model="deviceData.mobile" datasrc="deviceData.mobile" v-bind:disabled="!deviceData.is_remind" v-bind:empty="deviceData.is_remind===1&&!deviceData.mobile&&deviceData.mobile!==0 ? true : false" warning="请输入手机号码" placeholder="此号码用于接收掉线提醒"/>
+						</div>
+						<div class="dataCircle">
+							<label for="remind_interval">提醒间隔</label>
+							<input id="remind_interval" type="text" class="textInput" v-model="deviceData.remind_interval" datasrc="deviceData.remind_interval" v-bind:disabled="!deviceData.is_remind" v-bind:empty="deviceData.is_remind===1&&!deviceData.remind_interval&&deviceData.remind_interval!==0 ? true : false" warning="请输入间隔时间" placeholder="掉线提醒的间隔时间，单位分钟"/>
+						</div>
+						<div class="dataCircle">
+							<label for="remind_delay">延长时间</label>
+							<input id="remind_delay" type="text" class="textInput" v-model="deviceData.remind_delay" datasrc="deviceData.remind_delay" v-bind:disabled="!deviceData.is_remind" v-bind:empty="deviceData.is_remind===1&&!deviceData.remind_delay&&deviceData.remind_delay!==0 ? true : false" warning="请输入延迟时间" placeholder="掉线后提醒的延迟时间，单位分钟"/>
+						</div>
+					</div>
+					<div class="boxContent clearfix">
+						<div class="equipment">
+							<i class="fa fa-cogs"></i>&nbsp;通讯参数
+						</div>
+						<div class="dataCircle">
+							<label>采集周期</label>
+							<select v-model="deviceData.communication.collect_interval">
+								<option value="120">120</option>
+								<option value="180">180</option>
+								<option value="240">240</option>
+								<option value="300">300</option>
+								<option value="600">600</option>
+							</select>
+						</div>
+						<div class="dataCircle">
+							<label for="collector_id">采集器ID</label>
+							<input id="collector_id" type="text" num-limit="limit" class="textInput" v-model="deviceData.communication.collector_id" datasrc="deviceData.communication.collector_id" v-bind:empty="!deviceData.communication.collector_id&&!deviceData.communication.collector_id!==0 ? true : false" warning="请输入采集器ID" placeholder="请输入采集器ID" @keyup="requestCollectorList($event)" @focus="toggleList($event)" @blur="toggleList($event,true)"/>
+							<ul id="collector_id_list" class="hidden">
+								<li v-for="id in collectorData" @mousedown="confirmId($event)">{{ id.collector_id }}</li>
+							</ul>
+						</div>
+						<div class="dataCircle">
+							<label for="plc_id">通讯地址</label>
+							<input id="plc_id" type="text" num-limit="limit" class="textInput" v-model="deviceData.communication.plc_id" datasrc="deviceData.communication.plc_id" v-bind:empty="!deviceData.communication.plc_id&&!deviceData.communication.plc_id!==0 ? true : false" warning="请输入通讯地址" placeholder="请输入通讯地址"/>
+						</div>
+						<div class="dataCircle">
+							<label>CRC校验</label>
+							<select v-model="deviceData.communication.CRC_check">
+								<option value="0">高位在前</option>
+								<option value="16">低位在前</option>
+							</select>
+						</div>
+						<div class="dataCircle">
+							<label>波特率</label>
+							<select v-model="deviceData.communication.baud_rate">
+								<option value="0">1200</option>
+								<option value="1">2400</option>
+								<option value="2">4800</option>
+								<option value="3">9600</option>
+								<option value="4">19200</option>
+								<option value="5">38400</option>
+								<option value="6">57600</option>
+								<option value="7">115200</option>
+							</select>
+						</div>
+						<div class="dataCircle">
+							<label for="data_addr">起始位置</label>
+							<input id="data_addr" type="text" num-limit="limit" class="textInput" v-model="deviceData.communication.data_addr" datasrc="deviceData.communication.data_addr" v-bind:empty="!deviceData.communication.data_addr&&deviceData.communication.data_addr!==0 ? true : false" warning="请输入起始位置" placeholder="请输入起始位置"/>
+						</div>
+						<div class="dataCircle">
+							<label>校验位</label>
+							<select v-model="deviceData.communication.check_bit">
+								<option value="0">无校验</option>
+								<option value="1">奇校验</option>
+								<option value="2">偶校验</option>
+							</select>
+						</div>
+						<div class="dataCircle">
+							<label for="data_length">数据长度</label>
+							<input id="data_length" type="text" num-limit="limit" class="textInput" v-model="deviceData.communication.data_length" datasrc="deviceData.communication.data_length" v-bind:empty="!deviceData.communication.data_length&&deviceData.communication.data_length!==0 ? true : false" warning="请输入数据长度" placeholder="请输入数据长度"/>
+						</div>
+						<div class="dataCircle">
+							<label>停止位</label>
+							<select v-model="deviceData.communication.stop_bit">
+								<option value="1">1位</option>
+								<option value="2">2位</option>
+							</select>
+						</div>
+						<div class="dataCircle">
+							<label>字节序</label>
+							<select v-model="deviceData.communication.byte_oder">
+								<option value="0">4字节高位在前</option>
+								<option value="1">4字节低位在前</option>
+								<option value="2">2字节高位在前</option>
+								<option value="3">2字节低位在前</option>
+							</select>
+						</div>
+					</div>
+					<div class="boxContent clearfix">
+						<div class="equipment">
+							<i class="fa fa-wrench"></i>&nbsp;数据配置
+							<a class="btnYellow addPort" @click="createPort($event)">
+								<i class="fa fa-plus"></i>
+								<div class="tip">
+									添加端口
+									<em class="tip-arrow"></em>
+								</div>
+							</a>
+							<a class="btnYellow copyPort">
+								<i class="fa fa-copy"></i>
+								<div class="tip">
+									复制端口
+									<em class="tip-arrow"></em>
+								</div>
+							</a>
+						</div>
+						<div class="detialData">
+							<table>
+								<thead>
+									<tr>
+										<th>数据名称</th>
+										<th>端口类型</th>
+										<th>读写状态</th>
+										<th>数据单位</th>
+										<th>数据类型</th>
+										<th>数据精度</th>
+										<th>数据地址</th>
+										<th>实际量程低</th>
+										<th>实际量程高</th>
+										<th>低电平</th>
+										<th>高电平</th>
+										<th>编辑</th>
+										<th>删除</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="(port, index) in portData">
+										<td>{{ port.data_name }}</td>
+										<td>
+											<div class="fixIeSelect">
+												<select disabled="disabled" v-model="port.port_name">
+													<option value="A">模拟量</option>
+													<option value="D">数字量</option>
+												</select>
+											</div>
+										</td>
+										<td>
+											<div class="fixIeSelect">
+												<select disabled="disabled" v-model="port.oper_type">
+													<option value="1">读取</option>
+													<option value="2">写入</option>
+												</select>
+											</div>
+										</td>
+										<td>{{ port.data_unit }}</td>
+										<td>
+											<div class="fixIeSelect">
+												<select disabled="disabled" v-model="port.data_type">
+													<option value="0">长整形</option>
+													<option value="1">浮点型</option>
+													<option value="2">整形</option>
+												</select>
+											</div>
+										</td>
+										<td>{{ port.data_precision }}</td>
+										<td>{{ port.data_addr }}</td>
+										<td>{{ port.port_name=='A' ? port.real_range_low : '' }}</td>
+										<td>{{ port.port_name=='A' ? port.real_range_high : '' }}</td>
+										<td>{{ port.port_name=='D' ? port.low_battery : '' }}</td>
+										<td>{{ port.port_name=='D' ? port.high_battery : '' }}</td>
+										<td>
+											<i class="fa fa-edit" @click="editPort(index,$event)"></i>
+										</td>
+										<td>
+											<i class="fa fa-trash" @click="deletePort(index)"></i>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="saveSettings">
+						<button id="main-submit">保存设置</button>
+					</div>
+				</div>
+			</div>
+			<div class="hidden pop-mask"></div>
+			<div class="hidden pop newPort">
+				<div class="clearfix pop-title">
+					<p class="pull-left">新增数据标签</p>
+					<a href="javascript:;" class="pull-right pop-close"></a>
+				</div>
+				<dl class="pop-main">
+					<dd class="clearfix dataEdit">
+						<label for="new_data_name">数据名称</label>
+						<input id="new_data_name" type="text" v-model="newPort.data_name" datasrc="newPort.data_name" v-bind:empty="!newPort.data_name&&newPort.data_name!==0 ? true : false" warning="请输入数据名称" placeholder="请输入数据名称"/>
+					</dd>
+					<dd class="clearfix dataEdit">
+						<label>端口类型</label>
+						<select v-model="newPort.port_name">
+							<option value="A">模拟量</option>
+							<option value="D">数字量</option>
+						</select>
+					</dd>
+					<dd class="clearfix dataEdit">
+						<label>读写状态</label>
+						<select v-model="newPort.oper_type">
+							<option value="1">读取</option>
+							<option value="2">写入</option>
+						</select>
+					</dd>
+					<dd class="clearfix dataEdit">
+						<label for="new_data_unit">数据单位</label>
+						<input id="new_data_unit" type="text" v-model="newPort.data_unit" datasrc="newPort.data_unit" warning="请输入数据单位" placeholder="请输入数据单位"/>
+					</dd>
+					<dd class="clearfix dataEdit">
+						<label>数据类型</label>
+						<select v-model="newPort.data_type">
+							<option value="0">长整形</option>
+							<option value="1">浮点型</option>
+							<option value="2">整形</option>
+						</select>
+					</dd>
+					<dd class="clearfix dataEdit">
+						<label for="new_data_precision">数据精度</label>
+						<input id="new_data_precision" type="text" v-model="newPort.data_precision" datasrc="newPort.data_precision" v-bind:empty="!newPort.data_precision&&newPort.data_precision!==0 ? true : false" num-limit="limit" warning="请输入数据精度" placeholder="请输入数据精度"/>
+					</dd>
+					<dd class="clearfix dataEdit">
+						<label for="new_data_addr">数据地址</label>
+						<input id="new_data_addr" type="text" v-model="newPort.data_addr" datasrc="newPort.data_addr" v-bind:empty="!newPort.data_addr&&newPort.data_addr!==0 ? true : false" num-limit="limit" warning="请输入数据地址" placeholder="请输入数据地址"/>
+					</dd>
+					<dd class="clearfix dataEdit" v-if="newPort.port_name=='A'">
+						<label for="new_real_range_low">实际量程低</label>
+						<input id="new_real_range_low" type="text" v-model="newPort.real_range_low" datasrc="newPort.real_range_low" v-bind:empty="!newPort.real_range_low&&newPort.real_range_low!==0 ? true : false" num-limit="limit" warning="请输入实际量程低" placeholder="请输入实际量程低"/>
+					</dd>
+					<dd class="clearfix dataEdit" v-if="newPort.port_name=='A'">
+						<label for="new_real_range_high">实际量程高</label>
+						<input id="new_real_range_high" type="text" v-model="newPort.real_range_high" datasrc="newPort.real_range_high" v-bind:empty="!newPort.real_range_high&&newPort.real_range_high!==0 ? true : false" num-limit="limit" warning="请输入实际量程高" placeholder="请输入实际量程高"/>
+					</dd>
+					<dd class="clearfix dataEdit" v-if="newPort.port_name=='D'">
+						<label for="new_low_battery">低电平</label>
+						<input id="new_low_battery" type="text" v-model="newPort.low_battery" datasrc="newPort.low_battery" v-bind:empty="!newPort.low_battery&&newPort.low_battery!==0 ? true : false"  warning="请输入低电平" placeholder="请输入低电平"/>
+					</dd>
+					<dd class="clearfix dataEdit" v-if="newPort.port_name=='D'">
+						<label for="new_high_battery">高电平</label>
+						<input id="new_high_battery" type="text" v-model="newPort.high_battery" datasrc="newPort.high_battery" v-bind:empty="!newPort.high_battery&&newPort.high_battery!==0 ? true : false"  warning="请输入高电平" placeholder="请输入高电平"/>
+					</dd>
+					<dt>
+						<button @click="saveNewPort($event)">保存</button>
+					</dt>
+				</dl>
+				<div class="pop-shadow"></div>
+			</div>
+			<div class="hidden pop editPort">
+				<div class="clearfix pop-title">
+					<p class="pull-left">修改数据标签</p>
+					<a href="javascript:;" class="pull-right pop-close"></a>
+				</div>
+				<dl class="pop-main">
+					<dd class="clearfix dataEdit">
+						<label for="edit_data_name">数据名称</label>
+						<input id="edit_data_name" type="text" v-model="newPort.data_name" datasrc="newPort.data_name" v-bind:empty="!newPort.data_name&&newPort.data_name!==0 ? true : false" warning="请输入数据名称" placeholder="请输入数据名称"/>
+					</dd>
+					<dd class="clearfix dataEdit">
+						<label>端口类型</label>
+						<select v-model="newPort.port_name">
+							<option value="A">模拟量</option>
+							<option value="D">数字量</option>
+						</select>
+					</dd>
+					<dd class="clearfix dataEdit">
+						<label>读写状态</label>
+						<select v-model="newPort.oper_type">
+							<option value="1">读取</option>
+							<option value="2">写入</option>
+						</select>
+					</dd>
+					<dd class="clearfix dataEdit">
+						<label for="edit_data_unit">数据单位</label>
+						<input id="edit_data_unit" type="text" v-model="newPort.data_unit" datasrc="newPort.data_unit" warning="请输入数据单位" placeholder="请输入数据单位"/>
+					</dd>
+					<dd class="clearfix dataEdit">
+						<label>数据类型</label>
+						<select v-model="newPort.data_type">
+							<option value="0">长整形</option>
+							<option value="1">浮点型</option>
+							<option value="2">整形</option>
+						</select>
+					</dd>
+					<dd class="clearfix dataEdit">
+						<label for="edit_data_precision">数据精度</label>
+						<input id="edit_data_precision" type="text" v-model="newPort.data_precision" datasrc="newPort.data_precision" v-bind:empty="!newPort.data_precision&&newPort.data_precision!==0 ? true : false" num-limit="limit" warning="请输入数据精度" placeholder="请输入数据精度"/>
+					</dd>
+					<dd class="clearfix dataEdit">
+						<label for="edit_data_addr">数据地址</label>
+						<input id="edit_data_addr" type="text" v-model="newPort.data_addr" datasrc="newPort.data_addr" v-bind:empty="!newPort.data_addr&&newPort.data_addr!==0 ? true : false" num-limit="limit" warning="请输入数据地址" placeholder="请输入数据地址"/>
+					</dd>
+					<dd class="clearfix dataEdit" v-if="newPort.port_name=='A'">
+						<label for="edit_real_range_low">实际量程低</label>
+						<input id="edit_real_range_low" type="text" v-model="newPort.real_range_low" datasrc="newPort.real_range_low" v-bind:empty="!newPort.real_range_low&&newPort.real_range_low!==0 ? true : false" num-limit="limit" warning="请输入实际量程低" placeholder="请输入实际量程低"/>
+					</dd>
+					<dd class="clearfix dataEdit" v-if="newPort.port_name=='A'">
+						<label for="edit_real_range_high">实际量程高</label>
+						<input id="edit_real_range_high" type="text" v-model="newPort.real_range_high" datasrc="newPort.real_range_high" v-bind:empty="!newPort.real_range_high&&newPort.real_range_high!==0 ? true : false" num-limit="limit" warning="请输入实际量程高" placeholder="请输入实际量程高"/>
+					</dd>
+					<dd class="clearfix dataEdit" v-if="newPort.port_name=='D'">
+						<label for="edit_low_battery">低电平</label>
+						<input id="edit_low_battery" type="text" v-model="newPort.low_battery" datasrc="newPort.low_battery" v-bind:empty="!newPort.low_battery&&newPort.low_battery!==0 ? true : false"  warning="请输入低电平" placeholder="请输入低电平"/>
+					</dd>
+					<dd class="clearfix dataEdit" v-if="newPort.port_name=='D'">
+						<label for="edit_high_battery">高电平</label>
+						<input id="edit_high_battery" type="text" v-model="newPort.high_battery" datasrc="newPort.high_battery" v-bind:empty="!newPort.high_battery&&newPort.high_battery!==0 ? true : false"  warning="请输入高电平" placeholder="请输入高电平"/>
+					</dd>
+					<dt>
+						<button @click="saveEditPort($event)">保存</button>
+					</dt>
+				</dl>
+				<div class="pop-shadow"></div>
+			</div>
+		</div>
+		<script src="/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="/plugins/jQuery/jquery-1.11.3.min.js"></script>
+		<script src="/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/public_resources.js?1.0"></script>
+		<script src="/js/box_plc_edit.js?1.04" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

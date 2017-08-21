@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/layer/skin/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstarp/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/layer/skin/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/entity_data.css"/>
+	</head>
+	<body>
+		<input type="text" id="thingId" hidden="hidden" value="${thingId}" />
+		<div class="entityData">
+			<div class="dataTop">
+				<a href="/runData"><span>运行数据</span></a>
+				<span>/</span>
+				<span style="font-size:16px;">当前位置：</span>
+				<a href="/runData" style="color:#2C2E37;font-size:16px;">选择实体 </a>
+				<span style="font-size:16px;"> > </span>
+				<span style="color:#1AB394;font-size:16px;">选择数据标签</span>
+				<span class="search">
+					<input v-model="searchId" type="text" placeholder="请输入关键字查找" id="searchId" onkeypress="if(event.keyCode==13) {searchThing($(this));return false;}" />
+					<i class="fa fa-search" onclick="searchThing($('#searchId'))"></i>					
+				</span>
+			</div>
+			<hr>
+			<div class="dataContent">
+				
+			</div>
+		</div>
+	</body>
+	<script src="/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/bootstarp/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+	<script src="/js/entity_data.js?1.01" type="text/javascript" charset="utf-8"></script>
+</html>

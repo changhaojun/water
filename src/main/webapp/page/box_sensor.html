@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../plugins/bootstarp/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/box_sensor.css" />
+	</head>
+	<body>
+		<div class="boxAccess">
+			<div class="boxHeader">
+				<h3>新增传感器 &nbsp;/ <span>ADD传感器</span></h3>
+				<h4>当前位置：接入传感器 >&nbsp; <span>新增传感器</span></h4>
+			</div>
+			<!--主要内容部分-->
+			<div class="dataInfo">
+				<div class="boxContent clearfix">
+					<div class="equipment">
+						<i class="fa fa-book"></i>&nbsp;设备信息
+					</div>
+					<div class="dataCircle">
+						<label>设备编号</label>
+						<input type="text" class="textInput " value="请输入设备编号"/>
+					</div> 
+					<div class="dataCircle">
+						<label>设备名称</label>
+						<input type="text" class="textInput " value="请输入设备名称"/>
+					</div>
+					<div class="dataCircle">
+						<label>掉线提醒</label>
+						<p class="controlBtn">
+							<span class="activeBtn">开启</span>
+							<span>关闭</span>
+						</p>
+						<em>注 : 开启提醒后即可进行相关设置。</em>
+					</div>
+					<div class="dataCircle">
+						<label>联系电话</label>
+						<input type="text" class="textInput" value="此号码用于接收掉线提醒，如有多个号码请用逗号分隔"/>
+					</div>
+					<div class="dataCircle">
+						<label>提醒间隔</label>
+						<input type="text" class="textInput " value="掉线提醒的间隔时间，单位分钟"/>
+					</div>
+					<div class="dataCircle">
+						<label>延长时间</label>
+						<input type="text" class="textInput " value="掉线后提醒的延迟时间，单位分钟"/>
+					</div>
+				</div>
+				<div class="boxContent clearfix">
+					<div class="equipment">
+						<i class="fa fa-cogs"></i>&nbsp;通讯参数
+					</div>
+					<div class="dataCircle">
+						<label>采集周期</label>
+						<select>
+							<option selected="selected" value="120">120</option>
+							<option >180</option>
+							<option >240</option>
+							<option >300</option>
+							<option >360</option>
+							<option >420</option>
+						</select>
+					</div> 
+					<div class="dataCircle collector">
+						<label>采集器ID</label>
+						<select>
+							<option selected="selected" value="请选择采集器ID">请选择采集器ID</option>
+							<!--<option >130</option>
+							<option >140</option>-->
+						</select>
+					</div>
+					<div class="dataCircle">
+						<label>设备状态</label>
+						<p class="controlBtn">
+							<span class="activeBtn">开启</span>
+							<span>未启用</span>
+						</p>
+						<em>注 : 开启提醒后即可进行相关设置。</em>
+					</div>
+				</div>
+				<div class="boxContent clearfix">
+					<div class="equipment">
+						<div class="equipment1">
+							<i class="fa fa-wrench"></i>&nbsp;数据配置
+							<a class="addLabel" data-toggle="tooltip" data-placement="top" title="新增标签">
+								<i class="fa fa-plus "></i>
+							</a>
+							<a class="btnYellow" data-toggle="tooltip" data-placement="top" title="复制">
+								<i class="fa fa-copy "></i>
+							</a>
+							<span>?</span>
+						</div>
+						<div class="copyType"></div>
+					</div>
+					<div class="detialData">
+						<table>
+							<thead>
+								<tr>
+									<th>启用状态</th>
+									<th>端口名称</th>
+									<th>读写状态</th>
+									<th>数据类型</th>
+									<th>采集量程</th>
+									<th>实际量程</th>
+									<th>数据单位</th>
+									<th>数据名称</th>
+									<th>编辑</th>
+								</tr>
+							</thead>
+							<tr>
+								<td>
+									<input type="checkbox" checked="checked"/>
+								</td>
+								<td>AI1</td>
+								<td>读取</td>
+								<td>电流</td>
+								<td>4-20</td>
+								<td>-50-100</td>
+								<td>A</td>
+								<td>温度</td>
+								<td >
+									<i class="fa fa-edit"></i>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="checkbox" />
+								</td>
+								<td>AI2</td>
+								<td>读取</td>
+								<td>电流</td>
+								<td>4-20</td>
+								<td>-50-100</td>
+								<td>A</td>
+								<td>温度</td>
+								<td>
+									<i class="fa fa-edit"></i>
+								</td>
+							</tr>
+						</table>
+					</div> 
+				</div>
+			
+				<div class="saveSettings"><button >保存设置</button></div>
+			</div>
+		</div>
+		<!--============遮罩层===================-->
+		<div class="hidden pop-mask"></div>
+		<!--数据标签弹窗-->
+		<div class="hidden pop step1">
+			<div class="clearfix pop-title">
+				<p class="pull-left">编辑数据标签</p>
+				<a href="###" class="pull-right pop-close maskClose"></a>
+			</div>
+			<div class="pop-main">
+				<div class="portName clearfix">
+					<label>采集端子</label>
+					<span>AI2</span>
+					<p><i></i>是否启用</p>
+				</div>
+				<div class="dataName">
+					<label>数据名称</label>
+					<input type="text" value="请输入数据名称" />
+				</div>
+				<div class="advanceOption">
+					<p>高级选项</p>
+					<div class="dataType">
+						<div class="dataRow">
+							<label>数据类型</label>
+							<select>
+								<option selected="selected">电流</option>
+								<option >电压</option>
+							</select>
+						</div>
+						<div class="dataRow">
+							<label>采集量程</label>
+							<div class="rangeData">
+								<input type="text" value="4"  />
+								<span>-</span>
+								<input type="text" value="20"  />
+							</div>
+						</div>
+						<div class="dataRow">
+							<label>实际量程</label>
+							<div class="rangeData rangeBorder">
+								<input type="text"  value="" />
+								<span>-</span>
+								<input type="text"  value="" />
+							</div>
+						</div>
+					</div>
+					<button class="saveEquipment">保存</button>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../plugins/jQuery/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="../plugins/bootstarp/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../js/box_sensor.js"></script>
+	</body>
+</html>

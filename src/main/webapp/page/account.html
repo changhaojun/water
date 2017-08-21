@@ -3,25 +3,28 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title></title>
-		<link rel="stylesheet" type="text/css" href="../css/account.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/reset.css"/>
-		<link rel="stylesheet" type="text/css" href="../css/style.css"/>
-		<link rel="stylesheet" type="text/css" href="../plugins/font-awesome/css/font-awesome.css"/>
-		<link rel="stylesheet" type="text/css" href="../plugins/bootstarp/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/account.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstarp/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/layer/skin/layer.css"/>
 	</head>
 	<body>
+		<input type="text" id="companyCode" hidden="hidden" value=${companyCode} />
+		<input type="text" id="companyId" hidden="hidden" value=${companyId} />
 		<!--账户主页-->
 		<div class="accountBox">
 			<!--账户top-->
 			<div class="accountTop">
+				<span>账号管理 &nbsp;/&nbsp;</span>
+				<span>当前位置:</span>
 				<span>账号管理</span>
-				<span>/</span>
-				<span>Account</span>
-				<input type="button" value="添加账号" class="btn btn-primary"/>
 				<span class="search">
-					<input type="text" value="输入关键字来查找您的账号" id="searchId"/>
+					<input type="text" value="请输入姓名查找" id="searchId"/>
 					<i class="fa fa-search"></i>					
 				</span>
+				<input type="button" value="添加账号" class="btn btn-primary"/>
+				
 			</div>
 			<hr>
 			<div class="noneData">
@@ -29,169 +32,78 @@
 			</div>
 			<!--账户内容-->
 			<div class="accountContent">
-				
-				<!--<div class="accountList">
-					<div class="listTop">
-						<span>213234@qq.com</span>
-						<i class="fa fa-wrench" data-toggle="tooltip" data-placement="top" title="修改"></i>
-						<strong class="accountClose" data-toggle="tooltip" data-placement="top" title="删除">&times;</strong>
-					</div>
-					<div class="listName">
-						走上人生巅峰
-					</div>
-					<ul class="positionList" >
-						<li >巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-					</ul>
-				</div>
-				<div class="accountList">
-					<div class="listTop">
-						<span>213234@qq.com</span>
-						<i class="fa fa-wrench" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="修改"></i>
-						<strong class="accountClose" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="删除">&times;</strong>
-					</div>
-					<div class="listName">
-						走上人生巅峰
-					</div>
-					<ul class="positionList">
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-					</ul>
-				</div>
-				<div class="accountList">
-					<div class="listTop">
-						<span>213234@qq.com</span>
-						<i class="fa fa-wrench"></i>
-						<strong class="accountClose">&times;</strong>
-					</div>
-					<div class="listName">
-						走上人生巅峰
-					</div>
-					<ul class="positionList">
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-					</ul>
-				</div>
-				<div class="accountList">
-					<div class="listTop">
-						<span>213234@qq.com</span>
-						<i class="fa fa-wrench"></i>
-						<strong class="accountClose">&times;</strong>
-					</div>
-					<div class="listName">
-						走上人生巅峰
-					</div>
-					<ul class="positionList">
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-					</ul>
-				</div>
-				<div class="accountList">
-					<div class="listTop">
-						<span>213234@qq.com</span>
-						<i class="fa fa-wrench"></i>
-						<strong class="accountClose">&times;</strong>
-					</div>
-					<div class="listName">
-						走上人生巅峰
-					</div>
-					<ul class="positionList">
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-					</ul>
-				</div>
-				<div class="accountList">
-					<div class="listTop">
-						<span>213234@qq.com</span>
-						<i class="fa fa-wrench"></i>
-						<strong class="accountClose">&times;</strong>
-					</div>
-					<div class="listName">
-						走上人生巅峰
-					</div>
-					<ul class="positionList">
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-						<li>巡逻员</li>
-					</ul>
-				</div>-->
 			</div>
-			<!--账户底部-->
-			<!--<div class="accountFooter">
-				显示
-				<span class="pageNum">1</span>
-				到
-				<span class="pageAll">10</span>
-				，共
-				<span class="numSum">57</span>
-				项
-				<nav aria-label="Page navigation">
-				  <ul class="pagination">
-				    <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
-				    <li ><a href="#">1</a></li>
-				    <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">下一页</span></a></li>
-				  </ul>
-				</nav>
-			</div>		-->
 		</div>
 		<!--添加账户-->
 		<div class="accountMask addAccountMask">
-			<div class="addAccount">
+			<div class="addAccount addAccountnum">
 				<div class="addAccountTop">
 					<span>添加账号</span>
 					<span class="closeAdd">&times;</span>
 				</div>
 				<div class="addAccountContent">
 					<div class="accountNum">
+						
 						<label for="addText">账号：</label>
 						<input type="text" value="请输入邮箱" id="addText"/>
+						<span class=" error addaccountError"></span>
 					</div>
 					
 					<div class="accountNum">
+						
 						<label for="addUsername">姓名：</label>
 						<input type="text" value="请输入姓名" id="addUsername"/>
+						<span class=" error adduserError"></span>
 					</div>
 					<div class="accountNum">
-						<label for="passWord">密码：</label>
+						
+						<label for="addPassword">密码：</label>
 						<input type="text" value="请输入密码(由6到16位字母数字下划线组成)" id="addPassword"/>
+						<span class=" error addpassError"></span>
 					</div>
 					<div class="accountNum">
+						
 						<label for="addPhone">手机号：</label>
 						<input type="text" value="请输入手机号" id="addPhone"/>
+						<span class=" error addphoneError"></span>
 					</div>
+					<div class="accountNum accountState addState">
+						
+						<label>状态：</label>
+						<div class="status">
+							<input type="button" value="有效" id="addValid" class="stats"/>
+							<input type="button" value="无效" id="addInvalid" />
+						</div>
+					</div> 
 				</div>
 				<div class="selectRole">
 					<span>选择角色</span>
 					<span>请选择需要添加的角色</span>
 				</div>
-				<div class="accountRole">
+				<div class="accountRole addRole">
 					<ul>
-						<li class="disabled" >管理员</li>	
-						<li class="disabled" >普通用户</li>
+						
 					</ul>
 				</div>
-				<button type="submit" class="sureBtn addBtn">
+				<button type="submit" class="sureBtn addBtn" onclick="addUser()">
 					确定
 				</button>
 			</div>
 		</div>
+		<!--添加成功-->
+		<div class="accountMask successMsg">
+			<div class="addAccount">
+				<div class="addAccountTop">
+					<span>添加账号信息</span>
+				</div>
+				<div class="addback">
+					<span class="backImg"></span>
+					<span class="addText"></span>
+				</div>		
+				<button type="button" class="addSuccess">确定</button>
+			</div>
+		</div>
+
 		<!--修改账户-->
 		<div class="accountMask modifyAccountMask">
 			<div class="addAccount modifyAccount">
@@ -201,41 +113,62 @@
 				</div>
 				<div class="addAccountContent modifyAccountContent">
 					<div class="accountNum">
+						
 						<label for="modifyText">账号：</label>
 						<input type="text" value="请输入邮箱" id="modifyText"/>
+						<span class=" error modifyaccountError"></span>
 					</div>
 					<div class="accountNum">
+						
 						<label for="modifyUsername">姓名：</label>
 						<input type="text" value="请输入姓名" id="modifyUsername"/>
+						<span class=" error modifyuserError"></span>
 					</div>
 					<div class="accountNum">
-						<label for="passWord">密码：</label>
+						
+						<label for="passWord ">密码：</label>
 						<input type="text" value="请输入密码(由6到16位字母数字下划线组成)" id="modifyPassword"/>
+						<span class=" error modifypassError"></span>
 					</div>
 					<div class="accountNum">
-						<label for="modifyPhone">手机号：</label>
+						
+						<label for="modifyPhone ">手机号：</label>
 						<input type="text" value="请输入手机号" id="modifyPhone"/>
+						<span class=" error modifyphoneError"></span>
 					</div>
-					
+					<div class="accountNum modifyState">
+						<label>状态：</label>
+						<div class="status">
+							<input type="button" value="有效" id="modifyValid"/>
+							<input type="button" value="无效" id="modifyInvalid" />
+						</div>
+					</div> 
 				</div>
 				<div class="selectRole">
 					<span>选择角色</span>
 					<span>请选择需要添加的角色</span>
 				</div>
-				<div class="accountRole">
+				<div class="accountRole modifyRole" >
 					<ul>
-						<li class="disabled">巡逻员</li>
-						<li class="cheacked">巡逻员</li>
-						<li class="disabled">巡逻员</li>
-						<li class="disabled">巡逻员</li>
-						<li class="disabled">巡逻员</li>
-						<li class="disabled">巡逻员</li>
-						<li class="disabled">巡逻员</li>
+						
 					</ul>
 				</div>
-				<button type="submit"class="sureBtn modifyBtn">
+				<button type="submit"class="sureBtn modifyBtn" onclick="sureModify()">
 					确定
 				</button>
+			</div>
+		</div>
+		<!--修改成功-->
+		<div class="accountMask modifyMsg">
+			<div class="addAccount">
+				<div class="addAccountTop">
+					<span>修改账号信息</span>
+				</div>
+				<div class="modifyback">
+					<span class="backImg"></span>
+					<span class="modifyText"></span>
+				</div>		
+				<button type="button" class="modifySuccess">确定</button>
 			</div>
 		</div>
 		<!--删除账户-->	
@@ -246,17 +179,19 @@
 					<span class="closeDel">&times;</span>
 				</div>
 				<div class="delContent">
-					确定删除？
+					<span class="delIcon"><b>确定删除？</b></span>
+				
 				</div>
+				<button type="button" class="sureDel" onclick="sureDel()">确定</button>
 				<button type="button" class="cancelDel">取消</button>
-				<button type="button" class="sureDel">确定</button>
+				
 			</div>
 		</div>
+
 	</body>
-	<script src="../plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../plugins/bootstarp/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../plugins/vue/dist/vue.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../plugins/vue/dist/vue-resource.js" type="text/javascript" charset="utf-8"></script>
-	<script src="../js/account.js"></script>
-	<script src="../js/accountVue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/bootstarp/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/public_resources.js"></script>
+	<script src="/js/account.js?1.04"></script>
 </html>

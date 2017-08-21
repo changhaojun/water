@@ -1,0 +1,180 @@
+
+.timeData{
+	height: 100%;
+}
+.timeData .dataTop{
+	width:98%;
+	height:50px;
+	border-bottom: 1px solid #e6e6e6;
+	color:#acacac;
+	font-size:16px;
+	line-height:50px;
+	margin-left:10px;
+	margin-right:20px;
+}
+.timeData .dataTop span:nth-child(1){
+	margin-left:15px;
+}
+.timeData .dataTop .dataTime{
+	float: right;
+	border-left:1px solid #E6E6E6;
+	width:580px;
+	font-size:14px;
+	height:50px;
+}
+.timeData .dataContrast{
+	padding-left:15px;
+	padding-right:15px;
+	border-bottom:1px solid #E6E6E6;
+}
+.timeData .dataContrast .contrastTop{
+	height:40px;
+	border-bottom:1px solid #1ab394;
+	line-height:40px;
+	color:#39bda2;
+}
+.timeData .dataContrast .contrastList{
+	width:100%;
+	min-height:95px;
+}
+.timeData .dataContrast .contrastList .listOul span{
+	color:#ACACAC;
+	padding-left:10px;
+	margin-top:20px;
+	display: inline-block;
+}
+.timeData .dataContrast .contrastList>ul li{
+	float:left;
+	padding:5px 19px;
+	background:#1ab394;
+	margin-right:10px;
+	font-size:14px;
+	color:#fff;
+	margin-top:10px;
+	cursor: pointer;
+	
+}
+.timeData .dataContrast .contrastList>ul li:hover{
+	opacity:0.7;
+	filter:alpha(opacity=70);
+	-moz-opacity: 0.7;
+}
+#reservationtime{
+	width:580px !important;
+	font-size:14px;
+	margin-top:0 !important;
+	border:0 !important;
+	outline: none !important;
+	height:30px;
+	border-bottom:1px solid #ccc !important;
+	color:#9096a4 !important;
+	height:100%;
+	cursor: pointer;
+}
+.btn-small{
+	margin-top:20px;
+}
+.applyBtn{
+	background:#1ab394;
+	color:#fff;
+	margin-left:10px;
+}
+.daterangepicker.opensright .ranges{
+	width:560px;
+	height:50px;
+	float:left;
+	/*text-align:right;*/
+	padding-left:8px;
+	
+	
+}
+.daterangepicker select{
+	border:1px solid #ccc;
+	text-align:center;
+	
+}
+.rangefooter{
+	height:290px;
+	/*float:left;*/
+	width:560px;
+}
+.rangefooter .right{
+	display: inline-block !important;
+	float:left;
+	
+}
+.rangefooter .left{
+display: inline-block !important;
+float:right;
+}
+.nodata{
+	width:100%;
+	height:316px;
+	text-align:center;
+	font-size:24px;
+
+	line-height:316px;
+	background:#E5E5E5;
+	border-bottom:1px solid #ccc;
+	display:block;
+}
+.chartContent{
+	width:100%;
+	height:316px;
+	border-bottom:1px solid #ccc;
+}
+.contrastChart{
+	height:316px;
+	/*background:#de3;*/
+	margin:auto;
+	
+}
+#line{
+	width:800px;
+	height:316px;
+	margin:auto;
+	color:#1ab394;
+	text-align:center;
+	float:left;
+	margin-left:10px;
+}
+.closeChart{
+	font-size:28px;
+	color:#1ab394;
+	float:right;
+	cursor: pointer;
+	display: inline-block;
+	width:30px;
+	height:30px;
+}
+.dataChartBox{
+	text-align:center;
+	color:#acacac;
+	line-height:300px;
+}
+.hourselect,.minuteselect,.ampmselect{
+	padding-left:12px !important;
+	text-align: left !important;
+	
+}
+.hourselect option,.minuteselect option,.ampmselect option{
+	padding-left:12px !important;
+	width:50px !important;
+}
+.daterangepicker td.active{
+	background: #1ab394;
+	border-radius: 5px 5px;
+}
+.daterangepicker td.active:hover{
+	background: #1ab394;
+	border-radius: 5px 5px;
+}
+option:hover{
+	background:#1ab394 !important;
+}
+
+.layui-layer{
+	box-shadow: 8px 8px rgba(0,0,0,.5) !important;
+}
+
+

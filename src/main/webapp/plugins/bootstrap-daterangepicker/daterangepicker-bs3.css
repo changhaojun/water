@@ -86,7 +86,7 @@
   vertical-align: middle;
   margin: 0 0 10px 0;
   padding: 0 6px;
-  width: 74px;
+  width: 84px;
 }
 
 .daterangepicker .ranges ul {
@@ -240,7 +240,7 @@
 }
 
 .daterangepicker select.monthselect {
-  margin-right: 2%;
+  /*margin-right: 2%;*/
   width: 56%;
 }
 

@@ -1,0 +1,37 @@
+#  ==========================================================================
+#  Wavefront Material file
+#  Exported by Red-i Productions' "Riptide Pro"
+#  (a commercial plugin for Cinema 4D PC & Mac, R9.6 or later)
+#  
+#  Red-i Productions
+#  http://skinprops.com
+#  
+#  ==========================================================================
+
+newmtl __
+Kd 0.263041 0.681063 0.860215
+illum 1
+
+newmtl Plastic_Dot_Grid_White-sml
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 0.971350 0.933884
+illum 1
+
+newmtl __.1
+Kd 0.800000 0.800000 0.800000
+illum 1
+map_Kd microwave_system.jpg
+
+newmtl AS-03
+Ka 1.000000 1.000000 1.000000
+illum 1
+
+newmtl Plastic_Dot_Grid_White-sml.2
+Ka 0.000000 0.000000 0.000000
+Kd 0.140762 0.404692 0.774194
+illum 1
+
+newmtl Plastic_Dot_Grid_White-sml.1
+Ka 0.000000 0.000000 0.000000
+Kd 0.774194 0.140762 0.140762
+illum 1

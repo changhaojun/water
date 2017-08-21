@@ -9,17 +9,33 @@
     border-bottom: 1px solid #dddddd;
     border-collapse: collapse !important;
     border-radius: 1px;
+    width:100%;
+    
+}
+.bootstrap-table .table thead,
+.bootstrap-table .table tbody{
+	width:100%;
 }
 
+.bootstrap-table .table:not(.table-condensed),
+.bootstrap-table .table:not(.table-condensed) > tbody,
+.bootstrap-table .table:not(.table-condensed) > tfoot,
+.bootstrap-table .table:not(.table-condensed) > thead
+{
+	width:100%;
+}
 .bootstrap-table .table:not(.table-condensed),
 .bootstrap-table .table:not(.table-condensed) > tbody > tr > th,
 .bootstrap-table .table:not(.table-condensed) > tfoot > tr > th,
 .bootstrap-table .table:not(.table-condensed) > thead > tr > td,
 .bootstrap-table .table:not(.table-condensed) > tbody > tr > td,
 .bootstrap-table .table:not(.table-condensed) > tfoot > tr > td {
-    padding: 8px;
+   
 }
-
+.bootstrap-table .table.table-no-bordered > thead > tr {
+	width:100%;
+	
+}
 .bootstrap-table .table.table-no-bordered > thead > tr > th,
 .bootstrap-table .table.table-no-bordered > tbody > tr > td {
     border-right: 2px solid transparent;
@@ -32,14 +48,13 @@
 .fixed-table-container {
     position: relative;
     clear: both;
-    border: 1px solid #dddddd;
     border-radius: 4px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
+     padding-left:10px;
 }
 
 .fixed-table-container.table-no-bordered {
-    border: 1px solid transparent;
 }
 
 .fixed-table-footer,
@@ -55,6 +70,10 @@
     overflow-x: auto;
     overflow-y: auto;
     height: 100%;
+    width:100%;
+    color:#797979;
+    font-size:14px;
+     font-family: "微软雅黑";
 }
 
 .fixed-table-container table {
@@ -65,9 +84,10 @@
     height: 0;
     padding: 0;
     margin: 0;
-    border-left: 1px solid #dddddd;
+    color:#515151;
+    font-family: "微软雅黑";
+ 	
 }
-
 .fixed-table-container thead th:focus {
     outline: 0 solid transparent;
 }
@@ -81,12 +101,13 @@
 
 .fixed-table-container thead th .th-inner,
 .fixed-table-container tbody td .th-inner {
-    padding: 8px;
+ 	text-align:left;
     line-height: 24px;
     vertical-align: top;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    width:100%;
 }
 
 .fixed-table-container thead th .sortable {
@@ -112,16 +133,12 @@
     width: 30px;
 }
 
-.fixed-table-container tbody td {
-    border-left: 1px solid #dddddd;
+.fixed-table-container tbody{
+  width:100%;
 }
 
-.fixed-table-container tbody tr:first-child td {
+.fixed-table-container tbody tr td {
     border-top: none;
-}
-
-.fixed-table-container tbody td:first-child {
-    border-left: none;
 }
 
 /* the same color with .active */
@@ -130,11 +147,11 @@
 }
 
 .fixed-table-container .bs-checkbox {
-    text-align: center;
+    text-align: left;
 }
 
 .fixed-table-container .bs-checkbox .th-inner {
-    padding: 8px 0;
+
 }
 
 .fixed-table-container input[type="radio"],
@@ -150,6 +167,7 @@
 .fixed-table-pagination .pagination-detail {
     margin-top: 10px;
     margin-bottom: 10px;
+    /*display:block !important;*/
 }
 
 .fixed-table-pagination div.pagination .pagination {
@@ -271,7 +289,7 @@
 
 /* support bootstrap 3 */
 .bootstrap-table .table thead > tr > th {
-    padding: 0;
+    padding: 0 8px calc;
     margin: 0;
 }
 
@@ -284,7 +302,9 @@
     border-radius: 0;
     padding: 0 !important;
 }
-
+.pull-right{
+	display:block;
+}
 .pull-right .dropdown-menu {
     right: 0;
     left: auto;

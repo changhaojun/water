@@ -1,0 +1,334 @@
+html{
+	background:#f3f3f4 !important;
+	}
+body{
+	width: 100%;
+	height: 100%;
+	font-family: "Open Sans","Microsoft YaHei","Hiragino Sans GB","Hiragino Sans GB W3","微软雅黑","Helvetica Neue",Arial,sans-serif;
+}
+body *{
+	box-sizing: border-box;
+}
+select::-ms-expand{
+	display: none;
+}
+td>.fa{
+	margin-left: 8px;
+	cursor: pointer;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #c2c2c2; opacity:1; 
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #c2c2c2; opacity:1;
+}
+
+input:-ms-input-placeholder{
+    color: #c2c2c2; opacity:1;
+}
+
+input::-webkit-input-placeholder{
+    color: #c2c2c2; opacity:1;
+}
+
+input:disabled{
+	background-color: #f2f2f2;
+}
+
+.boxAccess{
+	width: 100%;
+	height: 100% ;
+	background: #F3F3F4;
+	padding: 20px 20px;
+	overflow: hidden;
+}
+.boxAccess .boxHeader{
+	border-bottom:3px solid #e0e0e0;
+	padding-bottom: 15px;
+	padding-top: 5px;
+	width: 100%;
+	float: left;
+	overflow: hidden;
+}
+.boxAccess .boxHeader span{
+	font-size:22px;
+	display: inline-block;
+}
+.boxAccess .boxHeader span:nth-child(1){	
+	margin-left:20px;
+	color:#5d5d5d;	
+}
+.boxAccess .boxHeader span:nth-child(2){
+	margin-left:5px;
+	margin-right:5px;
+}
+.boxAccess .boxHeader span:nth-child(3){
+	font-size:16px;
+	color:#000;	
+}
+.boxAccess .boxHeader span:nth-child(4){
+	font-size:16px;
+	color:#1ab394;	
+}
+
+/*================主要内容部分=================*/
+.dataInfo{
+	width: 100%;
+	overflow: hidden;
+	background: #fff;
+}
+.boxContent{
+	padding:10px 10px;
+}
+.boxContent .equipment{
+	position: relative;
+	height: 44px;
+	line-height: 44px;
+	color:#39bda2 ;
+	border-bottom: 1px solid #1ab394;
+}
+.boxContent .dataCircle{
+	width: 50%;
+	float: left;
+	padding-top: 25px;
+	position: relative;
+}
+.boxContent .dataCircle label,
+.dataEdit label{
+	float: left;
+	color: #9f9f9f;
+	width: 90px;
+	height: 35px;
+	text-align: right;
+	line-height: 35px;
+	font-size: 14px;
+	padding: 0 10px 0 8px ;
+	font-weight: 500;
+}
+.boxContent .dataCircle input,
+.boxContent .dataCircle select,
+.dataEdit input,
+.dataEdit select{
+	display: block;
+	float: left;
+    border: 1px solid #e5e6e7;
+    border-radius: 1px;
+    width: 70%;
+    height: 34px;
+    line-height: 32px;
+    font-size: 14px;
+    color: #a7a7a7;
+}
+.boxContent .dataCircle input,
+.dataEdit input{
+    text-indent: 12px;
+}
+.dataCircle em{
+	float: left;
+	height: 35px;
+	line-height: 35px;
+	color: #fc0;
+	font-size: 14px;
+	padding-left: 15px;
+}
+.equipment span,.equipment .btnYellow{
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background: #ffb400;
+	text-align: center;
+	line-height: 20px;
+	border-radius: 50%;
+	color: #fff;
+	cursor: pointer;
+	position: relative;
+}
+.tip{
+	width: 64px;
+	background: #ffc333;
+	text-align: center;
+	border-radius: 2px;
+	display: none;
+	position: absolute;
+	left: -22px;
+	top: -26px;
+}
+.tip-arrow{
+	width: 0;
+    height: 0;
+    border-left: 3.5px solid transparent;
+    border-right: 3.5px solid transparent;
+    border-top: 6px solid #ffc333;
+	position: absolute;
+	left: 28.5px;
+	bottom: -6px;
+}
+.btnYellow:hover .tip{
+	display: block;
+}
+.saveSettings{
+	margin: 10px auto;
+	height: 34px;
+	line-height: 34px;
+	color: #fff;
+	text-align: center;
+	font-size: 14px;
+	border-top:1px solid #1ab394;
+	padding: 20px;
+    width: 98%;
+	margin-bottom:45px ;
+}
+.saveSettings button{
+	width: 300px;
+	background: #1ab394;
+	border-radius: 3px;
+}
+button:hover{
+	background: #24c5a4;
+}
+.tooltip.top .tooltip-arrow{
+	bottom: 0;
+    margin-left: -5px;
+    border-width: 5px 5px 0;
+    border-top-color: #ffc333 !important;
+}
+.tooltip-inner{
+	max-width: 200px;
+    padding: 3px 8px;
+    color: #fff;
+    text-align: center;
+    font-family: "microsoft yahei";
+    background-color: #ffc333 !important;
+    border-radius: 4px;
+}
+.detialData table{
+	width: 100%;
+}
+.detialData table thead{
+	font-size: 15px;
+    font-weight: 700;
+}
+.detialData table tbody tr{
+	color: #8b91a0;
+	font-size: 12px;
+}
+.operate{
+	width: 50px;
+}
+.dataBox{
+	width:95%;
+	margin: 20px;
+}
+.boxTitle >.row{
+	height:35px;
+    line-height: 35px;
+	margin:20px 0;
+}
+.boxTitle input{
+	height: 34px;
+    border: 1px solid #e5e6e7;
+    width: calc(100% - 80px);
+    margin-left: 10px;
+}
+.conditionTag{
+	height: 34px;
+    border: 1px solid #e5e6e7;
+    width: calc(100% - 80px);
+    margin-left: 10px;
+}
+.sign{
+    padding: 0px 12px;
+    background-color: #1ab394;
+    color: #fff;
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 900;
+    cursor: pointer;
+}
+.sign:hover{
+	filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.7; /*Firefox私有，透明度50%*/
+	opacity:0.7;/*其他，透明度50%*/
+}
+.analogInput{
+	height: 35px;
+    border: 1px solid #e5e6e7;
+    cursor: text;
+    padding: 5px;
+}
+.saveRow{
+	text-align: center;
+    padding: 20px;
+}
+.saveBtn{
+	width: 300px;
+	display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    background-image: none;
+    color: #ffffff;
+    background-color: #1AB394;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.saveBtn:hover{
+	filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.7; /*Firefox私有，透明度50%*/
+	opacity:0.7;/*其他，透明度50%*/
+}
+.analogCursor{
+	width: 1px;
+	height: 100%;
+	float: left;
+	border-left:1px solid #000000;
+	animation:divCursor 1.25s infinite;
+	-moz-animation:divCursor 1.25s infinite; /* Firefox */
+	-webkit-animation:divCursor 1.25s infinite; /* Safari and Chrome */
+	-o-animation:divCursor 1.25s infinite; /* Opera */
+}
+@keyframes divCursor{
+	0%{opacity:0;}
+	100%{opacity:1;}
+}
+ul{
+	width: calc(100% - 110px);
+    margin-left: 70px;
+    max-height: 150px;
+    overflow: auto;
+    padding: 0;
+    z-index: 999;
+    position: absolute;
+    background: #fff;
+    top: 33px;
+    border: #E7E7E7 1px solid;
+}
+li{
+	list-style: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    height: 25px;
+    line-height: 25px;
+}
+li:hover{
+	background: #F1F1F1;
+}
+.dataTag,
+.selectSign{
+	margin:0 3px;
+    padding: 0 2px;
+	float: left;
+    background: #1ab394;
+    color: #ffffff;
+}

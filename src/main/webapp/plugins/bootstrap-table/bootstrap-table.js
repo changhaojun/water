@@ -321,8 +321,8 @@
         paginationHAlign: 'right', //right, left
         paginationVAlign: 'bottom', //bottom, top, both
         paginationDetailHAlign: 'left', //right, left
-        paginationPreText: '&lsaquo;',
-        paginationNextText: '&rsaquo;',
+        paginationPreText: '上一页',
+        paginationNextText: '下一页',
         search: false,
         searchOnEnterKey: false,
         strictSearch: false,
@@ -1345,7 +1345,6 @@
             this.options.onlyInfoPagination ? this.options.formatDetailPagination(this.options.totalRows) :
             this.options.formatShowingRows(this.pageFrom, this.pageTo, this.options.totalRows),
             '</span>');
-
         if (!this.options.onlyInfoPagination) {
             html.push('<span class="page-list">');
 

@@ -1,0 +1,438 @@
+html{
+	height: 100%;
+	background:#f3f3f4 !important;
+	}
+
+body{
+	width: 100%;
+	height: 100%;
+}
+.boxAccess{
+	width: 100%;
+	height: 100% ;
+	background: #F3F3F4;
+	padding: 20px 20px;
+	/*overflow: hidden;*/
+}
+.boxAccess .boxHeader{
+	border-bottom:3px solid #e0e0e0;
+	padding-bottom: 15px;
+	padding-top: 5px;
+	width: 100%;
+	float: left;
+	overflow: hidden;
+}
+.boxAccess .boxHeader h3{
+	font: 20px/20px "微软雅黑";
+	font-weight: 100;	
+	float: left;	
+}
+.boxAccess .boxHeader h3 span:nth-child(1){
+	color:#5d5d5d ;
+}
+.boxAccess .boxHeader h4{
+	font: 14px/20px "微软雅黑";
+	font-size: 14px;
+	font-weight: 100;
+}
+.boxAccess .boxHeader h4 a{
+	color:#5d5d5d;
+}
+.boxAccess .boxHeader h4 span:nth-last-child(1){
+	color: #1ab394;
+}
+/*================主要内容部分=================*/
+.dataInfo{
+	width: 100%;
+	overflow: hidden;
+	background: #fff;
+}
+.boxContent{
+	padding:10px 10px;
+}
+.boxContent .equipment{
+	position: relative;
+	color:#39bda2 ;
+	border-bottom: 1px solid #1ab394;
+	padding-bottom: 10px;
+}
+.boxContent .dataCircle{
+	width: 50%;
+	float: left;
+	padding-top: 25px;
+}
+.boxContent .dataCircle label{
+	float: left;
+	color: #9f9f9f;
+	height: 35px;
+	line-height: 35px;
+	font-size: 14px;
+	padding: 0 10px 0 8px ;
+	font-weight: 100;
+}
+.boxContent .dataCircle input,.boxContent .dataCircle select{
+	float: left;
+    background-color: #FFFFFF;
+    background-image: none;
+    border: 1px solid #e5e6e7;
+    border-radius: 1px;
+    color: inherit;
+    display: block;
+    padding-left:12px;
+    width: 70%;
+    font-size: 14px;
+    color:#a7a7a7 ;
+    height: 42px;
+    line-height: 42px;
+}
+.boxContent .dataCircle select{
+	appearance:none;
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	background: url("../img/select_arrow.png") no-repeat scroll right center transparent;
+}
+.boxContent .dataCircle select::-ms-expand {
+	display: none; 
+}
+.controlBtn{
+	float: left;
+	height: 33px;
+	line-height: 33px;
+	border: 1px solid #1ab394;
+	color: #1ab394;
+	border-radius: 3px;
+	text-align: center;
+}
+.controlBtn span{
+	padding: 0 15px;
+	display: inline-block;
+	height: 100%;
+	float: left;
+	cursor: pointer;
+}
+.activeBtn{
+	background: #1ab394;
+	color: #fff;
+}
+.dataCircle  em{
+	float: left;
+	height: 35px;
+	line-height: 35px;
+	color: #fc0;
+	font-size: 14px;
+	padding-left: 15px;
+}
+.equipment span,.equipment .btnYellow{
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background: #ffb400;
+	text-align: center;
+	line-height: 20px;
+	border-radius: 50%;
+	color: #fff;
+	cursor: pointer;
+}
+.equipment1{
+	width: 100%;
+	overflow: hidden;
+}
+/*复制标签样式*/
+.copyType{
+	width: 100%;
+	height: 20px;
+	display: none;
+}
+.detialData{
+	padding: 35px;
+	border-bottom: 1px solid #1ab394;
+} 
+.detialData table{
+	width: 100%;
+}
+.detialData table tr{
+	height: 38px;
+	border-bottom: 1px solid #ccc;
+}
+.detialData table th,.detialData table td{
+	padding: 0 10px;
+}
+.detialData table td i{
+	cursor: pointer;
+}
+.detialData tbody tr{
+	color: #8b91a0;
+	font-size: 12px;
+}
+.detialData tbody tr:nth-of-type(2n+1){
+	background: #fff;
+}
+.detialData tbody tr:nth-of-type(2n+2){
+	background: #f9f9f9;
+}
+.detialData tbody tr:hover{
+	background: #f3f3f4;
+}
+
+.saveSettings{
+	margin: 20px auto;
+	height: 34px;
+	line-height: 34px;
+	color: #fff;
+	text-align: center;
+	font-size: 14px;
+	padding-bottom:100px ;
+	cursor: pointer;
+}
+.saveSettings button{
+	width: 300px;
+	background: #1ab394;
+	border-radius: 3px;
+}
+.saveSettings button:hover{
+	opacity:0.7;
+	filter:alpha(opacity=70);
+	-moz-opacity: 0.7;
+}
+.pop-mask{
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: 0.3;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 3000;
+}
+.pop{
+	width: 500px;
+	position: fixed;
+	height:520px;
+	left: 0;
+	top: 0;
+	margin: auto;
+	background: #fff;
+	z-index: 3010;
+	box-shadow:7px 7px  7px rgba(0,0,0,0.4);
+	-webkit-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
+	-moz-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
+	-ms-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
+	-o-box-shadow:7px 7px 0 rgba(0,0,0,0.4);
+}
+.pop-title{
+	height: 40px;
+	line-height: 40px;
+	background: #1ab394;
+}
+.pop-title>p{
+	margin-left: 23px;
+	font-size: 15px;
+	color: #fff;
+}
+.pop-close{
+	width: 40px;
+	height: 100%;
+	background: url(../img/login/login_layer_close.png) no-repeat 10px 10px;
+}
+.pop-close:hover{
+	background-color: #24c5a4;
+}
+.pop-main{
+	width: 450px;
+	margin:15px auto 20px;
+}
+
+.dataName label,.advanceOption label{
+	font-size: 14px;
+	text-align: right;
+	margin-right: 20px;
+	color: #7e7e7e;
+	float: left;
+	font-weight: 100;
+	padding-top: 10px;
+}
+.portName {
+	margin-bottom: 15px;
+	color: #7e7e7e;
+}
+.portName label{
+	font-weight: 100;
+	float: left;
+	margin-right: 20px;
+}
+.portName span{
+	float: left;
+}
+.portName p{
+	float: right;
+}
+.portName p i{
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	background: url(../img/select_btn.png) no-repeat -48px 0;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+.pop-main input,.dataType select{
+	margin-bottom: 10px;
+	width:350px;
+	height: 38px;
+	line-height: 38px;
+	border: 1px solid #ccc;
+	color: #a8a8a8;
+	font-size: 15px;
+	padding-left: 10px;
+}
+.dataType select{
+	appearance:none;
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	background: url("../img/select_arrow.png") no-repeat scroll right center transparent;
+}
+.dataType select::-ms-expand {
+	display: none; 
+}
+.advanceOption>p{
+	height: 46px;
+	line-height: 46px;
+	color: #19b391;
+	font-size: 14px;
+	border-bottom: 1px solid #a4a4a4;
+}
+.dataType{
+	margin-top:17px ;
+}
+.dataRow{
+	margin-bottom: 15px;
+}
+.rangeBorder{
+	padding-bottom:15px ;
+	border-bottom:1px solid #a4a4a4 ;
+}
+.pop-main .dataType input{
+	width: 153px;
+}
+.pop-main .dataType span{
+	display: inline-block;
+	width: 35px;
+	text-align: center;
+}
+.saveEquipment{
+	display:block ;
+	margin: 20px auto;
+	width: 254px;
+	height: 44px;
+	background: #1ab394;
+	font-size: 16px;
+	line-height: 44px;
+	color: #fff;
+	border-radius: 22px;
+	letter-spacing: 14px;
+	text-indent: 14px;
+	text-align: center;
+}
+/*信息提示*/
+.tooltip-inner {
+	background: #ffb400;
+	white-space:nowrap;
+}
+.tooltip.top .tooltip-arrow{
+	border-top-color:#ffb400;
+}
+.editData_label{
+	display: none;
+}
+.imgConfirm{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left:0;
+	display: none ;
+}
+.imgConfirm img{
+	width: 508px;
+	height: 284px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-left: -254px;
+	margin-top: -142px;
+	display: none;
+}
+.dataType p{
+	width: 350px;
+	height: 38px;
+	line-height: 38px;
+	color: #A8A8A8;
+	font-size: 15px;
+	padding-left: 10px;
+	float: left;
+	margin-bottom: 25px;
+}
+
+.portName label ,.dataName label, .advanceOption label{
+	width:70px;
+	text-align: left;
+}
+.dataType .bettery select{
+	border:0;
+	background: none;
+	color: #7E7E7E;
+	padding-left: 0;
+}
+.pop-main .dataName input,.pop-main .dataUnit input{
+	margin-bottom: 10px;
+    width: 350px;
+    height: 38px;
+    line-height: 38px;
+    border: 1px solid #ccc;
+    color: #a8a8a8;
+    font-size: 15px;
+    padding-left: 10px;
+}
+.collector .list{
+	position: relative;
+}
+.collector .list input ,.collector .list ul{
+    float: left;
+    background-color: #FFFFFF;
+    background-image: none;
+    border: 1px solid #e5e6e7;
+    border-radius: 1px;
+    color: inherit;
+    display: block;
+    padding-left: 12px;
+    width: 70%;
+    font-size: 14px;
+    color: #a7a7a7;
+    height: 42px;
+    line-height: 42px;
+}
+.collector .list ul{
+	height: auto;
+	margin-left: 74px;
+	border-color: #1ab394;
+	display: none;
+	border-top:none;
+	padding-left: 0;
+	position: absolute;
+	top: 42px;
+	background: #fff;
+	z-index: 1;
+}
+.collector .list ul li{ 
+	list-style: none;
+	height: 30px; 
+	font:14px/30px "微软雅黑";
+	cursor: pointer;
+	padding-left: 15px;
+}
+.collector .list ul li:hover{
+	background: #F0F6FA;
+}
+
+.layui-layer-content img{
+	width: 100%;
+}

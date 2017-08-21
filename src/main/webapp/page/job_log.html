@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/layer/skin/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstarp/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-table/bootstrap-table.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-datepicker/css/datepicker.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/job_log.css"/>
+	</head>
+	<body>
+		<input type="text" id="companyCode" hidden="hidden" value=${companyCode} />
+		<input type="text" id="companyId" hidden="hidden" value=${companyId} />
+		<div class="taskLog">
+			<div class="logTop">
+				<span>操作日志</span>
+				<span>/</span>
+				<span>当前位置：<i>任务日志列表</i></span>
+			</div>
+			<hr/>
+			<div class="taskList">
+				<div class="listTop">
+					<span>&nbsp;&nbsp;选择日期</span>&nbsp;&nbsp;&nbsp;
+					<input type="text" name="reservation" id="reservationtime"class="span4"/>
+					<button onclick="changeList(-1)">24小时</button><button onclick="changeList(-2)">48小时</button><button onclick="changeList(-3)">72小时</button>
+					<hr />
+				</div>
+				<div>
+					<table class="table table-hover" id="logList">
+						<thead>
+							<th data-field="oper_time">日期</th>
+							<th data-field="oper_user">操作人</th>
+							<th data-field="address">地区</th>
+							<th data-field="process_name">工艺名</th>
+							<th data-field="oper_port">端口</th>
+							<th data-field="new_value">数值</th>
+							<th data-field="result" data-formatter="resultFormatter">结果</th>
+						</thead>
+					</table>
+				</div>
+			</div>
+			
+			
+			<!--vue-->
+			<!--<div id="main" style="height: auto;overflow: hidden; padding: 20px;">
+				<div v-for="row in rows" style="float: left; margin-top: 20px; margin-right: 20px;">
+					<div style="width: 300px; height: 126px; background: #fff;">
+						<div class="top" style="height: 26px;">
+							<span>{{row.address}}</span>
+							<span style="float: right;">{{row.ip}}</span>
+						</div>
+						<div style="text-align: center; padding-top: 120px;"></div>
+					</div>
+				</div>
+			</div>-->
+		</div>
+	</body>
+	<script src="/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/bootstarp/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/moment.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/bootstrap-table/bootstrap-table.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/job_log.js"  type="text/javascript" charset="utf-8"></script>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/layer/skin/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstarp/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-table/bootstrap-table.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/font-awesome/css/font-awesome.css"/>	
+		<link rel="stylesheet" type="text/css" href="/css/bind_entity.css"/>
+	</head>
+	<body>
+		<input type="text" id="thingId" hidden="hidden" value=${thingId} />
+		<div class="bindEntity">
+			<div class="bindTop">
+					<span>实体列表</span>
+					<span>/&nbsp;当前位置:&nbsp;</span>
+					<span><a href="/thing" style="font-size:14px;" class="thingName">${thingName}</a></span>
+					<span style="font-size:14px;"> > 绑定设备</span>					
+			</div>
+			<hr>
+			<div class="selectedList">
+				<div class="selTop">
+					<i class="fa fa-check-square-o "></i>
+					<span>已选设备</span>
+				</div>
+				<hr id="secHr">
+				<ul class="selectedUl" id="selectedUl">
+				</ul>
+				<hr id="fourHr">
+				<button id="saveDevice" onclick="saveDevice()">保存设备绑定</button>
+			</div>
+			<div class="optionalEntity">
+				<div class="optionalTop">
+					<i class="fa fa-th-large"></i>
+					<span>可选设备</span>
+					<div class="secEntity">
+						<input type="text" placeholder="请输入关键字来查找设备" id="searchDevice" onkeypress="if(event.keyCode==13) {screenDev();return false;}" onkeyup="if(event.keyCode==32){space($(this))}"/>
+						<i class="fa fa-search" onclick="screenDev()"></i>
+					</div>
+				</div>
+				<hr id="threeHr">
+				<div class="infoWay">
+					<p class="infoList">
+						<i class="fa fa-check-circle"></i>	
+						<span>Box接入</span>
+					</p>
+					<p class="infoList">
+						<i class="fa fa-check-circle"></i>	
+						<span>OPC接入</span>
+					</p>
+					<p class="infoList">
+						<i class="fa fa-check-circle"></i>	
+						<span>人工录入数值</span>
+					</p>
+					<p class="infoList">
+						<i class="fa fa-check-circle"></i>	
+						<span>计算数值</span>
+					</p>
+					<p class="infoList">
+						<i class="fa fa-check-circle"></i>	
+						<span>外部获取数据</span>
+					</p>
+				</div>
+				<div class="optionalList">
+					<!--<div class="disabledLi seclLi">
+						<div class="disabledFont">sdww</div>
+						<div class="disabledIcon" onclick="selectDev(111)" id="111">+</div>
+					</div>
+					<div class="disabledLi seclLi">
+						<div class="disabledFont">嗡嗡嗡</div>
+						<div class="disabledIcon">+</div>
+					</div>
+					<div class="disabledLi seclLi">
+						<div class="disabledFont">啊地问我</div>
+						<div class="disabledIcon">+</div>
+					</div>-->
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/bootstarp/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/bootstrap-table/bootstrap-table.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/bind_entity.js?1.03" type="text/javascript" charset="utf-8"></script>
+</html>

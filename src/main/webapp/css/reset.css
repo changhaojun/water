@@ -4,7 +4,7 @@ h2,
 h3,
 ul,
 p,
-label,div,ol,ul,h1,h2,h3,h4,h5,h6,header,nav,article,footer,dl,dd,dt{
+label,div,ol,ul,h1,h2,h3,h4,h5,h6,header,nav,article,footer,dl,dd,dt,tr,th,td{
 	margin: 0;
 	padding: 0;
 	font-family: "microsoft yahei";
@@ -15,15 +15,20 @@ li{
 }
 
 button,
-input{
+input,
+select{
 	margin: 0;
 	padding: 0;
-	appearance: none;
 	border: none;
 	background: none;
 	outline: none;
 }
-
+select{
+	appearance: none;
+	-ms-appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
 input::-moz-focus-inner,
 button::-moz-focus-inner{
 	padding: 0;
@@ -43,42 +48,4 @@ strong{
 }
 i,em{
 	font-style:normal ;
-}
-body,
-h1,
-h2,
-h3,
-ul,
-p,
-label{
-	margin: 0;
-	padding: 0;
-}
-
-li{
-	list-style: none;
-}
-
-button,
-input{
-	margin: 0;
-	padding: 0;
-	appearance: none;
-	border: none;
-	background: none;
-	outline: none;
-}
-
-input::-moz-focus-inner,
-button::-moz-focus-inner{
-	padding: 0;
-}
-
-img{
-	vertical-align: top;
-	border: none;
-}
-
-a{
-	text-decoration: none;
 }

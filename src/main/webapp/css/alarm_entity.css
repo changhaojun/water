@@ -1,0 +1,230 @@
+html{
+	background:#f3f3f4 !important;
+	}
+.alarmEntity{
+	width:100%;		
+	background:#f3f3f4;
+	float:left;
+	position: relative;	
+}
+/*账户top区域*/
+.alarmEntity .alarmTop{
+	
+	height:65px;
+	margin-right:20px;	
+}
+.alarmEntity .alarmTop span{
+	
+	padding-top:25px;
+	display: inline-block;
+	float:left;
+}
+.alarmEntity .alarmTop span:nth-child(1){	
+	margin-left:20px;
+	color:#5d5d5d;	
+	font-size:22px;
+}
+.alarmEntity .alarmTop span:nth-child(2){
+	margin-left:5px;
+	margin-right:5px;
+	margin-top:10px;
+}
+.alarmEntity .alarmTop span:nth-child(3){
+	
+	margin-top:10px;	
+}
+.alarmEntity .alarmTop span:nth-child(3) a{
+	color:#5d5d5d;
+}
+.alarmEntity .alarmTop span:nth-child(4){
+	color:#1ab394;
+	margin-top:10px;	
+}
+.alarmEntity hr{
+	width:98%;
+	margin-left:20px;
+	height:4px;
+	background:#e0e0e0;
+	border:0;
+	display: inline-block;
+	float:left;
+}
+
+.alarmEntity .alarmTop .search{
+	border:1px solid #c1c1c1;
+	background:#fff;
+	border-radius: 5px 5px;
+	width:360px;
+	padding:0;
+	height:36px;
+	font-size:14px;
+	float:right;
+	margin-right:20px;
+	margin-top:30px;
+}
+.alarmEntity .alarmTop .search input:nth-child(1){
+	color:#1AB394;
+	width:321px;
+	padding-left:12px;
+	height:36px;
+	border-radius: 5px 5px;
+}
+.alarmEntity .alarmTop .search i:nth-child(2){
+	color:#1AB394;
+	line-height:36px;
+	font-size:14px;
+	cursor: pointer;
+}
+.alarmList{
+	width:250px;
+	height:240px;	
+	margin-left:20px;
+	margin-top:15px;
+	float:left;
+	border-radius: 5px 5px;
+	padding-left:17px;
+	padding-right:17px;
+}
+.IContent .greenBg{
+	background:#1AB394;
+	color:#fff;
+}
+.IContent .greenBg .alarmContent{
+	border-top:1px solid #5dc9b2;
+}
+.IContent .greenBg .alarmFooter li{
+	border-top:1px solid #5dc9b2;
+	
+}
+.IContent .grayBg{
+	background:#9a9a9a;
+	color:#fff;
+}
+.IContent .grayBg .alarmContent{
+	border-top:1px solid #eee;
+
+}
+.IContent .grayBg .alarmContent .dataTime{
+		color:#fff;
+}
+.IContent .grayBg .alarmFooter li{
+	border-top:1px solid #eee;
+	
+}
+.IContent .redBg{
+	background:#f27779;
+	color:#fff;
+}
+.IContent .redBg .alarmContent{
+	border-top:1px solid #eee;
+	color:#fff;
+}
+.IContent .redBg .alarmContent .dataTime{
+	color:#fff;
+}
+.IContent .redBg .alarmFooter li{
+	border-top:1px solid #eee;	
+}
+.alarmList .alarmTop{
+	width:100%;
+	height:44px;
+	line-height:44px;
+	
+}
+.alarmList .alarmContent{
+	width:100%;
+	height:114px;
+	padding-top:30px;
+	text-align:center;	
+}
+.alarmList .alarmContent span:nth-child(1),.alarmList .alarmContent span:nth-child(2){
+	font-size:26px;	
+	height:30px;
+	margin:25px 0;
+}
+
+.alarmList .alarmContent span:nth-child(3){
+	color:#78cbb7;
+	display: block;
+}
+.alarmFooter{
+	width:100%;	
+}
+.alarmFooter ul{
+	width:100%;
+	float:left;
+}
+.alarmFooter li{
+	float:left;
+	width:100%;
+	line-height:39px;
+	padding-left:5px;
+}
+.alarmFooter li .dataLeft{
+	float:left;
+}
+.alarmFooter li .dataLeft span{
+	overflow: hidden;
+}
+.alarmFooter li .dataRight{
+	float:right;
+}
+.alarmFooter li .dataRight .fa{
+	margin:0 7px;
+	cursor: pointer;
+}
+
+.layui-layer-dialog
+.layui-layer-dialog .layui-layer-content{
+	color:#ccc !important;
+}
+#dataMin,#dataMax{
+	width:165px;
+	height:38px;
+	border:1px solid #cccccc;
+	padding-left:14px;
+	color:#ccc;
+}
+body .demo-class .layui-layer-btn{
+	text-align:center;
+}
+body .demo-class .layui-layer-btn a{
+	padding:5px 75px ;
+	border-radius: 10px 10px ;
+	 line-height:20px !important;
+}
+body .del-class .layui-layer-btn{
+	text-align:center;
+}
+body .del-class .layui-layer-content{
+	color:#FFB579;
+	text-align:center;
+}
+ body .del-class .layui-layer-content .layui-layer-ico{
+ 	left:55px;
+ }
+#dtuList thead tr th:nth-child(1) {
+    box-sizing: border-box;
+    width:35%
+}
+#dtuList thead  tr th:nth-child(2){
+    box-sizing: border-box;
+    width:50%
+}
+.IContent{
+	float:left;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

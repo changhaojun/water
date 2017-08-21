@@ -1,0 +1,73 @@
+.layui-layer-title{
+	color:#fff;
+	background:#1ab394;
+}
+.layui-layer-close{
+	color:#fff;
+}
+.layui-layer-btn .layui-layer-btn0{
+	background:#1ab394;
+	color:#fff;
+}
+.layui-layer-btn1{
+	color:#1cb392;
+	background:#fff !important;
+}
+.layui-layer-btn{
+	text-align: center;
+	padding: 0 10px 19px;
+}
+.layui-layer-btn a{
+	margin:0px 36px !important;
+	padding:0 20px !important;
+	border:1px solid #1cb392;	
+}
+#addentityName,#modifyentityName{
+	border:1px solid #cccccc;
+	padding:5px 10px;
+	width:100%;
+}
+.layui-layer-dialog .layui-layer-content{
+	margin-left:14px !important;
+}
+.layui-layer-tips {
+	box-shadow: none !important;
+}
+#dtuList tbody tr td:nth-child(2){
+	text-align:left !important;
+}
+
+#dtuList>thead>tr>th:nth-child(1){
+	width: 25%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+#dtuList>thead>tr>th:nth-child(2){
+	width: 30%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+#dtuList>thead>tr>th:nth-child(3){
+	width: 15%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+#dtuList>thead>tr>th:nth-child(4){
+	width: 15%;
+}
+#dtuList>thead>tr>th:nth-child(5){
+	width: 15%;
+}
+
+#dtuList>tbody>tr{
+	border-left: 3px solid #fff;
+}
+
+#dtuList>tbody>tr:hover{
+	color: #1ab394;
+	border-left: 3px solid #1ab394;
+}
+

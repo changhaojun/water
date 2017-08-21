@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/layer/skin/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstarp/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-table/bootstrap-table.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/run_data.css?1.0"/>
+		<title></title>
+	</head>
+	<body>
+		<input type="text" id="companyCode" hidden="hidden" value=${companyCode} />
+		<input type="text" id="companyId" hidden="hidden" value=${companyId} />
+		<div class="accountData">
+			<div class="accountTop dataTop">
+				<span>运行数据</span>
+				<span>/</span>
+				<span>当前位置：<i>选择实体</i></span>
+				<span class="search">
+					<input type="text" value="请输入关键字来查找实体" id="searchId"/>
+					<i class="fa fa-search"></i>					
+				</span>
+			</div>
+			<hr>
+			<div class="dataContent">
+				
+			</div>
+		</div>
+	</body>
+	<script src="/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/bootstarp/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/bootstrap-table/bootstrap-table.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript" charset="utf-8"></script>
+	<!--<script src="/js/echarts.js" type="text/javascript" charset="utf-8"></script>-->
+	<script src="https://cdn.bootcss.com/echarts/3.6.1/echarts.min.js"></script>
+	<script src="/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/js/run_data.js?1.01"  type="text/javascript" charset="utf-8"></script>
+	<!--<script src='http://rapapi.org/rap.plugin.js?projectId=15031'></script>-->
+</html>
