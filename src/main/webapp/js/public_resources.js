@@ -2,7 +2,8 @@
 //var globalurl="http://192.168.1.103:8081";
 //var globalurl="http://192.168.1.114";
 //var globalurl="http://192.168.1.108:9090";
-var globalurl="http://121.42.253.149:18808";
+//var globalurl="http://121.42.253.149:18808";
+var globalurl="http://139.129.235.9:18808";
 var accesstoken;
 var refreshToken;
 
