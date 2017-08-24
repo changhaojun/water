@@ -192,7 +192,7 @@
 										</td>
 										<td>
 											<div class="fixIeSelect">
-												<select disabled="disabled" v-model="port.oper_type">
+												<select disabled="disabled" v-model.number="port.oper_type">
 													<option value="1">读取</option>
 													<option value="2">写入</option>
 												</select>
@@ -250,7 +250,7 @@
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label>读写状态</label>
-						<select v-model="newPort.oper_type">
+						<select v-model.number="newPort.oper_type">
 							<option value="1">读取</option>
 							<option value="2">写入</option>
 						</select>
@@ -316,7 +316,7 @@
 					</dd>
 					<dd class="clearfix dataEdit">
 						<label>读写状态</label>
-						<select v-model="newPort.oper_type">
+						<select v-model.number="newPort.oper_type">
 							<option value="1">读取</option>
 							<option value="2">写入</option>
 						</select>

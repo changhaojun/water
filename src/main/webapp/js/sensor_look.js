@@ -95,7 +95,7 @@ function listBox(){
 										'<div class="water">'+
 											'<div class="board-ring board-ring'+i+'">'+
 												'<canvas></canvas>'+
-												'<input type="text" value="'+data.datas[i].data_value+'" class="dial"/>'+
+												'<input type="text" value="'+data.datas[i].data_value+'" class="dial'+data.datas[i].data_id+'"/>'+
 											'</div>'+
 											'<button type="button"id="give" onclick="give(&apos;'+data.datas[i].data_id+'&apos;)">下发</button>'+
 										'</div>'+						
@@ -125,7 +125,7 @@ function listBox(){
 								'<div class="listHr"></div>'+
 								'<div class="listContent">'+
 									'<div class="contentTop">'+
-										'<div class="Itext">'+data.datas[i].data_value+data.datas[i].data_unit+						
+										'<div class="Itext">'+data.datas[i].data_value+(data.datas[i].data_unit!='-'?data.datas[i].data_unit:'')+						
 										'</div>'+						
 									'</div>'+
 									'<div class="contentBottom">'+
@@ -182,15 +182,15 @@ function show(value,dataName){
  * 在模拟量的下发按钮调用
  */
 function give(id){
-	onoff=$(".dial").val();
-	var guid=guidGenerator();	
+	onoff=$(".dial"+id).val();
 	layer.confirm("<font size='2'>确认下发？</font>", {icon:7},function(index){
 		layer.close(index);
-		data="{'data_id':"+id+",'data_value':"+onoff+",'guid':'"+guid+"'}";
-		data={'data':data};
 		$.ajax({
-			url:globalurl+"/v1/homes?access_token="+accesstoken,
-			data:data,
+			url:globalurl+"/v1/gateways?access_token="+accesstoken,
+			data:{
+				data_id:parseInt(id),
+				data_value:parseInt(onoff)
+			},
 			dataType: 'JSON',
 			type: 'POST',
 			crossDomain: true == !(document.all),
@@ -198,11 +198,12 @@ function give(id){
 				if(data.code==400005){
 				getNewToken();
 				contrastData()
-			}else if(data.result==1){
-					layer.msg('已下发', {
+			}else if(data.result==0){
+					layer.msg(data.description, {
 						icon : 1
 					});
-					MQTTconnect(guid)
+				}else{
+					layer.msg(data.description, {icon : 1})
 				}
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -218,14 +219,14 @@ function give(id){
 function clickBtn(id,dataValue,i){
 	dataId=id;
 	onoff=dataValue;	
-	var guid=guidGenerator();
 	layer.confirm("<font size='2'>确认下发？</font>",{icon:7},function(index){
 		layer.close(index);
-    	data="{'data_id':"+dataId+",'data_value':"+onoff+",'guid':'"+guid+"'}";    	 
-		data={'data':data};	
 		$.ajax({
-			url:globalurl+"/v1/homes?access_token="+accesstoken,
-			data:data,
+			url:globalurl+"/v1/gateways?access_token="+accesstoken,
+			data:{
+				data_id:parseInt(dataId),
+				data_value:parseInt(onoff)
+			},
 			dataType: 'JSON',
 			type: 'POST',
 			crossDomain: true == !(document.all),
@@ -233,8 +234,8 @@ function clickBtn(id,dataValue,i){
 				if(data.code==400005){
 					getNewToken();
 					contrastData()
-				}else if(data.result==1){
-						layer.msg('已下发', {
+				}else if(data.result==0){
+						layer.msg(data.description, {
 						icon : 1
 					});
 						if(onoff){
@@ -246,7 +247,8 @@ function clickBtn(id,dataValue,i){
 							$(".Iopen"+i+"").removeClass("Iactive");
 							$(".circle"+i+"").animate({"left":"25px"});
 						}
-						MQTTconnect(guid)
+				}else{
+					layer.msg(data.description, {icon : 1})
 				}
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -258,96 +260,6 @@ function clickBtn(id,dataValue,i){
 		});
 	});
 }
-//控制量guid
-function guidGenerator() {
-	var S4 = function() {
-	return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-	};
-	return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
-}			
-
-//控制量guid
-function guidGenerator() {
-	var S4 = function() {
-	return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-	};
-	return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
-}
 function space(obj){
 	obj.val(obj.val().replace(/\s/g, ''))
-}
-
-function MQTTconnect(guid){
-	var mqttHost = mqttHostIP;
-	var username = mqttName;
-	var password = mqttWord;
-	var client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
-	var options = {
-		timeout: 1000,
-		onSuccess: function(){
-		   	topic = guid;
-		    client.subscribe(topic);
-		},
-		onFailure: function(message) {
-			setTimeout(MQTTconnect, 10000000);
-		}
-	};
-	// set callback handlers
-	client.onConnectionLost = onConnectionLost;
-	client.onMessageArrived = onMessageArrived;
-	
-	if(username != null) {
-		options.userName = username;
-		options.password = password;
-	}
-	client.connect(options);
-	// connect the clien
-}
-
-
-// called when the client loses its connection
-function onConnectionLost(responseObject) {
-  if (responseObject.errorCode !== 0) {
-  }
-}
-
-// called when a message arrives
-function onMessageArrived(message) {
-  var topic = message.destinationName;
-  var payload = JSON.parse(message.payloadString);
-  var result='',iconR=2
-
-  for(var i=0;i<$(".lookList").length;i++){
-	if((payload.data_id==$(".lookList").eq(i).attr("id"))&&(payload.result==0)){
-		if(payload.port_type=='AO'){			
-			$(".dial").val(payload.old_value);
-			new Finfosoft.Ring({
-				el: '.board-ring'+i,
-				startDeg: 150,
-				endDeg: 30,
-				lineWidth: 20,
-				mainColor: '#1ab394'
-			});	
-		}else if(payload.port_type=="DO"){
-			if($(".circle"+i+"").css("left")=="0px"){
-				$(".circle"+i+"").animate({"left":"25px"});
-			}else{
-				$(".circle"+i+"").animate({"left":"0px"});
-			}
-			if($(".circle"+i+"").css("left")=="25px"){
-				$(".circle"+i+"").animate({"left":"0px"});
-			}else{
-				$(".circle"+i+"").animate({"left":"25px"});
-			}
-		}
-		result='下发失败'
-  		iconR=2
-	}else if(payload.result==1){
-		result='下发成功';
-  		iconR=1
-	}
-}
-layer.msg(payload.data_name+result,{
-	icon:iconR
-})
 }

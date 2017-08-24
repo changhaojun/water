@@ -251,6 +251,20 @@ $.extend({
 		$.three.labelGroup.remove(originLabel);
 		$.initThree.initLabel(newData, position);
 	},
+	onIssue: function(originLabel, data) {
+//		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(data.data_id, $.initThree.judgeLabelType(data))];
+		var newData = {
+			data_id: originLabel.labelId,
+			data_name: originLabel.labelName,
+			data_value: data.data_value,
+			data_unit: originLabel.labelUnit,
+			port_type: originLabel.labelType,
+			status: originLabel.labelStatus
+		};
+		var position = originLabel.position;
+		$.three.labelGroup.remove(originLabel);
+		$.initThree.initLabel(newData, position);
+	},
 	labelOperation: function(label) {
 		var time = $.initTime();
 		if (label.labelType) {
@@ -304,7 +318,7 @@ $.extend({
 						bgColor: '#eeeeee'
 					});
 					$('.AO').find('.confirm').click(function() {
-						layer.confirm('是否确定下发？', {
+						var index=layer.confirm('是否确定下发？', {
 							btn: ['确定','取消']
 						}, function(){
 							var data_value = $('.AO').find('.confirmVal').val();
@@ -313,15 +327,19 @@ $.extend({
 							$.issueAjax({
 								data_value: data_value,
 								data_id: data_id
-							}, function() {
-								$.initMQTT({
-									data_value: data_value,
-									data_id: data_id,
-									port_type: port_type
-								}, true);
+							}, function(data) {
+//								$.initMQTT({
+//									data_value: data_value,
+//									data_id: data_id,
+//									port_type: port_type
+//								}, true);
+								data.data_value = data_value;
+								$.onIssue(label, data);
 								$('.operation').toggleWin(true);
 								$('.AO').find('.confirm').unbind();
 								$.three.capturer.intersected = null;
+								layer.msg(data.description,{icon:1})
+								layer.close(index)
 							});
 						});
 					});
@@ -336,7 +354,7 @@ $.extend({
 						el: '.finfosoft-onOff',
 						status: !label.labelValue ? 0 : label.labelValue,
 						onChanged: function(status) {
-							layer.confirm('是否确定下发？', {
+							var index=layer.confirm('是否确定下发？', {
 								btn: ['确定','取消']
 							}, function() {
 								var data_value = status;
@@ -345,14 +363,18 @@ $.extend({
 								$.issueAjax({
 									data_value: data_value,
 									data_id: data_id
-								}, function() {
-									$.initMQTT({
-										data_value: data_value,
-										data_id: data_id,
-										port_type: port_type
-									}, true);
+								}, function(data) {
+//									$.initMQTT({
+//										data_value: data_value,
+//										data_id: data_id,
+//										port_type: port_type
+//									}, true);
+									data.data_value = data_value;
+									$.onIssue(label, data);
 									$('.operation').toggleWin(true);
 									$.three.capturer.intersected = null;
+									layer.msg(data.description,{icon:1})
+									layer.close(index)
 								});
 							}, function() {
 								onOff.reset();
@@ -711,16 +733,16 @@ $.extend({
 		$.ajax({
 			type: "post",
 			dataType: "json",
-			url: $.initData.globalurl+"/v1/homes/",
+			url:$.initData.globalurl+"/v1/gateways?access_token="+$.initData.token.access,
 			async: true,
 			crossDomain: true == !(document.all),
 			data: {
-				access_token: $.initData.token.access,
-				data: JSON.stringify(newData)
+				data_id:newData.data_id,
+				data_value:newData.data_value
 			},
 			success: function(data) {
-				if (data.result == 1) {
-					callBack && callBack();
+				if (data.result == 0) {
+					callBack && callBack(data);
 				}
 			}
 		});
