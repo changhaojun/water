@@ -318,9 +318,14 @@ $.extend({
 						bgColor: '#eeeeee'
 					});
 					$('.AO').find('.confirm').click(function() {
-						var index=layer.confirm('是否确定下发？', {
+						var comfirm = layer.confirm('是否确定下发？', {
 							btn: ['确定','取消']
 						}, function(){
+							layer.close(comfirm);
+							layer.load(2, {
+								shade: [0.7,'#eee'],
+  								content:'<div style="width:200px;margin-left:50px;padding-top:5px;">下发中,请稍后。。。</div>'
+							});
 							var data_value = $('.AO').find('.confirmVal').val();
 							var	data_id = label.labelId;
 							var port_type = label.labelType;
@@ -338,8 +343,19 @@ $.extend({
 								$('.operation').toggleWin(true);
 								$('.AO').find('.confirm').unbind();
 								$.three.capturer.intersected = null;
-								layer.msg(data.description,{icon:1})
-								layer.close(index)
+								layer.msg(data.description,{
+									icon: 1,
+									time: 1400,
+									end: function() {
+										layer.closeAll();
+									}
+								});
+							}, function(msg) {
+								layer.closeAll();
+								layer.msg(msg,{
+									icon: 2,
+									time: 1400
+								});
 							});
 						});
 					});
@@ -354,9 +370,14 @@ $.extend({
 						el: '.finfosoft-onOff',
 						status: !label.labelValue ? 0 : label.labelValue,
 						onChanged: function(status) {
-							var index=layer.confirm('是否确定下发？', {
+							var comfirm = layer.confirm('是否确定下发？', {
 								btn: ['确定','取消']
 							}, function() {
+								layer.close(comfirm);
+								layer.load(2, {
+									shade: [0.7,'#eee'],
+  									content:'<div style="width:200px;margin-left:50px;padding-top:5px;">下发中,请稍后。。。</div>'
+								});
 								var data_value = status;
 								var	data_id = label.labelId;
 								var port_type = label.labelType;
@@ -373,8 +394,20 @@ $.extend({
 									$.onIssue(label, data);
 									$('.operation').toggleWin(true);
 									$.three.capturer.intersected = null;
-									layer.msg(data.description,{icon:1})
-									layer.close(index)
+									layer.msg(data.description,{
+										icon: 1,
+										time: 1400,
+										end: function() {
+											layer.closeAll();
+										}
+									});
+								}, function(msg) {
+									layer.closeAll();
+									layer.msg(msg,{
+										icon: 2,
+										time: 1400
+									});
+									onOff.reset();
 								});
 							}, function() {
 								onOff.reset();
@@ -729,7 +762,7 @@ $.extend({
         chart.hideLoading();
         chart.setOption(option);
 	},
-	issueAjax: function(newData, callBack) {
+	issueAjax: function(newData, callBack, onerror) {
 		$.ajax({
 			type: "post",
 			dataType: "json",
@@ -743,6 +776,8 @@ $.extend({
 			success: function(data) {
 				if (data.result == 0) {
 					callBack && callBack(data);
+				} else {
+					onerror && onerror('下发失败');
 				}
 			}
 		});

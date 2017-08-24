@@ -185,6 +185,10 @@ function give(id){
 	onoff=$(".dial"+id).val();
 	layer.confirm("<font size='2'>确认下发？</font>", {icon:7},function(index){
 		layer.close(index);
+		layer.load(2, {
+			shade: [0.7,'#eee'],
+			content:'<div style="width:200px;margin-left:50px;padding-top:5px;">下发中,请稍后。。。</div>'
+		});
 		$.ajax({
 			url:globalurl+"/v1/gateways?access_token="+accesstoken,
 			data:{
@@ -200,15 +204,27 @@ function give(id){
 				contrastData()
 			}else if(data.result==0){
 					layer.msg(data.description, {
-						icon : 1
+						icon : 1,
+						time: 1400,
+						end: function() {
+							layer.closeAll();
+						}
 					});
 				}else{
-					layer.msg('下发失败', {icon : 2})
+					layer.msg('下发失败', {
+						icon : 2,
+						end: function() {
+							layer.closeAll();
+						}
+					})
 				}
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
 				layer.msg('下发失败', {
-					icon : 2
+					icon : 2,
+					end: function() {
+							layer.closeAll();
+						}
 				});
 		    }
 		});
@@ -221,6 +237,10 @@ function clickBtn(id,dataValue,i){
 	onoff=dataValue;	
 	layer.confirm("<font size='2'>确认下发？</font>",{icon:7},function(index){
 		layer.close(index);
+		layer.load(2, {
+			shade: [0.7,'#eee'],
+			content:'<div style="width:200px;margin-left:50px;padding-top:5px;">下发中,请稍后。。。</div>'
+		});
 		$.ajax({
 			url:globalurl+"/v1/gateways?access_token="+accesstoken,
 			data:{
@@ -236,7 +256,11 @@ function clickBtn(id,dataValue,i){
 					contrastData()
 				}else if(data.result==0){
 						layer.msg(data.description, {
-						icon : 1
+						icon : 1,
+						time: 1400,
+						end: function() {
+							layer.closeAll();
+						}
 					});
 						if(onoff){
 							$(".Iopen"+i+"").addClass("Iactive");
@@ -248,12 +272,22 @@ function clickBtn(id,dataValue,i){
 							$(".circle"+i+"").animate({"left":"25px"});
 						}
 				}else{
-					layer.msg(data.description, {icon : 1})
+					layer.msg('下发失败', {
+						icon : 2,
+						time: 1400,
+						end: function() {
+							layer.closeAll();
+						}
+					})
 				}
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
 				layer.msg('下发失败', {
-					icon : 2
+					icon : 2,
+					time: 1400,
+					end: function() {
+						layer.closeAll();
+					}
 				});
 		    }
 
