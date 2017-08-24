@@ -177,7 +177,7 @@ function give(value){
 				if(data.code==400005){
 					  window.getNewToken()
 					  give(value);
-				 }else if(data.result==0){
+				 }else if(data.result==1){
 					layer.msg(data.description, {
 						icon : 1,
 						time: 1400,

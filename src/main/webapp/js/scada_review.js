@@ -774,7 +774,7 @@ $.extend({
 				data_value:newData.data_value
 			},
 			success: function(data) {
-				if (data.result == 0) {
+				if (data.result == 1) {
 					callBack && callBack(data);
 				} else {
 					onerror && onerror('下发失败');
