@@ -203,7 +203,7 @@ function give(id){
 						icon : 1
 					});
 				}else{
-					layer.msg(data.description, {icon : 1})
+					layer.msg('下发失败', {icon : 2})
 				}
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
