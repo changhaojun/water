@@ -105,7 +105,7 @@ function listBox(){
 										'<div class="water">'+
 											'<div class="board-ring board-ring'+i+'">'+
 												'<canvas></canvas>'+
-												'<input type="text" value="'+data.datas[i].data_value+'" class="dial"/>'+
+												'<input type="text" value="'+data.datas[i].data_value+'" class="dial'+data.datas[i].data_id+'"/>'+
 											'</div>'+
 											'<button type="button"id="give" onclick="give(&apos;'+data.datas[i].data_id+'&apos;)">下发</button>'+
 										'</div>'+						
@@ -201,7 +201,7 @@ function show(value,dataName){
 
  */
 function give(id){
-	onoff=$(".dial").val();
+	onoff=$(".dial"+id).val();
 	var guid=guidGenerator();	
 	layer.confirm("<font size='2'>确认下发？</font>", {icon:7},function(index){
 		layer.close(index);

@@ -291,6 +291,7 @@ function onConnectionLost(responseObject) {
 function onMessageArrived(message) {
   var topic = message.destinationName;
   var payload = JSON.parse(message.payloadString);
+  console.info(payload)
   var result='',iconR=2
   if(payload.result==0){
   	result='下发失败'
