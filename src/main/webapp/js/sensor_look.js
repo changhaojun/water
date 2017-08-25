@@ -202,7 +202,7 @@ function give(id){
 				if(data.code==400005){
 				getNewToken();
 				contrastData()
-			}else if(data.result==0){
+			}else if(data.result==1){
 					layer.msg(data.description, {
 						icon : 1,
 						time: 1400,
