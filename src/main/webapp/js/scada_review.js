@@ -1,13 +1,19 @@
 //数据流
+
 $.initData = {
 	token: { //令牌
+
 		access: '',
 		refresh: ''
 	},
 	globalurl: globalurl, //全局路径
+
 	scadaId: $('#scadaId').val(), //情景id
+
 	thingName: '', //实体名称
+
 	sentData: { //待发送数据
+
 		thing_id: '',
 		scada_name: '',
 		scada_model_id: $('#modelId').val(),
@@ -15,6 +21,7 @@ $.initData = {
 		scada_config: []
 	},
 	mqtt: { //MQTT订阅数据
+
 		host: mqttHostIP,
 		port: Number(portNum),
 		username: mqttName,
@@ -24,6 +31,7 @@ $.initData = {
 
 $.fn.extend({
 	//窗口显示&&隐藏(运动)
+
 	toggleWin: function(hide) {
 		var This = $(this);
 		if (hide) {
@@ -41,6 +49,7 @@ $.fn.extend({
 		return $(this);
 	},
 	//居中位置计算
+
 	setCenterPos: function(parent) {
 		$(this).css({
 			'left': (parent.width() - $(this).width()) / 2,
@@ -48,6 +57,7 @@ $.fn.extend({
 		});
 	},
 	//窗口改变时保持元素位置居中
+
 	stayCenter: function(parent) {
 		var This = $(this);
 		$(this).setCenterPos(parent);
@@ -59,11 +69,13 @@ $.fn.extend({
 
 $.extend({
 	//初始化
+
 	init: function() {
 		$.initToken('get', function() {
 			$.initTitle();
 			$.initAjax(function(data) {
 				//数据流初始化
+
 				$.initData.thingName = data.scada.thing_name;
 				$.initData.sentData.thing_id = data.scada.thing_id;
 				$.initData.sentData.scada_name = data.scada.scada_name;
@@ -71,14 +83,17 @@ $.extend({
 				$.initData.sentData.description = data.scada.description;
 				$.initData.sentData.scada_config = data.scada.scada_config;
 				//三维场景初始化
+
 				$.initThree.init(data.scadaModel.modelConfig, function() {
 					for (var i=0; i<$.initData.sentData.scada_config.length; i++) {
 						//数据标签渲染
+
 						$.initThree.initLabel(
 							$.initData.sentData.scada_config[i],
 							$.initData.sentData.scada_config[i].objPosition,
 							function(userData) {
 								//数据标签订阅MQTT
+
 								$.initMQTT(userData);
 							}
 						);
@@ -90,6 +105,7 @@ $.extend({
 		})
 	},
 	//页头初始化
+
 	initTitle: function() {
 		$.ajax({
 			type: "get",
@@ -102,6 +118,7 @@ $.extend({
 			},
 			success: function(data) {
 				//页头背面渲染
+
 				var listDom = '';
 				$.each(data.rows, function(i) {
 					if (data.rows[i]._id == $.initData.scadaId) {
@@ -110,13 +127,9 @@ $.extend({
 						listDom += "<li scadaId='"+data.rows[i]._id+"' scadaName='"+data.rows[i].scada_name+"' scadaDescription='"+data.rows[i].description+"'>"+data.rows[i].scada_name+"</li>";
 					}
 				});
-				$('.mainTitle').find('.backSide').html(listDom);
-//				console.log($('.mainTitle').find('.backSide').children('[scadaName=全场工艺]'));
-				if ($('.mainTitle').find('.backSide').children('[scadaName=全厂工艺]')) {
-					$('.mainTitle').find('.backSide').children('[scadaName=全厂工艺]').prependTo($('.mainTitle').find('.backSide'));
-				}
-				
+				$('.mainTitle').find('.backSide').html(listDom);;
 				//页头背面标签点击交互
+
 				$('.mainTitle').find('.backSide').children().click(function() {
 					var id = $(this).attr('scadaId');
 					var name = $(this).attr('scadaName');
@@ -130,11 +143,13 @@ $.extend({
 			}
 		});
 		//页头正面列表点击交互
+
 		$('.mainTitle').find('.frontSide').find('button').click(function() {
 			$('.mainTitle').removeClass('active');
 		});
 	},
 	//令牌初始化
+
 	initToken: function(type, callBack) {
 		switch (type) {
 			case 'get':
@@ -154,6 +169,7 @@ $.extend({
 		}
 	},
 	//页面初始化请求
+
 	initAjax: function(callBack) {
 		$.ajax({
 			type: "get",
@@ -170,6 +186,7 @@ $.extend({
 		});
 	},
 	//MQTT订阅相关
+
 	initMQTT: function(data, isIssue) {
 		var client = new Paho.MQTT.Client($.initData.mqtt.host, $.initData.mqtt.port, "server" + parseInt(Math.random() * 100, 10));
 		var options = {
@@ -178,14 +195,17 @@ $.extend({
 			timeout: 1000,
 			onSuccess: function() {
 				if (data.port_type == 'AO' || data.port_type == 'DO' || data.port_type == 'MO') { //AO && DO && MO订阅
+
 					if (isIssue) {
 						client.subscribe(data.data_id.toString());
 					}
 				} else if (data.port_type == 'AI' || data.port_type == 'DI') { //AI && DI订阅
+
 					client.subscribe(data.data_id.toString());
 				} else { //任务订阅
+
 					//任务订阅预留接口
-//					return;
+
 				}
 			},
 			onFailure: function(message) {
@@ -201,19 +221,23 @@ $.extend({
 		};
 		client.onMessageArrived = function(message) {
 			if (!isIssue) { //AI && DI回调
+
 				$.onLabelValueChange(message);
 			} else { //AO && DO && MO回调
+
 				$.onIssueSuccess(message, data);
 			}
 		};
 		client.connect(options);
 	},
 	//MQTT
+
 	onLabelValueChange: function(message) {
 		var dataId = Number(message.destinationName);
 		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(dataId, $.initThree.judgeLabelType({data_id: dataId}))];
 		var payload = typeof message.payloadString=='string' ? JSON.parse(message.payloadString) : message.payloadString;
 //		var payload = JSON.parse(message.payloadString);
+
 		if (!originLabel) return;
 		var newData = {
 			data_id: dataId,
@@ -251,20 +275,6 @@ $.extend({
 		$.three.labelGroup.remove(originLabel);
 		$.initThree.initLabel(newData, position);
 	},
-	onIssue: function(originLabel, data) {
-//		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(data.data_id, $.initThree.judgeLabelType(data))];
-		var newData = {
-			data_id: originLabel.labelId,
-			data_name: originLabel.labelName,
-			data_value: data.data_value,
-			data_unit: originLabel.labelUnit,
-			port_type: originLabel.labelType,
-			status: originLabel.labelStatus
-		};
-		var position = originLabel.position;
-		$.three.labelGroup.remove(originLabel);
-		$.initThree.initLabel(newData, position);
-	},
 	labelOperation: function(label) {
 		var time = $.initTime();
 		if (label.labelType) {
@@ -282,6 +292,7 @@ $.extend({
 			switch (label.labelType) {
 				case 'AI':
 					//do AI
+
 					$('.AI').siblings().toggleWin(true);
 					$('.AI').toggleWin().stayCenter($('.operation'));
 					$('.AI').find('.name').html(label.labelName);
@@ -293,6 +304,7 @@ $.extend({
 					break;
 				case 'DI':
 					//do DI
+
 					$('.DI').toggleWin().stayCenter($('.operation'));
 					$('.DI').siblings().toggleWin(true);
 					$('.DI').find('.name').html(label.labelName);
@@ -304,6 +316,7 @@ $.extend({
 					break;
 				case 'AO':
 					//do AO
+
 					$('.AO').siblings().toggleWin(true);
 					$('.AO').toggleWin().stayCenter($('.operation'));
 					$('.AO').find('.name').html(label.labelName);
@@ -318,50 +331,31 @@ $.extend({
 						bgColor: '#eeeeee'
 					});
 					$('.AO').find('.confirm').click(function() {
-						var comfirm = layer.confirm('是否确定下发？', {
+						layer.confirm('是否确定下发？', {
 							btn: ['确定','取消']
 						}, function(){
-							layer.close(comfirm);
-							layer.load(2, {
-								shade: [0.7,'#eee'],
-  								content:'<div style="width:200px;margin-left:50px;padding-top:5px;">下发中,请稍后。。。</div>'
-							});
 							var data_value = $('.AO').find('.confirmVal').val();
 							var	data_id = label.labelId;
 							var port_type = label.labelType;
 							$.issueAjax({
 								data_value: data_value,
 								data_id: data_id
-							}, function(data) {
-//								$.initMQTT({
-//									data_value: data_value,
-//									data_id: data_id,
-//									port_type: port_type
-//								}, true);
-								data.data_value = data_value;
-								$.onIssue(label, data);
+							}, function() {
+								$.initMQTT({
+									data_value: data_value,
+									data_id: data_id,
+									port_type: port_type
+								}, true);
 								$('.operation').toggleWin(true);
 								$('.AO').find('.confirm').unbind();
 								$.three.capturer.intersected = null;
-								layer.msg(data.description,{
-									icon: 1,
-									time: 1400,
-									end: function() {
-										layer.closeAll();
-									}
-								});
-							}, function(msg) {
-								layer.closeAll();
-								layer.msg(msg,{
-									icon: 2,
-									time: 1400
-								});
 							});
 						});
 					});
 					break;
 				case 'DO':
 					//do DO
+
 					$('.DO').siblings().toggleWin(true);
 					$('.DO').toggleWin().stayCenter($('.operation'));
 					$('.DO').find('.name').html(label.labelName);
@@ -370,44 +364,23 @@ $.extend({
 						el: '.finfosoft-onOff',
 						status: !label.labelValue ? 0 : label.labelValue,
 						onChanged: function(status) {
-							var comfirm = layer.confirm('是否确定下发？', {
+							layer.confirm('是否确定下发？', {
 								btn: ['确定','取消']
 							}, function() {
-								layer.close(comfirm);
-								layer.load(2, {
-									shade: [0.7,'#eee'],
-  									content:'<div style="width:200px;margin-left:50px;padding-top:5px;">下发中,请稍后。。。</div>'
-								});
 								var data_value = status;
 								var	data_id = label.labelId;
 								var port_type = label.labelType;
 								$.issueAjax({
 									data_value: data_value,
 									data_id: data_id
-								}, function(data) {
-//									$.initMQTT({
-//										data_value: data_value,
-//										data_id: data_id,
-//										port_type: port_type
-//									}, true);
-									data.data_value = data_value;
-									$.onIssue(label, data);
+								}, function() {
+									$.initMQTT({
+										data_value: data_value,
+										data_id: data_id,
+										port_type: port_type
+									}, true);
 									$('.operation').toggleWin(true);
 									$.three.capturer.intersected = null;
-									layer.msg(data.description,{
-										icon: 1,
-										time: 1400,
-										end: function() {
-											layer.closeAll();
-										}
-									});
-								}, function(msg) {
-									layer.closeAll();
-									layer.msg(msg,{
-										icon: 2,
-										time: 1400
-									});
-									onOff.reset();
 								});
 							}, function() {
 								onOff.reset();
@@ -417,6 +390,7 @@ $.extend({
 					break;
 				case 'MO':
 					//do MO
+
 					$('.MO').toggleWin().stayCenter($('.operation'));
 					$('.MO').siblings().toggleWin(true);
 					$('.MO').find('.name').html(label.labelName);
@@ -443,6 +417,7 @@ $.extend({
 						}
 						layer.confirm('是否确定下发？', {
 							btn: ['确定','取消'] //按钮
+
 						}, function(){
 							var data_value = parseFloat($('.MO').find('.newVal').val());
 							var	data_id = label.labelId;
@@ -467,54 +442,43 @@ $.extend({
 					break;
 			}
 		} else {
-			if (label.processId) {
-				var processId = label.processId;
-				var processName = label.processName;
-				layer.confirm('是否确定执行<span style="color: red;">'+processName+'</span>？', {
-					btn: ['确定','取消'],
-					btn1: function() {
-						$.issueAjax({
-							process_id: processId
-						}, function() {
-	//						$.initMQTT({
-	//							data_value: data_value,
-	//							data_id: data_id,
-	//							port_type: port_type
-	//						}, true);
-	//						$('.operation').toggleWin(true);
-							var position = label.position;
-							$.three.labelGroup.remove(label);
-							$.initThree.initLabel({
-								_id: processId,
-								process_name: processName,
-								status: 1
-							}, position);
-							$.three.capturer.intersected = null;
-						});
-					},
-					btn2: function() {
+			var processId = label.processId;
+			var processName = label.processName;
+			layer.confirm('是否确定执行<span style="color: red;">'+processName+'</span>？', {
+				btn: ['确定','取消'],
+				btn1: function() {
+					$.issueAjax({
+						process_id: processId
+					}, function() {
+//						$.initMQTT({
+
+//							data_value: data_value,
+
+//							data_id: data_id,
+
+//							port_type: port_type
+
+//						}, true);
+
+//						$('.operation').toggleWin(true);
+
+						var position = label.position;
+						$.three.labelGroup.remove(label);
+						$.initThree.initLabel({
+							_id: processId,
+							process_name: processName,
+							status: 1
+						}, position);
 						$.three.capturer.intersected = null;
-					},
-					cancel: function() {
-						$.three.capturer.intersected = null;
-					}
-				});
-			} else if (label.scadaId) {
-				var scadaId = label.scadaId;
-				var scadaName = label.scadaName;
-				layer.confirm('是否跳转至<span style="color: red;">'+scadaName+'</span>组态界面？', {
-					btn: ['确定','取消'],
-					btn1: function() {
-						$('.mainTitle').find('.backSide').children('[scadaid='+ scadaId +']').click();
-					},
-					btn2: function() {
-						$.three.capturer.intersected = null;
-					},
-					cancel: function() {
-						$.three.capturer.intersected = null;
-					}
-				});
-			}
+					});
+				},
+				btn2: function() {
+					$.three.capturer.intersected = null;
+				},
+				cancel: function() {
+					$.three.capturer.intersected = null;
+				}
+			});
 		}
 			
 	},
@@ -762,22 +726,20 @@ $.extend({
         chart.hideLoading();
         chart.setOption(option);
 	},
-	issueAjax: function(newData, callBack, onerror) {
+	issueAjax: function(newData, callBack) {
 		$.ajax({
 			type: "post",
 			dataType: "json",
-			url:$.initData.globalurl+"/v1/gateways?access_token="+$.initData.token.access,
+			url: $.initData.globalurl+"/v1/homes/",
 			async: true,
 			crossDomain: true == !(document.all),
 			data: {
-				data_id:newData.data_id,
-				data_value:newData.data_value
+				access_token: $.initData.token.access,
+				data: JSON.stringify(newData)
 			},
 			success: function(data) {
 				if (data.result == 1) {
-					callBack && callBack(data);
-				} else {
-					onerror && onerror('下发失败');
+					callBack && callBack();
 				}
 			}
 		});
