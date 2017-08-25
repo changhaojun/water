@@ -1,28 +1,36 @@
 var boxId=$("#boxId").val();	//获取box的id
+
 var type=$("#type").val();      //获取box类型
+
 var deviceId,deviceName,dataName;
 $(function(){
 	getToken();//刷新令牌
+
 	toolTip();//提示框
+
 	listBox();//数据列表页
+
 })
 //初始化提示框
+
 function toolTip(){
 	 $('[data-toggle="tooltip"]').tooltip();
 }
 //初始化头部
+
 if(type=="A"){
 	$(".sensorTop .Itype").html("查看传感器  / ");
-	$(".sensorTop .Etype a").html("接入传感器");
-	$(".sensorTop .Etype a").attr("href","/dataTag/box")
+	$(".sensorTop .Etype").html("Look Sensor");
 }else{
 	$(".sensorTop .Itype").html("查看PLC  / ");
-	$(".sensorTop .Etype a").html("接入PLC");
-	$(".sensorTop .Etype a").attr("href","/dataTag/plc")
+	$(".sensorTop .Etype").html("Look PLC");
 }
 //每隔十秒刷新一次
+
 //var time=setInterval(listBox,10000)
+
 //获取数据列表
+
 function listBox(){
 	$.ajax({
 		type: "get",
@@ -46,6 +54,7 @@ function listBox(){
 		    	deviceId=data.device._id
 		    	for(var i=0;i<data.datas.length;i++){	    		
 		    		//以开关展示
+
 		    		if(data.datas[i].port_type=="DO"){
 		    			str='<div class="lookList  normal" id="'+data.datas[i].data_id+'">'+
 								'<div class="listTop">'+
@@ -80,6 +89,7 @@ function listBox(){
 							$(".circle"+i+"").css({"left":"0px"});
 			    		}
 				//仪表盘展示
+
 		    		}else if((type="A"&&data.datas[i].port_type=="AO")||(type="P"&&data.datas[i].port_type=="AO")){
 		    			if (data.datas[i].data_value===''||data.datas[i].data_value===null) {
 		    				data.datas[i].data_value = 0;
@@ -95,7 +105,7 @@ function listBox(){
 										'<div class="water">'+
 											'<div class="board-ring board-ring'+i+'">'+
 												'<canvas></canvas>'+
-												'<input type="text" value="'+data.datas[i].data_value+'" class="dial"/>'+
+												'<input type="text" value="'+data.datas[i].data_value+'" class="dial'+data.datas[i].data_id+'"/>'+
 											'</div>'+
 											'<button type="button"id="give" onclick="give(&apos;'+data.datas[i].data_id+'&apos;)">下发</button>'+
 										'</div>'+						
@@ -112,10 +122,13 @@ function listBox(){
 							endDeg: 30,
 							lineWidth: 20,
 					//		bgColor: '#0055ff',
+
 							mainColor: '#1ab394'
 					//		initVal: this.input.value
+
 						});			
 				//数据展示
+
 		    		}else{	    			
 		    			str='<div class="lookList  normal" id="'+data.datas[i].data_id+'">'+
 								'<div class="listTop">'+
@@ -156,16 +169,19 @@ function listBox(){
 	})
 }
 //打开开关
+
 function Iopen(i,id){
 	
 	clickBtn(id,1,i)	
 }
 //关闭开关
+
 function Iclose(i,id){
 	
 	clickBtn(id,0,i)
 }
 //打开数据展示详情页
+
 function show(value,dataName){
 	layer.open({
 	  type: 2,
@@ -178,11 +194,14 @@ function show(value,dataName){
 	}); 
 }
 /**
+
  * 本方法用于模拟量的下发
+
  * 在模拟量的下发按钮调用
+
  */
 function give(id){
-	onoff=$(".dial").val();
+	onoff=$(".dial"+id).val();
 	var guid=guidGenerator();	
 	layer.confirm("<font size='2'>确认下发？</font>", {icon:7},function(index){
 		layer.close(index);
@@ -214,6 +233,7 @@ function give(id){
 	});
 }
 //io调控触发
+
 
 function clickBtn(id,dataValue,i){
 	dataId=id;
@@ -259,6 +279,7 @@ function clickBtn(id,dataValue,i){
 	});
 }
 //控制量guid
+
 function guidGenerator() {
 	var S4 = function() {
 	return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
@@ -267,6 +288,7 @@ function guidGenerator() {
 }			
 
 //控制量guid
+
 function guidGenerator() {
 	var S4 = function() {
 	return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
@@ -293,6 +315,7 @@ function MQTTconnect(guid){
 		}
 	};
 	// set callback handlers
+
 	client.onConnectionLost = onConnectionLost;
 	client.onMessageArrived = onMessageArrived;
 	
@@ -302,16 +325,19 @@ function MQTTconnect(guid){
 	}
 	client.connect(options);
 	// connect the clien
+
 }
 
 
 // called when the client loses its connection
+
 function onConnectionLost(responseObject) {
   if (responseObject.errorCode !== 0) {
   }
 }
 
 // called when a message arrives
+
 function onMessageArrived(message) {
   var topic = message.destinationName;
   var payload = JSON.parse(message.payloadString);
