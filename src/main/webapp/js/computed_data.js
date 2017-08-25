@@ -140,6 +140,16 @@ var $extend=$.fn.extend({
 			$.allData.inputCheck=false
 		}
 		return $.allData.inputCheck;
+	},
+	addNum:function(){
+		var num=$(this).prev().val();
+		var formula={
+			"data_name":num,
+			"class_name":"selectSign",
+			"dataTag":num
+			
+		};
+		$.allData.dataConfig.calculate_formula.push(formula);
 	}
 });
 
@@ -174,6 +184,9 @@ $.extend({
 		$('.sign').click(function(){
 			$(this).addSign();
 		});
+//		$('.markNum').click(function(){
+//			$(this).addNum();
+//		})
 		$('.saveBtn').click(function(){
 			$('.dataBox input').each(function(){
 				if($(this).attr('ischeck')!='false'){
