@@ -138,7 +138,7 @@ function listBox(){
 								'<div class="listHr"></div>'+
 								'<div class="listContent">'+
 									'<div class="contentTop">'+
-										'<div class="Itext">'+data.datas[i].data_value+data.datas[i].data_unit+						
+										'<div class="Itext">'+data.datas[i].data_value+(data.datas[i].data_unit=='-'?'':data.datas[i].data_unit)+						
 										'</div>'+						
 									'</div>'+
 									'<div class="contentBottom">'+
