@@ -148,11 +148,11 @@ function listBox(){
 							'</div>'
 						
 						$(".sensorContent").append(str);
-						if(type="P"&&data.datas[i].port_type=="DI"&&data.datas[i].data_value==1){
-								$(".Itext").html("开")
-		    			}else if(type="P"&&data.datas[i].port_type=="DI"&&data.datas[i].data_value==0){
-		    					$(".Itext").html("关");
-		    			}
+//						if(type="P"&&data.datas[i].port_type=="DI"&&data.datas[i].data_value==1){
+//								$(".Itext").html("开")
+//		    			}else if(type="P"&&data.datas[i].port_type=="DI"&&data.datas[i].data_value==0){
+//		    					$(".Itext").html("关");
+//		    			}
 		    		}
 		    		if(data.datas[i].status==1||data.datas[i].status==undefined){
 		    			$(".lookList").css({"border-left-color":"#1ab394","color":"#1ab394"});
