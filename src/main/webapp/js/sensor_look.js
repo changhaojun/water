@@ -219,14 +219,18 @@ function give(id){
 				contrastData()
 			}else if(data.result==1){
 					layer.msg('已下发', {
-						icon : 1
+						icon : 1,
+						time:2000,
+						end:function(){
+							MQTTconnect(guid)
+						}
 					});
-					MQTTconnect(guid)
 				}
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
 				layer.msg('下发失败', {
-					icon : 2
+					icon : 2,
+					time:2000
 				});
 		    }
 		});
@@ -255,9 +259,13 @@ function clickBtn(id,dataValue,i){
 					contrastData()
 				}else if(data.result==1){
 						layer.msg('已下发', {
-						icon : 1
+						icon : 1,
+						time:2000,
+						end:function(){
+							MQTTconnect(guid)
+						}
 					});
-						if(onoff){
+						/*if(onoff){
 							$(".Iopen"+i+"").addClass("Iactive");
 							$(".Iclose"+i+"").removeClass("Iactive");
 							$(".circle"+i+"").animate({"left":"0px"});
@@ -265,13 +273,14 @@ function clickBtn(id,dataValue,i){
 							$(".Iclose"+i+"").addClass("Iactive");
 							$(".Iopen"+i+"").removeClass("Iactive");
 							$(".circle"+i+"").animate({"left":"25px"});
-						}
-						MQTTconnect(guid)
+						}*/
+						
 				}
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
 				layer.msg('下发失败', {
-					icon : 2
+					icon : 2,
+					time:2000
 				});
 		    }
 
@@ -342,38 +351,57 @@ function onMessageArrived(message) {
   var topic = message.destinationName;
   var payload = JSON.parse(message.payloadString);
   var result='',iconR=2
-
-  for(var i=0;i<$(".lookList").length;i++){
-	if((payload.data_id==$(".lookList").eq(i).attr("id"))&&(payload.result==0)){
-		if(payload.port_type=='AO'){			
-			$(".dial").val(payload.old_value);
-			new Finfosoft.Ring({
-				el: '.board-ring'+i,
-				startDeg: 150,
-				endDeg: 30,
-				lineWidth: 20,
-				mainColor: '#1ab394'
-			});	
-		}else if(payload.port_type=="DO"){
-			if($(".circle"+i+"").css("left")=="0px"){
-				$(".circle"+i+"").animate({"left":"25px"});
-			}else{
-				$(".circle"+i+"").animate({"left":"0px"});
-			}
-			if($(".circle"+i+"").css("left")=="25px"){
-				$(".circle"+i+"").animate({"left":"0px"});
-			}else{
-				$(".circle"+i+"").animate({"left":"25px"});
-			}
+ 	console.info(payload)
+	if(payload.result==1){
+		if(payload.port_type=='DO'){
+			var circle=$('#'+payload.data_id).find('.circle');
+			var circleLeft=circle[0].offsetLeft;
+			circle.css('left',((circleLeft-25)*-1)+'px');
 		}
-		result='下发失败'
-  		iconR=2
-	}else if(payload.result==1){
 		result='下发成功';
-  		iconR=1
+	  	iconR=1
+	}else if(payload.result==0){
+		if(payload.port_type=='AO'){
+			var boardRing=$('#'+payload.data_id).find('.board-ring');
+			$('#'+payload.data_id).find('input').focus()
+			var value=$('#'+payload.data_id).find('input').val(payload.old_value);
+			$('#'+payload.data_id).find('input').blur()
+		}
+		result='下发失败';
+  		iconR=2;
 	}
-}
-layer.msg(payload.data_name+result,{
-	icon:iconR
-})
+//	for(var i=0;i<$(".lookList").length;i++){
+//		if((payload.data_id==$(".lookList").eq(i).attr("id"))&&(payload.result==0)){
+//			if(payload.port_type=='AO'){			
+//				$(".dial").val(payload.old_value);
+//				new Finfosoft.Ring({
+//					el: '.board-ring'+i,
+//					startDeg: 150,
+//					endDeg: 30,
+//					lineWidth: 20,
+//					mainColor: '#1ab394'
+//				});	
+//			}else if(payload.port_type=="DO"){
+//				console.log(payload)
+//				if($(".circle"+i+"").css("left")=="0px"){
+//					$(".circle"+i+"").animate({"left":"25px"});
+//				}else{
+//					$(".circle"+i+"").animate({"left":"0px"});
+//				}
+//				if($(".circle"+i+"").css("left")=="25px"){
+//					$(".circle"+i+"").animate({"left":"0px"});
+//				}else{
+//					$(".circle"+i+"").animate({"left":"25px"});
+//				}
+//			}
+//			result='下发失败'
+//	  		iconR=2
+//		}else if(payload.result==1){
+//			result='下发成功';
+//	  		iconR=1
+//		}
+//	}
+	layer.msg(payload.data_name+result,{
+		icon:iconR
+	})
 }
