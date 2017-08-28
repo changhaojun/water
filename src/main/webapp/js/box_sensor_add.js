@@ -218,6 +218,7 @@ $.fn.extend({
 	}
 	//点击编辑数据同步到弹窗
 	function editClick(i){
+		console.info(info[i])
 		$('.pop').filter('.step1').removeClass('hidden');
 		$('.pop-mask').removeClass('hidden');
 		$(".addData_label").hide();
@@ -263,7 +264,7 @@ $.fn.extend({
 			$(".changeData").empty();
 			dStr='<div class="dataRow collectorRange"><label>低电平</label><div class="rangeData">'
 			+'<input type="text" class="lowBattery" value="'+lowBattery+'" data-info="请填写低电平" style="width:350px;" /></div></div><div class="dataRow realRange">'
-			+'<label>高电平</label><div class="rangeData "><input type="text" data-info="请填写高电平" class="highBattery" style="width:350px;" value="'+lowBattery+'" /></div>'
+			+'<label>高电平</label><div class="rangeData "><input type="text" data-info="请填写高电平" class="highBattery" style="width:350px;" value="'+highBattery+'" /></div>'
 			+'</div><div class="dataRow dataName"><label>数据名称</label><input type="text" value="'+dataName+'" data-info="请填写数据名称"/></div>';
 			$(".changeData").append(dStr);
 		}
