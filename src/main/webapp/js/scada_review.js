@@ -261,9 +261,13 @@ $.extend({
 		}
 		if (!originLabel) return;
 		if (payload.result == 0) {
+			layer.closeAll();
+			layer.msg('下发失败', {
+				icon: 2,
+				time: 2000
+			});
 			return;
 		}
-		console.log(message);
 		layer.msg('下发成功！', {icon: 1});
 		var newData = {
 			data_id: originLabel.labelId,
