@@ -318,8 +318,14 @@ function onMessageArrived(message) {
     var payload = message.payloadString;
 	var dataConfig=JSON.parse(payload)
     var dataId=dataConfig.data_id
-	$("#"+dataId).find('.dataTime').html(dataConfig.data_time)
-	$("#"+dataId).find('.dataValue').html(dataConfig.data_value)
+    if(dataConfig.port_type=='DI'){
+    	$("#"+dataId).find('.dataTime').html(dataConfig.data_time)
+    	var battery=dataConfig.battery.split('$');
+    	$("#"+dataId).find('.dataValue').html(battery[dataConfig.data_value])
+    }else{
+    	$("#"+dataId).find('.dataTime').html(dataConfig.data_time)
+    	$("#"+dataId).find('.dataValue').html(dataConfig.data_value)
+    }
 	if(dataConfig.status==1){
 		$('#'+dataId).addClass("greenBg");
 	}else if(data==0){
@@ -330,7 +336,6 @@ function onMessageArrived(message) {
 }
 function showDisplay(){
 	$(".dataList").hover(function(){
-		console.log(123)
 		$(this).find(".focus1").css("display","inline-block");
 		$(this).find(".cover").css("display","inline-block");
 	},function(){
