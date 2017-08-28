@@ -116,7 +116,7 @@ $.fn.extend({
 				}
 			}
 		}else if(typeName=='时间周期触发'){
-			$(this).find('.content1').append('开始时间:'+conditions[0].begin_time+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间间隔:'+conditions[0].cycle_time+'分钟')
+			$(this).find('.content1').append('开始时间:'+conditions[0].begin_time+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间间隔:'+conditions[0].cycle_time+'秒')
 		}else if(typeName=='定时触发'){
 			var cycleStr='';
 			if(conditions[0].cycle=='everyWeek'){
@@ -183,7 +183,7 @@ $.fn.extend({
 		missionBox.attr('id',thisMIssion._id);
 		missionBox.append('<div class="content1">'+thisMIssion.mission_name+'</div>')
 		missionBox.append('<div class="content2">'+thisMIssion.target_thing_name+'：'+thisMIssion.target_data_name+'  '+action_str+'</div>');
-		missionBox.append('<div class="content3">等待'+thisMIssion.wait_time+'分钟</div>');
+		missionBox.append('<div class="content3">等待'+thisMIssion.wait_time+'秒</div>');
 		missionBox.append($($.taskData.domString.missionTools));
 	},
 	saveTechnologyName:function(isEdit,name,technologyId){		//保存工艺名称
