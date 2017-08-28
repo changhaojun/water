@@ -551,8 +551,20 @@ $.fn.extend({
 							})
 							$('#'+$.taskData.selectTaskId).showStepLine();
 							$.saveMissionIndex($.taskData.ruleIndexBox);
-							
+						}else if(data.code==400003){
+							layer.close($.layerConfirm)
+							layer.msg(data.error,{
+								icon:2,
+								time:2000,
+							})
+						}else{
+							layer.close($.layerConfirm)
+							layer.msg(data.error,{
+								icon:2,
+								time:2000,
+							})
 						}
+						
 					}
 				});
 				}
@@ -1184,6 +1196,15 @@ $.extend({
 							$.taskData.processDom.showStepLine()
 							layer.msg(data.success,{icon:1})
 							layer.close($.lyAddRuleBox);
+						}else if(data.code==400003){
+							layer.close($.layerConfirm)
+							layer.msg(data.error,{
+								icon:2,
+							})
+							layer.close($.lyAddRuleBox);
+							$.taskData.processDom.showStepLine()
+						}else{
+							layer.msg(data.error,{icon:2})
 						}
 					}
 				})

@@ -65,12 +65,12 @@ function listBox(){
 								'<div class="listContent">'+
 									'<div class="contentTop">'+
 										'<div class="on-off">'+
-											'<button type="button" class="Iopen Iopen'+i+' Iactive" onclick="Iopen('+i+','+data.datas[i].data_id+')">'+data.datas[i].high_battery+'</button>'+
+											'<button type="button" class="Iopen Iopen'+i+' Iactive" onclick="Iopen('+i+','+data.datas[i].data_id+',event)">'+data.datas[i].high_battery+'</button>'+
 											'<div class="off">'+
 												'<div class="circle circle'+i+'">'+				
 												'</div>'+
 											'</div>'+
-											'<button type="button" class="Iclose Iclose'+i+'" onclick="Iclose('+i+','+data.datas[i].data_id+')">'+data.datas[i].low_battery+'</button>'+
+											'<button type="button" class="Iclose Iclose'+i+'" onclick="Iclose('+i+','+data.datas[i].data_id+',event)">'+data.datas[i].low_battery+'</button>'+
 										'</div>'+							
 									'</div>'+
 									'<div class="contentBottom">'+
@@ -170,15 +170,19 @@ function listBox(){
 }
 //打开开关
 
-function Iopen(i,id){
-	
-	clickBtn(id,1,i)	
+function Iopen(i,id,ev){
+	var This=$(ev.target)
+	if(!This.hasClass('Iactive')){
+		clickBtn(id,1,i)	
+	}
 }
 //关闭开关
 
-function Iclose(i,id){
-	
-	clickBtn(id,0,i)
+function Iclose(i,id,ev){
+	var This=$(ev.target)
+	if(!This.hasClass('Iactive')){
+		clickBtn(id,0,i)
+	}
 }
 //打开数据展示详情页
 
@@ -342,12 +346,16 @@ function onMessageArrived(message) {
   var topic = message.destinationName;
   var payload = JSON.parse(message.payloadString);
   var result='',iconR=2
- 	console.info(payload)
 	if(payload.result==1){
 		if(payload.port_type=='DO'){
 			var circle=$('#'+payload.data_id).find('.circle');
 			var circleLeft=circle[0].offsetLeft;
 			circle.css('left',((circleLeft-25)*-1)+'px');
+			
+			var textParent=$('#'+payload.data_id).find('.on-off');
+			var activeBtn=textParent.find('.Iactive');
+			activeBtn.removeClass('Iactive');
+			activeBtn.siblings('button').addClass('Iactive');
 		}
 		result='下发成功';
 	  	iconR=1
