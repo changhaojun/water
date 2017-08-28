@@ -355,7 +355,7 @@ function onMessageArrived(message) {
 		if(payload.port_type=='AO'){
 			var boardRing=$('#'+payload.data_id).find('.board-ring');
 			$('#'+payload.data_id).find('input').focus()
-			var value=$('#'+payload.data_id).find('input').val(payload.old_value);
+			$('#'+payload.data_id).find('input').val(payload.old_value);
 			$('#'+payload.data_id).find('input').blur()
 		}
 		result='下发失败';
