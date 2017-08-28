@@ -65,7 +65,7 @@ function listData(data,i){
 				'<div class="contentTop">'+
 					'<div class="Itext">'+	
 						'<span class="dataValue">'+data[i].data_value+'</span>'+
-						'<span>'+data[i].data_unit+'</span>'+
+						'<span>'+(data[i].data_unit=='-'?'':data[i].data_unit)+'</span>'+
 					'</div>'+						
 				'</div>'+
 				'<div class="contentBottom">'+
@@ -87,7 +87,7 @@ function listData(data,i){
 				'<div class="contentTop">'+
 					'<div class="Itext">'+
 						'<span class="dataValue">'+data[i].data_value+'</span>'+
-						'<span>'+data[i].data_unit+'</span>'+
+						'<span>'+(data[i].data_unit=='-'?'':data[i].data_unit)+'</span>'+
 					'</div>'+						
 				'</div>'+
 				'<div class="contentBottom">'+
@@ -109,7 +109,7 @@ function listData(data,i){
 				'<div class="contentTop">'+
 					'<div class="Itext">'+
 						'<span class="dataValue">'+data[i].data_value+'</span>'+
-						'<span>'+data[i].data_unit+'</span>'+
+						'<span>'+(data[i].data_unit=='-'?'':data[i].data_unit)+'</span>'+
 					'</div>'+						
 				'</div>'+
 				'<div class="contentBottom">'+
@@ -132,7 +132,7 @@ function listData(data,i){
 				'<div class="contentTop">'+
 					'<div class="Itext">'+
 						'<span class="dataValue">'+data[i].data_value+'</span>'+
-						'<span>'+data[i].data_unit+'</span>'+
+						'<span>'+(data[i].data_unit=='-'?'':data[i].data_unit)+'</span>'+
 					'</div>'+						
 				'</div>'+
 				'<div class="contentBottom">'+
