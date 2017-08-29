@@ -377,6 +377,6 @@ function onMessageArrived(message) {
   	dataValue=payload.data_value;
   }
    toastr.error('告警!&nbsp;&nbsp;'+payload.whole_name+'&nbsp;&nbsp;&nbsp;&nbsp;当前值：'+dataValue+(payload.data_unit=='-'?'':payload.data_unit));
-   var alarmNum=$('.msgNum').text();
-   $('.msgNum').text(Number(alarmNum)+1);
+// var alarmNum=$('.msgNum').text();
+// $('.msgNum').text(Number(alarmNum)+1);
 }

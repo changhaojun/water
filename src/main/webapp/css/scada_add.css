@@ -374,9 +374,11 @@ body *{
 	background: url(../img/login/login_layer_close.png) no-repeat 10px 10px;
 	-webkit-transition: 0.5s;
 			transition: 0.5s;
+	opacity: 1;
 }
 .operation .close:hover{
 	background-color: #24c5a4;
+	opacity: 1;
 }
 
 .operation>.AI,

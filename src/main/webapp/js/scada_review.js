@@ -197,17 +197,13 @@ $.extend({
 			timeout: 1000,
 			onSuccess: function() {
 				if (data.port_type == 'AO' || data.port_type == 'DO' || data.port_type == 'MO') { //AO && DO && MO订阅
-
 					if (isIssue) {
 						client.subscribe(data.data_id.toString());
 					}
 				} else if (data.port_type == 'AI' || data.port_type == 'DI') { //AI && DI订阅
-
 					client.subscribe(data.data_id.toString());
 				} else { //任务订阅
-
 					//任务订阅预留接口
-
 				}
 			},
 			onFailure: function(message) {
@@ -223,10 +219,8 @@ $.extend({
 		};
 		client.onMessageArrived = function(message) {
 			if (!isIssue) { //AI && DI回调
-
 				$.onLabelValueChange(message);
 			} else { //AO && DO && MO回调
-
 				$.onIssueSuccess(message, data);
 			}
 		};
@@ -235,6 +229,7 @@ $.extend({
 	//MQTT
 
 	onLabelValueChange: function(message) {
+		console.log(message)
 		var dataId = Number(message.destinationName);
 		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(dataId, $.initThree.judgeLabelType({data_id: dataId}))];
 		var payload = typeof message.payloadString=='string' ? JSON.parse(message.payloadString) : message.payloadString;

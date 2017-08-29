@@ -68,7 +68,7 @@ function getCharts(){
 							$('.desktopContent').append(str);
 						dataId.push(data[i].data_id);
 						colorBg(data[i].status,data[i].data_id);
-					}
+					}	
 				}
 				MQTTconnect(dataId);		
 			}
@@ -192,20 +192,18 @@ $('.desktopContent').delegate('.cancel','click',function(){
 })
 
 //订阅
-var client; 
-var topic;
-var data;
+var client,topic,data;
 function MQTTconnect(dataIds) {
 	console.log('开始订阅')
     var mqttHost = mqttHostIP;
 	var username = mqttName;
 	var password = mqttWord;
-	 topic="mqtt_alarm_currentdata";
-	  client = new Paho.MQTT.Client(mqttHost, Number(portNum), "server" + parseInt(Math.random() * 100, 10));
+	topic="mqtt_alarm_currentdata";
+	 client = new Paho.MQTT.Client(mqttHost, Number(portNum), "server" + parseInt(Math.random() * 100, 10));
 	 data = dataIds;  
 	  var options = {
 			  timeout: 1000,
-			  onSuccess: onConnect,
+			  onSuccess:onConnect,
 			  onFailure: function (message) {
 				  setTimeout(MQTTconnect, 10000000);
 			  }
@@ -221,13 +219,14 @@ function MQTTconnect(dataIds) {
 	  // connect the clien	
 }
 
-// called when the client connects
+//// called when the client connects
 function onConnect() {
 
-  for(var i=0;i<data.length;i++){
-	  topic=data[i]+"";
-	  client.subscribe(topic);
-  }
+	for(var i=0;i<data.length;i++){
+	   topic=data[i] + "";
+	   console.log('MQTT connection successful!')
+	   client.subscribe(topic);
+	}
 }
 
 // called when the client loses its connection
@@ -245,11 +244,11 @@ function onMessageArrived(message) {
     var dataId=dataConfig.data_id
     //数据标签推送
     var dataValue;
-  if(dataConfig.prot_type=='DI'){
-  	dataValue=dataConfig.battery.split('$')[dataConfig.data_value]
-  }else{
-  	dataValue=dataConfig.data_value
-  }
+	  if(dataConfig.port_type=='DI'){
+	  	dataValue=dataConfig.battery.split('$')[dataConfig.data_value]
+	  }else{
+	  	dataValue=dataConfig.data_value
+	  }
 	$("#"+dataId).find('.dataTime').html(dataConfig.data_time)
 	$("#"+dataId).find('.dataValue').html(dataValue)
 	if(dataConfig.status==1){
