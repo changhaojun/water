@@ -370,7 +370,13 @@ function onMessageArrived(message) {
 	  "showMethod": "fadeIn",
 	  "hideMethod": "fadeOut"
 	}
-   toastr.error('告警!&nbsp;&nbsp;'+payload.whole_name+'&nbsp;&nbsp;&nbsp;&nbsp;当前值：'+payload.data_value+payload.data_unit);
+  var dataValue;
+  if(payload.port_type=='DI'){
+  	dataValue=payload.battery.split('$')[payload.data_value]
+  }else{
+  	dataValue=payload.data_value;
+  }
+   toastr.error('告警!&nbsp;&nbsp;'+payload.whole_name+'&nbsp;&nbsp;&nbsp;&nbsp;当前值：'+dataValue+(payload.data_unit=='-'?'':payload.data_unit));
    var alarmNum=$('.msgNum').text();
    $('.msgNum').text(Number(alarmNum)+1);
 }

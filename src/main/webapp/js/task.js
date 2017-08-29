@@ -790,7 +790,7 @@ $.extend({
 		$('input').filter('[num-limit=limit]').numOnly();		//数字限制输入
  		$('[data-toggle="tooltip"]').tooltip();
  		$.saveProcess();
- 		$.isRemind();
+ 		$.isRemind();      //短信提醒
  		$('.remindBtn').find('.activeBtn').remindBtnStatus();
  		$('#datetimepicker').datetimepicker({
  			language:'zh-CN',
@@ -869,6 +869,7 @@ $.extend({
 		$('#addTechnologyName').val(processData.process_name);
 		$('#triggerType').val(processData.trigger_type);
 		$('.actionTimes').val(processData.action_times);
+		$('.remindBtn').find('span').filter('[value='+processData.is_remind+']').click()
 		if(processData.trigger_name=="事件触发"){
 			if(processData.trigger_conditions.length>0){
 				$.showEventBoxData(processData)

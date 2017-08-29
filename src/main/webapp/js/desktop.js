@@ -57,7 +57,7 @@ function getCharts(){
 									'<div class="contentTop">'+
 										'<div class="Itext">'+
 											'<span class="dataValue">'+data[i].data_value+'</span>'+
-											'<span>'+data[i].data_unit+'</span>'+
+											'<span>'+(data[i].data_unit=='-'?'':data[i].data_unit)+'</span>'+
 										'</div>'+
 									'</div>'+
 									'<div class="contentBottom">'+
@@ -196,6 +196,7 @@ var client;
 var topic;
 var data;
 function MQTTconnect(dataIds) {
+	console.log('开始订阅')
     var mqttHost = mqttHostIP;
 	var username = mqttName;
 	var password = mqttWord;
@@ -243,8 +244,14 @@ function onMessageArrived(message) {
 	var dataConfig=JSON.parse(payload)
     var dataId=dataConfig.data_id
     //数据标签推送
+    var dataValue;
+  if(dataConfig.prot_type=='DI'){
+  	dataValue=dataConfig.battery.split('$')[dataConfig.data_value]
+  }else{
+  	dataValue=dataConfig.data_value
+  }
 	$("#"+dataId).find('.dataTime').html(dataConfig.data_time)
-	$("#"+dataId).find('.dataValue').html(dataConfig.data_value)
+	$("#"+dataId).find('.dataValue').html(dataValue)
 	if(dataConfig.status==1){
 		$('#'+dataId).removeClass('grayBg').addClass("greenBg");
 	}else if(data==0){
