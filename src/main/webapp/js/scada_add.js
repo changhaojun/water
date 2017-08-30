@@ -241,7 +241,6 @@ $.fn.extend({
 	refreshAnchorList: function(data) {
 		$(this).html('');
 		var liDom = '';
-		console.log(data);;
 		if (data.rows.length > 0) {
 			$.each(data.rows, function(i) {
 				liDom += "<li primary='"+JSON.stringify(data.rows[i])+"'>"+data.rows[i].scada_name+"</li>";
@@ -490,7 +489,6 @@ $.extend({
 			$.initData.sentData.scada_name = $('.name').find('input').val();
 			$.initData.sentData.description = $('.description').find('input').val();
 			$.initData.sentData.scada_config = $.initThree.createLabelData();
-			console.log($.initData.sentData.scada_config);
 			if ($.initData.sentData.scada_name==='') {
 				layer.msg('请输入情景名称！', {
 					icon: 2,

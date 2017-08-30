@@ -34,6 +34,14 @@ var $extend=$.fn.extend({
 		}
 		return $.allData.inputCheck;
 	},
+	//非数字限制输入
+	numOnly: function() {
+		$(this).keyup(function() {
+			if(!$(this).attr('num-limit')) return false;
+			$(this).val($(this).val().replace(/[^0-9-]/g, ''));
+			eval('initData.'+$(this).attr('datasrc')+'=Number($(this).val())');
+		});
+	}
 });
 
 $.extend({
@@ -44,6 +52,7 @@ $.extend({
 			methods:$extend
 		})
 		getToken();
+		$('input').filter('[num-limit=limit]').numOnly();
 		$.allData.access_token = accesstoken;
 		$.getDevice();
 		$('[data-toggle="tooltip"]').tooltip();

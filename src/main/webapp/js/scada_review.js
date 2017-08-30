@@ -25,7 +25,9 @@ $.initData = {
 		host: mqttHostIP,
 		port: Number(portNum),
 		username: mqttName,
-		password: mqttWord
+		password: mqttWord,
+		num: 0,
+		group: []
 	}
 }
 
@@ -75,7 +77,7 @@ $.extend({
 			$.initTitle();
 			$.initAjax(function(data) {
 				//数据流初始化
-
+				
 				$.initData.thingName = data.scada.thing_name;
 				$.initData.sentData.thing_id = data.scada.thing_id;
 				$.initData.sentData.scada_name = data.scada.scada_name;
@@ -87,13 +89,11 @@ $.extend({
 				$.initThree.init(data.scadaModel.modelConfig, function() {
 					for (var i=0; i<$.initData.sentData.scada_config.length; i++) {
 						//数据标签渲染
-
 						$.initThree.initLabel(
 							$.initData.sentData.scada_config[i],
 							$.initData.sentData.scada_config[i].objPosition,
 							function(userData) {
 								//数据标签订阅MQTT
-
 								$.initMQTT(userData);
 							}
 						);
@@ -190,11 +190,13 @@ $.extend({
 	//MQTT订阅相关
 
 	initMQTT: function(data, isIssue) {
-		var client = new Paho.MQTT.Client($.initData.mqtt.host, $.initData.mqtt.port, "server" + parseInt(Math.random() * 100, 10));
+		$.initData.mqtt.group.push(data);
+		var client = new Paho.MQTT.Client($.initData.mqtt.host, $.initData.mqtt.port, "server" + $.initData.mqtt.num.toString());
 		var options = {
 			userName: $.initData.mqtt.username,
 			password: $.initData.mqtt.password,
 			timeout: 1000,
+			keepAliveInterval: 10,
 			onSuccess: function() {
 				if (data.port_type == 'AO' || data.port_type == 'DO' || data.port_type == 'MO') { //AO && DO && MO订阅
 					if (isIssue) {
@@ -205,14 +207,11 @@ $.extend({
 				} else { //任务订阅
 					//任务订阅预留接口
 				}
-			},
-			onFailure: function(message) {
-				setTimeout(function() {
-					$.initMQTT(data, isIssue);
-				}, 10000000);
 			}
 		};
 		client.onConnectionLost = function(responseObject) {
+			var index = Number(this.clientId.replace( /server/, '' ));
+			$.initMQTT($.initData.mqtt.group[ index ]);
 			if(responseObject.errorCode !== 0) {
 				console.log("onConnectionLost:" + responseObject.errorMessage);
 			}
@@ -225,11 +224,11 @@ $.extend({
 			}
 		};
 		client.connect(options);
+		$.initData.mqtt.num += 1;
 	},
 	//MQTT
 
 	onLabelValueChange: function(message) {
-		console.log(message)
 		var dataId = Number(message.destinationName);
 		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(dataId, $.initThree.judgeLabelType({data_id: dataId}))];
 		var payload = typeof message.payloadString=='string' ? JSON.parse(message.payloadString) : message.payloadString;
@@ -599,6 +598,7 @@ $.extend({
 		});
 	},
 	initChart: function(chart, data, chartType) {
+		var gData = data;
 		var option = {
             tooltip: {
             	trigger: 'axis'
@@ -708,7 +708,7 @@ $.extend({
 		                			},
 		                			tooltip: {
 		                				formatter: function(data) {
-		                					return data.name + ' ' + (data.value == 1 ? '开' : '关');
+		                					return data.name + ' ' + (data.value == 1 ? gData.high_battery : gData.low_battery);
 		                				}
 		                			}
 		                		});
@@ -726,10 +726,10 @@ $.extend({
 	        				var status;
 			        		switch (value) {
 			        			case 1:
-			        				status = '开';
+			        				status = gData.high_battery;
 			        				break;
 			        			case -1:
-			        				status = '关';
+			        				status = gData.low_battery;
 			        				break;
 			        			default:
 			        				status = ''

@@ -252,9 +252,9 @@ $.initThree = {
 			var dataStatus = userData.status;
 			var portType = userData.port_type;
 			if (portType == 'AI' || portType == 'AO' || portType == 'MO') {
-				labelMessage = dataName + ':' + dataValue + dataUnit;
+				labelMessage = dataName + ':' + dataValue + (dataUnit == '-' ? '' : dataUnit) ;
 			} else if (portType == 'DI' || portType == 'DO') {
-				labelMessage = dataName + ':' + (dataValue == 1 ? '开启' : '关闭');
+				labelMessage = dataName + ':' + (dataValue == 1 ? userData.high_battery : userData.low_battery);
 			}
 		} else if ($.initThree.judgeLabelType(userData)=='process') {
 			var processId = userData._id ? userData._id : userData.process_id;
@@ -302,7 +302,7 @@ $.initThree = {
 					case 0:
 						return 0xcccccc;
 					case 1:
-						return 0x00aeff;
+						return 0x0036ff;
 					case 2:
 						return 0xff0000;
 				}
@@ -313,7 +313,7 @@ $.initThree = {
 					case 0:
 						return 0xcccccc;
 					case 1:
-						return 0x00aeff;
+						return 0x0036ff;
 				}
 			})();
 		} else if ($.initThree.judgeLabelType(userData) == 'anchor') {
@@ -375,6 +375,10 @@ $.initThree = {
 			label.labelValue = dataValue;
 			label.labelUnit = dataUnit;
 			label.labelType = portType;
+			if (portType == 'DI' || portType == 'DO') {
+				label.HighBattery = userData.high_battery;
+				label.LowBattery = userData.low_battery;
+			}
 			label.labelStatus = dataStatus;
 		} else if ($.initThree.judgeLabelType(userData) == 'process') {
 			label.processId = processId;
@@ -538,16 +542,31 @@ $.initThree = {
 		var labels = [];
 		for (var i=0; i<$.three.labelGroup.children.length; i++) {
 			if ($.initThree.judgeLabelType($.three.labelGroup.children[i]) == 'data') {
-				labels.push({
-					data_id: $.three.labelGroup.children[i].labelId,
-					data_name: $.three.labelGroup.children[i].labelName,
-					data_value: $.three.labelGroup.children[i].labelValue,
-					data_unit: $.three.labelGroup.children[i].labelUnit,
-					port_type: $.three.labelGroup.children[i].labelType,
-					status: $.three.labelGroup.children[i].labelStatus,
-					objPosition: $.three.labelGroup.children[i].position,
-					objRotation: $.three.labelGroup.children[i].rotation
-				});
+				if ($.three.labelGroup.children[i].labelType == 'DI' || $.three.labelGroup.children[i].labelType == 'DO') {
+					labels.push({
+						data_id: $.three.labelGroup.children[i].labelId,
+						data_name: $.three.labelGroup.children[i].labelName,
+						data_value: $.three.labelGroup.children[i].labelValue,
+						high_battery: $.three.labelGroup.children[i].HighBattery,
+						low_battery: $.three.labelGroup.children[i].LowBattery,
+						data_unit: $.three.labelGroup.children[i].labelUnit,
+						port_type: $.three.labelGroup.children[i].labelType,
+						status: $.three.labelGroup.children[i].labelStatus,
+						objPosition: $.three.labelGroup.children[i].position,
+						objRotation: $.three.labelGroup.children[i].rotation
+					});
+				} else {
+					labels.push({
+						data_id: $.three.labelGroup.children[i].labelId,
+						data_name: $.three.labelGroup.children[i].labelName,
+						data_value: $.three.labelGroup.children[i].labelValue,
+						data_unit: $.three.labelGroup.children[i].labelUnit,
+						port_type: $.three.labelGroup.children[i].labelType,
+						status: $.three.labelGroup.children[i].labelStatus,
+						objPosition: $.three.labelGroup.children[i].position,
+						objRotation: $.three.labelGroup.children[i].rotation
+					});
+				}
 			} else if ($.initThree.judgeLabelType($.three.labelGroup.children[i]) == 'process') {
 				labels.push({
 					process_id: $.three.labelGroup.children[i].processId,

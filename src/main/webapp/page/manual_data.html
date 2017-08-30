@@ -59,6 +59,10 @@
 								<div class="dataCircle">
 									<label>数据单位</label>
 									<input type="text" v-model="dataConfig.data_unit" isCheck="false" class="textInput" placeholder="请输入数据单位"/>
+								</div>
+								<div class="dataCircle">
+									<label>初始值</label>
+									<input num-limit="limit" type="text" v-model.number="dataConfig.data_value" isCheck="false" class="textInput" placeholder="请输入初始值"/>
 									<span @click='deleteData(index,$event)' class="fa fa-times-circle deleteData" data-toggle="tooltip" data-placement="top" title="删除"></span>
 								</div>
 							</div>

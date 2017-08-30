@@ -90,15 +90,15 @@ $.fn.extend({
 				url:globalurl+"/v1/processes?access_token="+$.taskData.access_token+"&process_id="+processId,
 				async:false,
 				success:function(data){
-					$('.ruleTitle').showTriger(data.trigger_conditions,data.action_times,data.trigger_name);
+					$('.ruleTitle').showTriger(data.trigger_conditions,data.action_times,data.trigger_name,data.target_process_name);
 				}
 			})
 	},
-	showTriger:function(conditions,times,typeName){
+	showTriger:function(conditions,times,typeName,targetName){
 		$(this).find('.content1').empty();
 		$(this).find('.content2').empty();
 		$(this).find('.content1').append('触发条件:&nbsp;&nbsp;&nbsp;&nbsp;')
-		if(typeName=='事件触发'||typeName=='异常处理'){
+		if(typeName=='事件触发'){
 			if(conditions.length>0){
 				for(var i=0;i<conditions.length;i++){
 					var operStr;
@@ -129,6 +129,8 @@ $.fn.extend({
 				cycleStr='每日'
 			}
 			$(this).find('.content1').append(`触发周期:${cycleStr}&nbsp;${conditions[0].start_time}`)
+		}else if(typeName=='异常处理'){
+			$(this).find('.content1').append(targetName+typeName)
 		}else{
 			$(this).find('.content1').append('人工触发没有触发条件')
 		}
@@ -323,18 +325,18 @@ $.fn.extend({
 			$('.addConditionBox').addCustomAttr();
 			$('.timingBox').addCustomAttr();
 		}else if(selectType=='异常处理'){
-			$(".eventBox").show();
-			$(".addEventBox").show();
+			$(".eventBox").hide();
+			$(".addEventBox").hide();
 			$('.timingBox').hide();
-			$('.triggerText').show();
-			$('.addConditionBtn').show();
+			$('.triggerText').hide();
+			$('.addConditionBtn').hide();
 			$('.targetProcess').show();
 			$('.targetProcess').removeCustomAttr();
 			$('.timing').hide()
 			$('.timing').addCustomAttr()
 			$('.timingBox').addCustomAttr();
-			$(".eventBox").removeCustomAttr();
-			$('.addConditionBox').removeCustomAttr();
+			$(".eventBox").addCustomAttr();
+			$('.addConditionBox').addCustomAttr();
 		}
 		layer.iframeAuto($.lyAddRuleBox);
 	},
@@ -891,10 +893,10 @@ $.extend({
 				$('.startTime').val(processData.trigger_conditions[0].start_time)
 			}
 		}else if(processData.trigger_name=="异常处理"){
-			if(processData.trigger_conditions.length>0){
-				$('.targetProcessName').val(processData.target_process_name)
-				$.showEventBoxData(processData)
-			}
+			$('.targetProcessName').val(processData.target_process_name)
+//			if(processData.trigger_conditions.length>0){
+//				$.showEventBoxData(processData)
+//			}
 		}
 		$('#triggerType').changeTriggerTypeAction(processData.trigger_name);
 		$.addProcessBox=layer.open({

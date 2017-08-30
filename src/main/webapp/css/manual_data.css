@@ -88,9 +88,14 @@ input:disabled{
 	color:#39bda2 ;
 	border-bottom: 1px solid #1ab394;
 }
-.boxContent .dataCircle,
-.dataModel .dataCircle{
+.boxContent .dataCircle{
 	width: 50%;
+	float: left;
+	padding-top: 25px;
+	position: relative;
+}
+.dataModel .dataCircle{
+	width: 33%;
 	float: left;
 	padding-top: 25px;
 	position: relative;
