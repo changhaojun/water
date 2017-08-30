@@ -23,7 +23,10 @@ $.extend({
 		var vmTaskBox = new Vue({
 			el:'.globalContent',
 			data:allData,
-			methods:$extend
+			methods:$extend,
+			updated:function(){
+				$('[data-toggle="tooltip"]').tooltip();
+			}
 		})
 		getToken();
 		allData.access_token=accesstoken
@@ -35,7 +38,6 @@ $.extend({
 			url:globalurl+"/v1/processes?access_token="+allData.access_token,
 			async:false,
 			success:function(data){
-				console.log(data)
 				allData.processList=data.rows
 			}
 		});

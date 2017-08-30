@@ -19,26 +19,26 @@
 			</div>
 			<hr>
 			<div class="globalContent">
-				<span class="groupName">已启动的工艺</span>
+				<span class="groupName">已启用的工艺</span>
 				<hr />
 				<div class="parentBox">
 					<div v-if="task.trigger_name!='人工触发' && task.trigger_name!='异常处理' && task.status==1" v-for="(task,index) in processList" class="processBox runProcess" >
 						<div class="processTitle">
 							{{task.process_name}}
 							<div class="btnBox">
-								<span class="fa fa-pause-circle" @click="stopProcess(index)"></span>
+								<span data-toggle="tooltip" data-placement="bottom" title="停用工艺" class="fa fa-pause-circle stop" @click="stopProcess(index)"></span>
 							</div>
 						</div>
 					</div>
 				</div>
-				<span class="groupName">已暂停的工艺</span>
+				<span class="groupName">已停用的工艺</span>
 				<hr />
 				<div class="parentBox">
 					<div v-if="task.trigger_name!='人工触发' && task.trigger_name!='异常处理' && task.status==0" v-for="(task,index) in processList" class="processBox stopProcess" >
 						<div class="processTitle">
 							{{task.process_name}}
 							<div class="btnBox">
-								<span class="fa fa-play-circle-o" @click='runProcess(index)'></span>
+								<span data-toggle="tooltip" data-placement="bottom" title="开启工艺" class="fa fa-play-circle-o run" @click='runProcess(index)'></span>
 							</div>
 						</div>
 					</div>
