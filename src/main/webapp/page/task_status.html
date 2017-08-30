@@ -26,7 +26,7 @@
 						<div class="processTitle">
 							{{task.process_name}}
 							<div class="btnBox">
-								<span data-toggle="tooltip" data-placement="bottom" title="停用工艺" class="fa fa-pause-circle stop" @click="stopProcess(index)"></span>
+								<span data-toggle="tooltip" data-placement="bottom" title="停用工艺" class="fa fa-pause-circle stop" @click="stopRunProcess(index)"></span>
 							</div>
 						</div>
 					</div>
@@ -38,7 +38,7 @@
 						<div class="processTitle">
 							{{task.process_name}}
 							<div class="btnBox">
-								<span data-toggle="tooltip" data-placement="bottom" title="开启工艺" class="fa fa-play-circle-o run" @click='runProcess(index)'></span>
+								<span data-toggle="tooltip" data-placement="bottom" title="开启工艺" class="fa fa-play-circle-o run" @click='stopRunProcess(index)'></span>
 							</div>
 						</div>
 					</div>
