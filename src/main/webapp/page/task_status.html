@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/plugins/font-awesome/css/font-awesome.min.css"/>
+		<link rel="stylesheet" href="/plugins/bootstarp/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/css/task_status.css?1.01" />
+	</head>
+	<body>
+		<input type="text" id="companyId" value="${companyId}" hidden="hidden"/>
+		<div class="globalBox">
+			<!--账户top-->
+			<div class="globalTop">
+				<span>工艺状态配置</span>
+				<span>/</span>
+				<span>当前位置：</span>
+				<span>工艺状态配置</span>	
+			</div>
+			<hr>
+			<div class="globalContent">
+				<span class="groupName">已启动的工艺</span>
+				<hr />
+				<div class="parentBox">
+					<div v-if="task.trigger_name!='人工触发' && task.trigger_name!='异常处理' && task.status==1" v-for="(task,index) in processList" class="processBox runProcess" >
+						<div class="processTitle">
+							{{task.process_name}}
+							<div class="btnBox">
+								<span class="fa fa-pause-circle" @click="stopProcess(index)"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<span class="groupName">已暂停的工艺</span>
+				<hr />
+				<div class="parentBox">
+					<div v-if="task.trigger_name!='人工触发' && task.trigger_name!='异常处理' && task.status==0" v-for="(task,index) in processList" class="processBox stopProcess" >
+						<div class="processTitle">
+							{{task.process_name}}
+							<div class="btnBox">
+								<span class="fa fa-play-circle-o" @click='runProcess(index)'></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="/plugins/jQuery/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="/plugins/bootstarp/js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="/plugins/layer/layer.min.js"></script>
+		<script src="/plugins/vue/dist/vue.js"></script>
+		<script type="text/javascript" src="/js/public_resources.js" ></script>
+		<script src="/js/task_status.js"></script>
+	</body>
+</html>

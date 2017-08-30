@@ -1,0 +1,94 @@
+html{
+	background:#f3f3f4 !important;
+	height: 100% !important;
+}
+body{
+	height: 100% !important;
+	font-family: microsoft yahei !important;
+}
+.globalBox{	
+	width:100%;
+	height: 100%;
+	background:#f3f3f4;
+	float:left;
+	position: relative;	
+	/*min-width:1366px;*/
+	overflow-y: hidden;
+	overflow-x: hidden;
+}
+.globalBox hr{
+	margin:0 20px;
+	width:calc(100% - 40px);
+	height:4px;
+	background:#e0e0e0;
+	border:0;
+	display: inline-block;
+}
+/*账户top区域*/
+.globalBox .globalTop{
+	width:100%;
+	height:65px;
+	
+}
+.globalBox .globalTop span{
+	font-size:22px;
+	padding-top:25px;
+	display: inline-block;
+}
+.globalBox .globalTop span:nth-child(1){	
+	margin-left:20px;
+	color:#5d5d5d;	
+}
+.globalBox .globalTop span:nth-child(2){
+	margin-left:5px;
+	margin-right:5px;
+}
+.globalBox .globalTop span:nth-child(3){
+	font-size:16px;
+	color:#000;	
+}
+.globalBox .globalTop span:nth-child(4){
+	font-size:16px;
+	color:#1ab394;	
+}
+.globalContent{
+	background: #ffffff;
+	height: calc(100% - 110px);
+	margin:10px 20px 20px 20px;
+	padding:20px;
+	overflow: auto;
+	position: relative;
+}
+.groupName{
+	color:#1ab394;	
+}
+.parentBox{
+	overflow:hidden;
+	zoom:1;
+	margin-bottom: 180px;
+}
+.processBox{
+	width: 180px;
+	height: 80px;
+	float: left;
+	margin-left: 20px;
+	border-radius: 4px;
+	border:1px solid #5D5D5D;
+	padding: 20px 0 0 0;
+}
+.stopProcess{
+	background: #E0E0E0;
+}
+.runProcess{
+	color: #fff;
+	background: #1ab394;
+}
+.processTitle{
+	text-align: center;
+}
+.btnBox{
+	width: 100%;
+	font-size: 18px;
+	margin-top: 10px;
+	border-top: 1px solid #5D5D5D;
+}

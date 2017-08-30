@@ -17,7 +17,6 @@ public class TaskController extends Controller{
 		render("task.html");
 	}
 	
-	@Clear()
 	public void taskStatus(){
 		Record company=getSessionAttr(Constants.SESSION_COMPANY);
 		String companyId=company.get("companyId");
