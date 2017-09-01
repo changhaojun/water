@@ -275,6 +275,7 @@ $.fn.extend({
 		if(selectType=="事件触发"){
 			$(".eventBox").show();
 			$(".addEventBox").show();
+			$('.andOr').show();
 			$('.timingBox').hide();
 			$('.triggerText').show();
 			$('.addConditionBtn').show();
@@ -289,6 +290,7 @@ $.fn.extend({
 			$('.timingBox').show();
 			$(".addEventBox").hide();
 			$(".eventBox").hide();
+			$('.andOr').hide();
 			$('.triggerText').show();
 			$('.addConditionBtn').hide();
 			$('.targetProcess').hide();
@@ -300,6 +302,7 @@ $.fn.extend({
 			$('.timingBox').removeCustomAttr();
 		}else if(selectType=="人工触发"){
 			$(".eventBox").hide();
+			$('.andOr').hide();
 			$(".addEventBox").hide();
 			$('.timingBox').hide();
 			$('.triggerText').hide();
@@ -314,6 +317,7 @@ $.fn.extend({
 		}else if(selectType=='定时触发'){
 			$(".eventBox").hide();
 			$(".addEventBox").hide();
+			$('.andOr').hide();
 			$('.timingBox').hide();
 			$('.triggerText').hide();
 			$('.addConditionBtn').hide();
@@ -326,6 +330,7 @@ $.fn.extend({
 			$('.timingBox').addCustomAttr();
 		}else if(selectType=='异常处理'){
 			$(".eventBox").hide();
+			$('.andOr').hide();
 			$(".addEventBox").hide();
 			$('.timingBox').hide();
 			$('.triggerText').hide();
@@ -608,6 +613,7 @@ $.fn.extend({
 		var conditionData={};
 		$.taskData.processBox.trigger_conditions=[];
 		if($('.eventBox').css('display')=='block'){
+			$.taskData.processBox.is_or=$('#isOr').val();
 			conditionData.thing_id=$('.eventBox').find('.conditionThingList').attr('thing_id');
 			conditionData.data_id=Number($('.eventBox').find('.conditionTag').val());
 			conditionData.compare_oper=$('.eventBox').find('.compareOper').val();
@@ -873,6 +879,7 @@ $.extend({
 		$('.actionTimes').val(processData.action_times);
 		$('.remindBtn').find('span').filter('[value='+processData.is_remind+']').click()
 		if(processData.trigger_name=="事件触发"){
+			$('#isOr').val(processData.is_or)
 			if(processData.trigger_conditions.length>0){
 				$.showEventBoxData(processData)
 			}
