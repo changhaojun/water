@@ -1076,6 +1076,12 @@ $.extend({
 				}
 			});
 			if($.taskData.inputCheck){
+				if($('#isOr').val()==null||$('#isOr').val()==undefined){
+					layer.tips('请选择条件关系！',$('#isOr'),{tips: [1,'#FE777A']})
+					$.taskData.inputCheck=false
+				}
+			}
+			if($.taskData.inputCheck){
 				$(this).saveProcessData();
 			}
 		});
