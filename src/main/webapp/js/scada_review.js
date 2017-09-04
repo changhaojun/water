@@ -200,7 +200,8 @@ $.extend({
 			onSuccess: function() {
 				if (data.port_type == 'AO' || data.port_type == 'DO' || data.port_type == 'MO') { //AO && DO && MO订阅
 					if (isIssue) {
-						client.subscribe(data.data_id.toString());
+//						client.subscribe(data.data_id.toString());
+						client.subscribe(data.guid);
 					}
 				} else if (data.port_type == 'AI' || data.port_type == 'DI') { //AI && DI订阅
 					client.subscribe(data.data_id.toString());
@@ -271,6 +272,8 @@ $.extend({
 			port_type: originLabel.labelType,
 			status: originLabel.labelStatus
 		};
+		data.high_battery && (newData.high_battery = data.high_battery);
+		data.low_battery && (newData.low_battery = data.low_battery);
 		var position = originLabel.position;
 		$.three.labelGroup.remove(originLabel);
 		$.initThree.initLabel(newData, position);
@@ -337,14 +340,17 @@ $.extend({
 							var data_value = $('.AO').find('.confirmVal').val();
 							var	data_id = label.labelId;
 							var port_type = label.labelType;
+							var guid = Date.now().toString();
 							$.issueAjax({
 								data_value: data_value,
-								data_id: data_id
+								data_id: data_id,
+								guid: guid
 							}, function() {
 								$.initMQTT({
 									data_value: data_value,
 									data_id: data_id,
-									port_type: port_type
+									port_type: port_type,
+									guid: guid
 								}, true);
 								$('.operation').toggleWin(true);
 								$('.AO').find('.confirm').unbind();
@@ -355,7 +361,10 @@ $.extend({
 					break;
 				case 'DO':
 					//do DO
-
+					var high_battery = label.HighBattery;
+					var low_battery = label.LowBattery;
+					$('.finfosoft-onOff').find('.left').html(high_battery);
+					$('.finfosoft-onOff').find('.right').html(low_battery);
 					$('.DO').siblings().toggleWin(true);
 					$('.DO').toggleWin().stayCenter($('.operation'));
 					$('.DO').find('.name').html(label.labelName);
@@ -370,14 +379,19 @@ $.extend({
 								var data_value = status;
 								var	data_id = label.labelId;
 								var port_type = label.labelType;
+								var guid = Date.now().toString();
 								$.issueAjax({
 									data_value: data_value,
-									data_id: data_id
+									data_id: data_id,
+									guid: guid
 								}, function() {
 									$.initMQTT({
 										data_value: data_value,
 										data_id: data_id,
-										port_type: port_type
+										port_type: port_type,
+										high_battery: high_battery,
+										low_battery: low_battery,
+										guid: guid
 									}, true);
 									$('.operation').toggleWin(true);
 									$.three.capturer.intersected = null;
@@ -758,6 +772,14 @@ $.extend({
 			success: function(data) {
 				if (data.result == 1) {
 					callBack && callBack();
+				} else {
+					layer.msg('下发失败！', {
+						icon: 2,
+						time: 2000,
+						end: function() {
+							layer.closeAll();
+						}
+					});
 				}
 			}
 		});
