@@ -63,7 +63,7 @@ $.three = {
 	modelGroup: new THREE.Object3D(),
 	renderer: {
 		el: null,
-		clearColor: 0xffffff
+		clearColor: 0xeeeeee
 	},
 	controller: {
 		cameraController: null,
