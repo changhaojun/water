@@ -5,6 +5,7 @@ $.allData={
 		company_id:$('#companyId').val(),
 		company_code:$('#companyCode').val(),
 		device_kind:4,
+		oper_type:1,
 		status:1
 	},
 	dataConfigs:[
