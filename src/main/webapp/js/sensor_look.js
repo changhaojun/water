@@ -345,6 +345,7 @@ function onConnectionLost(responseObject) {
 function onMessageArrived(message) {
   var topic = message.destinationName;
   var payload = JSON.parse(message.payloadString);
+  console.log(payload)
   var result='',iconR=2
 	if(payload.result==1){
 		if(payload.port_type=='DO'){
