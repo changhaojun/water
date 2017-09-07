@@ -82,7 +82,8 @@ var $extend=$.fn.extend({
 			url:globalurl+"/v1/missionDataTags?access_token="+$.allData.access_token+"&thing_id="+thingId,
 			async:false,
 			data:{
-				filter:'{"port_type":"AI","port_type_1":"MO"}'
+//				filter:'{"port_type":"AI","port_type_1":"MO"}'
+//				filter:''
 			},success:function(data){
 				if(data.length>0){
 					$.allData.ports=data
