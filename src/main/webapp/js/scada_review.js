@@ -218,6 +218,7 @@ $.extend({
 			}
 		};
 		client.onMessageArrived = function(message) {
+			console.log(message)
 			if (!isIssue) { //AI && DI回调
 				$.onLabelValueChange(message);
 			} else { //AO && DO && MO回调
