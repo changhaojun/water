@@ -5,7 +5,7 @@ var globalurl="http://139.129.235.9:18808";
 var accesstoken;
 var refreshToken;
 
-var mqttHostIP="121.42.253.149"
+var mqttHostIP="139.129.235.9"
 var mqttName="admin"
 var mqttWord="finfosoft123"
 var portNum='61623'
