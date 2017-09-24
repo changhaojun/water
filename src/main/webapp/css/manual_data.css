@@ -95,7 +95,7 @@ input:disabled{
 	position: relative;
 }
 .dataModel .dataCircle{
-	width: 33%;
+	width: 25%;
 	float: left;
 	padding-top: 25px;
 	position: relative;
@@ -216,4 +216,26 @@ button:hover{
     font-family: "microsoft yahei";
     background-color: #ffc333 !important;
     border-radius: 4px;
+}
+.tagList{
+	width: 305.19px;
+	border: 1px solid #ccc;
+	max-height: 170px;
+	position: fixed;
+	z-index: 9999;
+	background: #ffffff;
+	overflow-y: scroll;
+}
+.tagList dd,
+.tagList dt{
+	cursor: pointer;
+	line-height: 24px;
+}
+.removeTag{
+	float: right;
+	margin-right: 20px;
+	color: red;
+}
+.tagList dd:hover{
+	background: #cccccc;
 }

@@ -140,8 +140,11 @@ public class DataTagController extends Controller{
 	 * @exception  (说明在某情况下，将发生什么异常)
 	 */
 	public void editSensor(){
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String companyId=company.get("companyId");
 		String sensorId=getPara(0);
 		setAttr("deviceId", sensorId);
+		setAttr("companyId", companyId);
 		render("box_sensor_edit.html");
 	}
 	/**
@@ -181,7 +184,10 @@ public class DataTagController extends Controller{
 	 * @exception  (说明在某情况下，将发生什么异常)
 	 */
 	public void editPlc(){
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String companyId=company.get("companyId");
 		String plcId=getPara(0);
+		setAttr("companyId", companyId);
 		setAttr("deviceId", plcId);
 		render("box_plc_edit.html");
 	}
