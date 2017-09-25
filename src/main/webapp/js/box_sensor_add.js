@@ -90,6 +90,7 @@ $.fn.extend({
 		$('.pop').addClass('hidden');
 		$('.pop-mask').addClass('hidden');
 		$(".editData_label").hide();
+		$('.tagList').hide();
 	});
 	//数据配置处鼠标滑上的信息提示
 	$("[data-toggle='tooltip']").tooltip();
@@ -177,7 +178,7 @@ $.fn.extend({
 					}
 					var dataTr='<tr><td><input type="checkbox" disabled="disabled"/></td><td>'+dataInfo[i].port_name+'</td>'
 								+'<td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>4-20</td><td>'
-								+'50-100</td><td></td><td></td><td></td><td></td><td ><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>'										
+								+'50-100</td><td></td><td></td><td></td><td></td><td></td><td ><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>'										
 					$(".detialData tbody").append(dataTr);	
 					j=i;
 					infoJson='{"dataType":"'+dataInfo[i].data_type+'","operType":"'+dataInfo[i].oper_type+'","portName":"'+dataInfo[i].port_name+'"}';
@@ -251,6 +252,8 @@ $.fn.extend({
 		dataUnit=$("#dataTable").find(" tr").eq(i).find("td").eq(8).text();
 		//console.log(dataUnit)
 		dataName=$("#dataTable").find(" tr").eq(i).find("td").eq(9).text();
+		dataTag=$("#dataTable").find(" tr").eq(i).find("td").eq(10).text();
+		tagId=$("#dataTable").find(" tr").eq(i).find("td").eq(10).attr('id')!=undefined?$("#dataTable").find(" tr").eq(i).find("td").eq(10).attr('id'):'';
 		if(info[i].portName.substr(0,1)=='A'){
 			$(".changeData").empty();
 			aStr='<div class="dataRow collectorRange"><label>采集量程</label><div class="rangeData">'
@@ -258,21 +261,24 @@ $.fn.extend({
 			+'</div><div class="dataRow realRange"><label>实际量程</label><div class="rangeData ">'
 			+'<input type="text" class="number realLow" value="'+realLow+'" data-info="请输入实际量程"/><span>-</span><input type="text"  class="realHigh number" value="'+realHigh+'" data-info="请输入实际量程"/></div>'
 			+'</div><div class="dataRow dataName"><label>数据名称</label><input type="text" value="'+dataName+'" data-info="请填写数据名称"/></div>'
-			+'<div class="dataRow dataUnit"><label>数据单位</label><input type="text" value="'+dataUnit+'" data-info="请填写数据单位"/></div>';
-			$(".changeData").append(aStr);
+			+'<div class="dataRow dataUnit"><label>数据单位</label><input type="text" value="'+dataUnit+'" data-info="请填写数据单位"/></div>'
+			+'<div class="dataRow dataTag"><label>分组标签</label><input tagid="'+tagId+'" class="tagInput" type="text" value="'+dataTag+'" data-info="请选择分组标签"/></div>';
+			$(".changeData").append($(aStr));
 		}else{
 			$(".changeData").empty();
 			dStr='<div class="dataRow collectorRange"><label>低电平</label><div class="rangeData">'
 			+'<input type="text" class="lowBattery" value="'+lowBattery+'" data-info="请填写低电平" style="width:350px;" /></div></div><div class="dataRow realRange">'
 			+'<label>高电平</label><div class="rangeData "><input type="text" data-info="请填写高电平" class="highBattery" style="width:350px;" value="'+highBattery+'" /></div>'
-			+'</div><div class="dataRow dataName"><label>数据名称</label><input type="text" value="'+dataName+'" data-info="请填写数据名称"/></div>';
-			$(".changeData").append(dStr);
+			+'</div><div class="dataRow dataName"><label>数据名称</label><input type="text" value="'+dataName+'" data-info="请填写数据名称"/></div>'
+			+'<div class="dataRow dataTag"><label>分组标签</label><input tagid="'+tagId+'" class="tagInput" type="text" value="'+dataTag+'" data-info="请选择分组标签"/></div>';
+			$(".changeData").append($(dStr));
 		}
+		
 		j=i
 		$.each($('input'),function (){
 			$(this).smartInput();
 		});
-		
+		inputFocus();
 	}
 	
 	//点击弹窗是否启用的状态
@@ -309,6 +315,7 @@ $.fn.extend({
 						$(this).css("border","1px solid #1ab394");
 					})
 					openClose=-1;
+					return false;
 				}else if($(this).hasClass("number") && rangeReg.test($(this).val())==false){
 					$(this).css("border","1px solid #e11818");
 					layer.tips('请输入数字',$(this),{
@@ -338,6 +345,8 @@ $.fn.extend({
 		var dataName=$(".dataName input").val();
 		var lowBattery=$(".lowBattery").val();
 		var highBattery=$(".highBattery").val();
+		var dataTag=$('.tagInput').val();
+		var tagId=$('.tagInput').attr('tagid')
 		$('.pop').addClass('hidden');
 		$('.pop-mask').addClass('hidden');
 		if(info[j].dataType==0){
@@ -371,7 +380,7 @@ $.fn.extend({
 		};
 		
 			var dataTr='<td><input type="checkbox" checked="checked" /></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
-			+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'	
+			+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td id="'+tagId+'">'+dataTag+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'	
 		
 					
 		$(".detialData tbody").find("tr").eq(j).html(dataTr);	
@@ -577,8 +586,9 @@ $.fn.extend({
 			highBattery=$("#dataTable").find(" tr").eq(i).find("td").eq(6).text();
 			lowBattery=$("#dataTable").find(" tr").eq(i).find("td").eq(7).text();
 			dataUnit=$("#dataTable").find(" tr").eq(i).find("td").eq(8).text();
-			//console.log(dataUnit)
 			dataName=$("#dataTable").find(" tr").eq(i).find("td").eq(9).text();
+			tagName=$("#dataTable").find(" tr").eq(i).find("td").eq(10).text()!=undefined?$("#dataTable").find(" tr").eq(i).find("td").eq(10).text():' '
+			tagId=$("#dataTable").find(" tr").eq(i).find("td").eq(10).attr('id')!=undefined?$("#dataTable").find(" tr").eq(i).find("td").eq(10).attr('id'):' ';
 			if(rangeHigh=="-"){
 				rangeHigh="";
 			};
@@ -603,8 +613,9 @@ $.fn.extend({
 			'"high_battery":"'+highBattery+'",'+
 			'"status":'+status+','+
 			'"data_unit":"'+dataUnit+'",'+
-			'"data_name":"'+dataName+'"}';
-//				console.log(dataConfigJson)
+			'"data_name":"'+dataName+'",'+
+			'"tag_id":"'+tagId+'",'+
+			'"tag_name":"'+tagName+'"}';
 			dataConfigJson=JSON.parse(dataConfigJson);
 			//console.log(dataConfigJson);
 			dataConfig.push(dataConfigJson);
@@ -642,7 +653,6 @@ $.fn.extend({
 	$(".saveSettings button").click(function(){
 		saveDevice();
 	});
-	
 
 	//采集器获取焦点的时候
 	$(".collector input").click(function(event){
@@ -676,3 +686,87 @@ $.fn.extend({
 	$(document).click(function(){
 		$('.collector ul').hide();
 	});
+	
+//分组标签相关
+var tagVm = new Vue({
+	el:'.tagList',
+	data:{
+		tags:[]
+	},
+	methods:{
+		addTag:function(){
+			layer.prompt({
+				title: '输入新的分组标签',
+				formType: 0
+			}, function(pass, index) {	
+				$.ajax({
+					type:"post",
+					url:globalurl+"/v1/tags",
+					async:true,
+					data:{
+						access_token:accesstoken,
+						data:'{"company_id":"'+$('#companyId').val()+'","tag_name":"'+pass+'"}'
+					},
+					success:function(data){
+						if(data.code==200){
+							layer.close(index);
+							layer.msg('添加成功',{icon:1,zIndex:99999999});
+							delete data.code;
+							tagVm.tags.unshift(data)
+						}else{
+							layer.msg(data.error,{icon:2,zIndex:99999999});
+						}
+					}
+				});
+			});
+		},
+		removeTag:function(index,event){
+			event.stopPropagation();
+			$.ajax({
+				type:'delete',
+				url:globalurl+'/v1/tags/'+this.tags[index]._id+'?access_token='+window.accesstoken,
+				async:true,
+				success:function(data){
+					if(data.code==200){
+						tagVm.tags.splice(index,1)
+						layer.msg(data.success,{icon:1,zIndex:99999999})
+					}else{
+						layer.msg(data.error,{icon:2,zIndex:99999999})
+					}
+				}
+			});
+		}
+	}
+})
+
+function getTag(){
+	$.ajax({
+		type:"get",
+		url:globalurl+"/v1/tags",
+		async:true,
+		data:{
+				access_token:accesstoken,
+				filter:'{"company_id":"'+$('#companyId').val()+'"}'
+		},
+		success:function(data){
+			tagVm.tags=data.rows
+		}
+	});
+}
+getTag();
+function inputFocus(){
+	$('.tagInput').focus(function(){
+		$('.tagList').show(200);
+		$('.tagList').css({left:$(this).offset().left,top:$(this).offset().top+38})
+	})	
+}
+
+$('.tagList').delegate('dd','click',function(){
+	var tagName=$(this).text();
+	var tagId=$(this).attr('tagId');
+	$('.tagInput').val(tagName);
+	$('.tagInput').attr('tagId',tagId);
+	$('.tagList').hide(200);
+})
+
+

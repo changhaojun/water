@@ -12,6 +12,7 @@
 
 	<body>
 		<div>
+			<input type="text" id="companyId" hidden="hidden" value="${companyId}"/>
 			<input type="text" id="deviceId" hidden="hidden" value="${deviceId}"/>
 		</div>
 		<div id="vue">
@@ -174,6 +175,7 @@
 										<th>实际量程高</th>
 										<th>低电平</th>
 										<th>高电平</th>
+										<th>分组标签</th>
 										<th>编辑</th>
 										<th>删除</th>
 									</tr>
@@ -213,6 +215,7 @@
 										<td>{{ port.port_name=='A' ? port.real_range_high : '' }}</td>
 										<td>{{ port.port_name=='D' ? port.low_battery : '' }}</td>
 										<td>{{ port.port_name=='D' ? port.high_battery : '' }}</td>
+										<td :tagId="(port.tag_id?port.tag_id:'')">{{ port.tag_name? port.tag_name : '' }}</td>
 										<td>
 											<i class="fa fa-edit" @click="editPort(index,$event)"></i>
 										</td>
@@ -290,6 +293,10 @@
 						<label for="new_high_battery">高电平</label>
 						<input id="new_high_battery" type="text" v-model="newPort.high_battery" datasrc="newPort.high_battery" v-bind:empty="!newPort.high_battery&&newPort.high_battery!==0 ? true : false"  warning="请输入高电平" placeholder="请输入高电平"/>
 					</dd>
+					<dd class="clearfix dataEdit">
+						<label for="new_tag_id">分组标签</label>
+						<input id="new_tag_id" type="text" v-model="newPort.tag_name" datasrc="newPort.tag_name" v-bind:empty="!newPort.tag_name&&newPort.tag_name!==0 ? true : false" warning="请选择分组标签" placeholder="请选择分组标签" @focus="showTags($event)"/>
+					</dd>
 					<dt>
 						<button @click="saveNewPort($event)">保存</button>
 					</dt>
@@ -356,12 +363,21 @@
 						<label for="edit_high_battery">高电平</label>
 						<input id="edit_high_battery" type="text" v-model="newPort.high_battery" datasrc="newPort.high_battery" v-bind:empty="!newPort.high_battery&&newPort.high_battery!==0 ? true : false"  warning="请输入高电平" placeholder="请输入高电平"/>
 					</dd>
+					<dd class="clearfix dataEdit">
+						<label for="edit_tag_id">分组标签</label>
+						<input id="edit_tag_id" type="text" v-model="newPort.tag_name" datasrc="newPort.tag_name" v-bind:empty="!newPort.tag_name&&newPort.tag_name!==0 ? true : false" warning="请选择分组标签" placeholder="请选择分组标签" @focus="showTags($event)"/>
+					</dd>
 					<dt>
 						<button @click="saveEditPort($event)">保存</button>
 					</dt>
 				</dl>
 				<div class="pop-shadow"></div>
 			</div>
+			
+			<dl class="tagList" hidden="hidden">
+				<dt @click="addTag">添加新分组标签</dt>
+				<dd @click="chioseTag(index)" v-for="(tag,index) in tags" :tagId="tag._id">{{tag.tag_name}} <span @click="removeTag(index,$event)" class="fa fa-trash  removeTag"></span></dd>
+			</dl>
 		</div>
 		<script src="/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="/plugins/jQuery/jquery-1.11.3.min.js"></script>

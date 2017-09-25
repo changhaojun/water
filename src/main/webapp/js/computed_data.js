@@ -15,11 +15,15 @@ $.allData={
 		data_name:'',
 		calculate_formula:[],
 		status:1,
+		tag_id:'',
+		tag_name:'',
 		port_type:'CD'
 	},
+	tags:[],
 	ports:[],
 	selectPort:'',
 	access_token:'',
+	chioseIndex:0,
 	inputCheck:true,			//input框验证是否通过
 	device_id:$('#deviceId').val(),
 	dataIndex:999
@@ -31,9 +35,14 @@ var $extend=$.fn.extend({
 			type: 1,
 			title: titleMsg,
 			shadeClose: false,
-			shade: 0.8,
+			shade: [0.7,'#ffffff'],
 			area: ['860px'],
-			content: $('.dataBox') //iframe的url
+			content: $('.dataBox'), //iframe的url
+			cancel: function(dataBox, layero){ 
+			    layer.close(dataBox);
+			    $('.tagList').hide();
+			  	return false; 
+			}
 		})
 	},
 	getThing:function(){		//获取触发条件的实体列表
@@ -142,6 +151,60 @@ var $extend=$.fn.extend({
 			$.allData.inputCheck=false
 		}
 		return $.allData.inputCheck;
+	},
+	showTags:function(index,event){
+		$.allData.chioseIndex = index;
+		var $This = typeof event==="undefined" ? $(this) : $(event.currentTarget);
+		$('.tagList').show(200)
+		$('.tagList').css({left:$This.offset().left,top:($This.offset().top+$This.height()-$(window).scrollTop())});
+	},
+	chioseTag:function(index){
+		$.allData.dataConfig.tag_id = this.tags[index]._id;
+		$.allData.dataConfig.tag_name = this.tags[index].tag_name; 
+		$('.tagList').hide(200)
+	},
+	addTag:function(){
+		layer.prompt({
+			title: '输入新的分组标签',
+			formType: 0
+		}, function(pass, index) {	
+			$.ajax({
+				type:"post",
+				url:globalurl+"/v1/tags",
+				async:true,
+				data:{
+					access_token:$.allData.access_token,
+					data:'{"company_id":"'+$('#companyId').val()+'","tag_name":"'+pass+'"}'
+				},
+				success:function(data){
+					if(data.code==200){
+						layer.close(index);
+						layer.msg('添加成功',{icon:1,zIndex:99999999});
+						delete data.code;
+						$.allData.tags.unshift(data)
+					}else{
+						layer.msg(data.error,{icon:2,zIndex:99999999});
+					}
+				}
+			});
+		});
+	},
+	removeTag:function(index,event){
+		event.stopPropagation();
+		$.ajax({
+			type:'delete',
+			url:globalurl+'/v1/tags/'+$.allData.tags[index]._id+'?access_token='+$.allData.access_token,
+			async:true,
+			success:function(data){
+				console.log(this.tags)
+				if(data.code==200){
+					$.allData.tags.splice(index,1)
+					layer.msg(data.success,{icon:1,zIndex:99999999})
+				}else{
+					layer.msg(data.error,{icon:2,zIndex:99999999})
+				}
+			}
+		});
 	}
 });
 
@@ -155,6 +218,7 @@ $.extend({
 		getToken();
 		$.allData.access_token = accesstoken;
 		$.addPort();
+		$.getTag();
 		$('input').limitSpacing();		//输入框去除空格
 		$(document).delegate('*','click',function(ev){
 			if($(ev.target).attr('class')==='analogInput'){
@@ -231,6 +295,20 @@ $.extend({
 		});
 		$.getDevice();
 	},
+	getTag:function(){
+		$.ajax({
+			type:"get",
+			url:globalurl+"/v1/tags",
+			async:true,
+			data:{
+					access_token:$.allData.access_token,
+					filter:'{"company_id":"'+$('#companyId').val()+'"}'
+			},
+			success:function(data){
+				$.allData.tags=data.rows
+			}
+		});
+	},
 	addPort:function(){
 		$('.addPort').click(function(){
 			var titleMsg="新增计算公式"
@@ -238,6 +316,8 @@ $.extend({
 				data_name:'',
 				calculate_formula:[],
 				status:1,
+				tag_id:'',
+				tag_name:'',
 				port_type:'CD'
 			};
 			$.allData.ports=[];

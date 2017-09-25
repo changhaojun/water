@@ -45,12 +45,16 @@ var initData = {
 		real_range_high: "",
 		high_battery: "",
 		low_battery: "",
+		tag_id:"",
+		tag_name:"",
 		status: 1 //无渲染
 	},
+	//分组标签列表
+	tags:[],
 	//当前选中端口索引值
 	portIndex: 0,
 	//全部端口信息
-	portData: []
+	portData: [],
 };
 
 var $extend = $.fn.extend({
@@ -239,6 +243,59 @@ var $extend = $.fn.extend({
 		};
 		$(this).changeTip('正在保存，请稍后...');
 		$.doAjax();
+	},
+	showTags:function(event){
+		var $This = typeof event==="undefined" ? $(this) : $(event.currentTarget);
+		$('.tagList').show(200)
+		$('.tagList').css({left:$This.offset().left,top:($This.offset().top+$This.height()-$(window).scrollTop())});
+	},
+	chioseTag:function(index){
+		this.newPort.tag_id = this.tags[index]._id;
+		this.newPort.tag_name = this.tags[index].tag_name; 
+		$('.tagList').hide(200)
+	},
+	addTag:function(){
+		layer.prompt({
+			title: '输入新的分组标签',
+			formType: 0
+		}, function(pass, index) {	
+			$.ajax({
+				type:"post",
+				url:globalurl+"/v1/tags",
+				async:true,
+				data:{
+					access_token:accesstoken,
+					data:'{"company_id":"'+$('#companyId').val()+'","tag_name":"'+pass+'"}'
+				},
+				success:function(data){
+					if(data.code==200){
+						layer.close(index);
+						layer.msg('添加成功',{icon:1,zIndex:99999999});
+						delete data.code;
+						initData.tags.unshift(data)
+					}else{
+						layer.msg(data.error,{icon:2,zIndex:99999999});
+					}
+				}
+			});
+		});
+	},
+	removeTag:function(index,event){
+		event.stopPropagation();
+		$.ajax({
+			type:'delete',
+			url:globalurl+'/v1/tags/'+initData.tags[index]._id+'?access_token='+window.accesstoken,
+			async:true,
+			success:function(data){
+				console.log(this.tags)
+				if(data.code==200){
+					initData.tags.splice(index,1)
+					layer.msg(data.success,{icon:1,zIndex:99999999})
+				}else{
+					layer.msg(data.error,{icon:2,zIndex:99999999})
+				}
+			}
+		});
 	}
 });
 
@@ -259,11 +316,13 @@ $.extend({
 		$('input').changeBorderColor().enterKey(function() {
 			$.judgePageStatus();
 		});
+		$.getTag();
 		$('input').limitSpacing();
 		$('input').filter('[num-limit=limit]').numOnly();
 		$('select').changeBorderColor();
 		$('.pop-close').click(function() {
 			$(this).closeWindow([$('.pop'), $('.pop-mask')]);
+			$('.tagList').hide();
 		});
 		$('#main-submit').click(function() {
 			$(this).mainSubmit();
@@ -283,6 +342,8 @@ $.extend({
 			real_range_high: "",
 			high_battery: "",
 			low_battery: "",
+			tag_name:"",
+			tag_id:"",
 			status: 1 //无渲染
 		}
 	},
@@ -313,6 +374,20 @@ $.extend({
 				$('.editPort').find('button').saveEditPort();
 				break;
 		}
+	},
+	getTag:function(){
+		$.ajax({
+			type:"get",
+			url:globalurl+"/v1/tags",
+			async:true,
+			data:{
+					access_token:accesstoken,
+					filter:'{"company_id":"'+$('#companyId').val()+'"}'
+			},
+			success:function(data){
+				initData.tags=data.rows
+			}
+		});
 	},
 	//工具类->layer提示
 	layerTip: function(focusElem, message) {
