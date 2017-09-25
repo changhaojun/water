@@ -71,7 +71,7 @@ body{
 	position: relative;
 }
 .chioceBox{
-	width: 50%;
+	width: 41%;
 }
 .dateBox,.chioceBox{
 	float: left;
@@ -160,4 +160,60 @@ button:hover{
 .tools a{
     color: #1ab394;
     text-decoration: none;
+}
+.selectBox{
+	float:left;
+}
+.selectEntity{
+	margin-left:10px;
+	padding-left:10px;
+	width:250px ;
+	height:34px ;
+	position: relative;
+	border:1px solid #ccc ;
+}
+
+.table-condensed tbody td span{
+	font-size:12px;
+}
+/*.table-condensed tbody td .active{
+	background:#1ab394 !important
+}
+.table-condensed tbody tr{
+	height:40px;
+	
+}*/
+.tableContent #reportForm thead tr th:nth-child(1){
+	color:#666666;
+	border-left:0;
+	padding-left:40px;
+}
+.tableContent #reportForm thead tr th{
+	color:#666666;
+	border-right:0 ;
+	border-left:0 ;
+}
+.compareThingList{
+	width:251px;
+	margin-left: 60px;
+	max-height: 150px;
+	overflow: auto;
+	padding: 0;
+	z-index: 999;
+	position: absolute;
+	background: #fff;
+}
+.compareThingList li{
+	border-bottom:0;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	border:1px solid #ccc;
+	list-style: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.compareThingList li:hover{
+	background: #F1F1F1;
 }

@@ -3,10 +3,39 @@
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
-		<link rel="stylesheet"  href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-		<link rel="stylesheet"  href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="/plugins/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" />
+		<link rel="stylesheet" href="../../plugins/bootstarp/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../plugins/font-awesome/css/font-awesome.min.css" />
+	    <link rel="stylesheet" type="text/css"  href="../../plugins/layer/skin/layer.css" />
+		<link rel="stylesheet" type="text/css" href="../../plugins/bootstrap-datetimepicker/css/datetimepicker.css"/>
+		<link rel="stylesheet" type="text/css" href="../../plugins//bootstrap-table/bootstrap-table.min.css">
+	
 		<link rel="stylesheet" href="/css/report_form.css" />
+		<#if way=='operate' || way=='alarm'>
+			<style>
+				.tableContent #reportForm tbody tr{
+					border-bottom:1px solid #ccc;
+				}
+				.tableContent #reportForm tbody tr td{
+					border:0 ;
+					border:0 ;
+					color:#666666;
+				}
+				.tableContent tbody tr td:nth-child(1){
+					padding-left:40px !important;
+				}
+				.tableContent tbody tr:hover{
+					border-top-color: #1ab394;
+					border-bottom-color: #1ab394;
+					border-left:2px solid #1ab394;					
+				}
+				.tableContent #reportForm tbody tr:hover td{
+					color:#1ab394;
+				}
+				.fixed-table-loading{
+					border:1px solid #ccc;
+				}			
+			</style>
+		</#if>
 	</head>
 	<body>
 	</body>
@@ -21,7 +50,16 @@
 			<div class="dateBox">
 				<label>选择日期</label>
 				<input type="text" class="date form-control"  id="datetimepicker"/>
+				
 			</div>
+			<#if way=='operate' || way=='alarm'>
+				<div class="selectBox">
+					<span>选择实体</span>
+					<input class="selectEntity"/>
+					<ul class="compareThingList" hidden="hidden">
+					</ul>
+				</div>
+			</#if>
 			<#if type=='day'>
 				<div class="chioceBox">
 					<button class="today">今天</button>
@@ -34,6 +72,7 @@
 					<button class="lastMonth">上月</button>
 				</div>
 			</#if>
+			
 			<div class="toolsBox">
 				<div class="tools excel_o">
 					<a href='' id="excel_o"><i class="fa fa-file-excel-o"></i>导出</a>
@@ -60,6 +99,9 @@
 	<script type="text/javascript"  src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<script type="text/javascript"  src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript"  src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
+	<script type="text/javascript" src="../../plugins/bootstarp/js/bootstrap.js" charset="utf-8"></script> 
+    <script type="text/javascript" src="../../plugins/bootstrap-table/bootstrap-table.min.js"  charset="utf-8"></script>
+	<script type="text/javascript" src="../../plugins/bootstrap-table/locale/bootstrap-table-zh-CN.js" charset="utf-8"></script>
 	<script type="text/javascript"  src="/plugins/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript" src="/plugins/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 	<script type="text/javascript" src="https://cdn.bootcss.com/printThis/1.9.0/printThis.min.js"></script>
