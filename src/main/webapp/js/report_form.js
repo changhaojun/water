@@ -25,7 +25,7 @@ $.fn.extend({
 			newDom.val(text);
 			newDom.css({
 				position:'absolute',
-				left:$(this).offset().left,
+				left:$(this).offset().left, 
 				top:$(this).offset().top,
 				width:$(this).outerWidth(),
 				height:$(this).outerHeight(),
@@ -333,18 +333,18 @@ $.extend({
 //			    	 newWin.print();//打印
 //			    	 newWin.close();//关闭窗口
 //			    },300)	
-
 				$('.tableContent').printThis({ 
 				    debug: false, 
 				    importCSS: true, 
-				    importStyle: false, 
+				    importStyle: true, 
 				    printContainer: true, 
 					//loadCSS: "/css/report_form.css", 
 				    pageTitle: "二维码", 
 				    removeInline: false, 
 				    printDelay: 333, 
 				    header: null, 
-				    formValues: false
+				    formValues: false,
+				    doctypeString: '<!DOCTYPE html>'
 				   });
 			},
 			excel:function(){

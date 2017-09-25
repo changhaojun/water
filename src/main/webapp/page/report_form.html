@@ -7,11 +7,10 @@
 		<link rel="stylesheet" href="../../plugins/font-awesome/css/font-awesome.min.css" />
 	    <link rel="stylesheet" type="text/css"  href="../../plugins/layer/skin/layer.css" />
 		<link rel="stylesheet" type="text/css" href="../../plugins/bootstrap-datetimepicker/css/datetimepicker.css"/>
-		<link rel="stylesheet" type="text/css" href="../../plugins//bootstrap-table/bootstrap-table.min.css">
-	
-		<link rel="stylesheet" href="/css/report_form.css" />
+		<link rel="stylesheet" type="text/css" href="../../plugins//bootstrap-table/bootstrap-table.min.css">	
+		<link rel="stylesheet" href="/css/report_form.css"/>
 		<#if way=='operate' || way=='alarm'>
-			<style>
+			<style media="screen">
 				.tableContent #reportForm tbody tr{
 					border-bottom:1px solid #ccc;
 				}
@@ -34,6 +33,12 @@
 				.fixed-table-loading{
 					border:1px solid #ccc;
 				}			
+			</style>
+			<style type="text/css" media="print">
+				.tableContent .caption{
+					display: block;
+					text-align: center;
+				}
 			</style>
 		</#if>
 	</head>
@@ -85,6 +90,7 @@
 		</div>
 		<hr />
 		<div class="tableContent">
+			<div class="caption">${name}</div>
 			<table class="table table-bordered" id="reportForm">
 				
 			</table>
@@ -99,7 +105,6 @@
 	<script type="text/javascript"  src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<script type="text/javascript"  src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript"  src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
-	<script type="text/javascript" src="../../plugins/bootstarp/js/bootstrap.js" charset="utf-8"></script> 
     <script type="text/javascript" src="../../plugins/bootstrap-table/bootstrap-table.min.js"  charset="utf-8"></script>
 	<script type="text/javascript" src="../../plugins/bootstrap-table/locale/bootstrap-table-zh-CN.js" charset="utf-8"></script>
 	<script type="text/javascript"  src="/plugins/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
