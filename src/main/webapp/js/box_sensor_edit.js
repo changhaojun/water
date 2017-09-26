@@ -178,7 +178,6 @@ $.fn.extend({
 				$(".detialData tbody").empty();
 				info=[];
 				dataInfo=data.rows;
-				console.log(dataInfo)
 				for(var i in dataInfo){
 					if(dataInfo[i].data_type==0){
 						dataTypeStr="电流";
@@ -704,7 +703,6 @@ $.fn.extend({
 		var data={};
 		var status = "";
 		for (var i = 0; i < info.length; i++) {
-				//console.log(33434)
 			status=$("#dataTable").find(" tr").eq(i).find("input").attr('checked')==="checked" ? 1 : 0;
 			rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
 			rangeHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[1];
@@ -715,7 +713,7 @@ $.fn.extend({
 			dataUnit=$("#dataTable").find(" tr").eq(i).find("td").eq(8).text();
 			dataName=$("#dataTable").find(" tr").eq(i).find("td").eq(9).text();
 			tagName=$("#dataTable").find(" tr").eq(i).find("td").eq(10).text()!=undefined?$("#dataTable").find(" tr").eq(i).find("td").eq(10).text():' '
-			tagId=$("#dataTable").find(" tr").eq(i).find("td").eq(10).attr('id')!=undefined?$("#dataTable").find(" tr").eq(i).find("td").eq(10).attr('id'):' ';
+			tagId=$("#dataTable").find(" tr").eq(i).find("td").eq(10).attr('tagid')!=undefined?$("#dataTable").find(" tr").eq(i).find("td").eq(10).attr('tagid'):' ';
 			if(rangeHigh=="-"){
 				rangeHigh="";
 			};
@@ -728,6 +726,7 @@ $.fn.extend({
 			if(realLow=="-"){
 				realLow=""
 			}
+			console.log(tagId)
 			//判断采集器id是否发生更改
 			if($(".collector input").val()!=collector_id){
 				//发生更改
