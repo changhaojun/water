@@ -10,6 +10,7 @@ import com.finfosoft.water.thing.ThingController;
 import com.finfosoft.water.login.LoginController;
 import com.finfosoft.water.operatelog.OperateLogController;
 import com.finfosoft.water.power.PowerController;
+import com.finfosoft.water.preconditionsConfig.PreconditionsConfig;
 import com.finfosoft.water.report.ReportController;
 import com.finfosoft.water.rundata.RunDataController;
 import com.finfosoft.water.scada.ScadaController;
@@ -50,6 +51,7 @@ public class WaterConfig extends JFinalConfig{
 		me.add("/log",OperateLogController.class,"/");
 		me.add("/power",PowerController.class,"/");
 		me.add("/report",ReportController.class,"/");  //报表  
+		me.add("/preconditionsConfig",PreconditionsConfig.class,"/");  //前置条件 
 	}
 
 	@Override

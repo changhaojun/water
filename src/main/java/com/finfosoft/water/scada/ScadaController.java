@@ -25,10 +25,13 @@ public class ScadaController extends Controller{
 	}
 	
 	public void review() throws UnsupportedEncodingException {
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String companyId=company.get("companyId");
 		String scadaId = getPara(0);
 		String scadaName = URLDecoder.decode(getPara(1), "UTF-8");
 		String scadaDescription = URLDecoder.decode(getPara(2), "UTF-8");
 		setAttr("scadaId", scadaId);
+		setAttr("companyId", companyId);
 		setAttr("scadaName", scadaName);
 		setAttr("scadaDescription", scadaDescription);
 		render("scada_review.html");
