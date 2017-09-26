@@ -3,7 +3,9 @@ var globalConfig={	//全局变量
 		receive_number:'',	//手机号码
 		max_drop_time:'',	//最长掉线时间
 		warn_time_interval:'',	//时间间隔
-		smart_mode:0		//智能提醒
+		smart_mode: 0,		//智能提醒
+		receive_password_phone: '',
+		password_interval: 7,
 	},
 	company_id:$('#companyId').val(),	//公司id
 	access_token: '',	//访问令牌
@@ -45,7 +47,7 @@ var $extend=$.fn.extend({
 		return globalConfig.inputCheck;
 	},
 	isMobile:function(){
-		var mobileStr=globalConfig.globalData.receive_number.replace(/，/g,',')
+		var mobileStr=globalConfig.globalData[$(this).attr('dataSource')].replace(/，|\,/g, ',')
 		var mobile=mobileStr.split(',')
 		for(var i=0;i<mobile.length;i++){
 			if(!(/^1(3|4|5|7|8)\d{9}$/.test(mobile[i]))){ 
@@ -56,7 +58,7 @@ var $extend=$.fn.extend({
 		}
 	},
 	saveGlobal:function(){		//保存全局配置
-		var  sendType;
+		var sendType;
 		var sendData={};
 		if(globalConfig.alarm_config_id!=''){
 			sendType='put';
@@ -67,18 +69,19 @@ var $extend=$.fn.extend({
 			globalConfig.globalData.company_id=globalConfig.company_id;
 		}
 		sendData.access_token=globalConfig.access_token,
-		sendData.data=JSON.stringify(globalConfig.globalData)
+		sendData.data=JSON.stringify(globalConfig.globalData);
 		$.ajax({
 			type:sendType,
 			url: globalurl+"/v1/globalAlarmConfigs",
 			async:true,
 			crossDomain: true == !(document.all),
-			data:sendData ,
+			data:sendData,
 			success: function(data) {
 				if(data.code==200){
-					layer.msg(data.success,{icon:1})
+					layer.msg(data.success,{icon:1});
+					$.refreshPassword();
 				}else{
-					layer.msg(data.error)
+					layer.msg(data.error);
 				}
 			}
 		});
@@ -108,7 +111,10 @@ $.extend({
 		$('input').filter('[num-limit=limit]').numOnly();		//数字限制输入
 		$('input').filter('[num-limit=limit]').keyup(function(){
 			globalConfig.globalData[$(this).attr('dataSource')]=globalConfig.globalData[$(this).attr('dataSource')].replace(/[^0-9-]/g, '')
-		})
+		});
+		$('.getpassword').click(function() {
+			$.refreshPassword();
+		});
 		$('.saveBtn').click(function(){	//点击保存按钮
 			$('.globalMain input').each(function(){
 				var overEach=$(this).formCheckFoo();
@@ -116,7 +122,9 @@ $.extend({
 						return false;
 					}
 			})
-			$('.mobile').isMobile();
+			$('.mobile').each(function() {
+				$(this).isMobile();
+			});
 			if(globalConfig.inputCheck){
 				$(this).saveGlobal();
 			}
@@ -136,8 +144,29 @@ $.extend({
 				if(data._id!=undefined){
 					globalConfig.alarm_config_id=data._id;
 					delete data._id;
-					globalConfig.globalData=data;
+					for (var attr in data) {
+						globalConfig.globalData[attr]=data[attr];
+					}
 					$.smartModel(globalConfig.globalData.smart_mode);
+				}
+			}
+		});
+	},
+	refreshPassword: function() {
+		$.ajax({
+			type:"post",
+			url: globalurl+"/v1/mails",
+			async:true,
+			crossDomain: true == !(document.all),
+			data: {
+				access_token: globalConfig.access_token,
+				company_id: $('#companyId').val()
+			},
+			success: function(data) {
+				if(data.code==200){
+					layer.msg(data.success,{icon:1})
+				}else{
+					layer.msg(data.error);
 				}
 			}
 		});

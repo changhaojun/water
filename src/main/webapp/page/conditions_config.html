@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/layer/skin/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstarp/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-table/bootstrap-table.css?1.0"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/font-awesome/css/font-awesome.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/conditions_config.css"/>
+	</head>
+	<body>
+		<input type="text" id="companyId" value="${companyId}" hidden="hidden"/>
+		<div class="vue">
+			<div class="title">
+				<span>下发前置条件配置</span>
+				<span style="font-size:14px;">/&nbsp;当前位置:</span>
+				<span style="font-size:14px;">下发前置条件配置</span>
+				<!--<span class="search">
+					<input v-model="search_name" type="text" placeholder="请输入关键字查找" onkeypress="if(event.keyCode==13) {likeSearch($event);return false;}"/>
+					<i class="fa fa-search" onclick="likeSearch($event)"></i>
+				</span>-->
+				<input type="button" value="新增" class="add-config btn-primary"/>
+			</div>
+			<hr>
+			<div class="list">
+				<table class="table table-hover"></table>
+			</div>
+			
+			<!--弹出层-->
+			<div class="config-mask hidden"></div>
+			<div class="config hidden">
+				<div class="config-title clearfix">
+					<span class="config-title-name pull-left">新增配置</span>
+					<span class="close pull-right"></span>
+				</div>
+				<div class="config-content">
+					<div class="target clearfix">
+						<div class="entity pull-left clearfix">
+							<span class="pull-left">目标实体</span>
+							<input class="check pull-left" type="text" v-model="config.target_entity.name" v-bind:correct="config.target_entity.name === '' ? 'false' : 'true'"/>
+							<ul class="list-define"></ul>
+						</div>
+						<div class="port pull-left clearfix" v-if="config.target_port.group.length != 0">
+							<span class="pull-left">目标端口</span>
+							<select v-model="config.target_port.selectedIndex">
+								<option v-for="(port, index) in config.target_port.group" v-bind:value="index">{{port.data_name}}</option>
+							</select>
+						</div>
+						<div class="status pull-left clearfix" v-if="config.target_port.group.length != 0">
+							<span class="pull-left">目标状态</span>
+							<select class="check pull-left" v-model="config.target_status" v-bind:correct="config.target_status === '' ? 'false' : 'true'">
+								<option value="1">{{ config.target_port.group[config.target_port.selectedIndex].high_battery }}</option>
+								<option value="0">{{ config.target_port.group[config.target_port.selectedIndex].low_battery }}</option>
+							</select>
+						</div>
+						<button class="add-condition pull-right">新增前置条件</button>
+					</div>
+					<ul class="prepose">
+						<li class="deleparent clearfix" v-for="(condition, index) in config.conditions">
+							<div class="type pull-left clearfix">
+								<span class="pull-left">端口类型</span>
+								<select class="pull-left" v-model.number="condition.type">
+									<option value="1">已接入</option>
+									<option value="2">未接入</option>
+								</select>
+							</div>
+							<div class="entity pull-left clearfix" v-if="condition.type == 1">
+								<span class="pull-left">前置实体</span>
+								<input class="check pull-left" type="text" v-model="condition.entity.name" v-bind:correct="condition.entity.name === '' ? 'false' : 'true'"/>
+								<ul class="list-define"></ul>
+							</div>
+							<div class="port pull-left clearfix" v-if="condition.type == 1 && config.conditions[index].port.group.length != 0">
+								<span class="pull-left">前置端口</span>
+								<select v-model="config.conditions[index].port.selectedIndex">
+									<option v-for="(port, portindex) in config.conditions[index].port.group" v-bind:value="portindex">{{port.data_name}}</option>
+								</select>
+							</div>
+							<div class="status pull-left clearfix" v-if="condition.type == 1 && config.conditions[index].port.group.length != 0">
+								<span class="pull-left">前置状态</span>
+								<select class="check pull-left" v-model="condition.status" v-bind:correct="condition.status === '' ? 'false' : 'true'">
+									<option v-bind:value="config.conditions[index].port.group[config.conditions[index].port.selectedIndex].high_battery">{{ config.conditions[index].port.group[config.conditions[index].port.selectedIndex].high_battery }}</option>
+									<option v-bind:value="config.conditions[index].port.group[config.conditions[index].port.selectedIndex].low_battery">{{ config.conditions[index].port.group[config.conditions[index].port.selectedIndex].low_battery }}</option>
+								</select>
+							</div>
+							<div class="port-define pull-left clearfix" v-if="condition.type == 2">
+								<span class="pull-left">自定义端口</span>
+								<input class="check pull-left" type="text" v-model="condition.port_define" v-bind:correct="condition.port_define === '' ? 'false' : 'true'"/>
+							</div>
+							<div class="status-define pull-left clearfix" v-if="condition.type == 2">
+								<span class="pull-left">自定义状态</span>
+								<input class="check pull-left" type="text" v-model="condition.status_define" v-bind:correct="condition.status_define === '' ? 'false' : 'true'"/>
+							</div>
+							<button class="remove-condition pull-right" v-on:click="deleteCondition(index)">移除</button>
+						</li>
+					</ul>
+					<button class="save-config">保存</button>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="/plugins/jQuery/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="/plugins/bootstarp/js/bootstrap.min.js" ></script>
+		<script src="/plugins/bootstrap-table/bootstrap-table.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="/plugins/layer/layer.min.js"></script>
+		<script src="/plugins/vue/dist/vue.js"></script>
+		<script type="text/javascript" src="/js/public_resources.js" ></script>
+		<script src="/js/conditions_config.js"></script>
+	</body>
+</html>

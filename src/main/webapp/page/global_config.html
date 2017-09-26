@@ -21,37 +21,67 @@
 			<!--账户内容-->
 			<div class="globalContent container-fluid">
 				<div class="globalMain">
-					<div class="row">
-						<div class="col-xs-6">
-							<label>接收短信号码</label>
-							<input class="mobile" v-model="globalData.receive_number" type="text" placeholder="请输入接收短信号码，多个号码以逗号分隔"/>
-						</div>
-						<div class="col-xs-6">
-							<span class="notes">注:该号码接收平台所有短信,多个号码用逗号隔开。</span>
+					<div class="zone">
+						<div class="title">掉线提醒配置</div>
+						<div class="content">
+							<div class="line clearfix">
+								<p class="half pull-left">
+									<label>最长掉线时间</label>
+									<input v-model="globalData.max_drop_time" num-limit="limit" dataSource="max_drop_time" type="text" placeholder="请输入最长掉线时间"/>
+									<span class="unit">分</span>
+								</p>
+								<p class="half pull-left">
+									<label>循环提醒周期</label>
+									<input v-model="globalData.warn_time_interval" dataSource="warn_time_interval" num-limit="limit" type="text" placeholder="请输入提醒时间间隔"/>
+									<span class="unit">分</span>
+								</p>
+							</div>
+							<div class="line">
+								<label>开启智能模式</label>
+								<div class="btn-group" role="group" aria-label="...">
+								    <button type="button" class="btn-left ">开启</button>
+								    <button type="button" class="btn-right actionBTn">关闭</button>
+								</div>
+							</div>
+							<div class="line">
+								<span class="notes">注：针对一段时间的波动范围自动计算合理运行区间，超出此区间进行告警</span>
+							</div>
 						</div>
 					</div>
-					<hr />
-					<div class="row">
-						<div class="col-xs-6">
-							<label>最长掉线时间</label>
-							<input v-model="globalData.max_drop_time" num-limit="limit" dataSource="max_drop_time" type="text" placeholder="请输入最长掉线时间，以分钟为单位"/>
-						</div>
-						<div class="col-xs-6">
-							<label>提醒时间间隔</label>
-							<input v-model="globalData.warn_time_interval" dataSource="warn_time_interval" num-limit="limit" type="text" placeholder="请输入提醒时间间隔，以分钟为单位"/>
+					<div class="zone">
+						<div class="title">全局提醒短信</div>
+						<div class="content">
+							<div class="line clearfix">
+								<label class="pull-left">手机号码</label>
+								<input class="mobile pull-left" v-model="globalData.receive_number" dataSource="receive_number" type="text" placeholder="请输入接收短信号码，多个号码以逗号分隔"/>
+							</div>
+							<div class="line">
+								<span class="notes">注：该号码接收平台所有提醒短信（包括告警、设备掉线、下发失败），多个号码用逗号隔开。</span>
+							</div>
 						</div>
 					</div>
-					<div class="row">
-						<label>开启智能模式</label>
-						<div class="btn-group" role="group" aria-label="...">
-						    <button type="button" class="btn-left ">开启</button>
-						    <button type="button" class="btn-right actionBTn">关闭</button>
+					<div class="zone">
+						<div class="title">下发密码短信</div>
+						<div class="content">
+							<div class="line clearfix">
+								<p class="half pull-left">
+									<label>手机号码</label>
+									<input class="mobile" v-model="globalData.receive_password_phone" dataSource="receive_password_phone" type="text" placeholder="请输入接收短信号码"/>
+								</p>
+								<p class="half pull-left">
+									<label>循环变更周期</label>
+									<input v-model="globalData.password_interval" dataSource="password_interval" num-limit="limit" type="text" placeholder="请输入提醒时间间隔"/>
+									<span class="unit">天</span>
+								</p>
+							</div>
+							<div class="line">
+								<span class="notes">注：该号码接收下发时所需的密码，只能设置一个接受号码。</span>
+								<button class="getpassword">立即获取密码</button>
+							</div>
 						</div>
-						<span class="notes">注:针对一段时间的波动范围自动计算合理运行区间，超出此区间进行告警</span>
 					</div>
 				</div>
 				<div class="globalFooter">
-					<hr />
 					<button class="saveBtn">保存配置</button>
 				</div>
 			</div>
