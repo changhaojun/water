@@ -218,12 +218,12 @@ $.fn.extend({
 						+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'<td>'+dataInfo[i].collect_range_low+'-'
 						+dataInfo[i].collect_range_high+'</td><td>'+dataInfo[i].real_range_low+'-'+dataInfo[i].real_range_high
 						+'<td>-</td><td>-</td><td>'+dataInfo[i].data_unit+'</td><td>'+dataInfo[i].data_name
-						+'</td><td tagId="'+(dataInfo[i].tag_id!=undefined?dataInfo[i].tag_id:"")+'">'+(dataInfo[i].tag_name!=undefined?dataInfo[i].tag_name:"")+'</td><td ><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>';								
+						+'</td><td tagid="'+(dataInfo[i].tag_id!=undefined?dataInfo[i].tag_id:"")+'">'+(dataInfo[i].tag_name!=undefined?dataInfo[i].tag_name:"")+'</td><td ><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>';								
 					}else{
 						dataTr+='<tr><td><input type="checkbox" '+stateEnabled+'/></td><td>'+dataInfo[i].port_name
 						+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'<td>-</td><td>-</td><td>'+dataInfo[i].high_battery
 						+'</td><td>'+dataInfo[i].low_battery+'<td>-</td><td>'+dataInfo[i].data_name
-						+'</td><td tagId="'+(dataInfo[i].tag_id!=undefined?dataInfo[i].tag_id:"")+'">'+(dataInfo[i].tag_name!=undefined?dataInfo[i].tag_name:"")+'</td><td><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>';
+						+'</td><td tagid="'+(dataInfo[i].tag_id!=undefined?dataInfo[i].tag_id:"")+'">'+(dataInfo[i].tag_name!=undefined?dataInfo[i].tag_name:"")+'</td><td><i class="fa fa-edit" onclick="editClick('+i+')"></i></td></tr>';
 					};
 					$("#dataTable").append($(dataTr));	
 					j=i;
@@ -397,7 +397,7 @@ $.fn.extend({
 		//console.log(dataUnit)
 		dataName=$("#dataTable").find(" tr").eq(i).find("td").eq(9).text();
 		dataTag=$("#dataTable").find(" tr").eq(i).find("td").eq(10).text();
-		tagId=$("#dataTable").find(" tr").eq(i).find("td").eq(10).attr('id')!=undefined?$("#dataTable").find(" tr").eq(i).find("td").eq(10).attr('id'):'';
+		tagId=$("#dataTable").find(" tr").eq(i).find("td").eq(10).attr('tagid')!=undefined?$("#dataTable").find(" tr").eq(i).find("td").eq(10).attr('tagid'):'';
 		if(info[i].portName.substr(0,1)=='A'){
 			$(".changeData").empty();
 			aStr='<div class="dataRow collectorRange"><label>采集量程</label><div class="rangeData">'
@@ -519,10 +519,10 @@ $.fn.extend({
 		};
 		if(flag==0){
 			var dataTr='<td><input type="checkbox" checked="checked" /></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
-			+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td id="'+tagId+'">'+dataTag+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'	
+			+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td tagid="'+tagId+'">'+dataTag+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'	
 		}else{
 			var dataTr='<td><input type="checkbox" disabled="disabled"/></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
-					+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td id="'+tagId+'">'+dataTag+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'	
+					+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td tagid="'+tagId+'">'+dataTag+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'	
 		}			
 		$(".detialData tbody").find("tr").eq(j).html(dataTr);	
 	}
