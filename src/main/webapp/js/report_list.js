@@ -4,7 +4,7 @@ var allData={
 $.fn.extend({
 	showReportList:function(dataList){
 		for(var i=0;i<dataList.length;i++){
-			var boxDom='<span class="reportBox" id="'+dataList[i]._id+'" type="'+dataList[i].type+'">'+dataList[i].form_name+'</span>'
+			var boxDom='<span class="reportBox" way="'+dataList[i].way+'" id="'+dataList[i]._id+'" type="'+dataList[i].type+'">'+dataList[i].form_name+'</span>'
 			$(this).append(boxDom)
 		}
 	},
@@ -12,7 +12,10 @@ $.fn.extend({
 		var reportId=$(this).attr('id');
 		var type=$(this).attr('type');
 		var name=$(this).text()
-		self.location.href="/report/reportForm/"+reportId+"-"+type+'-'+name;
+		var way=$(this).attr("way");
+			self.location.href="/report/reportForm/"+reportId+"-"+type+'-'+name+"-"+way;
+		
+		
 	}
 });
 $.extend({
