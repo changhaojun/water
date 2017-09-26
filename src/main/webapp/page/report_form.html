@@ -11,9 +11,6 @@
 		<link rel="stylesheet" href="/css/report_form.css"/>
 		<#if way=='operate' || way=='alarm'>
 			<style media="screen">
-				.tableContent #reportForm tbody tr{
-					border-bottom:1px solid #ccc;
-				}
 				.tableContent #reportForm tbody tr td{
 					border:0 ;
 					border:0 ;
@@ -32,7 +29,12 @@
 				}
 				.fixed-table-loading{
 					border:1px solid #ccc;
-				}			
+				}
+				.fixed-table-container,.bootstrap-table .table	{
+					border:none;
+					
+				}	
+			
 			</style>
 			<style type="text/css" media="print">
 				.tableContent .caption{
@@ -104,6 +106,7 @@
 	<script type="text/javascript"  src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript"  src="https://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
     <script type="text/javascript" src="../../plugins/bootstrap-table/bootstrap-table.min.js"  charset="utf-8"></script>
+	<script src="../../plugins/bootstrap-table/bootstrap-table-locale-all.min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript" src="../../plugins/bootstrap-table/locale/bootstrap-table-zh-CN.js" charset="utf-8"></script>
 	<script type="text/javascript"  src="/plugins/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
 	<script type="text/javascript" src="/plugins/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>

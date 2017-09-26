@@ -103,7 +103,7 @@ button:hover{
 	font-size: 14px;
 }
 .table td{
-	height: 43px;
+	height: 23px;
 	vertical-align:middle !important;
 }
 .tableTitle{
@@ -194,21 +194,23 @@ button:hover{
 	border-left:0 ;
 }
 .compareThingList{
-	width:251px;
-	margin-left: 60px;
-	max-height: 150px;
+	width:250px;
+	top:34px;
+	right:0;
 	overflow: auto;
 	padding: 0;
 	z-index: 999;
 	position: absolute;
 	background: #fff;
+	border:1px solid #eee;
+	border-bottom:none;
 }
 .compareThingList li{
-	border-bottom:0;
+	border-bottom:1px solid #eee;
 	height:30px;
 	line-height:30px;
-	text-align:center;
-	border:1px solid #ccc;
+	text-align:left;
+	padding-left:10px;
 	list-style: none;
 	white-space: nowrap;
 	overflow: hidden;
@@ -220,4 +222,39 @@ button:hover{
 .tableContent .caption{
 	display: none;
 }
-
+.selectBox{
+	position: relative;
+	
+}
+@media screen and (max-width: 1366px) {
+	.dateBox {
+	    width: 25%;
+	    position: relative;
+	}
+	.date{
+		width: calc(100% - 115px);
+	}
+	.selectEntity{
+		width:210px;
+	}
+	.compareThingList{
+		width:210px;
+	}
+	.chioceBox {
+	    width: 32%;
+	}
+	.portTiile button{
+		margin: 0 10px;
+		width: 85px;
+	}
+}
+@media screen  and (max-width: 1762px){
+	.chioceBox {
+	    width: 32%;
+	    margin-left: 10px;
+	}
+	.portTiile button{
+		margin: 0 10px;
+		width: 85px;
+	}
+}
