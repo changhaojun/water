@@ -15,7 +15,8 @@ var allData={
 	startDate:"",
 	way:"function",
 	ourl:"",
-	columns:[]
+	columns:[],
+	allRecordData:[]
 };
 $.fn.extend({
 	editInner:function(){
@@ -372,15 +373,46 @@ $.extend({
 			}
 		});
 	},
+	//获取表格数据表格分页
+//	monthTable:function(){
+//		$.ajax({
+//			url : allData.ourl,
+//			data : $.queryParams(),
+//			dataType : 'JSON',
+//			type : 'get',
+//			success : function(data) {
+//				for (var i = 0; i < data.length; i++) {
+//					var childData = {
+//						"index" : (i + 1),
+//						"operTime" : (data[i].operTime),
+//						"fullname" : (data[i].fullname),
+//						"IP" : (data[i].ip),
+//						"urlDesc" : (data[i].urlDesc)
+//					};
+//					allRecordData.push(childData);
+//				}
+//				// 表格分页项
+//				$('#reportForm').bootstrapTable({
+//					data : allRecordData,
+//					pageList : [ 10, 15, 25, 35 ],
+//					pageSize : 10,
+//					cache : true,
+//					showExport : false, // 是否显示导出
+//					exportDataType : "all", // basic', 'all', 'selected'.
+//				});
+//				$("#reportForm").bootstrapTable('load', allRecordData);
+//			}
+//	});
+//	},
 	//获取操作报表
 	monthTable:function(){
 		$('#reportForm').bootstrapTable({
 		method: 'get',
 		url: allData.ourl,
-		sidePagination: 'server', //设置为服务器端分页
+		sidePagination: 'client', //设置为服务器端分页
 		pagination: true, //是否分页
 		search: false, //显示搜索框
-		pageSize: 9, //每页的行数 
+		pageSize: 10, //每页的行数 
 		pageNumber: 1,
 		showRefresh: false,
 		showToggle: false,
@@ -389,18 +421,24 @@ $.extend({
 		queryParams: $.queryParams,
 		striped: true, //条纹
 		onLoadSuccess: function(value) {
+			console.log(value)
 			if (value.code == 400005) {
 				getlogTable();
 				$('#reportForm').bootstrapTable("refresh", $.queryParams)
 				$.colorBorder();
 			}
 		},
+		responseHandler: function(data){
+		     return data.rows;
+		},
 		columns:allData.columns
 		})
 	},
 	//数据请求参数
-	queryParams:function(){
+	queryParams:function(params){
 		var data=JSON.stringify({
+				pageNumber: 0,
+				pageSize: params.limit,
 				type:allData.type,
 				start_time:allData.startDate+" 00:00:00",
 				end_time:allData.endTime+" 00:00:00",
@@ -408,7 +446,7 @@ $.extend({
 			})
 		return {
 			data:data,
-			access_token:accesstoken
+			access_token:accesstoken,
 		}
 	},
 	//列表参数
