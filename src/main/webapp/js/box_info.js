@@ -194,8 +194,11 @@ function give(value){
 //		data={'data':data};
 		$.ajax({
 //			url:globalurl+"/v1/homes?access_token="+accesstoken,
-			url:'121.42.253.149:18840/v1/waterGateways/device_id='+value,
+			url:'http://121.42.253.149:18840/v1/waterGateways/',
 //			data:data,
+			data:{
+				device_id:value
+			},
 			dataType: 'JSON',
 			type: 'POST',
 			crossDomain: true == !(document.all),

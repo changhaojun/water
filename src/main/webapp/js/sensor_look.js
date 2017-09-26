@@ -213,7 +213,7 @@ function give(id){
 //		data={'data':data};
 		$.ajax({
 //			url:globalurl+"/v1/homes?access_token="+accesstoken,
-			url:'121.42.253.149:18840/v1/waterGateways/',
+			url:'http://121.42.253.149:18840/v1/waterGateways/',
 //			data:data,
 			data:{
 				data_id:id,
@@ -258,7 +258,7 @@ function clickBtn(id,dataValue,i){
 //		data={'data':data};	
 		$.ajax({
 //			url:globalurl+"/v1/homes?access_token="+accesstoken,
-			url:'url:'121.42.253.149:18840/v1/waterGateways/'',
+			url:'http://121.42.253.149:18840/v1/waterGateways/'',
 //			data:data,
 			data:{
 				data_id:id,
