@@ -512,7 +512,6 @@ $.extend({
 	//选择实体刷新列表
 	feshTable:function(){
 		$(".compareThingList li").on("click",function(){
-			console.log($(this).html())
 			$(".selectEntity").val($(this).html())
 			$(".compareThingList").hide();
 			allData.thingId=$(this).attr("value");
