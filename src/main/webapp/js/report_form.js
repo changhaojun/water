@@ -373,38 +373,7 @@ $.extend({
 			}
 		});
 	},
-	//获取表格数据表格分页
-//	monthTable:function(){
-//		$.ajax({
-//			url : allData.ourl,
-//			data : $.queryParams(),
-//			dataType : 'JSON',
-//			type : 'get',
-//			success : function(data) {
-//				for (var i = 0; i < data.length; i++) {
-//					var childData = {
-//						"index" : (i + 1),
-//						"operTime" : (data[i].operTime),
-//						"fullname" : (data[i].fullname),
-//						"IP" : (data[i].ip),
-//						"urlDesc" : (data[i].urlDesc)
-//					};
-//					allRecordData.push(childData);
-//				}
-//				// 表格分页项
-//				$('#reportForm').bootstrapTable({
-//					data : allRecordData,
-//					pageList : [ 10, 15, 25, 35 ],
-//					pageSize : 10,
-//					cache : true,
-//					showExport : false, // 是否显示导出
-//					exportDataType : "all", // basic', 'all', 'selected'.
-//				});
-//				$("#reportForm").bootstrapTable('load', allRecordData);
-//			}
-//	});
-//	},
-	//获取操作报表
+	//获取操作报表，客户端的分页
 	monthTable:function(){
 		$('#reportForm').bootstrapTable({
 		method: 'get',
@@ -421,7 +390,6 @@ $.extend({
 		queryParams: $.queryParams,
 		striped: true, //条纹
 		onLoadSuccess: function(value) {
-			console.log(value)
 			if (value.code == 400005) {
 				getlogTable();
 				$('#reportForm').bootstrapTable("refresh", $.queryParams)
