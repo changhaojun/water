@@ -200,7 +200,7 @@ function give(value){
 				device_id:value
 			},
 			dataType: 'JSON',
-			type: 'POST',
+			type: 'GET',
 			crossDomain: true == !(document.all),
 			success: function(data) {
 				if(data.code==400005){

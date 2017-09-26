@@ -220,7 +220,7 @@ function give(id){
 				data_value:onoff
 			},
 			dataType: 'JSON',
-			type: 'POST',
+			type: 'GET',
 			crossDomain: true == !(document.all),
 			success: function(data) {
 				if(data.code==400005){
@@ -265,7 +265,7 @@ function clickBtn(id,dataValue,i){
 				data_value:onoff
 			},
 			dataType: 'JSON',
-			type: 'POST',
+			type: 'GET',
 			crossDomain: true == !(document.all),
 			success: function(data) {
 				if(data.code==400005){
