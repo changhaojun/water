@@ -190,11 +190,12 @@ function give(value){
 	var guid=guidGenerator();	
 	layer.confirm("<font size='2'>确认下发？</font>",{icon:7},function(index){
 		layer.close(index);
-		data="{'device_id':'"+value+"','guid':'"+guid+"'}";
-		data={'data':data};
+//		data="{'device_id':'"+value+"','guid':'"+guid+"'}";
+//		data={'data':data};
 		$.ajax({
-			url:globalurl+"/v1/homes?access_token="+accesstoken,
-			data:data,
+//			url:globalurl+"/v1/homes?access_token="+accesstoken,
+			url:'121.42.253.149:18840/v1/waterGateways/device_id='+value,
+//			data:data,
 			dataType: 'JSON',
 			type: 'POST',
 			crossDomain: true == !(document.all),
@@ -218,7 +219,7 @@ function give(value){
 				});
 		    }
 		});
-		MQTTconnect(guid)
+//		MQTTconnect(guid)
 	});
 }
 //控制量guid
