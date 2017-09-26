@@ -15,7 +15,8 @@ var allData={
 	startDate:"",
 	way:"function",
 	ourl:"",
-	columns:[]
+	columns:[],
+	allRecordData:[]
 };
 $.fn.extend({
 	editInner:function(){
@@ -372,15 +373,15 @@ $.extend({
 			}
 		});
 	},
-	//获取操作报表
+	//获取操作报表，客户端的分页
 	monthTable:function(){
 		$('#reportForm').bootstrapTable({
 		method: 'get',
 		url: allData.ourl,
-		sidePagination: 'server', //设置为服务器端分页
+		sidePagination: 'client', //设置为服务器端分页
 		pagination: true, //是否分页
 		search: false, //显示搜索框
-		pageSize: 9, //每页的行数 
+		pageSize: 10, //每页的行数 
 		pageNumber: 1,
 		showRefresh: false,
 		showToggle: false,
@@ -395,12 +396,17 @@ $.extend({
 				$.colorBorder();
 			}
 		},
+		responseHandler: function(data){
+		     return data.rows;
+		},
 		columns:allData.columns
 		})
 	},
 	//数据请求参数
-	queryParams:function(){
+	queryParams:function(params){
 		var data=JSON.stringify({
+				pageNumber: 0,
+				pageSize: params.limit,
 				type:allData.type,
 				start_time:allData.startDate+" 00:00:00",
 				end_time:allData.endTime+" 00:00:00",
@@ -408,7 +414,7 @@ $.extend({
 			})
 		return {
 			data:data,
-			access_token:accesstoken
+			access_token:accesstoken,
 		}
 	},
 	//列表参数
