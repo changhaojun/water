@@ -616,7 +616,7 @@ $.extend({
 							});
 						});
 					},
-					btn1: function() {
+					btn2: function() {
 						$.three.capturer.intersected = null;
 					}
 				});
