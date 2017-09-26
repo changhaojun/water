@@ -726,7 +726,6 @@ $.fn.extend({
 			if(realLow=="-"){
 				realLow=""
 			}
-			console.log(tagId)
 			//判断采集器id是否发生更改
 			if($(".collector input").val()!=collector_id){
 				//发生更改
