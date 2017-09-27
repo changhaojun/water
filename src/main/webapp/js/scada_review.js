@@ -71,7 +71,6 @@ $.fn.extend({
 
 $.extend({
 	//初始化
-
 	init: function() {
 		$.initToken('get', function() {
 			$.initTitle();
@@ -84,7 +83,6 @@ $.extend({
 				$.initData.sentData.description = data.scada.description;
 				$.initData.sentData.scada_config = data.scada.scada_config;
 				//三维场景初始化
-
 				$.initThree.init(data.scadaModel.modelConfig, function() {
 					for (var i=0; i<$.initData.sentData.scada_config.length; i++) {
 						//数据标签渲染
@@ -170,7 +168,6 @@ $.extend({
 		}
 	},
 	//页面初始化请求
-
 	initAjax: function(callBack) {
 		$.ajax({
 			type: "get",
@@ -233,7 +230,6 @@ $.extend({
 		var dataId = Number(message.destinationName);
 		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(dataId, $.initThree.judgeLabelType({data_id: dataId}))];
 		var payload = typeof message.payloadString=='string' ? JSON.parse(message.payloadString) : message.payloadString;
-//		var payload = JSON.parse(message.payloadString);
 
 		if (!originLabel) return;
 		var newData = {
