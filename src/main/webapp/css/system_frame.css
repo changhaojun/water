@@ -123,18 +123,42 @@ body.fixed-sidebar .navbar-static-side{
 	background: url("../img/qr_code_thumbnail.png") no-repeat center;
 	vertical-align: middle;
 }
-
-#wrapper  .indexHeader ul li .qrCode {
-	width: 160px;
-	float: right;
-	display: none;
+.qrCode_dl{
+	position: relative;
 }
-
-#wrapper  .indexHeader ul li .qrCode img {
+.qrCode_dl:hover .qrCode{
+	display: block;
+}
+.qrCode {
+	width: 400px;
+	display: none;
+	padding-top: 10px;
+	position:absolute;
+}
+.qrCode>.row>.col-xs-6{
+	padding-right: 0; 
+}
+.qrCode .panel-success{
+	border-color: #2FA4BF;
+}
+.qrCode .panel-success .panel-heading{
+	background-color: #2FA4BF;
+    border-color: #2FA4BF;
+    color: #ffffff;
+}
+.qrCode .panel-info{
+	border-color: #1AB394;
+}
+.qrCode .panel-info .panel-heading{
+	background-color: #1AB394;
+    border-color: #1AB394;
+    color: #ffffff;
+}
+/*#wrapper  .indexHeader ul li .qrCode img {
 	width: 140px;
 	border:10px solid #C7C7C7;
 	margin: 20px auto;
-}
+}*/
 
 #wrapper  .indexHeader ul li .headPortrait {
 	display: inline-block;

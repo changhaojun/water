@@ -7,18 +7,6 @@
 	MQTTconnect();
 	$(".userName").append("欢迎你，"+user.fullname)
 var flag=-1;
-	//二维码的展现	
-		$(".qrCode_dl").on({
-			"mouseenter":function(){
-				$(".qrCode").fadeIn(400);
-			},
-			"mouseleave":function(){
-				$(".qrCode").hide();
-			},
-		});
-		$(".qrCode").mouseleave(function(){
-			$(".qrCode").hide();
-		})
 	//个人信息的修改
 	$("#personInfo").on({
 		"mouseenter":function(){
