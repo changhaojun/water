@@ -2,7 +2,9 @@ $.initData = {
 	vueInstance: null,
 	isSearch: false,
 	tableData: null,
+	tableIndex: 0,
 	conditionId: '',
+	isEdit: false,
 	vueData: {
 		search_name:'',
 		config: {
@@ -71,7 +73,7 @@ $.extend({
 			el:'.vue',
 			methods: extend,
 			data: $.initData.vueData
-		})
+		});
 	},
 	token: function() {
 		getToken();
@@ -98,6 +100,7 @@ $.extend({
 		    queryParams: $.queryParams,
 		    striped: true,//条纹
 		    onLoadSuccess:function(value){
+		    	console.log(value)
 		    	$.initData.tableData = value;
 		    	if(value.code==400005){
 		    		$.token();
@@ -227,6 +230,16 @@ $.extend({
 		});
 		return res;
 	},
+	hasExisted: function(portId, status, except) {
+		for (var i=0; i<$.initData.tableData.rows.length; i++) {
+			if ( typeof except === 'number' && i === except ) {
+				continue;
+			}
+			if (portId === $.initData.tableData.rows[i].gateway_data_id && status === $.initData.tableData.rows[i].status) {
+				layer.msg( '当前所配置的目标端口以及所对应的目标状态存在于配置列表中，请勿重复配置！' ,{ icon: 2 });
+			}
+		}
+	},
 	saveConfig: function() {
 		$('.save-config').click(function() {
 			if ( !$.canBeSaved() ) return;
@@ -234,7 +247,9 @@ $.extend({
 			if ( $.initData.conditionId ) {
 				sentData.id = $.initData.conditionId;
 				sentData.type = 'put';
+				$.hasExisted( $.initData.vueData.config.target_port.group[ $.initData.vueData.config.target_port.selectedIndex ].data_id, $.initData.vueData.config.target_status, $.initData.tableIndex );
 			} else {
+				$.hasExisted( $.initData.vueData.config.target_port.group[ $.initData.vueData.config.target_port.selectedIndex ].data_id, $.initData.vueData.config.target_status );
 				sentData.type = 'post';
 			}
 			sentData.mainData = {
@@ -257,7 +272,6 @@ $.extend({
 					}
 				});
 			}
-//			return false;
 			$.mainAjax(sentData);
 		});
 		
@@ -268,6 +282,7 @@ $.extend({
 		$('.config-mask').removeClass('hidden');
 		var index = $(this).parents('tr').index();
 		$.initData.conditionId = $(this).attr('_id');
+		$.initData.tableIndex = index;
 		$.applyEditData(index);
 	},
 	deleteConfig: function() {
