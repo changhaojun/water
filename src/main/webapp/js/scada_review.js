@@ -214,7 +214,7 @@ $.extend({
 			}
 		};
 		client.onMessageArrived = function(message) {
-			console.log(message)
+			console.log(message);
 			if (!isIssue) { //AI && DI回调
 				$.onLabelValueChange(message);
 			} else { //AO && DO && MO回调
@@ -327,6 +327,7 @@ $.extend({
 						bgColor: '#eeeeee'
 					});
 					$('.AO').find('.confirm').click(function() {
+						$('.conditions-layer').css('display', 'block');
 						$('.conditions-layer').find('table').css('display', 'none');
 						$('.conditions-layer').find('p').css('display', 'none');
 						var passwordDom = $('.conditions-layer').find('input');
@@ -351,6 +352,7 @@ $.extend({
 										guid: guid
 									}, function() {
 										layer.close(index1);
+										$('.conditions-layer').css('display', 'none');
 										$.initMQTT({
 											data_value: data_value,
 											data_id: data_id,
@@ -394,6 +396,7 @@ $.extend({
 									}
 								}
 								$('.conditions-layer').find('tbody').html(tbodyHtml);
+								$('.conditions-layer').css('display', 'block');
 								$('.conditions-layer').find('table').css('display', 'table');
 								$('.conditions-layer').find('p').css('display', 'none');
 								var passwordDom = $('.conditions-layer').find('input');
@@ -419,6 +422,7 @@ $.extend({
 												btn: ['下发','取消'] //按钮
 											}, function(index2){
 												layer.close(index2);
+												$('.conditions-layer').css('display', 'none');
 												$.verifyIssuePassword(passwordDom, function() {
 													$('.conditions-layer').find('tbody').html('');
 													$.issueAjax({
@@ -442,6 +446,7 @@ $.extend({
 										} else {
 											$.verifyIssuePassword(passwordDom, function() {
 												$('.conditions-layer').find('tbody').html('');
+												$('.conditions-layer').css('display', 'none');
 												$.issueAjax({
 													data_value: data_value,
 													data_id: data_id,
@@ -466,9 +471,11 @@ $.extend({
 									    $('.conditions-layer').find('tbody').html('');
 									    onOff.reset();
 									    layer.close(index); //如果设定了yes回调，需进行手工关闭
+									    $('.conditions-layer').css('display', 'none');
 									}
 								});
 							}, function() {
+								$('.conditions-layer').css('display', 'block');
 								$('.conditions-layer').find('table').css('display', 'none');
 								$('.conditions-layer').find('p').css('display', 'none');
 								var passwordDom = $('.conditions-layer').find('input');
@@ -501,6 +508,7 @@ $.extend({
 													guid: guid
 												}, true);
 												layer.close(index1);
+												$('.conditions-layer').css('display', 'none');
 												$('.operation').toggleWin(true);
 												$.three.capturer.intersected = null;
 											});
@@ -542,6 +550,7 @@ $.extend({
 							});
 							return false;
 						}
+						$('.conditions-layer').css('display', 'block');
 						$('.conditions-layer').find('table').css('display', 'none');
 						$('.conditions-layer').find('p').css('display', 'none');
 						var passwordDom = $('.conditions-layer').find('input');
@@ -564,6 +573,7 @@ $.extend({
 										data_id: data_id
 									}, function() {
 										layer.close(index1);
+										$('.conditions-layer').css('display', 'none');
 										$.onLabelValueChange({
 											destinationName: data_id,
 											payloadString: {
@@ -585,6 +595,7 @@ $.extend({
 			if (label.processId) {
 				var processId = label.processId;
 				var processName = label.processName;
+				$('.conditions-layer').css('display', 'block');
 				$('.conditions-layer').find('table').css('display', 'none');
 				$('.conditions-layer').find('p').css('display', 'block').html('是否确定执行<span style="color: red;">'+processName+'</span>？');
 				var passwordDom = $('.conditions-layer').find('input');
@@ -597,6 +608,7 @@ $.extend({
 					area: ['430px'],
 					btn: ['下发', '取消'],
 					yes: function(index1) {
+						$('.conditions-layer').css('display', 'none');
 						$.verifyIssuePassword(passwordDom, function() {
 							$.issueAjax({
 								process_id: processId
@@ -613,47 +625,10 @@ $.extend({
 						});
 					},
 					btn2: function() {
+						$('.conditions-layer').css('display', 'none');
 						$.three.capturer.intersected = null;
 					}
 				});
-				
-				
-//				layer.confirm('是否确定执行<span style="color: red;">'+processName+'</span>？', {
-//					btn: ['确定','取消'],
-//					btn1: function() {
-//						
-//						$.issueAjax({
-//							process_id: processId
-//						}, function() {
-//	//						$.initMQTT({
-//
-//	//							data_value: data_value,
-//
-//	//							data_id: data_id,
-//
-//	//							port_type: port_type
-//
-//	//						}, true);
-//
-//	//						$('.operation').toggleWin(true);
-//
-//							var position = label.position;
-//							$.three.labelGroup.remove(label);
-//							$.initThree.initLabel({
-//								_id: processId,
-//								process_name: processName,
-//								status: 1
-//							}, position);
-//							$.three.capturer.intersected = null;
-//						});
-//					},
-//					btn2: function() {
-//						$.three.capturer.intersected = null;
-//					},
-//					cancel: function() {
-//						$.three.capturer.intersected = null;
-//					}
-//				});
 			} else if (label.scadaId) {
 				var scadaId = label.scadaId;
 				var scadaName = label.scadaName;
@@ -671,7 +646,6 @@ $.extend({
 				});
 			}
 		}
-			
 	},
 	initTime: function() {
 		var now = new Date();
@@ -964,7 +938,6 @@ $.extend({
 		});
 	},
 	getConditions: function(dataId, status, callback, noConditions) {
-		console.log(dataId, status);
 		$.ajax({
 			type: 'get',
 			url: globalurl+"/v1/preconditions?access_token="+accesstoken,
