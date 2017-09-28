@@ -4,11 +4,11 @@ html{
 }
 body{
 	height: 100% !important;
+	background:#f3f3f4 !important;
 	font-family: microsoft yahei !important;
 }
 .globalBox{	
 	width:100%;
-	height: 100%;
 	background:#f3f3f4;
 	float:left;
 	position: relative;	
@@ -136,6 +136,7 @@ input{
 }
 .globalFooter{
 	height: 100px;
+	margin-top:20px;
 	text-align: center;
 }
 .globalContent hr{
@@ -150,7 +151,7 @@ input{
 }
 .saveBtn{
 	width: 300px;
-	margin-top: -10px;
+	margin-top: 32px;
 	display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;

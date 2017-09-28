@@ -32,8 +32,8 @@ $("#reservationtime").val(initstartTime+' '+' - '+' '+initendTime)
 function taskList(){
 	var allLogData=[]
 	var data={};
-	data.start_time=startTime
-	data.end_time=endTime
+	data.start_time=startTime;
+	data.end_time=endTime;
 	data=JSON.stringify(data)
 
 	$.ajax({

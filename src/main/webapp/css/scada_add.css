@@ -764,7 +764,9 @@ body *{
 	-webkit-animation: color-text1 3s infinite linear;
 			animation: color-text1 3s infinite linear;
 }
-
+.conditions-layer{
+	display: none;
+}
 .conditions-layer>table{
 	margin: 15px;
 	margin-bottom: 0;
