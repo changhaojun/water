@@ -230,7 +230,7 @@ $.extend({
 		var dataId = Number(message.destinationName);
 		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(dataId, $.initThree.judgeLabelType({data_id: dataId}))];
 		var payload = typeof message.payloadString=='string' ? JSON.parse(message.payloadString) : message.payloadString;
-
+		console.log(payload);
 		if (!originLabel) return;
 		var newData = {
 			data_id: dataId,
