@@ -345,6 +345,7 @@ function onConnectionLost(responseObject) {
 function onMessageArrived(message) {
   var topic = message.destinationName;
   var payload = JSON.parse(message.payloadString);
+  console.log(payload);
   toastr.options = {
 	  "closeButton":true,
 	  "debug":false,
