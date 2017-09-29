@@ -251,10 +251,12 @@ $.initThree = {
 			var dataUnit = userData.data_unit;
 			var dataStatus = userData.status;
 			var portType = userData.port_type;
+			var battery=userData.battery;
 			if (portType == 'AI' || portType == 'AO' || portType == 'MO') {
 				labelMessage = dataName + ':' + dataValue + (dataUnit == '-' ? '' : dataUnit) ;
 			} else if (portType == 'DI' || portType == 'DO') {
-				labelMessage = dataName + ':' + (dataValue == 1 ? userData.high_battery : userData.low_battery);
+				labelMessage = dataName + ':' + battery.split('$')[dataValue]
+//				(dataValue == 1 ? userData.high_battery : userData.low_battery);
 			}
 		} else if ($.initThree.judgeLabelType(userData)=='process') {
 			var processId = userData._id ? userData._id : userData.process_id;
