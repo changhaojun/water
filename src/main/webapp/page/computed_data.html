@@ -60,6 +60,7 @@
 								<thead>
 									<td>名称</td>
 									<td>计算公式</td>
+									<td>分组标签</td>
 									<td>编辑</td>
 									<td>删除</td>
 								</thead>
@@ -70,6 +71,9 @@
 											<span v-for="(formula,index) in dataConfig.calculate_formula" >
 												{{formula.data_name}}
 											</span>
+										</td>
+										<td>
+											{{dataConfig.tag_name}}
 										</td>
 										<td class="operate">
 											<i class="fa fa-edit" @click="editPort(index,$event)"></i>
@@ -120,6 +124,12 @@
 							</select>
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<label>分组标签</label>
+							<input @focus="showTags(index,$event)" :tag_id="dataConfig.tag_id" type="text" v-model="dataConfig.tag_name" placeholder="请选择分组标签" />
+						</div>
+					</div>
 				</div>
 				<div class="boxContent">
 					<div class="analogInput">
@@ -131,6 +141,11 @@
 					<button class="saveBtn">保存公式</button>
 				</div>
 			</div>
+			
+			<dl class="tagList" hidden="hidden">
+				<dt @click="addTag">添加新分组标签</dt>
+				<dd @click="chioseTag(index)" v-for="(tag,index) in tags" :tagId="tag._id">{{tag.tag_name}} <span @click="removeTag(index,$event)" class="fa fa-trash  removeTag"></span></dd>
+			</dl>
 		</div>
 		
 		

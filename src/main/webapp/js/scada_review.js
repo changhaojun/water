@@ -71,13 +71,11 @@ $.fn.extend({
 
 $.extend({
 	//初始化
-
 	init: function() {
 		$.initToken('get', function() {
 			$.initTitle();
 			$.initAjax(function(data) {
 				//数据流初始化
-				
 				$.initData.thingName = data.scada.thing_name;
 				$.initData.sentData.thing_id = data.scada.thing_id;
 				$.initData.sentData.scada_name = data.scada.scada_name;
@@ -85,7 +83,6 @@ $.extend({
 				$.initData.sentData.description = data.scada.description;
 				$.initData.sentData.scada_config = data.scada.scada_config;
 				//三维场景初始化
-
 				$.initThree.init(data.scadaModel.modelConfig, function() {
 					for (var i=0; i<$.initData.sentData.scada_config.length; i++) {
 						//数据标签渲染
@@ -171,7 +168,6 @@ $.extend({
 		}
 	},
 	//页面初始化请求
-
 	initAjax: function(callBack) {
 		$.ajax({
 			type: "get",
@@ -218,7 +214,7 @@ $.extend({
 			}
 		};
 		client.onMessageArrived = function(message) {
-			console.log(message)
+			console.log(message);
 			if (!isIssue) { //AI && DI回调
 				$.onLabelValueChange(message);
 			} else { //AO && DO && MO回调
@@ -234,8 +230,7 @@ $.extend({
 		var dataId = Number(message.destinationName);
 		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(dataId, $.initThree.judgeLabelType({data_id: dataId}))];
 		var payload = typeof message.payloadString=='string' ? JSON.parse(message.payloadString) : message.payloadString;
-//		var payload = JSON.parse(message.payloadString);
-
+		console.log(payload);
 		if (!originLabel) return;
 		var newData = {
 			data_id: dataId,
@@ -296,7 +291,6 @@ $.extend({
 			switch (label.labelType) {
 				case 'AI':
 					//do AI
-
 					$('.AI').siblings().toggleWin(true);
 					$('.AI').toggleWin().stayCenter($('.operation'));
 					$('.AI').find('.name').html(label.labelName);
@@ -308,7 +302,6 @@ $.extend({
 					break;
 				case 'DI':
 					//do DI
-
 					$('.DI').toggleWin().stayCenter($('.operation'));
 					$('.DI').siblings().toggleWin(true);
 					$('.DI').find('.name').html(label.labelName);
@@ -320,7 +313,6 @@ $.extend({
 					break;
 				case 'AO':
 					//do AO
-
 					$('.AO').siblings().toggleWin(true);
 					$('.AO').toggleWin().stayCenter($('.operation'));
 					$('.AO').find('.name').html(label.labelName);
@@ -335,28 +327,44 @@ $.extend({
 						bgColor: '#eeeeee'
 					});
 					$('.AO').find('.confirm').click(function() {
-						layer.confirm('是否确定下发？', {
-							btn: ['确定','取消']
-						}, function(){
-							var data_value = $('.AO').find('.confirmVal').val();
-							var	data_id = label.labelId;
-							var port_type = label.labelType;
-							var guid = Date.now().toString();
-							$.issueAjax({
-								data_value: data_value,
-								data_id: data_id,
-								guid: guid
-							}, function() {
-								$.initMQTT({
-									data_value: data_value,
-									data_id: data_id,
-									port_type: port_type,
-									guid: guid
-								}, true);
-								$('.operation').toggleWin(true);
-								$('.AO').find('.confirm').unbind();
-								$.three.capturer.intersected = null;
-							});
+						$('.conditions-layer').css('display', 'block');
+						$('.conditions-layer').find('table').css('display', 'none');
+						$('.conditions-layer').find('p').css('display', 'none');
+						var passwordDom = $('.conditions-layer').find('input');
+						passwordDom.val('');
+						layer.open({
+							type: 1,
+							title: '下发密码验证',
+							closeBtn: 0,
+							content: $('.conditions-layer'),
+							area: ['430px'],
+							btn: ['下发', '取消'],
+							yes: function(index1) {
+								//确定下发
+								var data_value = $('.AO').find('.confirmVal').val();
+								var	data_id = label.labelId;
+								var port_type = label.labelType;
+								var guid = Date.now().toString();
+								$.verifyIssuePassword(passwordDom, function() {
+									$.issueAjax({
+										data_value: data_value,
+										data_id: data_id,
+										guid: guid
+									}, function() {
+										layer.close(index1);
+										$('.conditions-layer').css('display', 'none');
+										$.initMQTT({
+											data_value: data_value,
+											data_id: data_id,
+											port_type: port_type,
+											guid: guid
+										}, true);
+										$('.operation').toggleWin(true);
+										$('.AO').find('.confirm').unbind();
+										$.three.capturer.intersected = null;
+									});
+								});
+							}
 						});
 					});
 					break;
@@ -374,38 +382,150 @@ $.extend({
 						el: '.finfosoft-onOff',
 						status: !label.labelValue ? 0 : label.labelValue,
 						onChanged: function(status) {
-							layer.confirm('是否确定下发？', {
-								btn: ['确定','取消']
-							}, function() {
-								var data_value = status;
-								var	data_id = label.labelId;
-								var port_type = label.labelType;
-								var guid = Date.now().toString();
-								$.issueAjax({
-									data_value: data_value,
-									data_id: data_id,
-									guid: guid
-								}, function() {
-									$.initMQTT({
-										data_value: data_value,
-										data_id: data_id,
-										port_type: port_type,
-										high_battery: high_battery,
-										low_battery: low_battery,
-										guid: guid
-									}, true);
-									$('.operation').toggleWin(true);
-									$.three.capturer.intersected = null;
+							$.getConditions(label.labelId, status, function(data) {
+								var tbodyHtml = '';
+								var suggest = false; //是否不建议下发
+								for (var i=0; i<data.rows[0].list.length; i++) {
+									if ( data.rows[0].list[i].type === 1 ) {
+										if ( data.rows[0].list[i].target_status !== data.rows[0].list[i].current_status ) {
+											suggest = true;
+										}
+										tbodyHtml += '<tr class="'+ (data.rows[0].list[i].target_status === data.rows[0].list[i].current_status ? '' : 'defer') +'"><td>'+ data.rows[0].list[i].data_name +'</td><td>'+ data.rows[0].list[i].target_status +'</td><td>'+ data.rows[0].list[i].current_status +'</td></tr>';
+									} else {
+										tbodyHtml += '<tr><td>'+ data.rows[0].list[i].custom_name + '(自定义)' +'</td><td>'+ data.rows[0].list[i].custom_status + '(自定义)' +'</td><td>未接入</td></tr>';
+									}
+								}
+								$('.conditions-layer').find('tbody').html(tbodyHtml);
+								$('.conditions-layer').css('display', 'block');
+								$('.conditions-layer').find('table').css('display', 'table');
+								$('.conditions-layer').find('p').css('display', 'none');
+								var passwordDom = $('.conditions-layer').find('input');
+								passwordDom.val('');
+								layer.open({
+									type: 1,
+									title: '前置条件提示',
+									closeBtn: 0,
+									content: $('.conditions-layer'),
+									area: ['430px'],
+									btn: ['下发', '取消'],
+									yes: function(index1) {
+										//确定下发
+										var data_value = status;
+										var	data_id = label.labelId;
+										var port_type = label.labelType;
+										var guid = Date.now().toString();
+										if (suggest) {
+											layer.confirm('<span style="color: red;">警告：当前端口存在已知异常前置端口！是否确认下发？</span>', {
+												title: false,
+												closeBtn: false,
+												area: '400px',
+												btn: ['下发','取消'] //按钮
+											}, function(index2){
+												layer.close(index2);
+												$('.conditions-layer').css('display', 'none');
+												$.verifyIssuePassword(passwordDom, function() {
+													$('.conditions-layer').find('tbody').html('');
+													$.issueAjax({
+														data_value: data_value,
+														data_id: data_id,
+														guid: guid
+													}, function() {
+														$.initMQTT({
+															data_value: data_value,
+															data_id: data_id,
+															port_type: port_type,
+															high_battery: high_battery,
+															low_battery: low_battery,
+															guid: guid
+														}, true);
+														$('.operation').toggleWin(true);
+														$.three.capturer.intersected = null;
+													});
+												});
+											});
+										} else {
+											$.verifyIssuePassword(passwordDom, function() {
+												$('.conditions-layer').find('tbody').html('');
+												$('.conditions-layer').css('display', 'none');
+												$.issueAjax({
+													data_value: data_value,
+													data_id: data_id,
+													guid: guid
+												}, function() {
+													$.initMQTT({
+														data_value: data_value,
+														data_id: data_id,
+														port_type: port_type,
+														high_battery: high_battery,
+														low_battery: low_battery,
+														guid: guid
+													}, true);
+													$('.operation').toggleWin(true);
+													$.three.capturer.intersected = null;
+												});
+											});
+										}
+									},
+									btn2: function(index){
+									    //do something
+									    $('.conditions-layer').find('tbody').html('');
+									    onOff.reset();
+									    layer.close(index); //如果设定了yes回调，需进行手工关闭
+									    $('.conditions-layer').css('display', 'none');
+									}
 								});
 							}, function() {
-								onOff.reset();
+								$('.conditions-layer').css('display', 'block');
+								$('.conditions-layer').find('table').css('display', 'none');
+								$('.conditions-layer').find('p').css('display', 'none');
+								var passwordDom = $('.conditions-layer').find('input');
+								passwordDom.val('');
+								layer.open({
+									type: 1,
+									title: '无前置条件',
+									closeBtn: 0,
+									content: $('.conditions-layer'),
+									area: ['430px'],
+									btn: ['下发', '取消'],
+									yes: function(index1) {
+										//确定下发
+										var data_value = status;
+										var	data_id = label.labelId;
+										var port_type = label.labelType;
+										var guid = Date.now().toString();
+										$.verifyIssuePassword(passwordDom, function() {
+											$.issueAjax({
+												data_value: data_value,
+												data_id: data_id,
+												guid: guid
+											}, function() {
+												$.initMQTT({
+													data_value: data_value,
+													data_id: data_id,
+													port_type: port_type,
+													high_battery: high_battery,
+													low_battery: low_battery,
+													guid: guid
+												}, true);
+												layer.close(index1);
+												$('.conditions-layer').css('display', 'none');
+												$('.operation').toggleWin(true);
+												$.three.capturer.intersected = null;
+											});
+										});
+									},
+									btn2: function(index){
+									    //do something
+									    onOff.reset();
+									    layer.close(index);
+									}
+								});
 							});
 						}
 					});
 					break;
 				case 'MO':
 					//do MO
-
 					$('.MO').toggleWin().stayCenter($('.operation'));
 					$('.MO').siblings().toggleWin(true);
 					$('.MO').find('.name').html(label.labelName);
@@ -430,28 +550,43 @@ $.extend({
 							});
 							return false;
 						}
-						layer.confirm('是否确定下发？', {
-							btn: ['确定','取消'] //按钮
-
-						}, function(){
-							var data_value = parseFloat($('.MO').find('.newVal').val());
-							var	data_id = label.labelId;
-							var port_type = label.labelType;
-							$.moAjax({
-								data_value: data_value,
-								data_id: data_id
-							}, function() {
-								$.onLabelValueChange({
-									destinationName: data_id,
-									payloadString: {
+						$('.conditions-layer').css('display', 'block');
+						$('.conditions-layer').find('table').css('display', 'none');
+						$('.conditions-layer').find('p').css('display', 'none');
+						var passwordDom = $('.conditions-layer').find('input');
+						passwordDom.val('');
+						layer.open({
+							type: 1,
+							title: '下发密码验证',
+							closeBtn: 0,
+							content: $('.conditions-layer'),
+							area: ['430px'],
+							btn: ['下发', '取消'],
+							yes: function(index1) {
+								//确定下发
+								var data_value = parseFloat($('.MO').find('.newVal').val());
+								var	data_id = label.labelId;
+								var port_type = label.labelType;
+								$.verifyIssuePassword(passwordDom, function() {
+									$.moAjax({
 										data_value: data_value,
-										status: label.labelStatus
-									}
+										data_id: data_id
+									}, function() {
+										layer.close(index1);
+										$('.conditions-layer').css('display', 'none');
+										$.onLabelValueChange({
+											destinationName: data_id,
+											payloadString: {
+												data_value: data_value,
+												status: label.labelStatus
+											}
+										});
+										$('.operation').toggleWin(true);
+										$('.MO').find('.confirm').unbind();
+										$.three.capturer.intersected = null;
+									});
 								});
-								$('.operation').toggleWin(true);
-								$('.MO').find('.confirm').unbind();
-								$.three.capturer.intersected = null;
-							});
+							}
 						});
 					});
 					break;
@@ -460,38 +595,37 @@ $.extend({
 			if (label.processId) {
 				var processId = label.processId;
 				var processName = label.processName;
-				layer.confirm('是否确定执行<span style="color: red;">'+processName+'</span>？', {
-					btn: ['确定','取消'],
-					btn1: function() {
-						$.issueAjax({
-							process_id: processId
-						}, function() {
-	//						$.initMQTT({
-
-	//							data_value: data_value,
-
-	//							data_id: data_id,
-
-	//							port_type: port_type
-
-	//						}, true);
-
-	//						$('.operation').toggleWin(true);
-
-							var position = label.position;
-							$.three.labelGroup.remove(label);
-							$.initThree.initLabel({
-								_id: processId,
-								process_name: processName,
-								status: 1
-							}, position);
-							$.three.capturer.intersected = null;
+				$('.conditions-layer').css('display', 'block');
+				$('.conditions-layer').find('table').css('display', 'none');
+				$('.conditions-layer').find('p').css('display', 'block').html('是否确定执行<span style="color: red;">'+processName+'</span>？');
+				var passwordDom = $('.conditions-layer').find('input');
+				passwordDom.val('');
+				layer.open({
+					type: 1,
+					title: '下发密码验证',
+					closeBtn: 0,
+					content: $('.conditions-layer'),
+					area: ['430px'],
+					btn: ['下发', '取消'],
+					yes: function(index1) {
+						$('.conditions-layer').css('display', 'none');
+						$.verifyIssuePassword(passwordDom, function() {
+							$.issueAjax({
+								process_id: processId
+							}, function() {
+								var position = label.position;
+								$.three.labelGroup.remove(label);
+								$.initThree.initLabel({
+									_id: processId,
+									process_name: processName,
+									status: 1
+								}, position);
+								$.three.capturer.intersected = null;
+							});
 						});
 					},
 					btn2: function() {
-						$.three.capturer.intersected = null;
-					},
-					cancel: function() {
+						$('.conditions-layer').css('display', 'none');
 						$.three.capturer.intersected = null;
 					}
 				});
@@ -512,7 +646,6 @@ $.extend({
 				});
 			}
 		}
-			
 	},
 	initTime: function() {
 		var now = new Date();
@@ -800,6 +933,61 @@ $.extend({
 				if (data.code == 200) {
 					layer.msg('已下发！', {icon: 1});
 					callBack && callBack();
+				}
+			}
+		});
+	},
+	getConditions: function(dataId, status, callback, noConditions) {
+		$.ajax({
+			type: 'get',
+			url: globalurl+"/v1/preconditions?access_token="+accesstoken,
+			async: false,
+			data: {
+				filter: JSON.stringify({
+					gateway_data_id: dataId,
+					status: String(status)
+				})
+			},
+			success:function(data){
+				if (data.total === 1) {
+					callback && callback(data);
+				} else if (data.total === 0) {
+					noConditions && noConditions();
+				}
+			}
+		});
+	},
+	verifyIssuePassword: function(passwordDom, callback) {
+		var password = passwordDom.val();
+		if (password === '') {
+			passwordDom.css('border-color', '#fe787b');
+			layer.tips('请输入下发密码', passwordDom, {
+				tips: [3, '#fe787b'],
+				end: function() {
+					passwordDom.css('border-color', '#cccccc');
+				}
+			});
+			return;
+		}
+		$.ajax({
+			type: 'put',
+			url: globalurl+"/v1/mails?access_token="+accesstoken,
+			async: false,
+			data: {
+				company_id: $('#companyId').val(),
+				password: password
+			},
+			success:function(data){
+				if (data.code === 200) {
+					callback && callback();
+				} else {
+					passwordDom.css('border-color', '#fe787b');
+					layer.tips(data.error, passwordDom, {
+						tips: [3, '#fe787b'],
+						end: function() {
+							passwordDom.css('border-color', '#cccccc');
+						}
+					});
 				}
 			}
 		});

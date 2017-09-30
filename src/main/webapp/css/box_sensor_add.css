@@ -207,7 +207,7 @@ body{
 .pop{
 	width: 500px;
 	position: fixed;
-	height:520px;
+	height:550px;
 	left: 0;
 	top: 0;
 	margin: auto;
@@ -382,7 +382,9 @@ body{
 	color: #7E7E7E;
 	padding-left: 0;
 }
-.pop-main .dataName input,.pop-main .dataUnit input{
+.pop-main .dataName input,
+.pop-main .dataUnit input,
+.pop-main .dataTag input{
 	margin-bottom: 10px;
     width: 350px;
     height: 38px;
@@ -435,4 +437,26 @@ body{
 
 .layui-layer-content img{
 	width: 100%;
+}
+.tagList{
+	width:350px;
+	border: 1px solid #ccc;
+	max-height: 170px;
+	position: absolute;
+	z-index: 9999;
+	background: #ffffff;
+	overflow-y: scroll;
+}
+.tagList dd,
+.tagList dt{
+	cursor: pointer;
+	line-height: 24px;
+}
+.removeTag{
+	float: right;
+	margin-right: 20px;
+	color: red;
+}
+.tagList dd:hover{
+	background: #cccccc;
 }

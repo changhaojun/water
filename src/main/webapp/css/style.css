@@ -48,13 +48,25 @@ h5 {
 a:focus {
     outline: none;
 }
-
 .nav > li > a {
-    color: #a7b1c2;
-    font-weight: 600;
-    padding: 14px 20px 14px 25px;
+	    color: #a7b1c2;
+	    font-weight: 600;
+	    padding: 6% 20px 6% 25px;
 }
-
+@media screen and (max-width: 1905px){
+	.nav > li > a {
+	    color: #a7b1c2;
+	    font-weight: 600;
+	    padding: 6% 20px 6% 25px;
+	}
+}
+@media screen and (max-width: 1366px){
+	.nav > li > a {
+	    color: #a7b1c2;
+	    font-weight: 600;
+	    padding: 3% 20px 3% 25px;
+	}
+}
 .nav li>a {
     display: block;
     /*white-space: nowrap;*/

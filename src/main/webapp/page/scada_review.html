@@ -17,6 +17,7 @@
 	</head>
 	<body>
 		<input type="text" id="scadaId" hidden="hidden" value=${scadaId} />
+		<input type="text" id="companyId" hidden="hidden" value=${companyId} />
 		<div id="vue">
 			<div class="mainTitle clearfix">
 				<ul class="clearfix backSide"></ul>
@@ -215,4 +216,23 @@
 		<script src="/js/scada_three.js?2.3" type="text/javascript" charset="utf-8"></script>
 		<script src="/js/scada_review.js?2.5" type="text/javascript" charset="utf-8"></script>
 	</body>
+	
+	<div class="conditions-layer" hidden="hidden">
+		<table border="" cellspacing="" cellpadding="">
+			<thead>									
+				<tr>
+					<th>前置端口</th>
+					<th>前置状态</th>
+					<th>当前状态</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+		<p></p>
+		<div class="control-password clearfix">
+			<span class="pull-left">下发密码：</span>
+			<input class="pull-left" type="password" placeholder="请输入下发密码" autocomplete="off" onfocus="this.type='password'"/>
+		</div>
+	</div>
+	
 </html>

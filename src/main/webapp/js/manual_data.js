@@ -8,8 +8,10 @@ $.allData={
 		status:1
 	},
 	dataConfigs:[],
+	tags:[],
 	access_token:'',
-	inputCheck:true,			//input框验证是否通过
+	inputCheck:true,//input框验证是否通过
+	chioseIndex:0,
 	device_id:$('#deviceId').val(),
 };
 
@@ -39,7 +41,61 @@ var $extend=$.fn.extend({
 		$(this).keyup(function() {
 			if(!$(this).attr('num-limit')) return false;
 			$(this).val($(this).val().replace(/[^0-9-]/g, ''));
-			eval('initData.'+$(this).attr('datasrc')+'=Number($(this).val())');
+			eval('allData.'+$(this).attr('datasrc')+'=Number($(this).val())');
+		});
+	},
+	showTags:function(index,event){
+		$.allData.chioseIndex = index;
+		var $This = typeof event==="undefined" ? $(this) : $(event.currentTarget);
+		$('.tagList').show(200)
+		$('.tagList').css({left:$This.offset().left,top:($This.offset().top+$This.height()-$(window).scrollTop())});
+	},
+	chioseTag:function(index){
+		this.dataConfigs[$.allData.chioseIndex].tag_id = this.tags[index]._id;
+		this.dataConfigs[$.allData.chioseIndex].tag_name = this.tags[index].tag_name; 
+		$('.tagList').hide(200)
+	},
+	addTag:function(){
+		layer.prompt({
+			title: '输入新的分组标签',
+			formType: 0
+		}, function(pass, index) {	
+			$.ajax({
+				type:"post",
+				url:globalurl+"/v1/tags",
+				async:true,
+				data:{
+					access_token:$.allData.access_token,
+					data:'{"company_id":"'+$('#companyId').val()+'","tag_name":"'+pass+'"}'
+				},
+				success:function(data){
+					if(data.code==200){
+						layer.close(index);
+						layer.msg('添加成功',{icon:1,zIndex:99999999});
+						delete data.code;
+						$.allData.tags.unshift(data)
+					}else{
+						layer.msg(data.error,{icon:2,zIndex:99999999});
+					}
+				}
+			});
+		});
+	},
+	removeTag:function(index,event){
+		event.stopPropagation();
+		$.ajax({
+			type:'delete',
+			url:globalurl+'/v1/tags/'+$.allData.tags[index]._id+'?access_token='+$.allData.access_token,
+			async:true,
+			success:function(data){
+				console.log(this.tags)
+				if(data.code==200){
+					$.allData.tags.splice(index,1)
+					layer.msg(data.success,{icon:1,zIndex:99999999})
+				}else{
+					layer.msg(data.error,{icon:2,zIndex:99999999})
+				}
+			}
 		});
 	}
 });
@@ -55,6 +111,7 @@ $.extend({
 		$('input').filter('[num-limit=limit]').numOnly();
 		$.allData.access_token = accesstoken;
 		$.getDevice();
+		$.getTag();
 		$('[data-toggle="tooltip"]').tooltip();
 		$('.addPort').click(function(){
 			$.addPort();
@@ -74,8 +131,30 @@ $.extend({
 		});
 		$('input').limitSpacing();		//输入框去除空格
 	},
+	getTag:function(){
+		$.ajax({
+			type:"get",
+			url:globalurl+"/v1/tags",
+			async:true,
+			data:{
+					access_token:$.allData.access_token,
+					filter:'{"company_id":"'+$('#companyId').val()+'"}'
+			},
+			success:function(data){
+				$.allData.tags=data.rows
+			}
+		});
+	},
 	addPort:function(){
-		var dataConfig={'data_name':'','data_unit':'','port_type':'MO','status':1};
+		var dataConfig={
+			data_name:'',
+			data_unit:'',
+			port_type:'MO',
+			tag_id:'',
+			tag_name:'',
+			data_value:0,
+			status:1
+		};
 		$.allData.dataConfigs.push(dataConfig);
 		$('[data-toggle="tooltip"]').tooltip();
 	},

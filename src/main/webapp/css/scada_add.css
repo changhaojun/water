@@ -764,6 +764,52 @@ body *{
 	-webkit-animation: color-text1 3s infinite linear;
 			animation: color-text1 3s infinite linear;
 }
+.conditions-layer{
+	display: none;
+}
+.conditions-layer>table{
+	margin: 15px;
+	margin-bottom: 0;
+	width: 400px;
+}
+.conditions-layer>table th,
+.conditions-layer>table td{
+	text-align: center;
+}
+.conditions-layer>table>thead>tr{
+	height: 40px;
+}
+.conditions-layer>table>tbody>tr{
+	height: 30px;
+}
+.conditions-layer>table>thead>tr>th:nth-of-type(1){
+	width: 60%;
+}
+.conditions-layer>table>thead>tr>th:nth-of-type(2){
+	width: 20%;
+}
+.conditions-layer>table>thead>tr>th:nth-of-type(3){
+	width: 20%;
+}
+.conditions-layer p{
+	margin-top: 15px;
+	margin-left: 15px;
+}
+.conditions-layer .defer{
+	background: #fff;
+	-webkit-animation: warning 2s infinite ease-in-out;
+	animation: warning 2s infinite ease-in-out;
+}
+.conditions-layer>.control-password{
+	margin-top: 15px;
+	margin-left: 15px;
+	width: 400px;
+}
+.conditions-layer>.control-password>input{
+	text-indent: 4px;
+	width: 330px;
+	border: 1px solid #ccc;
+}
 
 @-webkit-keyframes -webkit-rotate-top {
 	from {
@@ -841,5 +887,16 @@ body *{
 @keyframes color-text3 {
 	100% {
 		color: #ffcd66;
+	}
+}
+@keyframes warning {
+	0% {
+		background: #fff;
+	}
+	50% {
+		background: #f2dede;
+	}
+	100% {
+		background: #fff;
 	}
 }

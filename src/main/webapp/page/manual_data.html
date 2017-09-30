@@ -61,6 +61,10 @@
 									<input type="text" v-model="dataConfig.data_unit" isCheck="false" class="textInput" placeholder="请输入数据单位"/>
 								</div>
 								<div class="dataCircle">
+									<label>分组标签</label>
+									<input @focus="showTags(index,$event)" :tag_id="dataConfig.tag_id" type="text" v-model="dataConfig.tag_name"  class="textInput" placeholder="请选择分组标签"/>
+								</div>
+								<div class="dataCircle">
 									<label>初始值</label>
 									<input num-limit="limit" type="text" v-model.number="dataConfig.data_value" isCheck="false" class="textInput" placeholder="请输入初始值"/>
 									<span @click='deleteData(index,$event)' class="fa fa-times-circle deleteData" data-toggle="tooltip" data-placement="top" title="删除"></span>
@@ -73,6 +77,11 @@
 					</div>
 				</div>
 			</div>
+			
+			<dl class="tagList" hidden="hidden">
+				<dt @click="addTag">添加新分组标签</dt>
+				<dd @click="chioseTag(index)" v-for="(tag,index) in tags" :tagId="tag._id">{{tag.tag_name}} <span @click="removeTag(index,$event)" class="fa fa-trash  removeTag"></span></dd>
+			</dl>
 		</div>
 		<script src="/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="/plugins/jQuery/jquery-1.11.3.min.js"></script>

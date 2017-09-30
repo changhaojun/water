@@ -251,6 +251,9 @@ $.initThree = {
 			var dataUnit = userData.data_unit;
 			var dataStatus = userData.status;
 			var portType = userData.port_type;
+			var battery=userData.battery;
+			console.log(userData);
+			console.log(battery);
 			if (portType == 'AI' || portType == 'AO' || portType == 'MO') {
 				labelMessage = dataName + ':' + dataValue + (dataUnit == '-' ? '' : dataUnit) ;
 			} else if (portType == 'DI' || portType == 'DO') {
@@ -307,6 +310,19 @@ $.initThree = {
 						return 0xff0000;
 				}
 			})();
+			var portType = userData.port_type;
+			if(portType == 'AO' || portType == 'DO' || portType == 'MO'){
+				var labelPlaneColor = (function() {
+					switch (dataStatus) {
+						case 0:
+							return 0xcccccc;
+						case 1:
+							return 0x007866;
+						case 2:
+							return 0xff0000;
+					}
+				})();
+			}
 		} else if ($.initThree.judgeLabelType(userData) == 'process') {
 			var labelPlaneColor = (function() {
 				switch (processStatus) {
