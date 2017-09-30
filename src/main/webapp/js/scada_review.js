@@ -240,6 +240,10 @@ $.extend({
 			port_type: originLabel.labelType,
 			status: payload.status
 		};
+		if(payload.port_type == 'DI'){
+			newData.high_battery=payload.high_battery
+			newData.low_battery=payload.low_battery
+		}
 		var position = originLabel.position;
 		$.three.labelGroup.remove(originLabel);
 		$.initThree.initLabel(newData, position);

@@ -251,9 +251,7 @@ $.initThree = {
 			var dataUnit = userData.data_unit;
 			var dataStatus = userData.status;
 			var portType = userData.port_type;
-			var battery=userData.battery;
 			console.log(userData);
-			console.log(battery);
 			if (portType == 'AI' || portType == 'AO' || portType == 'MO') {
 				labelMessage = dataName + ':' + dataValue + (dataUnit == '-' ? '' : dataUnit) ;
 			} else if (portType == 'DI' || portType == 'DO') {
