@@ -92,7 +92,7 @@ $.extend({
 		    pagination: true, //是否分页
 		    search: false, //显示搜索框
 		    pageSize: 10,//每页的行数 
-		    pageNumber:1,
+		    pageNumber: 1,
 		    showRefresh: false,
 		    showToggle: false,
 		    showColumns: false,
@@ -138,7 +138,7 @@ $.extend({
 	},
 	queryParams: function(params) {
 		return {
-			pageNumber: $.initData.isSearch ? 0 : params.offset,//第几页
+			pageNumber: params.offset,//第几页
 			pageSize: params.limit,//每页的条数
 			access_token: accesstoken,
 //			like:'{"scada_name":"'+$.initData.vueInstance.search_name+'"}',//模糊查询的设备名
@@ -231,14 +231,17 @@ $.extend({
 		return res;
 	},
 	hasExisted: function(portId, status, except) {
+		var res = false;
 		for (var i=0; i<$.initData.tableData.rows.length; i++) {
 			if ( typeof except === 'number' && i === except ) {
 				continue;
 			}
 			if (portId === $.initData.tableData.rows[i].gateway_data_id && status === $.initData.tableData.rows[i].status) {
 				layer.msg( '当前所配置的目标端口以及所对应的目标状态存在于配置列表中，请勿重复配置！' ,{ icon: 2 });
+				res = true;
 			}
 		}
+		return res;
 	},
 	saveConfig: function() {
 		$('.save-config').click(function() {
@@ -247,9 +250,13 @@ $.extend({
 			if ( $.initData.conditionId ) {
 				sentData.id = $.initData.conditionId;
 				sentData.type = 'put';
-				$.hasExisted( $.initData.vueData.config.target_port.group[ $.initData.vueData.config.target_port.selectedIndex ].data_id, $.initData.vueData.config.target_status, $.initData.tableIndex );
+				if ( $.hasExisted( $.initData.vueData.config.target_port.group[ $.initData.vueData.config.target_port.selectedIndex ].data_id, $.initData.vueData.config.target_status, $.initData.tableIndex ) ) {
+					return;
+				}
 			} else {
-				$.hasExisted( $.initData.vueData.config.target_port.group[ $.initData.vueData.config.target_port.selectedIndex ].data_id, $.initData.vueData.config.target_status );
+				if ( $.hasExisted( $.initData.vueData.config.target_port.group[ $.initData.vueData.config.target_port.selectedIndex ].data_id, $.initData.vueData.config.target_status ) ) {
+					return;
+				}
 				sentData.type = 'post';
 			}
 			sentData.mainData = {
@@ -289,6 +296,7 @@ $.extend({
 		var index = $(this).parents('tr').index();
 		var portName = $(this).parents('tr').children().eq(0).html();
 		var portStatus = $(this).parents('tr').children().eq(1).html();
+		var pageNumber = $('.table').find('tbody').children().length;
 		$.initData.conditionId = $(this).attr('_id');
 		layer.confirm('<span style="color: red;">是否要删除前置条件配置？</span></br>端口【'+ portName +'】 / 状态【'+ portStatus +'】', {
 			title: '删除配置',
@@ -298,9 +306,13 @@ $.extend({
 				id: $.initData.conditionId,
 				type: 'delete',
 				callback: function(data) {
+					if (pageNumber === 1) {
+						$('.table').bootstrapTable("prevPage");
+					}
 					$('.table').bootstrapTable("refresh", $.queryParams);
 					layer.msg(data.success, {
 						icon: 1,
+						time: 1000,
 						end: function() {
 							layer.closeAll();
 							$.initData.conditionId = '';
@@ -370,7 +382,8 @@ $.extend({
 					sentData.callback && sentData.callback(data);
 				} else {
 					layer.msg(data.error, {
-						icon: 2
+						icon: 2,
+						time: 1000
 					});
 				}
 			}

@@ -156,8 +156,10 @@ $.fn.extend({
 			username: $('input').filter('[name=username]').val().replace($.RegEsp.trim, ''),
 			password: $('input').filter('[name=password]').val(),
 			code: $('input').filter('[name=verificationCode]').val() === '请输入验证码' ? '' : $('input').filter('[name=verificationCode]').val(),
-			client_id: 'admin',
-			client_secret: 'admin',
+//			client_id: 'admin',
+//			client_secret: 'admin',
+			client_id: 'water',
+			client_secret: 'water',
 //			address: $.address
 			address: '陕西省西安市'
 		};
