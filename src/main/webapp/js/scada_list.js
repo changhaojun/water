@@ -102,8 +102,72 @@ function topColor(obj,color){
 
 //添加数据事件
 function addEntity(){
-	self.location.href="/scada/select/";
+	$('.popup').find('input').val();
+	searchThing();
+	layer.open({
+		title: false,
+		closeBtn: 0,
+		type: 1,
+		content: $('.popup'),
+		success: function(layero, index) {
+			$('.popup').find('.close').off('click').click(function() {
+				layer.close(index);
+			});
+			$('.popup').find('.save').off('click').click(function() {
+				var thingId = $(this).attr('thingId');
+				if ( !thingId ) {
+					layer.msg('请选择实体', {icon: 2});
+					return false;
+				}
+				layer.close(index);
+				self.location.href="/scada/add/"+thingId;
+			});
+		}
+	});
 }
+
+function thingLikeSearch(dom) {
+		var val = $(dom).val();
+		searchThing(val);
+}
+
+function searchThing(val) {
+	$.ajax({
+		type: "get",
+		dataType: "json",
+		url: globalurl+"/v1/things",
+		async: true,
+		crossDomain: true == !(document.all),
+		data: {
+			access_token: accesstoken,
+			like: JSON.stringify({
+				thing_name: val
+			})
+		},
+		success: function(data) {
+			var list = $('.popup').find('.thing-list');
+			var save = $('.popup').find('.save');
+			save.removeAttr('thingId');
+			list.html('');
+			var liDom = '';
+			if (data.rows.length > 0) {
+				$.each(data.rows, function(i) {
+					liDom += '<li thingId="'+data.rows[i]._id+'">'+data.rows[i].thing_name+'</li>'
+				});
+				list.html(liDom);
+				list.children().click(function() {
+					$(this).addClass('active');
+					$(this).siblings().removeClass('active');
+					save.attr('thingId', $(this).attr('thingId'));
+				})
+			} else {
+				liDom += '<li style="color: #ff787b;">未查询到对应实体!</li>';
+				list.html(liDom);
+			}
+		}
+	});
+}
+
 
 function reviewScada(){
 	var id = $(this).parents('tr').attr('id');

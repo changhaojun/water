@@ -41,4 +41,17 @@
 	<script src="/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/plugins/vue/dist/vue-resource.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/scada_list.js?1.2" type="text/javascript" charset="utf-8"></script>
+	<div class="popup">
+		<div class="title">
+			<p class="pull-left">选择对应实体</p>
+			<a href="javascript:;" class="pull-right close"></a>
+		</div>
+		<input class="thing-search" type="text" placeholder="关键字搜索" onkeyup="thingLikeSearch(this)"/>
+		<div class="wrap">
+			<ul class="thing-list"></ul>
+		</div>
+		<div class="line-wrap">
+			<button class="save">确定</button>
+		</div>
+	</div>
 </html>

@@ -71,3 +71,101 @@
 	border-left: 3px solid #1ab394;
 }
 
+.popup{
+	display: none;
+	width: 300px;
+	height: 400px;
+	background: #fff;
+	overflow: hidden;
+}
+.popup>.title{
+	height: 40px;
+	background: #1AB394;
+}
+.popup>.title>p{
+	margin: 0;
+	height: 40px;
+	line-height: 40px;
+	font-size: 15px;
+	text-indent: 8px;
+	color: #fff;
+	background: #1AB394;
+}
+.popup>.title>.close{
+	width: 40px;
+	height: 100%;
+	background: url(../img/login/login_layer_close.png) no-repeat 10px 10px;
+	transition: 0.4s;
+	opacity: 1;
+}
+.popup>.title>.close:hover{
+	background-color: #24c5a4;
+}
+
+.popup>.wrap{
+	height: 290px;
+	overflow: auto;
+}
+.popup>.thing-search{
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	text-indent: 8px;
+	border-bottom: 1px solid #eee;
+	color: #1AB394;
+}
+.popup>.wrap>.thing-list{
+	box-sizing: border-box;
+}
+.popup>.wrap>.thing-list>li{
+	box-sizing: border-box;
+	height: 40px;
+	line-height: 40px;
+	text-indent: 8px;
+	border-bottom: 1px solid #eee;
+	color: #5b5b5b;
+	transition: 0.4s;
+}
+.popup>.wrap>.thing-list>li.active,
+.popup>.wrap>.thing-list>li:hover{
+	background: #eee;
+	color: #1AB394;
+}
+.popup>.line-wrap{
+	margin: 5px 0;
+	width: 100%;
+	height: 30px;
+	background: #fff;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+}
+.popup .save{
+	display: block;
+	margin: 0 auto;
+	width: 80px;
+	height: 30px;
+	font-size: 14px;
+	line-height: 30px;
+	color: #fff;
+	background: #1AB394;
+	border-radius: 10px;
+	letter-spacing: 6px;
+	text-indent: 6px;
+	transition: 0.4s;
+}
+.popup .save:hover{
+	background: #19c5a2;
+}
+
+::-webkit-scrollbar {
+	width: 5px;
+}
+::-webkit-scrollbar-track {
+	width: 2px;
+	background-color: #f1f1f1;
+} /* 滚动条的滑轨背景颜色 */
+::-webkit-scrollbar-thumb {
+	width:5px;
+	background-color: #1AB394; 
+} /* 滑块颜色 */
