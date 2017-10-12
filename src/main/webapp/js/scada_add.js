@@ -4,13 +4,9 @@ var allData = {
 	parentData: {
 		system: 1,
 		scada_config: {
-			data_list: []
-		},
-		process_config:{
-			data_list: []
-		},
-		anchor_config:{
-			data_list: []
+			data_list: [],
+			process_list: [],
+			anchor_list: []
 		}
 	}
 };
@@ -20,6 +16,8 @@ $.extend({
 		getToken(function() {
 			console.log(accesstoken)
 			$.getData();
+			$.searchProcess();
+			$.createParentProcess();
 		});
 	},
 	getData: function() {
@@ -37,6 +35,59 @@ $.extend({
 //				$.getMessageFromChild();
 			}
 		})
+	},
+	//所有人工触发的
+	searchProcess: function() {
+//		var val = $(this).val();
+		$.ajax({
+			type: "get",
+			dataType: "json",
+			url: globalurl+"/v1/processes/",
+			async: true,
+			crossDomain: true == !(document.all),
+			data: {
+				access_token: accesstoken,
+			},
+			success: function(data) {
+				$.createParentProcess(data.rows);
+			}
+		});
+	},
+	createParentProcess:function(data){
+		for(var i=0;i<data.length;i++){
+			var datas={};
+			datas.label_id = data[i].data_id;
+			datas.label_name = data[i].data_name;
+			allData.parentData.scada_config.process_list.push(datas);
+		}
+		$.postMessageToChild();
+	},
+	//ajax查询所有工艺锚点
+	searchAnchor: function() {
+//		var val = $(this).val();
+		$.ajax({
+			type: "get",
+			dataType: "json",
+			url: globalurl+"/v1/scadas",
+			async: true,
+			crossDomain: true == !(document.all),
+			data: {
+				access_token: accesstoken,
+				
+			},
+			success: function(data) {
+				$.createParentAnchor(data);
+			}
+		});
+	},
+	createParentAnchor:function(data){
+		for(var i=0;i<data.length;i++){
+			var datas={};
+			datas.label_id = data[i].data_id;
+			datas.label_name = data[i].data_name;
+			allData.parentData.scada_config.anchor_list.push(datas);
+		}
+		$.postMessageToChild();
 	},
 	createParentMessage: function(data) {
 		for (var i = 0; i < data.length; i++) {
