@@ -126,6 +126,7 @@
 	color: #5b5b5b;
 	transition: 0.4s;
 }
+.popup>.wrap>.thing-list>li.alreadyActive,
 .popup>.wrap>.thing-list>li.active,
 .popup>.wrap>.thing-list>li:hover{
 	background: #eee;

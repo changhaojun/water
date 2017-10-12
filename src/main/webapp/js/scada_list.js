@@ -8,7 +8,7 @@ var searchEntity = new Vue({
 getToken();//刷新令牌
 toolTip();
 getEntityList();
-
+var thing_id=[];
 var isSearch = false;
 
 //搜索功能
@@ -72,6 +72,7 @@ function getEntityList() {
 }
 //操作列的格式化
 function editFormatter(value,row,index){
+	thing_id.push(row.thing_id);
 	return "<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#18b393;cursor: pointer;' class='fa fa-laptop' onclick='reviewScada.call(this)'></span><span data-toggle='tooltip' data-placement='top' title='编辑' style='color:#ffb400;margin-left:30px;cursor: pointer;' class='fa fa-cog' onclick='editScada.call(this)'></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:30px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol.call(this)></span>"
 }
 
@@ -151,14 +152,24 @@ function searchThing(val) {
 			list.html('');
 			var liDom = '';
 			if (data.rows.length > 0) {
+				console.log(thing_id)
 				$.each(data.rows, function(i) {
-					liDom += '<li thingId="'+data.rows[i]._id+'">'+data.rows[i].thing_name+'</li>'
-				});
-				list.html(liDom);
+					liDom = '<li thingId="'+data.rows[i]._id+'">'+data.rows[i].thing_name+'</li>';					
+					for(var j=0;j<thing_id.length;j++){
+						if(data.rows[i]._id==thing_id[j]){
+							liDom = '<li thingId="'+data.rows[i]._id+'" class="alreadyActive">'+data.rows[i].thing_name+'</li>';
+						}
+					}
+					list.append(liDom);					
+				});		
 				list.children().click(function() {
 					$(this).addClass('active');
 					$(this).siblings().removeClass('active');
 					save.attr('thingId', $(this).attr('thingId'));
+				})
+				$(".alreadyActive").click(function(){
+					layer.msg("不能重复绑定实体",{icon:2});
+					save.removeAttr('thingId');
 				})
 			} else {
 				liDom += '<li style="color: #ff787b;">未查询到对应实体!</li>';

@@ -5,6 +5,12 @@ var allData = {
 		system: 1,
 		scada_config: {
 			data_list: []
+		},
+		process_config:{
+			data_list: []
+		},
+		anchor_config:{
+			data_list: []
 		}
 	}
 };
