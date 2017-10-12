@@ -14,10 +14,9 @@ var allData = {
 $.extend({
 	init: function() {
 		getToken(function() {
-			console.log(accesstoken)
 			$.getData();
 			$.searchProcess();
-			$.createParentProcess();
+			$.searchAnchor();
 		});
 	},
 	getData: function() {
@@ -47,6 +46,9 @@ $.extend({
 			crossDomain: true == !(document.all),
 			data: {
 				access_token: accesstoken,
+				filter: JSON.stringify({
+					trigger_type: "58f0431743929a10a8fb49fa"
+				})
 			},
 			success: function(data) {
 				$.createParentProcess(data.rows);
@@ -56,8 +58,8 @@ $.extend({
 	createParentProcess:function(data){
 		for(var i=0;i<data.length;i++){
 			var datas={};
-			datas.label_id = data[i].data_id;
-			datas.label_name = data[i].data_name;
+			datas.label_id = data[i]._id;
+			datas.label_name = data[i].process_name;
 			allData.parentData.scada_config.process_list.push(datas);
 		}
 		$.postMessageToChild();
@@ -72,8 +74,7 @@ $.extend({
 			async: true,
 			crossDomain: true == !(document.all),
 			data: {
-				access_token: accesstoken,
-				
+				access_token: accesstoken,			
 			},
 			success: function(data) {
 				$.createParentAnchor(data);
@@ -83,8 +84,8 @@ $.extend({
 	createParentAnchor:function(data){
 		for(var i=0;i<data.length;i++){
 			var datas={};
-			datas.label_id = data[i].data_id;
-			datas.label_name = data[i].data_name;
+			datas.label_id = data[i]._id;
+			datas.label_name = data[i].scada_name;
 			allData.parentData.scada_config.anchor_list.push(datas);
 		}
 		$.postMessageToChild();
