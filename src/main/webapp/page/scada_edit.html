@@ -4,53 +4,21 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="/css/reset.css"/>
-		<link rel="stylesheet" type="text/css" href="/plugins/layer/skin/layer.css"/>
-		<link rel="stylesheet" type="text/css" href="/plugins/bootstarp/css/bootstrap.css"/>
-		<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-table/bootstrap-table.css?1.0"/>
-		<link rel="stylesheet" type="text/css" href="/plugins/font-awesome/css/font-awesome.css"/>	
-		<link rel="stylesheet" type="text/css" href="/css/box_info.css"/>
-		<link rel="stylesheet" type="text/css" href="/css/scada_list.css?1.0"/>
+		<link rel="stylesheet" type="text/css" href="/css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/scada_add.css"/>
 	</head>
 	<body>
-		
-		<div class="accountBox entity">
-			<div class="accountTop entityTop">
-					<span>情景列表</span>
-					<span style="font-size:14px;">/&nbsp;当前位置:</span>
-					<span style="font-size:14px;">情景列表</span>
-					<span class="search">
-						<input v-model="searchEntityId" type="text" placeholder="请输入关键字查找" id="searchId" onkeypress="if(event.keyCode==13) {likeSearch();return false;}"/>
-						<i class="fa fa-search" onclick="likeSearch()"></i>
-					</span>
-					<input type="button" value="新增" class="btn-primary" onclick="addEntity()"/>
-			</div>
-			<hr>
-			<div class="boxList entityList">
-				<table class="table table-hover" id="dtuList" class="entityList"></table>
-			</div>
+		<input type="text" id="scadaId" hidden="hidden" value=${scadaId} />
+		<div class="mainTitle">
+			<span>修改情景</span>
+			<span>/ 当前位置:</span>
+			<span>编辑情景</span>
 		</div>
+		<iframe id="scada" src=''></iframe>
 	</body>
 	<script src="/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/plugins/bootstarp/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/plugins/bootstrap-table/bootstrap-table.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/plugins/vue/dist/vue-resource.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/js/scada_list.js?1.2" type="text/javascript" charset="utf-8"></script>
-	<div class="popup">
-		<div class="title">
-			<p class="pull-left">选择对应实体</p>
-			<a href="javascript:;" class="pull-right close"></a>
-		</div>
-		<input class="thing-search" type="text" placeholder="关键字搜索" onkeyup="thingLikeSearch(this)"/>
-		<div class="wrap">
-			<ul class="thing-list"></ul>
-		</div>
-		<div class="line-wrap">
-			<button class="save">确定</button>
-		</div>
-	</div>
+	<script src="/js/scada_add.js?2.3" type="text/javascript" charset="utf-8"></script>
+	
 </html>
