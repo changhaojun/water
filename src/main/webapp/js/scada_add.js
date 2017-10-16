@@ -162,18 +162,36 @@ $.extend({
 			//code = 200, 新增成功 //返回组态id,  //code = 201, 修改成功  ,  //code = 500, 直接返回  //code = 300, 鼠标点击数据标签后的事件
 			console.log(ev.originalEvent.data)
 			if (ev.originalEvent.data.code == 200) {
-				var scadaId = ev.originalEvent.data.data._id
+//				var scadaId = ev.originalEvent.data.data._id;
+				var sentData = {
+					scada_id: ev.originalEvent.data.data._id,
+					scada_name: ev.originalEvent.data.data.scada_name,
+					description: ev.originalEvent.data.data.scada_description
+				};
+				
+//				$.initData.sentData.scada_name = $('.name').find('input').val();
+//				$.initData.sentData.description = $('.description').find('input').val();
+//				$.initData.sentData.scada_config = $.initThree.createLabelData();
+			
+				
+//				self.location.href = '/scada'
 				$.ajax({
 					type: "post",
-					url: globalurl + '/v1_0_0/station/' + allData.thingId + '/datas',
+//					url: globalurl + '/v1_0_0/station/' + allData.thingId + '/datas',
+					url: globalurl+"/v1/scadas",
 					dataType: "JSON",
 					crossDomain: true == !(document.all),
+//					data: {
+//						accesstoken: accesstoken,
+//						scada_id: scadaId
+//					},
 					data: {
-						accesstoken: accesstoken,
-						scada_id: scadaId
+						access_token: accesstoken,
+						data: JSON.stringify(sentData)
 					},
 					success: function(data) {
-						//						console.log(data)
+												console.log(data)
+												return false;
 						if (data.code == 200) {
 							self.location.href = '/scada'
 						}
