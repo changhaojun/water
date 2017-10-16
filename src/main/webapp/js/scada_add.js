@@ -12,12 +12,15 @@ var allData = {
 };
 
 $.extend({
-	init: function() {
+	init: function() {	
+		if($("#scadaId").val()){
+			allData.parentData.scada_id=$("#scadaId").val();
+		}
 		getToken(function() {
 			$.getData();
 			$.searchProcess();
 			$.searchAnchor();
-		});
+		}); 
 	},
 	getData: function() {
 		$.ajax({

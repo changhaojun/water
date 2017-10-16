@@ -73,7 +73,7 @@ function getEntityList() {
 //操作列的格式化
 function editFormatter(value,row,index){
 	thing_id.push(row.thing_id);
-	return "<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#18b393;cursor: pointer;' class='fa fa-laptop' onclick='reviewScada.call(this)'></span><span data-toggle='tooltip' data-placement='top' title='编辑' style='color:#ffb400;margin-left:30px;cursor: pointer;' class='fa fa-cog' onclick='editScada.call(this)'></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:30px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol.call(this)></span>"
+	return "<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#18b393;cursor: pointer;' class='fa fa-laptop' onclick='reviewScada.call(this)'></span><span data-toggle='tooltip' data-placement='top' title='编辑' style='color:#ffb400;margin-left:30px;cursor: pointer;' class='fa fa-cog' onclick='editScada.call(this,&quot;"+row.thing_id+"&quot;)'></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:30px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol.call(this)></span>"
 }
 
 //表格数据获取的参数
@@ -187,9 +187,9 @@ function reviewScada(){
 	self.location.href = '/scada/review/'+id+'-'+name+'-'+description;
 }
 
-function editScada(){
+function editScada(thingId){
 	var id = $(this).parents('tr').attr('id');
-	self.location.href = '/scada/edit/'+id;
+	self.location.href = '/scada/edit/'+id+'-'+thingId;
 }
 
 //删除一条数据
