@@ -87,7 +87,8 @@ function queryParams(params) {
 			pageNumber:params.offset,//第几页
 			pageSize:params.limit,//每页的条数
 			access_token:window.accesstoken,
-			like:'{"thing_name":"'+searchEntity.searchEntityId+'"}'//模糊查询的设备名
+			like:'{"thing_name":"'+searchEntity.searchEntityId+'"}',//模糊查询的设备名
+			filter:'{"customer_id":"'+$("#customerId").val()+'","company_id":"'+$("#companyId").val()+'"}'
 			
 		};
 	}else{
@@ -95,7 +96,8 @@ function queryParams(params) {
 	    	pageNumber:0,
 	    	pageSize:params.limit,
 		    access_token:window.accesstoken,
-			like:'{"thing_name":"'+searchEntity.searchEntityId+'"}'
+			like:'{"thing_name":"'+searchEntity.searchEntityId+'"}',
+			filter:'{"customer_id":"'+$("#customerId").val()+'","company_id":"'+$("#companyId").val()+'"}'
 	    };
 	}
 }
@@ -131,9 +133,8 @@ function addEntity(){
 				  time: 2000
 			});
 		}else{
-			 data="{'thing_name':'"+$("#addentityName").val()+"'}";
-			 data={"data":data,"access_token":window.accesstoken};
-		
+			 data="{'thing_name':'"+$("#addentityName").val()+"','customer_id':'"+$('#customerId').val()+"','company_id':'"+$('#companyId').val()+"'}";
+			 data={"data":data,"access_token":window.accesstoken,};
 			$.ajax({
 				url:globalurl+"/v1/things",
 				data:data,
@@ -261,7 +262,7 @@ function space(obj){
 }
 //超出一行省略
 function omission(obj){
-	if(obj.html().length>40){
+	if((obj.html()!=undefined)&&(obj.html().length>40)){
 		obj.css({
 			"display":"inline-block",
 			"width":"140px",

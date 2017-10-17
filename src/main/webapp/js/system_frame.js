@@ -24,7 +24,7 @@ function getNavData(){
 	$.ajax({
 		type:'get',
 		crossDomain: true == !(document.all),
-		url:globalurl+"/v1/resources?access_token="+accesstoken,
+		url:auth_globalurl+"/v1/userResources?access_token="+accesstoken,
 		datatype:'json',
 		success:function(data){
 			if(data.code==400005){

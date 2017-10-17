@@ -34,6 +34,7 @@ function lssuedList(){
 	var data={};
 	data.start_time=startTime
 	data.end_time=endTime
+	data.company_id=companyId;
 	data=JSON.stringify(data)
 
 	$.ajax({
