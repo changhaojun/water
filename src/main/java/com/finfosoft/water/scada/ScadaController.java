@@ -24,7 +24,7 @@ public class ScadaController extends Controller{
 		render("scada_list.html");
 	}
 	
-	public void review() throws UnsupportedEncodingException {
+	public void get() throws UnsupportedEncodingException {
 		Record company=getSessionAttr(Constants.SESSION_COMPANY);
 		String companyId=company.get("companyId");
 		String scadaId = getPara(0);
