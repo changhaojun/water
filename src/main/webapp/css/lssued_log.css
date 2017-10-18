@@ -47,9 +47,17 @@ html{
     margin-right: 20px;
     padding: 20px 10px 10px 10px;
 }
-@media screen and (max-width: 1910px){
+#reservationtime{
+	border: 1px solid #ccc;
+    line-height: 35px;
+    width: 600px ;
+    text-align: center;
+    color: #9096a4;
+    cursor: pointer;
+}
+/*@media screen and (max-width: 1915px){
 	#reservationtime{
-	    width: 600px !important;
+	    width: 600px ;
 	}
 	.daterangepicker.opensright .ranges{
 		width:582px;
@@ -72,10 +80,10 @@ html{
 		float:right;
 	    margin-right: 20px!important;
 	}
-}
+}*/
 @media screen and (max-width: 1366px){
 	#reservationtime{
-	    width: 550px !important;
+	    width: 550px;
 	}
 	.daterangepicker.opensright .ranges{
 		width:550px;
@@ -99,13 +107,7 @@ html{
 	    margin-right: -2px!important;
 	}
 }
-#reservationtime{
-	border: 1px solid #ccc;
-    line-height: 35px;
-    text-align: center;
-    color: #9096a4;
-    cursor: pointer;
-}
+
 .lssuedList .listTop span{
 	color:#999;
 }

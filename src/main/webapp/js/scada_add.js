@@ -30,10 +30,10 @@ $.extend({
 			dataType: "JSON",
 			crossDomain: true == !(document.all),
 			data: {
-				access_token: accesstoken,
+				access_token: accesstoken
 			},
 			success: function(data) {
-//				console.log(data);
+				console.log(data);
 				$.createParentMessage(data.dataConfigList);
 				$.getMessageFromChild();
 			}
@@ -193,12 +193,12 @@ $.extend({
 												console.log(data)
 												return false;
 						if (data.code == 200) {
-							self.location.href = '/scada'
+							self.location.href = '/scadas'
 						}
 					}
 				})
 			} else if (ev.originalEvent.data.code == 500) {
-				self.location.href = '/scada'
+				self.location.href = '/scadas'
 			}
 		});
 	}

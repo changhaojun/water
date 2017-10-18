@@ -3,25 +3,15 @@ var customerId=$("#customerId").val();
 //var thingId="58734ea511b69c22b0afa990";
 //var globalurl="http://192.168.1.114";
 var selectedId=[];
-var allData=[];
 $(function(){
 	getToken();
-	DevList();
-	deviceKind();
-	
-	screenDev();
+	DevList()
 	addClass();
+	screenDev();
 	omission($(".bindEntity .bindTop span:nth-child(2)"));
 	
 
 })
-function deviceKind(){
-	for(var i=0;i<$(".infoList").length;i++){
-		if($(".infoList").eq(i).find("i").attr("class")=="fa fa-check-circle"){			
-			$(".infoList").eq(i).find("i").attr("devicekind",i+1)		
-		}	
-	}
-}
 //获取已选设备的列表
 function DevList(){
 	$.ajax({
@@ -51,24 +41,9 @@ function DevList(){
 		}
 	});
 }
-//删除selectedId数组中的制定元素
-Array.prototype.indexOf = function(val) {
-	for (var i = 0; i < this.length; i++) {
-		if (this[i] == val) return i;
-	}
-	return -1;
-};
-Array.prototype.remove = function(val) {
-	var index = this.indexOf(val);
-	if (index > -1) {
-		this.splice(index, 1);
-	}
-};
-
 //移除已选的设备
 function colseDev(id){
 	$("#"+id+"").remove();
-	selectedId.remove(id);
 	$(".optionalList #"+id+"").prev().removeClass("selectdFont").addClass("disabledFont");
 	$(".optionalList #"+id+"").removeClass("selectdIcon").addClass("disabledIcon");
 	$(".optionalList #"+id+"").parent("div").removeClass("selectdLi").addClass("disabledLi");
@@ -78,20 +53,12 @@ function colseDev(id){
 //选择设备角色
 function addClass(){
 		$(".infoList .fa").click(function(){
-			$(".optionalList").html("")
 			if($(this).attr("class")=="fa fa-circle-o"){				
 				$(this).removeClass("fa-circle-o").addClass("fa-check-circle");
 			}else{
 				$(this).removeClass("fa-check-circle").addClass("fa-circle-o");
 			}
-			for(var i=0;i<allData.length;i++){
-				for(var j=0;j<$(".fa-check-circle").length;j++){
-					if(allData[i].device_kind==$(".fa-check-circle").eq(j).attr("devicekind")){
-						domHtml(allData[i]);
-					}
-				}			
-			}
-//			screenDev();
+			screenDev();
 		})
 	
 }
@@ -101,8 +68,7 @@ function selectDev(id){
 		$("#"+id+"").prev().removeClass("disabledFont").addClass("selectdFont");
 		$("#"+id+"").removeClass("disabledIcon").addClass("selectdIcon");
 		$("#"+id+"").parent("div").removeClass("disabledLi").addClass("selectdLi");
-		$("#"+id+"").html("已选");
-		selectedId.push(id)
+		$("#"+id+"").html("已选");		
 		str1="<li id='"+id+"'>"+$("#"+id+"").parent(".selectdLi").find(".selectdFont").html()+"<span onclick='colseDev(&apos;"+id+"&apos;)'>&times;</span></li>"
 		$("#selectedUl").append(str1);
 		
@@ -164,14 +130,19 @@ function saveDevice(){
 function screenDev(){
 	$(".optionalList").html("")
 	var DevKind="";
+	for(var i=0;i<$(".infoList").length;i++){
+		if($(".infoList").eq(i).find("i").attr("class")=="fa fa-check-circle"){			
+			DevKind+=(i+1)+",";			
+		}
 	
-//	if($(".infoList").find(".fa-circle-o").length==7){		
-//		DevKind=0+",";	
-//	}
+	}
+	if($(".infoList").find(".fa-circle-o").length==7){		
+		DevKind=0+",";	
+	}
 	if($("#searchDevice").val()==""){	
 		data={
 			"access_token":window.accesstoken,
-			filter:'{"customer_id":"'+customerId+'"}'
+			filter:'{"device_kind":"'+DevKind+'","customer_id":"'+customerId+'"}'
 		}
 		setTimeout(function(){
 			doAjax(data);
@@ -180,7 +151,7 @@ function screenDev(){
 		data={
 			'like':'{"device_name":"'+$("#searchDevice").val()+'"}',
 			"access_token":window.accesstoken,
-			filter:'{"customer_id":"'+customerId+'"}'
+			filter:'{"device_kind":"'+DevKind+'","customer_id":"'+customerId+'"}'
 		}	
 		doAjax(data);
 	}	
@@ -200,31 +171,27 @@ function doAjax(data){
 					}else if(data.rows.length==0){
 						$(".optionalList").html("<span class='nonedata'>暂无数据</span>");
 					}else{
+						var screenList="";			
 						for(var i=0;i<data.rows.length;i++){
-							domHtml(data.rows[i]);
-						}					
-						allData=data.rows;
+							if(selectedId.indexOf(data.rows[i]._id)!=-1){					
+								screenList='<div class="selectdLi" onclick="selectDev(&apos;'+data.rows[i]._id+'&apos;)">'+
+								'<div class="selectdFont">'+data.rows[i].device_name+'</div>'+
+								'<div class="selectdIcon"  id="'+data.rows[i]._id+'">已选</div>'+
+								'</div>';
+								$(".optionalList").append(screenList);
+							}else{
+								screenList='<div class="disabledLi" onclick="selectDev(&apos;'+data.rows[i]._id+'&apos;)">'+
+								'<div class="disabledFont">'+data.rows[i].device_name+'</div>'+
+								'<div class="disabledIcon"  id="'+data.rows[i]._id+'">+</div>'+
+								'</div>';
+								$(".optionalList").append(screenList);
+							}
+							
+						}
+						
 					}
 				}
 			})
-}
-//设备列表的布局
-function domHtml(data){
-	var screenList="";	
-	console.log(selectedId)
-	if(selectedId.indexOf(data._id)!=-1){	
-		screenList='<div class="selectdLi" onclick="selectDev(&apos;'+data._id+'&apos;)">'+
-		'<div class="selectdFont">'+data.device_name+'</div>'+
-		'<div class="selectdIcon"  id="'+data._id+'">已选</div>'+
-		'</div>';
-		$(".optionalList").append(screenList);
-	}else{
-		screenList='<div class="disabledLi" onclick="selectDev(&apos;'+data._id+'&apos;)">'+
-		'<div class="disabledFont">'+data.device_name+'</div>'+
-		'<div class="disabledIcon"  id="'+data._id+'">+</div>'+
-		'</div>';
-		$(".optionalList").append(screenList);
-	}
 }
 //input禁止输入字母空格
 function space(obj){

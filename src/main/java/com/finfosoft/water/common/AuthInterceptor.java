@@ -78,6 +78,7 @@ public class AuthInterceptor implements Interceptor{
 //			return true;
 //		}
 		// 检测用户是否有此url的访问权限
+		System.err.println(url);
 		List<Record> urls = (List<Record>) user.get("resources");
 		if (urls.contains(url)) {
 			log.debug("url auth passed");
