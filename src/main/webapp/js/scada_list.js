@@ -36,6 +36,7 @@ function getEntityList() {
 	    queryParams: queryParams,
 	    striped: true,//条纹
 	    onLoadSuccess:function(value){
+	    	console.log(value)
 	    	if(value.code==400005){
 	    		getNewToken();
 	    		getEntityList();		    	
@@ -47,6 +48,10 @@ function getEntityList() {
             {
                 title: "名称",
                 field: "scada_name"
+            },
+            {
+                title: "绑定实体",
+                field: "thing_name"
             },
             {
                 title: "说明",
@@ -195,7 +200,7 @@ function editScada(){
 	self.location.href = '/scadas/edit/'+id;
 }
 
-//删除一条数据
+//删除一条数据(是否加入删除组态)
 function deleteCol() {
 	var id = $(this).parents('tr').attr('id');
 	var val = $(this).parents('tr').children().eq(0).html();
@@ -206,6 +211,7 @@ function deleteCol() {
 			type : 'delete',
 			crossDomain: true == !(document.all),
 			success : function(data) {
+				console.log(data);
 				if(data.code==200){
 					layer.msg(data.success,{icon:1})
 					setTimeout("self.location.reload()",2000)

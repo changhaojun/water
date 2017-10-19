@@ -49,8 +49,14 @@ public class ScadaController extends Controller{
 	
 	public void post() {
 		//String modelId = getPara(0);
+		Record user=getSessionAttr(Constants.SESSION_USER);
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String companyId=company.get("companyId");
+		String createUser = user.get("fullname");
 		String thingId = getPara(0);
 		setAttr("thingId", thingId);
+		setAttr("companyId", companyId);
+		setAttr("createUser", createUser);
 		render("scada_add.html");
 	}
 	
