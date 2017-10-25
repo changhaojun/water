@@ -8,7 +8,7 @@ var searchEntity = new Vue({
 getToken();//刷新令牌
 toolTip();
 getEntityList();
-var thing_id=[];
+var tableData;
 var isSearch = false;
 
 //搜索功能
@@ -36,7 +36,7 @@ function getEntityList() {
 	    queryParams: queryParams,
 	    striped: true,//条纹
 	    onLoadSuccess:function(value){
-	    	console.log(value)
+	    	tableData = value.rows;
 	    	if(value.code==400005){
 	    		getNewToken();
 	    		getEntityList();		    	
@@ -77,7 +77,7 @@ function getEntityList() {
 }
 //操作列的格式化
 function editFormatter(value,row,index){
-	thing_id.push(row.thing_id);
+//	thing_id.push(row.thing_id);
 	return "<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#18b393;cursor: pointer;' class='fa fa-laptop' onclick='reviewScada.call(this)'></span><span data-toggle='tooltip' data-placement='top' title='编辑' style='color:#ffb400;margin-left:30px;cursor: pointer;' class='fa fa-cog' onclick='editScada.call(this)'></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:30px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol.call(this)></span>"
 }
 
@@ -160,11 +160,11 @@ function searchThing(val) {
 			list.html('');
 			var liDom = '';
 			if (data.rows.length > 0) {
-				console.log(thing_id)
+				console.log(tableData)
 				$.each(data.rows, function(i) {
 					liDom = '<li thingId="'+data.rows[i]._id+'">'+data.rows[i].thing_name+'</li>';					
-					for(var j=0;j<thing_id.length;j++){
-						if(data.rows[i]._id==thing_id[j]){
+					for(var j=0;j<tableData.length;j++){
+						if(data.rows[i]._id==tableData[j].thing_id){
 							liDom = '<li thingId="'+data.rows[i]._id+'" class="alreadyActive">'+data.rows[i].thing_name+'</li>';
 						}
 					}
@@ -195,9 +195,12 @@ function reviewScada(){
 	self.location.href = '/scadas/get/'+id+'-'+name+'-'+description;
 }
 
-function editScada(){
-	var id = $(this).parents('tr').attr('id');
-	self.location.href = '/scadas/edit/'+id;
+function editScada(data){
+	var index = $(this).parents('tr').index();
+	var id = tableData[index]._id;
+	var scada_models_id = tableData[index].scada_models_id;
+	var thing_id = tableData[index].thing_id;
+	self.location.href = '/scadas/put?id='+ id +'&scada_models_id='+ scada_models_id +'&thing_id='+ thing_id;
 }
 
 //删除一条数据(是否加入删除组态)
