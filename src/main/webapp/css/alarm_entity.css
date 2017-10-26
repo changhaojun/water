@@ -107,6 +107,9 @@ html{
 .IContent .grayBg .alarmContent .dataTime{
 		color:#fff;
 }
+.IContent .grayBg .alarmContent .dataLable{
+	color:#fff;
+}
 .IContent .grayBg .alarmFooter li{
 	border-top:1px solid #eee;
 	
@@ -134,19 +137,22 @@ html{
 .alarmList .alarmContent{
 	width:100%;
 	height:114px;
-	padding-top:30px;
+	padding-top:11px;
 	text-align:center;	
 }
-.alarmList .alarmContent span:nth-child(1),.alarmList .alarmContent span:nth-child(2){
-	font-size:26px;	
+.alarmList .alarmContent .dataValue,.alarmList .alarmContent .dataUnit{
+	font-size:26px;
 	height:30px;
-	margin:25px 0;
+	
 }
 
-.alarmList .alarmContent span:nth-child(3){
+.alarmList .alarmContent .dataTime,.alarmList .alarmContent .dataLable{
 	color:#78cbb7;
 	display: block;
+	width:100%;
+	text-align: center;
 }
+
 .alarmFooter{
 	width:100%;	
 }
@@ -213,17 +219,127 @@ body .del-class .layui-layer-content{
 }
 .IContent{
 	float:left;
+	width:98%;
+	padding-left:20px;
 }
+.configurAble,.unconfigurAble{
+	width:100%;
+	background:#fff;
+	float:left;
+	padding-bottom:20px;
+}
+.unconfigurAble{
+	margin-top: 20px;
+}
+.configurAble .title,.unconfigurAble .title{
+	height:45px;
+	line-height:45px;
+	padding-left:20px;
+	font-size:16px;
+	border-bottom:1px solid #1AB394;
+	
+}
+.alarmContent p span{
+	font-size:14px;
+	cursor: pointer;
+}
+.alarmContent p{
+	margin-bottom:5px;
+}
+/*弹窗*/
+#searchData{
+	width: 265px;
+    height: 35px;
+    padding-left: 20px;
+    color: #1ab394;	
+}
+.confirmInfo i{
+	color: #1AB394;
+    line-height: 35px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.confirmInfo ul{
+	margin-top: 67px;
+}
+.confirmInfo ul li{
+	height: 36px;
+    line-height: 36px;
+    color:#999;
+    padding-left:20px;
+    cursor: pointer;
+    border-top: 1px solid #eee;
+}
+.confirmInfo ul li span{
+	margin-right: 20px;
+	 float:right;
+	 line-height:33px;
+}
+.confirmInfo ul li:hover{
+	background: #eee;
+}
+.confirmInfo .fix{
+	width: 17%;
+    position: fixed;
+    background: #fff;
+}
+.confirmInfo .fix p{
+	/*border-top: 1px solid #eee;*/
 
-
-
-
-
-
-
-
-
-
+}
+.confirmInfo p span{
+	border-radius: 5px;
+    color: #fff;
+    margin-left: 20px;
+   
+    padding: 2px 10px;
+    background: #009f95;
+    cursor: pointer;
+}
+.confirmInfo{
+	height: 294px;
+	overflow: auto;
+}
+.confirmInfo::-webkit-scrollbar{
+	width:3px;background-color:#ccc;
+}
+.confirmInfo::-webkit-scrollbar-thumb{
+	background-color:#009f95;;
+	-webkit-border-radius:4px;
+}
+ .layui-layer-title{
+	background:#1ab394 !important;
+	color:#fff !important;
+}
+.alarmRange {
+	display: none;
+	margin-top:20px !important;
+	padding-left:20px !important;
+}
+.layui-layer-btn .layui-layer-btn0{
+	background:#1ab394 !important;
+	
+}
+.layui-layer-page .layui-layer-content{
+	height:294px !important;
+}
+.alarmRange{
+	height:166px !important;
+}
+.saveBtn{
+	width:91%;
+    height: 46px;
+    text-align: center;
+    padding-top:20px;
+}
+.alarmBtn{
+	text-decoration: none;
+	background:#1ab394;
+	padding: 5px 75px;
+	color:#fff;
+    border-radius: 10px 10px;
+    line-height: 20px !important;
+}
 
 
 

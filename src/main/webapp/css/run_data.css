@@ -109,8 +109,15 @@ html{
 	height:182px;
 }
 .dataList .listContent .contentBottom{
-	color: #afafaf;
     text-align: center;
     height: 30px;
     -margin-top: 40px;
+}
+.dataList .listContent .contentBottom span{
+	color:#1AB394;
+	display: block;
+}
+.dataList .listContent .contentBottom .fa-clock-o{
+	color:#676A6C;
+	margin-bottom:5px;
 }

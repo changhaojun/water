@@ -1,4 +1,5 @@
 var thingId=$('#thingId').val()//获取实体的id
+var companyId=$("#companyId").val();
 var dataLike;
 var dataId=[];
 
@@ -157,7 +158,7 @@ function selectData(){
 		data:{
 			access_token: accesstoken,
 		    fields:"data_id",
-		    filter:JSON.stringify({"thing_id":thingId,"is_chart":0})
+		    filter:JSON.stringify({"thing_id":thingId,"is_chart":0,"company_id":companyId})
 		},
 		success:function(data){
 			for(var i=0;i<data.length;i++){
@@ -221,7 +222,7 @@ $('.dataContent').delegate('.focus1','click',function(){
 			crossDomain: true == !(document.all),
 			data:{
 				access_token: accesstoken,
-				data:'{"data_id":'+Number(id)+',"thing_id":"'+thingId+'"}'		
+				data:'{"data_id":'+Number(id)+',"thing_id":"'+thingId+'","company_id":"'+companyId+'"}'		
 			},
 			success:function(data){
 				layer.msg('关注成功',{icon:1,time:1000})

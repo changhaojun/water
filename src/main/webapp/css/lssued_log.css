@@ -55,7 +55,7 @@ html{
     color: #9096a4;
     cursor: pointer;
 }
-/*@media screen and (max-width: 1915px){
+@media screen and (max-width: 1915px){
 	#reservationtime{
 	    width: 600px ;
 	}
@@ -63,7 +63,7 @@ html{
 		width:582px;
 		height:50px;
 		float:left;
-		/*text-align:right;*/
+		text-align:right;
 		padding-left:8px;
 	}
 	.rangefooter{
@@ -80,7 +80,7 @@ html{
 		float:right;
 	    margin-right: 20px!important;
 	}
-}*/
+}
 @media screen and (max-width: 1366px){
 	#reservationtime{
 	    width: 550px;

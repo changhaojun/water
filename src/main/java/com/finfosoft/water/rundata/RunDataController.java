@@ -18,7 +18,12 @@ public class RunDataController extends Controller{
 	}
 	
 	public void getDatas(){
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String companyCode=company.get("companyCode");
+		String companyId=company.get("companyId");		
 		String thingId = getPara(0);
+		setAttr("companyCode", companyCode);
+		setAttr("companyId", companyId);
 		setAttr("thingId", thingId);
 		render("entity_data.html");
 	}
