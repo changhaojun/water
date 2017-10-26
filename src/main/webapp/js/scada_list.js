@@ -87,7 +87,7 @@ function queryParams(params) {
 		pageNumber: isSearch ? 0 : params.offset,//第几页
 		pageSize:params.limit,//每页的条数
 		access_token:window.accesstoken,
-		like:'{"scada_name":"'+searchEntity.searchEntityId+'"}'//模糊查询的设备名
+		filter:'{"company_id":"'+$('#companyId').val()+'"}'//模糊查询的设备名
 	};
 }
 
