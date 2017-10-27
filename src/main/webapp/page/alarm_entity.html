@@ -69,7 +69,7 @@
 					</div>
 					<div class="unconfigurAble">
 						<p class="title">不可配置告警范围</p>
-						<div class="alarmList greenBg" v-for="(alarmDatas,index) in alarmData" v-if="alarmDatas.port_type=='AO'||alarmDatas.port_type=='DO'||alarmDatas.port_type=='MO'">
+						<div class="alarmList" v-for="(alarmDatas,index) in alarmData" v-if="alarmDatas.port_type=='AO'||alarmDatas.port_type=='DO'||alarmDatas.port_type=='MO'" v-bind:class="alarmDatas.status == 1 ? 'greenBg' : alarmDatas.status == 0 ? 'grayBg':'redBg' ">
 							<div class="alarmTop" v-text="alarmDatas.title"></div>
 								<div class="alarmContent">
 									<p>

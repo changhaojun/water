@@ -196,14 +196,15 @@ var $extend=$.fn.extend({
 	},
 	//添加提交告警范围判断，修改提交告警
 	alarmRangeSave:function(){
-		
-		var text=/^[-+]?[0-9]+(\.[0-9]+)?$/;
+		console.log(initData.dataMin+","+initData.dataMax)
+		var text=/^[0-9]*$/;
 		 if(initData.dataMin==""&&initData.dataMax==""){
 			layer.tips('最大值或者最小值不能同时为空', $("#dataMax"), {
 				  tips: [1, '#ff787c'],
 				  time: 2000
 			});
-		}else if(text.test(initData.dataMin)||text.test(initData.dataMax)){ 
+		}else if(text.test(initData.dataMin)&&text.test(initData.dataMax)){
+			
 			if((Number(initData.dataMin)>=Number(initData.dataMax)&&initData.dataMax!="")){
 				layer.tips('最大值不能比最小值小', $("#dataMax"), {
 				  tips: [1, '#ff787c'],

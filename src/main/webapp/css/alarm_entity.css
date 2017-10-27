@@ -239,6 +239,7 @@ body .del-class .layui-layer-content{
 	border-bottom:1px solid #1AB394;
 	
 }
+
 .alarmContent p span{
 	font-size:14px;
 	cursor: pointer;
@@ -340,7 +341,13 @@ body .del-class .layui-layer-content{
     border-radius: 10px 10px;
     line-height: 20px !important;
 }
-
-
-
+.unconfigurAble .alarmContent p{
+	margin-top:20px;
+}
+.unconfigurAble .alarmContent .dataTime{
+	margin-top:20px;
+}
+.unconfigurAble .alarmContent .dataLable{
+	margin-top:20px;
+}
 
