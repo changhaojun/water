@@ -8,7 +8,7 @@ var searchEntity = new Vue({
 getToken();//刷新令牌
 toolTip();
 getEntityList();
-var tableData;
+var tableData = [];
 var isSearch = false;
 
 //搜索功能
@@ -36,6 +36,7 @@ function getEntityList() {
 	    queryParams: queryParams,
 	    striped: true,//条纹
 	    onLoadSuccess:function(value){
+	    	console.log(value)
 	    	tableData = value.rows;
 	    	if(value.code==400005){
 	    		getNewToken();
@@ -154,6 +155,7 @@ function searchThing(val) {
 			})
 		},
 		success: function(data) {
+			
 			var list = $('.popup').find('.thing-list');
 			var save = $('.popup').find('.save');
 			save.removeAttr('thingId');
@@ -162,7 +164,7 @@ function searchThing(val) {
 			if (data.rows.length > 0) {
 				console.log(tableData)
 				$.each(data.rows, function(i) {
-					liDom = '<li thingId="'+data.rows[i]._id+'">'+data.rows[i].thing_name+'</li>';					
+					liDom = '<li thingId="'+data.rows[i]._id+'">'+data.rows[i].thing_name+'</li>';
 					for(var j=0;j<tableData.length;j++){
 						if(data.rows[i]._id==tableData[j].thing_id){
 							liDom = '<li thingId="'+data.rows[i]._id+'" class="alreadyActive">'+data.rows[i].thing_name+'</li>';

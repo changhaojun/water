@@ -80,6 +80,7 @@ $.extend({
 				})
 			},
 			success: function(data) {
+				console.log(data);
 				$.createParentProcess(data.rows);
 			}
 		});
