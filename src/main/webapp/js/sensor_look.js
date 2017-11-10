@@ -206,28 +206,41 @@ function show(value,dataName){
  */
 function give(id){
 	onoff=$(".dial"+id).val();
-	var guid=guidGenerator();	
+//	var guid=guidGenerator();	
 	layer.confirm("<font size='2'>确认下发？</font>", {icon:7},function(index){
 		layer.close(index);
-		data="{'data_id':"+id+",'data_value':"+onoff+",'guid':'"+guid+"'}";
-		data={'data':data};
+//		data="{'data_id':"+id+",'data_value':"+onoff+",'guid':'"+guid+"'}";
+//		data={'data':data};
+		var loading=layer.msg('正在下发，请稍等', {
+			icon: 16,
+			time:0,
+			shade: [0.7,'#5E5C5C']
+		});
 		$.ajax({
-			url:globalurl+"/v1/homes?access_token="+accesstoken,
-			data:data,
+			url:gatewayUrl+'/v1/waterGateways?access_token='+accesstoken,
+//			data:data,
 			dataType: 'JSON',
-			type: 'POST',
+			type: 'GET',
+			data:{
+				data_id:id,
+				data_value:onoff
+			},
 			crossDomain: true == !(document.all),
 			success: function(data) {
-				if(data.code==400005){
-				getNewToken();
-				contrastData()
-			}else if(data.result==1){
-					layer.msg('已下发', {
+				if(data.result==1){
+					layer.msg('下发成功', {
 						icon : 1,
-						time:2000,
-						end:function(){
-							MQTTconnect(guid)
-						}
+						time:2000
+					});
+				}else if(data.result==0){
+					var boardRing=$('#'+id).find('.board-ring');
+					$('#'+id).find('input').focus()
+					$('#'+id).find('input').val(onoff);
+					$('#'+id).find('input').blur()
+					
+					layer.msg('下发失败', {
+						icon : 2,
+						time:2000
 					});
 				}
 			},
@@ -246,39 +259,46 @@ function give(id){
 function clickBtn(id,dataValue,i){
 	dataId=id;
 	onoff=dataValue;	
-	var guid=guidGenerator();
+//	var guid=guidGenerator();
 	layer.confirm("<font size='2'>确认下发？</font>",{icon:7},function(index){
 		layer.close(index);
-    	data="{'data_id':"+dataId+",'data_value':"+onoff+",'guid':'"+guid+"'}";    	 
-		data={'data':data};	
+//  	data="{'data_id':"+dataId+",'data_value':"+onoff+",'guid':'"+guid+"'}";    	 
+//		data={'data':data};	
+		var loading=layer.msg('正在下发，请稍等', {
+			icon: 16,
+			time:0,
+			shade: [0.7,'#5E5C5C']
+		});
 		$.ajax({
-			url:globalurl+"/v1/homes?access_token="+accesstoken,
-			data:data,
+			url:gatewayUrl+'/v1/waterGateways?access_token='+accesstoken,
+//			data:data,
+			data:{
+				data_id:dataId,
+				data_value:onoff
+			},
 			dataType: 'JSON',
-			type: 'POST',
+			type: 'GET',
 			crossDomain: true == !(document.all),
 			success: function(data) {
-				if(data.code==400005){
-					getNewToken();
-					contrastData()
-				}else if(data.result==1){
-						layer.msg('已下发', {
+				layer.close(loading)
+				if(data.result==1){
+					var circle=$('#'+dataId).find('.circle');
+					var circleLeft=circle[0].offsetLeft;
+					circle.css('left',((circleLeft-25)*-1)+'px');
+					
+					var textParent=$('#'+dataId).find('.on-off');
+					var activeBtn=textParent.find('.Iactive');
+					activeBtn.removeClass('Iactive');
+					activeBtn.siblings('button').addClass('Iactive');
+					layer.msg('下发成功！', {
 						icon : 1,
-						time:2000,
-						end:function(){
-							MQTTconnect(guid)
-						}
+						time:2000
+					});	
+				}else if(data.result==0){
+					layer.msg('下发失败', {
+						icon : 2,
+						time:2000
 					});
-						/*if(onoff){
-							$(".Iopen"+i+"").addClass("Iactive");
-							$(".Iclose"+i+"").removeClass("Iactive");
-							$(".circle"+i+"").animate({"left":"0px"});
-						}else{
-							$(".Iclose"+i+"").addClass("Iactive");
-							$(".Iopen"+i+"").removeClass("Iactive");
-							$(".circle"+i+"").animate({"left":"25px"});
-						}*/
-						
 				}
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -292,116 +312,116 @@ function clickBtn(id,dataValue,i){
 	});
 }
 //控制量guid
-
-function guidGenerator() {
-	var S4 = function() {
-	return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-	};
-	return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
-}			
-function space(obj){
-	obj.val(obj.val().replace(/\s/g, ''))
-}
-
-function MQTTconnect(guid){
-	var mqttHost = mqttHostIP;
-	var username = mqttName;
-	var password = mqttWord;
-	var client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
-	var options = {
-		timeout: 1000,
-		onSuccess: function(){
-		   	topic = guid;
-		    client.subscribe(topic);
-		},
-		onFailure: function(message) {
-			setTimeout(MQTTconnect, 10000000);
-		}
-	};
-	// set callback handlers
-
-	client.onConnectionLost = onConnectionLost;
-	client.onMessageArrived = onMessageArrived;
-	
-	if(username != null) {
-		options.userName = username;
-		options.password = password;
-	}
-	client.connect(options);
-	// connect the clien
-
-}
-
-
-// called when the client loses its connection
-
-function onConnectionLost(responseObject) {
-  if (responseObject.errorCode !== 0) {
-  }
-}
-
-// called when a message arrives
-
-function onMessageArrived(message) {
-  var topic = message.destinationName;
-  var payload = JSON.parse(message.payloadString);
-  console.log(payload)
-  var result='',iconR=2
-	if(payload.result==1){
-		if(payload.port_type=='DO'){
-			var circle=$('#'+payload.data_id).find('.circle');
-			var circleLeft=circle[0].offsetLeft;
-			circle.css('left',((circleLeft-25)*-1)+'px');
-			
-			var textParent=$('#'+payload.data_id).find('.on-off');
-			var activeBtn=textParent.find('.Iactive');
-			activeBtn.removeClass('Iactive');
-			activeBtn.siblings('button').addClass('Iactive');
-		}
-		result='下发成功';
-	  	iconR=1
-	}else if(payload.result==0){
-		if(payload.port_type=='AO'){
-			var boardRing=$('#'+payload.data_id).find('.board-ring');
-			$('#'+payload.data_id).find('input').focus()
-			$('#'+payload.data_id).find('input').val(payload.old_value);
-			$('#'+payload.data_id).find('input').blur()
-		}
-		result='下发失败';
-  		iconR=2;
-	}
-//	for(var i=0;i<$(".lookList").length;i++){
-//		if((payload.data_id==$(".lookList").eq(i).attr("id"))&&(payload.result==0)){
-//			if(payload.port_type=='AO'){			
-//				$(".dial").val(payload.old_value);
-//				new Finfosoft.Ring({
-//					el: '.board-ring'+i,
-//					startDeg: 150,
-//					endDeg: 30,
-//					lineWidth: 20,
-//					mainColor: '#1ab394'
-//				});	
-//			}else if(payload.port_type=="DO"){
-//				console.log(payload)
-//				if($(".circle"+i+"").css("left")=="0px"){
-//					$(".circle"+i+"").animate({"left":"25px"});
-//				}else{
-//					$(".circle"+i+"").animate({"left":"0px"});
-//				}
-//				if($(".circle"+i+"").css("left")=="25px"){
-//					$(".circle"+i+"").animate({"left":"0px"});
-//				}else{
-//					$(".circle"+i+"").animate({"left":"25px"});
-//				}
-//			}
-//			result='下发失败'
-//	  		iconR=2
-//		}else if(payload.result==1){
-//			result='下发成功';
-//	  		iconR=1
+//
+//function guidGenerator() {
+//	var S4 = function() {
+//	return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+//	};
+//	return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+//}			
+//function space(obj){
+//	obj.val(obj.val().replace(/\s/g, ''))
+//}
+//
+//function MQTTconnect(guid){
+//	var mqttHost = mqttHostIP;
+//	var username = mqttName;
+//	var password = mqttWord;
+//	var client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
+//	var options = {
+//		timeout: 1000,
+//		onSuccess: function(){
+//		   	topic = guid;
+//		    client.subscribe(topic);
+//		},
+//		onFailure: function(message) {
+//			setTimeout(MQTTconnect, 10000000);
 //		}
+//	};
+//	// set callback handlers
+//
+//	client.onConnectionLost = onConnectionLost;
+//	client.onMessageArrived = onMessageArrived;
+//	
+//	if(username != null) {
+//		options.userName = username;
+//		options.password = password;
 //	}
-	layer.msg(payload.data_name+result,{
-		icon:iconR
-	})
-}
+//	client.connect(options);
+//	// connect the clien
+//
+//}
+//
+//
+//// called when the client loses its connection
+//
+//function onConnectionLost(responseObject) {
+//if (responseObject.errorCode !== 0) {
+//}
+//}
+//
+//// called when a message arrives
+//
+//function onMessageArrived(message) {
+//var topic = message.destinationName;
+//var payload = JSON.parse(message.payloadString);
+//console.log(payload)
+//var result='',iconR=2
+//	if(payload.result==1){
+//		if(payload.port_type=='DO'){
+//			var circle=$('#'+payload.data_id).find('.circle');
+//			var circleLeft=circle[0].offsetLeft;
+//			circle.css('left',((circleLeft-25)*-1)+'px');
+//			
+//			var textParent=$('#'+payload.data_id).find('.on-off');
+//			var activeBtn=textParent.find('.Iactive');
+//			activeBtn.removeClass('Iactive');
+//			activeBtn.siblings('button').addClass('Iactive');
+//		}
+//		result='下发成功';
+//	  	iconR=1
+//	}else if(payload.result==0){
+//		if(payload.port_type=='AO'){
+//			var boardRing=$('#'+payload.data_id).find('.board-ring');
+//			$('#'+payload.data_id).find('input').focus()
+//			$('#'+payload.data_id).find('input').val(payload.old_value);
+//			$('#'+payload.data_id).find('input').blur()
+//		}
+//		result='下发失败';
+//		iconR=2;
+//	}
+////	for(var i=0;i<$(".lookList").length;i++){
+////		if((payload.data_id==$(".lookList").eq(i).attr("id"))&&(payload.result==0)){
+////			if(payload.port_type=='AO'){			
+////				$(".dial").val(payload.old_value);
+////				new Finfosoft.Ring({
+////					el: '.board-ring'+i,
+////					startDeg: 150,
+////					endDeg: 30,
+////					lineWidth: 20,
+////					mainColor: '#1ab394'
+////				});	
+////			}else if(payload.port_type=="DO"){
+////				console.log(payload)
+////				if($(".circle"+i+"").css("left")=="0px"){
+////					$(".circle"+i+"").animate({"left":"25px"});
+////				}else{
+////					$(".circle"+i+"").animate({"left":"0px"});
+////				}
+////				if($(".circle"+i+"").css("left")=="25px"){
+////					$(".circle"+i+"").animate({"left":"0px"});
+////				}else{
+////					$(".circle"+i+"").animate({"left":"25px"});
+////				}
+////			}
+////			result='下发失败'
+////	  		iconR=2
+////		}else if(payload.result==1){
+////			result='下发成功';
+////	  		iconR=1
+////		}
+////	}
+//	layer.msg(payload.data_name+result,{
+//		icon:iconR
+//	})
+//}
