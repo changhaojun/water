@@ -36,7 +36,7 @@ function getEntityList() {
 	    queryParams: queryParams,
 	    striped: true,//条纹
 	    onLoadSuccess:function(value){
-	    	console.log(value)
+	    	console.log(value);
 	    	tableData = value.rows;
 	    	if(value.code==400005){
 	    		getNewToken();
@@ -162,7 +162,6 @@ function searchThing(val) {
 			list.html('');
 			var liDom = '';
 			if (data.rows.length > 0) {
-				console.log(tableData)
 				$.each(data.rows, function(i) {
 					liDom = '<li thingId="'+data.rows[i]._id+'">'+data.rows[i].thing_name+'</li>';
 					for(var j=0;j<tableData.length;j++){
@@ -191,6 +190,13 @@ function searchThing(val) {
 
 
 function reviewScada(){
+//	var index = $(this).parents('tr').index();
+//	var id = tableData[index]._id;
+//	var scada_models_id = tableData[index].scada_models_id;
+//	var thing_id = tableData[index].thing_id;
+//	self.location.href = '/scadas/put?id='+ id +'&scada_models_id='+ scada_models_id +'&thing_id='+ thing_id;
+	
+	
 	var id = $(this).parents('tr').attr('id');
 	var name = $(this).parents('tr').find('td').eq(0).html();
 	var description = $(this).parents('tr').find('td').eq(1).html();
@@ -216,7 +222,6 @@ function deleteCol() {
 			type : 'delete',
 			crossDomain: true == !(document.all),
 			success : function(data) {
-				console.log(data);
 				if(data.code==200){
 					layer.msg(data.success,{icon:1})
 					setTimeout("self.location.reload()",2000)
