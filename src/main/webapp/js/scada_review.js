@@ -278,6 +278,22 @@ $.extend({
 		$.three.labelGroup.remove(originLabel);
 		$.initThree.initLabel(newData, position);
 	},
+	newIssueSuccesse: function(data) {
+		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(data.data_id, $.initThree.judgeLabelType(data))];
+		var newData = {
+			data_id: originLabel.labelId,
+			data_name: originLabel.labelName,
+			data_value: data.data_value,
+			data_unit: originLabel.labelUnit,
+			port_type: originLabel.labelType,
+			status: originLabel.labelStatus
+		};
+		data.high_battery && (newData.high_battery = data.high_battery);
+		data.low_battery && (newData.low_battery = data.low_battery);
+		var position = originLabel.position;
+		$.three.labelGroup.remove(originLabel);
+		$.initThree.initLabel(newData, position);
+	},
 	labelOperation: function(label) {
 		var time = $.initTime();
 		if (label.labelType) {
@@ -348,24 +364,23 @@ $.extend({
 								var data_value = $('.AO').find('.confirmVal').val();
 								var	data_id = label.labelId;
 								var port_type = label.labelType;
-								var guid = Date.now().toString();
 								$.verifyIssuePassword(passwordDom, function() {
-									$.issueAjax({
-										data_value: data_value,
+									$.newIssueAjax({
 										data_id: data_id,
-										guid: guid
+										data_value: data_value
 									}, function() {
-										layer.close(index1);
-										$('.conditions-layer').css('display', 'none');
-										$.initMQTT({
+										$.newIssueSuccesse({
 											data_value: data_value,
 											data_id: data_id,
-											port_type: port_type,
-											guid: guid
-										}, true);
+											port_type: port_type
+										});
+										layer.close(index1);
+										$('.conditions-layer').css('display', 'none');
 										$('.operation').toggleWin(true);
 										$('.AO').find('.confirm').unbind();
 										$.three.capturer.intersected = null;
+									}, function() {
+										ring.reset();
 									});
 								});
 							}
@@ -417,7 +432,6 @@ $.extend({
 										var data_value = status;
 										var	data_id = label.labelId;
 										var port_type = label.labelType;
-										var guid = Date.now().toString();
 										if (suggest) {
 											layer.confirm('<span style="color: red;">警告：当前端口存在已知异常前置端口！是否确认下发？</span>', {
 												title: false,
@@ -429,21 +443,21 @@ $.extend({
 												$('.conditions-layer').css('display', 'none');
 												$.verifyIssuePassword(passwordDom, function() {
 													$('.conditions-layer').find('tbody').html('');
-													$.issueAjax({
-														data_value: data_value,
+													$.newIssueAjax({
 														data_id: data_id,
-														guid: guid
+														data_value: data_value
 													}, function() {
-														$.initMQTT({
+														$.newIssueSuccesse({
 															data_value: data_value,
 															data_id: data_id,
 															port_type: port_type,
 															high_battery: high_battery,
-															low_battery: low_battery,
-															guid: guid
-														}, true);
+															low_battery: low_battery
+														});
 														$('.operation').toggleWin(true);
 														$.three.capturer.intersected = null;
+													}, function() {
+														onOff.reset();
 													});
 												});
 											});
@@ -451,21 +465,21 @@ $.extend({
 											$.verifyIssuePassword(passwordDom, function() {
 												$('.conditions-layer').find('tbody').html('');
 												$('.conditions-layer').css('display', 'none');
-												$.issueAjax({
-													data_value: data_value,
+												$.newIssueAjax({
 													data_id: data_id,
-													guid: guid
+													data_value: data_value
 												}, function() {
-													$.initMQTT({
+													$.newIssueSuccesse({
 														data_value: data_value,
 														data_id: data_id,
 														port_type: port_type,
 														high_battery: high_battery,
-														low_battery: low_battery,
-														guid: guid
-													}, true);
+														low_battery: low_battery
+													});
 													$('.operation').toggleWin(true);
 													$.three.capturer.intersected = null;
+												}, function() {
+													onOff.reset();
 												});
 											});
 										}
@@ -498,23 +512,23 @@ $.extend({
 										var port_type = label.labelType;
 										var guid = Date.now().toString();
 										$.verifyIssuePassword(passwordDom, function() {
-											$.issueAjax({
-												data_value: data_value,
+											$.newIssueAjax({
 												data_id: data_id,
-												guid: guid
+												data_value: data_value
 											}, function() {
-												$.initMQTT({
+												$.newIssueSuccesse({
 													data_value: data_value,
 													data_id: data_id,
 													port_type: port_type,
 													high_battery: high_battery,
-													low_battery: low_battery,
-													guid: guid
-												}, true);
+													low_battery: low_battery
+												});
 												layer.close(index1);
 												$('.conditions-layer').css('display', 'none');
 												$('.operation').toggleWin(true);
 												$.three.capturer.intersected = null;
+											}, function() {
+												onOff.reset();
 											});
 										});
 									},
@@ -917,6 +931,30 @@ $.extend({
 						end: function() {
 							layer.closeAll();
 						}
+					});
+				}
+			}
+		});
+	},
+	newIssueAjax: function(data, callback, fail) {
+		$.ajax({
+			url:gatewayUrl+'/v1/waterGateways?access_token='+accesstoken,
+			data:{
+				data_id: data.data_id,
+				data_value: data.data_value
+			},
+			dataType: 'JSON',
+			type: 'GET',
+			crossDomain: true == !(document.all),
+			success: function(data) {
+				if (data.result == 1) {
+					callback && callback()
+				} else {
+					fail && fail();
+					layer.closeAll();
+					layer.msg('下发失败', {
+						icon: 2,
+						time: 2000
 					});
 				}
 			}
