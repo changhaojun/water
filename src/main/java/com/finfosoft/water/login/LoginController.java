@@ -61,7 +61,7 @@ public class LoginController extends Controller{
 		setSessionAttr(Constants.SESSION_REFRESHTOKEN,refresh_token);
 		setSessionAttr(Constants.SESSION_USER,userRecord);
 		setSessionAttr(Constants.SESSION_COMPANY, company);
-		//setSessionAttr(Constants.SESSION_CUSTOM_ID, customerId);
+		setSessionAttr(Constants.SESSION_CUSTOM_ID, customerId);
 		//定向到系统首页
 		Record result=new Record();
 		result.set("code", 200);
