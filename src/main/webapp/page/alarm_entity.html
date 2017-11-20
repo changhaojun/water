@@ -33,8 +33,8 @@
 								<div class="alarmContent">
 									
 									<p>
-										<span class="dataValue" style="margin-right:10px;" v-if="alarmDatas.data_value=alarmDatas.data_value=='' ? '-':alarmDatas.data_value" v-text="alarmDatas.data_value"></span>
-										<span class="dataUnit" v-text="alarmDatas.data_unit"></span>
+										<span class="dataValue" style="margin-right:10px;" v-if="alarmDatas.data_value=alarmDatas.data_value=='-' ? '':alarmDatas.data_value" v-text="alarmDatas.data_value"></span>
+										<span class="dataUnit" v-if="alarmDatas.data_unit=alarmDatas.data_unit=='-' ? '':alarmDatas.data_unit" v-text="alarmDatas.data_unit"></span>
 										<span class="fa fa-tags"  data-toggle='tooltip' data-placement='top' data-title='标签' @click="showLayer(index)"  @mouseenter="tooltips($event)"></span>
 									</p>				
 									<span class="dataTime" v-if="alarmDatas.data_time=alarmDatas.data_time==''? '-':alarmDatas.data_time" v-text="alarmDatas.data_time"></span>
@@ -73,8 +73,10 @@
 							<div class="alarmTop" v-text="alarmDatas.title"></div>
 								<div class="alarmContent">
 									<p>
-										<span class="dataValue" style="margin-right:10px;" v-if="alarmDatas.data_value=alarmDatas.data_value=='' ? '-':alarmDatas.data_value" v-text="alarmDatas.data_value"></span>
-										<span class="dataUnit" v-text="alarmDatas.data_unit"></span>
+										<span class="dataValue" style="margin-right:10px;" v-if="alarmDatas.data_value==0" v-text="alarmDatas.low_battery"></span>
+										<span class="dataValue" style="margin-right:10px;" v-if="alarmDatas.data_value==1" v-text="alarmDatas.high_battery"></span>
+										<span class="dataValue" style="margin-right:10px;" v-if="alarmDatas.data_value!=0&&alarmDatas.data_value!=1" v-if="alarmDatas.data_value=alarmDatas.data_value=='-' ? '':alarmDatas.data_value" v-text="alarmDatas.data_value"></span>
+										<span class="dataUnit" v-if="alarmDatas.data_unit=alarmDatas.data_unit=='-' ? '':alarmDatas.data_unit" v-text="alarmDatas.data_unit"></span>
 										<span class="fa fa-tags" data-toggle="tooltip" data-placement="top" thingDataId="initData.thingDataId" title="标签" @click="showLayer(index)"  @mouseenter="tooltips($event)"></span>
 									</p>
 									<span class="dataTime" v-if="alarmDatas.data_time=alarmDatas.data_time==''? '-':alarmDatas.data_time" v-text="alarmDatas.data_time"></span>
