@@ -5,6 +5,7 @@ $.initData = {
 	tableIndex: 0,
 	conditionId: '',
 	isEdit: false,
+	companyId:$("#companyId").val(),
 	vueData: {
 		search_name:'',
 		config: {
@@ -100,7 +101,6 @@ $.extend({
 		    queryParams: $.queryParams,
 		    striped: true,//条纹
 		    onLoadSuccess:function(value){
-		    	console.log(value)
 		    	$.initData.tableData = value;
 		    	if(value.code==400005){
 		    		$.token();
@@ -350,6 +350,7 @@ $.extend({
 			url:globalurl+"/v1/things?access_token="+accesstoken,
 			async:false,
 			data:{
+				filter:"{'company_id':'"+$.initData.companyId+"'}",
 				like:'{"thing_name":"'+searchValue+'"}'
 			},
 			success:function(data){

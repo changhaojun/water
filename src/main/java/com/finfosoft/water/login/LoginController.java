@@ -51,10 +51,12 @@ public class LoginController extends Controller{
 		String refresh_token=userMap.get("refresh_token").toString();
 		String companyCode=userMap.get("company_code").toString();
 		String companyId=userMap.get("company_id").toString();
-		//String customerId=userMap.get("customer_id").toString();
+		String customerId=userMap.get("customer_id").toString();
+		String companyName=userMap.get("company_name").toString();
 		Record company=new Record();
 		company.set("companyCode", companyCode);
 		company.set("companyId", companyId);
+		company.set("companyName",companyName);
 		setSessionAttr(Constants.SESSION_ACCESSTOKEN,access_token);
 		setSessionAttr(Constants.SESSION_REFRESHTOKEN,refresh_token);
 		setSessionAttr(Constants.SESSION_USER,userRecord);

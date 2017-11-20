@@ -13,10 +13,14 @@ public class UserController extends Controller{
 	
 	public void index(){
 		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String customerId=getSessionAttr(Constants.SESSION_CUSTOM_ID);
 		String companyCode=company.get("companyCode");
 		String companyId=company.get("companyId");
+		String companyName=company.getStr("companyName");
 		setAttr("companyCode", companyCode);
 		setAttr("companyId", companyId);
+		setAttr("customerId", customerId);
+		setAttr("companyName",companyName);
 		render("account.html");
 	}
 }

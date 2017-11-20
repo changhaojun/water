@@ -1,31 +1,36 @@
 var editId; 	//当点击编辑时所取到的目标数据ID
-var searchFilter;
-var customerId=$("#customerId").val();
-var companyId=$("#companyId").val();
-var systemName="water";
+var companyCode=$("#companyCode").val();	//公司编号，获取用户列表时使用
+var companyId=$("#companyId").val();		//公司ID
 //获取账户列表
 $(function(){
-	searchFilter='{"customer_id":"'+customerId+'","company_id":"'+companyId+'"}';
 	getToken();
 	allList();
 	showTips();
 	setRole();
-	roleList();
-//	chooseCompany();
+	//聚焦失焦颜色变化
+	function changeBorderColor(othis){
+			othis.focus(function() {
+				$(this).css('borderColor', '#1ab394');
+			});
+//			othis.blur(function() {
+//				$(this).css('borderColor', '#e5e6e7');
+//			});
+	}
+	changeBorderColor($(".accountMask input"));
 })
 function allList(){
-	
+	var searchFilter='{"customer_id":"'+customerId+'"}';
 	$.ajax({
 		type: "get",
 		url: manage_globalurl + "/v1/users",
 		dataType: "JSON",
 		async: false,
 		crossDomain: true == !(document.all),
-		data: {	
+		data: {
 			access_token: accesstoken,
 			filter:searchFilter
 		},
-		success: function(data) {
+		success: function(data) {		
 			if(data.code==400005){
 				getNewToken();
 				allList();
@@ -52,9 +57,7 @@ function allList(){
 						'</div>' +
 						'<div class="listName">' + data.rows[i].username + '</div>' +
 						'<ul class="positionList" >' + str2 +
-						'</ul>' + 
-						'<span class="parentCompany fa fa-pinterest">&nbsp;'+data.rows[i].company.company_name+'</span>'+
-						'</div>';
+						'</ul>' + '</div>';
 						$(".accountContent").append(str);
 						
 						//判断列表的状态
@@ -65,39 +68,23 @@ function allList(){
 							$(".accountList .positionList").eq(i).find("li").addClass("cheacked");
 						}
 					}
-				}	
+				}
+				//获取角色列表
+				var oRole = "";
+				for (var i in data.rolesName) {
+					oRole += "<li class='disabled' rolename_id=" + data.rolesName[i]._id + ">" + data.rolesName[i].role_name + "</li>";
+				}
+				$(".accountRole ul").html(oRole);	
 			}
 		}
 	})
 };
-//获取角色
-function roleList(){
-	$.ajax({
-		type: "get",
-		url: manage_globalurl + "/v1/roles",
-		dataType: "JSON",
-		async: false,
-		crossDomain: true == !(document.all),
-		data: {
-			access_token: accesstoken,
-			filter:'{"customer_id":"'+customerId+'"}'
-		},
-		success: function(data) {		
-		var oRole = "";
-		for (var i in data.rows) {
-			oRole += "<li class='disabled' rolename_id=" + data.rows[i]._id + ">" + data.rows[i].role_name + "</li>";
-		}
-		$(".accountRole ul").html(oRole);
-		setRole()
-		}
-	})
-}
 //点击添加角色
 function setRole() {
 	$(".addRole ul li").each(function(index, ele) {
 		$(this).on("click", function() {
 			if($(this).attr("class") == "disabled"){
-				$(this).removeClass("disabled").addClass("cheacked");	
+					$(this).removeClass("disabled").addClass("cheacked");	
 			}else{
 				$(this).removeClass("cheacked").addClass("disabled");
 			}
@@ -114,65 +101,16 @@ function setRole() {
 		})
 	})
 };
-var initData={
-	choose:[],
-	initSelect:"请选择所属公司"
-}
-//获取子公司页面
-var childCompany = new Vue({
-	el: '.ovue',
-	data: initData,
-	
-});
-function chooseCompany(){
-		$.ajax({
-			type:"get",
-			url:manage_globalurl+"/v1/companies",
-			async:true,
-			dataType:'JSON',
-			data:{
-				access_token:window.accesstoken,
-				filter:searchFilter
-			},
-			success:function(data){
-				if(data.total>=1){
-					initData.choose=data.rows
-				}
-				
-			}
-		});
-}
 //点击显示添加页面
 $(".btn-primary").on("click", function() {
 		$(".addAccountMask").fadeIn(200);
 		$(".addRole ul li").removeClass("cheacked").addClass("disabled");
-		
 		$("#addText").val("请输入邮箱");
 		$("#addUsername").val("请输入姓名");
 		$("#addPassword").val("请输入密码(由6到16位字母数字下划线组成)");
 		$("#addPhone").val("请输入手机号");
 		$(".accountNum span").css("display","none");
-		$("#Icompany").val("0");
 })
-//选择系统
-system();
-function system(){
-	$(".addSystem ul li").find("input").on("click",function(){
-	if($(this).prop("checked")){
-		$(this).parent("li").find("label").css("color","#1291cc");
-	}else{
-		$(this).parent("li").find("label").css("color","#ccc");
-	}	
-})
-	$(".modifySystem ul li").find("input").on("click",function(){
-	if($(this).prop("checked")){
-		$(this).parent("li").find("label").css("color","#1291cc");
-	}else{
-		$(this).parent("li").find("label").css("color","#ccc");
-	}	
-})
-}
-
 //点击添加账户的保存
 function addUser(){
 	var flag;
@@ -181,15 +119,13 @@ function addUser(){
 	} else {
 		flag = 0;
 	}
-	//添加系统
-	var addSystem=[];
-	addSystem.push(systemName)
 	//添加角色
 		var addoRole = [];
 		$(".addRole ul .cheacked").each(function(index, ele) {
 			addoRole.push($(".addRole ul .cheacked").eq(index).attr("rolename_id"));
 		})
-		addoRole +="";
+		addoRole += "";
+	
 	if ($("#addText").val() == "请输入邮箱") {
 		$(".addaccountError").css("display", "block");
 		$(".addaccountError").html("邮箱不能为空");
@@ -214,22 +150,19 @@ function addUser(){
 		$(".addphoneError").css("display", "block");
 		$(".addphoneError").html("请输入正确的手机号");
 		$(".addphoneError").css("color", "#fff");
-	}else if(addoRole.length==0){
+	} else if(addoRole.length==0){
 		layer.msg("账户角色不能为空", {icon: 2,});
 	}else{
-		
-		var data = "{'company_id':'"+companyId+"','system':"+JSON.stringify(addSystem)+",'fullname':'" + $("#addUsername").val() + "','username':'" + $("#addText").val() + "','password':'" + $("#addPassword").val() + "','mobile':'" + $("#addPhone").val() + "','status':" + flag + ",'customer_id':'" + customerId + "'}";
-
+		var data = "{'fullname':'" + $("#addUsername").val() + "','username':'" + $("#addText").val() + "','password':'" + $("#addPassword").val() + "','mobile':'" + $("#addPhone").val() + "','status':" + flag + ",'company_id':'" + companyId + "','company_code':'" +companyCode+ "'}";
 		$.ajax({
 			type: 'POST',
-			url: manage_globalurl + "/v1/users",
+			url: globalurl + "/v1/users",
 			dataType: "JSON",
 			crossDomain: true == !(document.all),
 			data: {
 				'roles': addoRole,
 				data: data,
-				access_token: accesstoken,
-				filter:'{"customer_id":"'+customerId+'"}'
+				access_token: accesstoken
 			},
 			success: function(data) {
 			if(data.code==400005){
@@ -237,14 +170,17 @@ function addUser(){
 				addUser();
 			}else if (data.code ==  400014) {
 				layer.msg(data.error, {icon: 2,});
-			}else if (data.code ==  400017) {
-				layer.msg(data.error, {icon: 2,});
+//				layer.alert(data.error, {
+//				   icon: 2,
+//				   skin: 'layui-layer-molv' ,
+//				   shade :0,
+//				   closeBtn: 0
+//				});
 			}else if(data.code ==  200){
 				layer.msg(data.success, {
 					icon: 1,
 					end: function() {
-						setTimeout("self.location.reload()",0)
-					
+					self.location.href='/user'
 				}})
 			}
 			}
@@ -257,16 +193,12 @@ function modify(_id){
 	$(".modifyRole ul li").removeClass("cheacked").addClass("disabled");
 	$(".modifyAccountMask").fadeIn(200);
 	$(".modifyState input").removeClass();
-	$(".modifySystem ul li").find("label").css("color","#ccc");
-	$(".modifySystem ul li").find("input").attr({"checked":false});
 	$.ajax({
 		type: 'get',
 		crossDomain: true == !(document.all),
-		url: manage_globalurl + "/v1/users/",
+		url: globalurl + "/v1/users/"+_id,
 		data: {
-			user_id:_id,
-			access_token: accesstoken,
-			filter:searchFilter
+			access_token: accesstoken
 		},
 		success: function(data) {
 			if(data.code==400005){
@@ -289,23 +221,18 @@ function modify(_id){
 			$("#modifyText").val(data.username);
 			$("#modifyPhone").val(data.mobile);
 			$("#modifyPassword").val(data.password);
-			$("#mofidyCompany").val(data.company._id)
 		}
 	});
 }
 
 //确定修改
 function sureModify() {
-	//添加系统
-	var addSystem=[];
-	addSystem.push(systemName);
-	addSystem=JSON.stringify(addSystem)
 	//添加角色
 		var addoRole = [];
 		$(".modifyRole ul .cheacked").each(function(index, ele) {
 			addoRole.push($(".modifyRole ul .cheacked").eq(index).attr("rolename_id"));
 		})
-		addoRole +="";
+		addoRole += "";
 	if ($("#modifyText").val() == "请输入邮箱") {
 		$(".modifyaccountError").css("display", "block");
 		$(".modifyaccountError").html("邮箱不能为空");
@@ -342,17 +269,17 @@ function sureModify() {
 		} else {
 			setVar = 0;
 		}
-		var modifydata = "{'company_id':'"+companyId+"','system':"+addSystem+",'fullname':'" + $("#modifyUsername").val() + "','username':'" + $("#modifyText").val() + "','password':'" + $("#modifyPassword").val() + "','mobile':'" + $("#modifyPhone").val() + "','status':" + setVar + "}";
+		
+		var modifydata = "{'fullname':'" + $("#modifyUsername").val() + "','username':'" + $("#modifyText").val() + "','password':'" + $("#modifyPassword").val() + "','mobile':'" + $("#modifyPhone").val() + "','status':" + setVar + "}";
 		$.ajax({
 			type: 'put',
-			url: manage_globalurl + "/v1/users/" +editId,
+			url: globalurl + "/v1/users/" +editId,
 			dataType: "JSON",
 			crossDomain: true == !(document.all),
 			data: {
 				roles: addoRole,
 				data: modifydata,
-				access_token: accesstoken,
-				filter:'{"customer_id":"'+customerId+'"}'
+				access_token: accesstoken
 			},
 			success: function(data) {
 				if(data.code==400005){
@@ -360,13 +287,17 @@ function sureModify() {
 					sureModify();
 				}else if (data.code ==  400014) {
 					layer.msg(data.error, {icon: 2,});
-				}else if (data.code ==  400017) {
-					layer.msg(data.error, {icon: 2,});
+	//				layer.alert(data.error, {
+	//				   icon: 2,
+	//				   skin: 'layui-layer-molv' ,
+	//				   shade :0,
+	//				   closeBtn: 0
+	//				});
 				}else if(data.code ==  200){
 					layer.msg(data.success, {
 						icon: 1,
 						end: function() {
-						setTimeout("self.location.reload()",0)
+						self.location.href='/user'
 					}})
 				}
 				}
@@ -387,22 +318,16 @@ function sureDel() {
 	$.ajax({
 		type: 'delete',
 		crossDomain: true == !(document.all),
-		url: manage_globalurl + "/v1/users/" + editId + "?access_token=" + accesstoken,
-		dataType: 'json',
-		data:{
-			filter:searchFilter
-		},
-		crossDomain: true == !(document.all),		
-		success: function(data) {			
+		url: globalurl + "/v1/users/" + editId + "?access_token=" + accesstoken,
+		success: function(data) {
 			if(data.code==400005){
 				getNewToken();
 				sureDel();
-			}else if (data.code ==  400017) {
-				layer.msg(data.error, {icon: 2,});
 			}else{
-				setTimeout("self.location.reload()",0)
+				location.reload("account.html");
 				$(".delAccountMask").fadeOut(200);
-			}			
+			}
+			
 		}
 	})
 }
@@ -427,13 +352,17 @@ function event(obj, str) {
 	}})
 	obj.on("blur", function() {
 		if (obj.val() == "") {
-			obj.val(str);		
+			obj.val(str);	
 		}
 		if (obj.val() != "") {
 			$(".adduserError").html("");
 			$(".modifyuserError").html("");
+		
 			$(".adduserError").css("display", "none");
 			$(".modifyuserError").css("display", "none");	
+		}
+		if(obj!=$("#searchId")){
+			obj.css('border', '1px solid #e5e6e7');
 		}
 	})
 }
@@ -456,14 +385,17 @@ function blank(obj1, obj2, str1, str2, Var) {
 	obj1.on("blur", function() {
 		if (obj1.val() == "") {
 			obj1.val(str1);
+			obj1.css('border', '1px solid #e5e6e7');
 		} else {
 			if (!Var.test(obj1.val())) {
 				obj2.css("display", "block");
 				obj2.html(str2);
 				obj2.css("color", "#fff");
+				obj1.css('border', '1px solid #ff787b');
 			} else {
 				obj2.html("");
 				obj2.css("display", "none");
+				obj1.css('border', '1px solid #e5e6e7');
 			}
 		}
 	})
@@ -474,15 +406,6 @@ blank($("#addPhone"), $(".addphoneError"), "请输入手机号", "请输入正�
 blank($("#modifyText"), $(".modifyaccountError"), "请输入邮箱", "请输入正确的邮箱格式", re);
 blank($("#modifyPassword"), $(".modifypassError"), "请输入密码(由6到16位字母数字下划线组成)", "请输入正确密码(6到16位字母数字或下划线)", pass);
 blank($("#modifyPhone"), $(".modifyphoneError"), "请输入手机号", "请输入正确的手机号", phone);
-tips($("#mofidyCompany"),$(".mofidyError"));
-tips($("#Icompany"),$(".IcompanyError"))
-function tips(obj,tip){
-	obj.on("blur",function(){
-		if(obj.val()!=0){
-			tip.css("display", "none");
-		}
-	})
-}
 //初始化提示框
 function showTips(){
 	$('[data-toggle="tooltip"]').tooltip();
@@ -490,6 +413,7 @@ function showTips(){
 //选择状态
 setStatus($(".addState input"));
 setStatus($(".modifyState input"));
+
 function setStatus(obj) {
 	obj.on("click", function() {
 		obj.removeClass("stats");
@@ -499,8 +423,7 @@ function setStatus(obj) {
 //关闭添加
 $(".closeAdd").on("click", function() {
 		$(".addAccountMask").fadeOut(200);
-		$(".addSystem ul li").find("label").css("color","#ccc");
-		$(".addSystem ul li").find("input").attr({"checked":false});
+
 })
 //按回车键进行查找
 $("#searchId").on("keyup", function(event) {
@@ -508,6 +431,7 @@ $("#searchId").on("keyup", function(event) {
 		ajaxRequest();
 	}
 })
+
 function ajaxRequest() {
 	var search = "";
 	if($("#searchId").val()==""||$("#searchId").val()=="请输入姓名查找"){
@@ -520,13 +444,12 @@ function ajaxRequest() {
 		$(".accountContent").html("");
 		$.ajax({
 			type: 'get',
-			url: manage_globalurl + "/v1/users",
+			url: globalurl + "/v1/users",
 			dataType: "JSON",
 			crossDomain: true == !(document.all),
 			data: {
 				like: okey,
-				access_token: accesstoken,
-				filter:searchFilter
+				access_token: accesstoken
 			},
 			success: function(data) {
 				if(data.code==400005){
@@ -569,4 +492,5 @@ function ajaxRequest() {
 //按搜索图标进行查找
 $(".fa-search").on("click", function() {
 	ajaxRequest();	
-})
+});
+
