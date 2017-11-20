@@ -241,6 +241,7 @@ function onMessageArrived(message) {
     var topic = message.destinationName;
     var payload = message.payloadString;
 	var dataConfig=JSON.parse(payload)
+	console.log(dataConfig)
     var dataId=dataConfig.data_id
     //数据标签推送
     var dataValue;
