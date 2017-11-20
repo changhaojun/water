@@ -75,9 +75,9 @@ function getNavData(){
 							}
 						}
 						$(".changeLi .nav_list").eq(j).append(childStr);
-						var url='/scada/edit';
+						var url='/scadas/post';
 						if(urlList.indexOf(url)==-1){
-							$('.changeLi').filter('[title="组态"]').find('a').attr('href','/scada/598d15ac6e674b0006f07d76-全厂工艺-全厂工艺展示')
+							$('.changeLi').filter('[title="组态"]').find('a').attr('href','/scadas/598d15ac6e674b0006f07d76-全厂工艺-全厂工艺展示')
 						}
 					}
 				}

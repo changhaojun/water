@@ -12,8 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="/css/scada_list.css?1.0"/>
 	</head>
 	<body>
-		<input type="text" id="companyCode" hidden="hidden" value=${companyCode} />
-		<input type="text" id="companyId" hidden="hidden" value=${companyId} />
+		
 		<div class="accountBox entity">
 			<div class="accountTop entityTop">
 					<span>情景列表</span>

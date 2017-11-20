@@ -37,9 +37,13 @@ public class ScadaController extends Controller{
 		render("scada_review.html");
 	}
 	
-	public void edit() {
-		String scadaId = getPara(0);
+	public void put() {
+		String scadaId = getPara("id");
+		String scadaModelsId = getPara("scada_models_id");
+		String thingId = getPara("thing_id");
 		setAttr("scadaId", scadaId);
+		setAttr("scadaModelsId", scadaModelsId);
+		setAttr("thingId", thingId);
 		render("scada_edit.html");
 	}
 	
@@ -47,9 +51,16 @@ public class ScadaController extends Controller{
 		render("scada_select.html");
 	}
 	
-	public void add() {
-		String modelId = getPara(0);
-		setAttr("modelId", modelId);
+	public void post() {
+		//String modelId = getPara(0);
+		Record user=getSessionAttr(Constants.SESSION_USER);
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String companyId=company.get("companyId");
+		String createUser = user.get("fullname");
+		String thingId = getPara(0);
+		setAttr("thingId", thingId);
+		setAttr("companyId", companyId);
+		setAttr("createUser", createUser);
 		render("scada_add.html");
 	}
 	
