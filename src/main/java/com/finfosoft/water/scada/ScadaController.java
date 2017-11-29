@@ -39,7 +39,9 @@ public class ScadaController extends Controller{
 	
 	public void edit() {
 		String scadaId = getPara(0);
-		setAttr("scadaId", scadaId);
+		String thingId = getPara(1);
+		setAttr("scadaId", scadaId);	
+		setAttr("thingId", thingId);
 		render("scada_edit.html");
 	}
 	
@@ -48,8 +50,9 @@ public class ScadaController extends Controller{
 	}
 	
 	public void add() {
-		String modelId = getPara(0);
-		setAttr("modelId", modelId);
+		//String modelId = getPara(0);
+		String thingId = getPara(0);
+		setAttr("thingId", thingId);
 		render("scada_add.html");
 	}
 	
