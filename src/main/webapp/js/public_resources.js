@@ -3,7 +3,7 @@
 //var globalurl="http://121.42.253.149:18808";
 var globalurl="http://139.129.235.9:18808";
 var gatewayUrl="http://114.215.46.56:18850";					//下发API地址正式
-//var gatewayUrl="http://192.168.1.110:9091";					//下发API
+//var gatewayUrl="http://192.168.1.104:9091";					//下发API
 var accesstoken;
 var refreshToken;
 
