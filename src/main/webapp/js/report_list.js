@@ -1,19 +1,20 @@
 var allData={
 	access_token:'',
+	companyId:$("#companyId").val()
 };
 $.fn.extend({
 	showReportList:function(dataList){
-		for(var i=0;i<dataList.length;i++){
-			var boxDom='<span class="reportBox" way="'+dataList[i].way+'" id="'+dataList[i]._id+'" type="'+dataList[i].type+'">'+dataList[i].form_name+'</span>'
-			$(this).append(boxDom)
+		for(var i=0;i<dataList.length;i++){							
+			var boxDom='<span class="reportBox"  way="'+dataList[i].way+'" id="'+dataList[i]._id+'" type="'+dataList[i].type+'">'+dataList[i].form_name+'</span>';					
+			$(this).append(boxDom);
 		}
 	},
 	editReport:function(){
 		var reportId=$(this).attr('id');
 		var type=$(this).attr('type');
 		var name=$(this).text()
-		var way=$(this).attr("way");
-			self.location.href="/report/reportForm/"+reportId+"-"+type+'-'+name+"-"+way;
+		var way=$(this).attr("way");	
+		self.location.href="/report/reportForm/"+reportId+"-"+type+'-'+name+"-"+way;
 		
 		
 	}
@@ -30,6 +31,10 @@ $.extend({
 			type:"get",
 			url:globalurl+"/v1/formTemplates/",
 			async:true,
+			data:{
+				access_token:allData.access_token,
+				filter:'{"company_id":"'+allData.companyId+'"}'
+			},
 			success:function(data){
 				if(data.rows.length>0){
 					$('.reportList').showReportList(data.rows)

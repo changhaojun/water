@@ -17,7 +17,7 @@ $.fn.extend({
 		if(info.indexOf("msie") >= 0 || info.indexOf("trident") >= 0) {
 			//IE9以下浏览器
 			var iIndex = 0;
-			turnHide();
+			turnHide(); 
 		} else {
 			//标准浏览器
 			turnRotate.call($(this));
@@ -156,8 +156,10 @@ $.fn.extend({
 			username: $('input').filter('[name=username]').val().replace($.RegEsp.trim, ''),
 			password: $('input').filter('[name=password]').val(),
 			code: $('input').filter('[name=verificationCode]').val() === '请输入验证码' ? '' : $('input').filter('[name=verificationCode]').val(),
-			client_id: 'admin',
-			client_secret: 'admin',
+//			client_id: 'admin',
+//			client_secret: 'admin',
+			client_id: 'water',
+			client_secret: 'water',
 //			address: $.address
 			address: '陕西省西安市'
 		};

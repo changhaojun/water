@@ -14,14 +14,13 @@
 		<input type="text" id="companyId" hidden="hidden" value=${companyId} />
 		<input type="text" id="customerId" value=${customerId} hidden="hidden" />
 		<input type="text" id="companyName" value=${companyName} hidden="hidden"/>
-		<div class="ovue">
 		<!--账户主页-->
 		<div class="accountBox">
 			<!--账户top-->
 			<div class="accountTop">
 				<span>账号管理 &nbsp;/&nbsp;</span>
 				<span>当前位置:</span>
-				<span>账号管理</span>
+				<span>账号管理></span>
 				<span class="search">
 					<input type="text" value="请输入姓名查找" id="searchId"/>
 					<i class="fa fa-search"></i>					
@@ -39,17 +38,12 @@
 		</div>
 		<!--添加账户-->
 		<div class="accountMask addAccountMask">
-		<div class="autoHeight">
 			<div class="addAccount addAccountnum">
 				<div class="addAccountTop">
 					<span>添加账号</span>
 					<span class="closeAdd">&times;</span>
 				</div>
 				<div class="addAccountContent">
-					<div class="accountNum">					
-						<label for="Icompany">所属公司：</label>
-						<input type="text" id="company" value=${companyName} readonly="readonly">
-					</div>
 					<div class="accountNum">
 						
 						<label for="addText">账号：</label>
@@ -75,7 +69,6 @@
 						<input type="text" value="请输入手机号" id="addPhone"/>
 						<span class=" error addphoneError"></span>
 					</div>
-					
 					<div class="accountNum accountState addState">
 						
 						<label>状态：</label>
@@ -83,7 +76,7 @@
 							<input type="button" value="有效" id="addValid" class="stats"/>
 							<input type="button" value="无效" id="addInvalid" />
 						</div>
-					</div> 				
+					</div> 
 				</div>
 				<div class="selectRole">
 					<span>选择角色</span>
@@ -99,7 +92,6 @@
 				</button>
 			</div>
 		</div>
-	</div>
 		<!--添加成功-->
 		<div class="accountMask successMsg">
 			<div class="addAccount">
@@ -113,19 +105,15 @@
 				<button type="button" class="addSuccess">确定</button>
 			</div>
 		</div>
+
 		<!--修改账户-->
 		<div class="accountMask modifyAccountMask">
-			<div class="autoHeight">
 			<div class="addAccount modifyAccount">
 				<div class="addAccountTop modifyAccountTop">
 					<span>修改账号</span>
 					<span class="closeModify">&times;</span>
 				</div>
 				<div class="addAccountContent modifyAccountContent">
-					<div class="accountNum">					
-						<label for="modifyCompany">所属公司：</label>
-						<input type="text" id="company" value=${companyName} readonly="readonly">
-					</div>
 					<div class="accountNum">
 						
 						<label for="modifyText">账号：</label>
@@ -150,7 +138,6 @@
 						<input type="text" value="请输入手机号" id="modifyPhone"/>
 						<span class=" error modifyphoneError"></span>
 					</div>
-					
 					<div class="accountNum modifyState">
 						<label>状态：</label>
 						<div class="status">
@@ -172,7 +159,6 @@
 					确定
 				</button>
 			</div>
-			</div>
 		</div>
 		<!--修改成功-->
 		<div class="accountMask modifyMsg">
@@ -189,8 +175,7 @@
 		</div>
 		<!--删除账户-->	
 		<div class="accountMask delAccountMask">
-	
-			<div class="addAccount delAccount" >
+			<div class="addAccount delAccount">
 				<div class="addAccountTop delAccountTop">
 					<span>删除账号</span>
 					<span class="closeDel">&times;</span>
@@ -203,14 +188,11 @@
 				<button type="button" class="cancelDel">取消</button>
 				
 			</div>
-	
 		</div>
-	</div>	
 
 	</body>
 	<script src="/plugins/jQuery/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/plugins/vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/plugins/bootstarp/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/js/public_resources.js"></script>
 	<script src="/js/account.js?1.04"></script>

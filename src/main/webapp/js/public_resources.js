@@ -1,9 +1,13 @@
 //项目中所有页面公用的代码(获取token,获取新token)
 //var globalurl="http://192.168.1.104:9090";
 //var globalurl="http://121.42.253.149:18808";
-var globalurl="http://139.129.235.9:18808";
 var gatewayUrl="http://114.215.46.56:18850";					//下发API地址正式
 //var gatewayUrl="http://192.168.1.104:9091";					//下发API
+var globalurl="http://192.168.1.104:9090";
+//var globalurl="http://121.42.253.149:18808";
+var manage_globalurl="http://192.168.1.104:8088";//获取数据标签
+var auth_globalurl="http://121.42.253.149:18826";//获取资源列表
+//var manage_globalurl="http://192.168.1.111:8088";
 var accesstoken;
 var refreshToken;
 
