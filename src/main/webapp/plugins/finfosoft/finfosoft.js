@@ -241,6 +241,13 @@ Finfosoft.Ring.prototype = {
 		if (this.input.value.length>2) {
 			this.input.value = 100;
 		}
+	},
+	
+	reset() {
+		var iDeg = this.startDeg + this.initVal*(this.endDeg+360-this.startDeg)/100;
+		var iScale = (iDeg-this.startDeg)/(this.endDeg+360-this.startDeg);
+		this.rangeText(iScale);
+		this.reDraw(iDeg);
 	}
 	
 };

@@ -8,7 +8,7 @@ var searchEntity = new Vue({
 getToken();//刷新令牌
 toolTip();
 getEntityList();
-
+var tableData = [];
 var isSearch = false;
 
 //搜索功能
@@ -36,6 +36,8 @@ function getEntityList() {
 	    queryParams: queryParams,
 	    striped: true,//条纹
 	    onLoadSuccess:function(value){
+	    	console.log(value);
+	    	tableData = value.rows;
 	    	if(value.code==400005){
 	    		getNewToken();
 	    		getEntityList();		    	
@@ -47,6 +49,10 @@ function getEntityList() {
             {
                 title: "名称",
                 field: "scada_name"
+            },
+            {
+                title: "绑定实体",
+                field: "thing_name"
             },
             {
                 title: "说明",
@@ -72,6 +78,7 @@ function getEntityList() {
 }
 //操作列的格式化
 function editFormatter(value,row,index){
+//	thing_id.push(row.thing_id);
 	return "<span data-toggle='tooltip' data-placement='top' title='查看' style='color:#18b393;cursor: pointer;' class='fa fa-laptop' onclick='reviewScada.call(this)'></span><span data-toggle='tooltip' data-placement='top' title='编辑' style='color:#ffb400;margin-left:30px;cursor: pointer;' class='fa fa-cog' onclick='editScada.call(this)'></span><span data-toggle='tooltip' data-placement='top' title='删除' style='color:#ff787b;margin-left:30px;cursor: pointer;' class='fa fa-trash-o' onclick=deleteCol.call(this)></span>"
 }
 
@@ -81,7 +88,7 @@ function queryParams(params) {
 		pageNumber: isSearch ? 0 : params.offset,//第几页
 		pageSize:params.limit,//每页的条数
 		access_token:window.accesstoken,
-		like:'{"scada_name":"'+searchEntity.searchEntityId+'"}'//模糊查询的设备名
+		filter:'{"company_id":"'+$('#companyId').val()+'"}'//模糊查询的设备名
 	};
 }
 
@@ -102,22 +109,110 @@ function topColor(obj,color){
 
 //添加数据事件
 function addEntity(){
-	self.location.href="/scada/select/";
+	$('.popup').find('input').val();
+	searchThing();
+	layer.open({
+		title: false,
+		closeBtn: 0,
+		type: 1,
+		content: $('.popup'),
+		success: function(layero, index) {
+			$('.popup').find('.close').off('click').click(function() {
+				layer.close(index);
+			});
+			$('.popup').find('.save').off('click').click(function() {
+				var thingId = $(this).attr('thingId');
+				if ( !thingId ) {
+					layer.msg('请选择实体', {icon: 2});
+					return false;
+				}
+				layer.close(index);
+				self.location.href="/scadas/post/"+thingId;
+			});
+		}
+	});
 }
+
+function thingLikeSearch(dom) {
+		var val = $(dom).val();
+		searchThing(val);
+}
+
+function searchThing(val) {
+	$.ajax({
+		type: "get",
+		dataType: "json",
+		url: globalurl+"/v1/things",
+		async: true,
+		crossDomain: true == !(document.all),
+		data: {
+			access_token: accesstoken,
+			like: JSON.stringify({
+				thing_name: val
+			}),
+			filter: JSON.stringify({
+				company_id: $('#companyId').val()
+			})
+		},
+		success: function(data) {
+			
+			var list = $('.popup').find('.thing-list');
+			var save = $('.popup').find('.save');
+			save.removeAttr('thingId');
+			list.html('');
+			var liDom = '';
+			if (data.rows.length > 0) {
+				$.each(data.rows, function(i) {
+					liDom = '<li thingId="'+data.rows[i]._id+'">'+data.rows[i].thing_name+'</li>';
+					for(var j=0;j<tableData.length;j++){
+						if(data.rows[i]._id==tableData[j].thing_id){
+							liDom = '<li thingId="'+data.rows[i]._id+'" class="alreadyActive">'+data.rows[i].thing_name+'</li>';
+						}
+					}
+					list.append(liDom);					
+				});		
+				list.children().click(function() {
+					$(this).addClass('active');
+					$(this).siblings().removeClass('active');
+					save.attr('thingId', $(this).attr('thingId'));
+				})
+				$(".alreadyActive").click(function(){
+					layer.msg("不能重复绑定实体",{icon:2});
+					save.removeAttr('thingId');
+				})
+			} else {
+				liDom += '<li style="color: #ff787b;">未查询到对应实体!</li>';
+				list.html(liDom);
+			}
+		}
+	});
+}
+
 
 function reviewScada(){
-	var id = $(this).parents('tr').attr('id');
-	var name = $(this).parents('tr').find('td').eq(0).html();
-	var description = $(this).parents('tr').find('td').eq(1).html();
-	self.location.href = '/scada/review/'+id+'-'+name+'-'+description;
+	var index = $(this).parents('tr').index();
+	var id = tableData[index]._id;
+	var scada_models_id = tableData[index].scada_models_id;
+	var thing_id = tableData[index].thing_id;
+	self.location.href = '/scadas/get?id='+ scada_models_id + '&thing_id='+ thing_id;
+	
+	
+//	var id = $(this).parents('tr').attr('id');
+//	var name = $(this).parents('tr').find('td').eq(0).html();
+//	var description = $(this).parents('tr').find('td').eq(1).html();
+//	self.location.href = '/scadas/get/'+id+'-'+name+'-'+description;
+	
 }
 
-function editScada(){
-	var id = $(this).parents('tr').attr('id');
-	self.location.href = '/scada/edit/'+id;
+function editScada(data){
+	var index = $(this).parents('tr').index();
+	var id = tableData[index]._id;
+	var scada_models_id = tableData[index].scada_models_id;
+	var thing_id = tableData[index].thing_id;
+	self.location.href = '/scadas/put?id='+ id +'&scada_models_id='+ scada_models_id +'&thing_id='+ thing_id;
 }
 
-//删除一条数据
+//删除一条数据(是否加入删除组态)
 function deleteCol() {
 	var id = $(this).parents('tr').attr('id');
 	var val = $(this).parents('tr').children().eq(0).html();

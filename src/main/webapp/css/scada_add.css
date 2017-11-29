@@ -14,8 +14,11 @@ body *{
 	font-size: 14px;
 }
 
-#vue{
-	height: calc(100% - 40px);
+#scada{
+	margin: -20px 0 0 -20px;
+	width: calc( 100% + 40px );
+	height: calc( 100% - 46px );
+	border: none;
 }
 
 .mainTitle{
