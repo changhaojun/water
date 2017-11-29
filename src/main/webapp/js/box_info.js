@@ -187,23 +187,25 @@ window.deleteCol=function(value){
 //设备下发
 
 function give(value){
-	var guid=guidGenerator();	
 	layer.confirm("<font size='2'>确认下发？</font>",{icon:7},function(index){
 		layer.close(index);
-		data="{'device_id':'"+value+"','guid':'"+guid+"'}";
-		data={'data':data};
+		var loading=layer.msg('正在下发配置，请稍等', {
+			icon: 16,
+			time:0,
+			shade: [0.7,'#5E5C5C']
+		});
 		$.ajax({
-			url:globalurl+"/v1/homes?access_token="+accesstoken,
-			data:data,
+			url:gatewayUrl+'/v1/waterGateways?access_token='+accesstoken,
 			dataType: 'JSON',
-			type: 'POST',
+			type: 'get',
+			data:{
+				device_id:value
+			},
 			crossDomain: true == !(document.all),
 			success: function(data) {
-				if(data.code==400005){
-					  window.getNewToken()
-					  give(value);
-				 }else if(data.result==1){
-					layer.msg('已下发', {
+				layer.close(loading)
+				if(data.result==1){
+					layer.msg('下发成功', {
 						icon : 1
 					});
 				}else{
@@ -218,88 +220,9 @@ function give(value){
 				});
 		    }
 		});
-		MQTTconnect(guid)
 	});
-}
-//控制量guid
-
-function guidGenerator() {
-	var S4 = function() {
-	return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-	};
-	return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 }
 function space(obj){
 	obj.val(obj.val().replace(/\s/g, ''))
 }
 
-function MQTTconnect(guid){
-	console.log("订阅程序开始执行");
-	var mqttHost = mqttHostIP;
-	var username = mqttName;
-	var password = mqttWord;
-	var client = new Paho.MQTT.Client(mqttHost, Number(61623), "server" + parseInt(Math.random() * 100, 10));
-	var options = {
-		timeout: 1000,
-		onSuccess: function(){
-			console.log("onConnect");
-		   	topic = guid;
-		    client.subscribe(topic);
-		},
-		onFailure: function(message) {
-			setTimeout(MQTTconnect, 10000000);
-		}
-	};
-	// set callback handlers
-
-	client.onConnectionLost = onConnectionLost;
-	client.onMessageArrived = onMessageArrived;
-	
-	if(username != null) {
-		options.userName = username;
-		options.password = password;
-	}
-	client.connect(options);
-	// connect the clien
-
-}
-
-// called when the client connects
-
-//function onConnect(client,guid) {
-
-//  console.log("onConnect");
-
-//  topic = guid;
-
-//  client.subscribe(topic);
-
-//}
-
-
-// called when the client loses its connection
-
-function onConnectionLost(responseObject) {
-  if (responseObject.errorCode !== 0) {
-    console.log("onConnectionLost:" + responseObject.errorMessage);
-  }
-}
-
-// called when a message arrives
-
-function onMessageArrived(message) {
-  var topic = message.destinationName;
-  var payload = JSON.parse(message.payloadString);
-  console.info(payload)
-  var result='',iconR=2
-  if(payload.result==0){
-  	result='下发失败'
-  	iconR=2
-  }else{
-  	result='下发成功'
-  	iconR=1
-  }
-  layer.msg(payload.device_name+result,{
-  	icon:iconR
-  })
-}

@@ -1,10 +1,10 @@
 //项目中所有页面公用的代码(获取token,获取新token)
-//var globalurl="http://192.168.1.104:9090";
-//var globalurl="http://121.42.253.149:18808";
-var globalurl="http://192.168.1.104:9090";
-//var globalurl="http://121.42.253.149:18808";
-var manage_globalurl="http://192.168.1.104:8088";//获取数据标签
-var auth_globalurl="http://121.42.253.149:18826";//获取资源列表
+var globalurl="http://192.168.1.104:9090";		//访问水务API地址
+//var globalurl="http://121.42.253.149:18808";		//访问水务API测试服务器地址
+var manage_globalurl="http://121.42.253.149:18825";	//获取数据标签
+var auth_globalurl="http://121.42.253.149:18826";	//获取资源列表
+//var gatewayUrl="http://114.215.46.56:18850";		//下发API地址正式
+var gatewayUrl="http://192.168.1.104:9091";		//下发API
 var accesstoken;
 var refreshToken;
 

@@ -43,7 +43,7 @@ public class WaterConfig extends JFinalConfig{
 		me.add("/dataTag",DataTagController.class,"/");			//设备相关
 		me.add("/task",TaskController.class,"/");				//任务相关
 		me.add("/thing",ThingController.class,"/");             //实体相关的页面
-		me.add("/scada",ScadaController.class,"/");			//组态相关
+		me.add("/scadas",ScadaController.class,"/");			//组态相关
 		me.add("/globalConfig",GlobalConfigController.class,"/");  //全局配置
 		me.add("/alarm",AlarmController.class,"/");		//告警
 		me.add("/runData",RunDataController.class,"/");
