@@ -1,6 +1,7 @@
 var allData={
 	today:'',
 	filename:'',
+	companyId:$("#companyId").val(),
 	dateSetting:{
 		format:'yyyy-mm-dd',
 		startView:2,
@@ -13,7 +14,7 @@ var allData={
 	thingId:"",
 	endTime:"",
 	startDate:"",
-	way:"function",
+	way:"run",
 	ourl:"",
 	columns:[],
 	allRecordData:[]
@@ -109,14 +110,15 @@ $.extend({
 			url:globalurl+"/v1/forms/"+reportId,
 			async:false,
 			data:{
-				reportDate:startDate
+				reportDate:startDate,
+				access_token:accesstoken,			
 			},
 			success:function(data){
 				if(data.code==404){
 					layer.msg(data.error,{icon:2})
 				}else{
 					allData.filename=data.form_name;
-					if(data.way=="function"){
+					if(data.way=="run"){
 							var html=decodeURI(data.form_html);
 							$('.table').append(html);
 							var splitDate=allData.today.split('-')[0]+'-'+allData.today.split('-')[1]
@@ -177,7 +179,7 @@ $.extend({
      			}else if(selectDay==beforeYesterday){
      				$('.beforeYesterday').click();
      			}else{
-     				if(allData.way=="function"){
+     				if(allData.way=="run"){
      					$.getForm(selectDay)
      				}else{
      					var num = ev.date;
@@ -202,7 +204,7 @@ $.extend({
      			}else if(selectDay==newLastMonth){
      				$('.lastMonth').click();
      			}else{
-     				if(allData.way=="function"){
+     				if(allData.way=="run"){
      					$.getForm(selectDay)
      				}else{
      					var num = ev.date;
@@ -254,7 +256,7 @@ $.extend({
 		return {
 			todayForm:function(){
 				$('#datetimepicker').val(allData.today);			
-				if(allData.way=="function"){
+				if(allData.way=="run"){
 					$.getForm(allData.today);
 				}else{
 					allData.type="day"
@@ -266,7 +268,7 @@ $.extend({
 			yesterdayForm:function(){
 				var yesterday=$.formatDate(allData.newDate,1,0);
 				$('.date').val(yesterday);
-				if(allData.way=="function"){
+				if(allData.way=="run"){
 					$.getForm(yesterday);
 				}else{
 					$.Date("yesterday")
@@ -276,7 +278,7 @@ $.extend({
 			beforeYesterdayForm:function(){
 				var beforeYesterday=$.formatDate(allData.newDate,2,0);
 				$('.date').val(beforeYesterday);				
-				if(allData.way=="function"){
+				if(allData.way=="run"){
 					$.getForm(beforeYesterday);
 				}else{
 					$.Date("beforeYesterday")
@@ -287,7 +289,7 @@ $.extend({
 				var thisMonth=$.formatDate(allData.newDate)
 				var sendDate=thisMonth.split('-')[0]+'-'+thisMonth.split('-')[1];
 				$('.date').val(sendDate);
-				if(allData.way=="function"){
+				if(allData.way=="run"){
 					$.getForm(sendDate);
 				}else{
 					allData.type="month"
@@ -300,7 +302,7 @@ $.extend({
 				var lastMonth=$.formatDate(allData.newDate,0,1)
 				var sendDate=lastMonth.split('-')[0]+'-'+lastMonth.split('-')[1];
 				$('.date').val(sendDate);
-				if(allData.way=="function"){
+				if(allData.way=="run"){
 					$.getForm(sendDate);
 				}else{
 					$.Date("lastMonth")
@@ -367,7 +369,8 @@ $.extend({
 			url:globalurl+"/v1/forms/",
 			async:true,
 			data:{
-				data:'{"form_html":"'+encodeURI(tableStr)+'","form_name":"'+allData.filename+'","form_template_id":"'+reportId+'","save_time":"'+save_time+'"}'
+				access_token:accesstoken,
+				data:'{"way":"run","company_id":"'+allData.companyId+'","form_html":"'+encodeURI(tableStr)+'","form_name":"'+allData.filename+'","form_template_id":"'+reportId+'","save_time":"'+save_time+'"}'
 			},
 			success:function(data){
 			}
@@ -484,6 +487,7 @@ $.extend({
 			async:false,
 			crossDomain: true == !(document.all),
 			data:{
+				"company_id":allData.companyId,
 				access_token:accesstoken,
 				like:'{"thing_name":"'+callBack+'"}'
 			},

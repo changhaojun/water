@@ -5,7 +5,9 @@ import java.net.URLDecoder;
 
 import org.apache.log4j.Logger;
 
+import com.finfosoft.water.common.Constants;
 import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Record;
 
 public class ReportController extends Controller{
 	private static Logger log=Logger.getLogger(ReportController.class);
@@ -25,6 +27,9 @@ public class ReportController extends Controller{
 	 * @exception  (说明在某情况下，将发生什么异常)
 	 */
 	public void index(){
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String companyId=company.get("companyId");
+		setAttr("companyId", companyId);
 		render("report_list.html");
 	}
 	 
@@ -43,14 +48,17 @@ public class ReportController extends Controller{
 	 * @exception  (说明在某情况下，将发生什么异常)
 	 */
 	public void reportForm() throws UnsupportedEncodingException{
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);		
 		String reportId=getPara(0);
 		String type=getPara(1);
 		String name=URLDecoder.decode(getPara(2), "UTF-8");
 		String way=getPara(3);
+		String companyId=company.get("companyId");
 		setAttr("reportId", reportId);
 		setAttr("type", type);
 		setAttr("name",name);
 		setAttr("way",way);
+		setAttr("companyId", companyId);
 		render("report_form.html");
 	}
 	/**

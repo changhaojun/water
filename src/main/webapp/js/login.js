@@ -17,7 +17,7 @@ $.fn.extend({
 		if(info.indexOf("msie") >= 0 || info.indexOf("trident") >= 0) {
 			//IE9以下浏览器
 			var iIndex = 0;
-			turnHide();
+			turnHide(); 
 		} else {
 			//标准浏览器
 			turnRotate.call($(this));

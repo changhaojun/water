@@ -73,6 +73,6 @@ public class WaterConfig extends JFinalConfig{
 		
 	}
 	public static void main(String[] args) {
-		JFinal.start("src/main/webapp", 8080, "/", 5);
+		JFinal.start("src/main/webapp", 8081, "/", 5);
 	}
 }

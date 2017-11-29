@@ -24,9 +24,10 @@ function getNavData(){
 	$.ajax({
 		type:'get',
 		crossDomain: true == !(document.all),
-		url:globalurl+"/v1/resources?access_token="+accesstoken,
+		url:auth_globalurl+"/v1/userResources?access_token="+accesstoken,
 		datatype:'json',
 		success:function(data){
+			console.log(data)
 			if(data.code==400005){
 				getNewToken()
 				getNavData()
@@ -76,7 +77,7 @@ function getNavData(){
 						$(".changeLi .nav_list").eq(j).append(childStr);
 						var url='/scada/edit';
 						if(urlList.indexOf(url)==-1){
-							$('.changeLi').filter('[title="组态"]').find('a').attr('href','/scada/review/598d15ac6e674b0006f07d76-全厂工艺-全厂工艺展示')
+							$('.changeLi').filter('[title="组态"]').find('a').attr('href','/scada/598d15ac6e674b0006f07d76-全厂工艺-全厂工艺展示')
 						}
 					}
 				}

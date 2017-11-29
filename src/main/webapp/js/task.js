@@ -89,6 +89,9 @@ $.fn.extend({
 				type:"get",
 				url:globalurl+"/v1/processes?access_token="+$.taskData.access_token+"&process_id="+processId,
 				async:false,
+				data:{
+					filter:'{"company_id":"'+$("#companyId").val()+'"}'
+				},
 				success:function(data){
 					$('.ruleTitle').showTriger(data.trigger_conditions,data.action_times,data.trigger_name,data.target_process_name);
 				}
@@ -362,6 +365,7 @@ $.fn.extend({
 			url:globalurl+"/v1/processes?access_token="+$.taskData.access_token,
 			async:true,
 			data:{
+				filter:'{"company_id":"'+$("#companyId").val()+'"}',
 				like:'{"process_name":"'+$(this).val()+'"}'
 			},
 			success:function(data){
@@ -400,6 +404,7 @@ $.fn.extend({
 			url:globalurl+"/v1/things?access_token="+$.taskData.access_token,
 			async:false,
 			data:{
+				filter:'{"company_id":"'+$("#companyId").val()+'"}',
 				like:'{"thing_name":"'+$(this).val()+'"}'
 			},
 			success:function(data){
@@ -657,6 +662,7 @@ $.fn.extend({
 			sendData={data:JSON.stringify($.taskData.processBox),process_id:processId}
 		}else{
 			sendType='post'
+			$.taskData.processBox.company_id=$("#companyId").val();
 			sendData={data:JSON.stringify($.taskData.processBox)}
 		}
 		$.ajax({
@@ -788,8 +794,9 @@ $.extend({
 		$.taskData.access_token = accesstoken;
 		$.addNode();	//增加工艺节点
 		$.getProcess();		//获取任务List
-		$.taskData.companyId=$("#companyId").val();		//全局变量公司ID
 		$.getTriggerType();		//获取触发类型List
+		$.taskData.companyId=$("#companyId").val();		//全局变量公司ID
+		
 		$.addRule();		//添加规则
 		$.selectTriggerType();	//选择触发类型
 		$.setConditionThing();	//输入条件实体名称，模糊查询
@@ -845,6 +852,9 @@ $.extend({
 			type:"get",
 			url:globalurl+"/v1/processes?access_token="+$.taskData.access_token,
 			async:false,
+			data:{
+				filter:'{"company_id":"'+$("#companyId").val()+'"}'
+			},
 			success:function(data){
 				if(data.rows.length>0){
 					$.taskData.task=data.rows;
@@ -863,7 +873,7 @@ $.extend({
 			}
 		})
 	},
-	getTriggerType:function(){	//获取触发类型
+	getTriggerType:function(){	//获取触发类型	
 		$.ajax({
 			type:"get",
 			url:globalurl+"/v1/triggerTypes?access_token="+$.taskData.access_token,

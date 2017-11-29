@@ -3,12 +3,13 @@
 $(function(){
 	getToken();//刷新令牌
 	entityList();//加载实体列表
+	
 })
 
 function entityList(){
 	$.ajax({
 		type: "get",
-		url: globalurl+"/v1/runDatas",
+		url: globalurl+"/v1/runDatas?company_id="+$('#companyId').val(),
 		dataType: "JSON",
 		async: false,
 		crossDomain: true == !(document.all),
@@ -33,7 +34,7 @@ function entityData(data,i){
 	if(data.rows[i].run_data){
 		str='<div class="dataList" style="cursor:pointer;" onclick="look(&apos;'+data.rows[i]._id+'&apos;)">'+
 				'<div class="listTop">'+
-					'<span>'+data.rows[i].thing_name+'-'+data.rows[i].device_name+'-'+data.rows[i].dataName+'</span>'+							
+					'<span>'+data.rows[i].thing_name+'</span>'+							
 				'</div>'+
 				'<div class="listHr"></div>'+
 				'<div class="listContent">'+
@@ -42,6 +43,7 @@ function entityData(data,i){
 					'</div>'+
 					'<div class="contentBottom">'+
 							'<span class="fa fa-clock-o">'+' '+data.rows[i].run_data.data_times[0].substring(0,7)+'&nbsp; &nbsp;&nbsp;&nbsp;'+'72h'+'</span>'+
+							'<span >'+data.rows[i].device_name+'-'+data.rows[i].dataName+'</span>'+
 					'</div>'+
 				'</div>'+			
 			'</div>';
@@ -56,6 +58,9 @@ function entityData(data,i){
 				'<div class="listContent">'+
 					'<div style="width:478px;margin:0 auto; text-align:center; padding-top:80px;" class="contentTop" id="'+data.rows[i]._id+'">'+
 						'暂无数据'+
+					'</div>'+
+					'<div class="contentBottom">'+
+						'<span>'+data.rows[i].device_name+'-'+data.rows[i].dataName+'</span>'+
 					'</div>'+
 				'</div>'+			
 			'</div>';
@@ -180,7 +185,7 @@ function ajaxRequest(){
 		$(".dataContent").html("");
 		$.ajax({
 			type: 'get',
-			url: globalurl+"/v1/runDatas",
+			url: globalurl+"/v1/runDatas?company_id="+$('#companyId').val(),
 			dataType: "JSON",
 			crossDomain: true == !(document.all),
 			data:{

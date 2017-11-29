@@ -120,6 +120,15 @@ Finfosoft.Ring.prototype = {
 		return dir==='left' ? dis.x : dis.y;
 	},
 	
+	//获取滚动距离
+	getScrollDis: function() {
+		var body = document.body || document.documentElement;
+		return {
+			x: body.scrollLeft,
+			y: body.scrollTop
+		}
+	},
+	
 	//鼠标交互逻辑
 	mouseCtrl: function (x,y){
 		if (y<=this.height/2) {
@@ -146,8 +155,8 @@ Finfosoft.Ring.prototype = {
 	//鼠标按下时进度条响应
 	mousedown: function (ev){
 		var This = this;
-		var x = ev.clientX - this.getPosToDoc(this.canvas,'left');
-		var y = ev.clientY - this.getPosToDoc(this.canvas,'top');
+		var x = ev.clientX - this.getPosToDoc(this.canvas,'left') + this.getScrollDis().x;
+		var y = ev.clientY - this.getPosToDoc(this.canvas,'top') + this.getScrollDis().y;
 		this.mouseCtrl(x,y);
 		document.onmousemove = function (ev){
 			var ev = ev || window.event;
@@ -160,8 +169,8 @@ Finfosoft.Ring.prototype = {
 	
 	//鼠标移动时进度条响应
 	mousemove: function (ev){
-		var x = ev.clientX - this.getPosToDoc(this.canvas,'left');
-		var y = ev.clientY - this.getPosToDoc(this.canvas,'top');
+		var x = ev.clientX - this.getPosToDoc(this.canvas,'left') + this.getScrollDis().x;
+		var y = ev.clientY - this.getPosToDoc(this.canvas,'top') + this.getScrollDis().y;
 		this.mouseCtrl(x,y);
 	},
 	

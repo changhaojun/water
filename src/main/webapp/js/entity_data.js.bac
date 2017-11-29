@@ -54,46 +54,85 @@ function dataList(){
 function listData(data,i){
 	var str='';
 	var title="";
+	var contentShow="";
+	var index="";
 	//已关注，已设封面
 	if(selectedId.indexOf(data[i].data_id)!=-1 && selectedData.indexOf(data[i].data_id)!=-1){
 		title='<span class="fa fa-plus-square disabledLi focus1" data-toggle="tooltip" data-placement="top" title="已关注"></span>'+
-			'<span class="fa fa-list-alt disabledLi cover" data-toggle="tooltip" data-placement="top"  title="已设封面"></span>'			
-	}else if(selectedId.indexOf(data[i].data_id)!=-1 && selectedData.indexOf(data[i].data_id)==-1){
+			'<span class="fa fa-list-alt disabledLi cover" data-toggle="tooltip" data-placement="top"  title="已设封面"></span>'
 	//已关注，没设封面
+	}else if(selectedId.indexOf(data[i].data_id)!=-1 && selectedData.indexOf(data[i].data_id)==-1){
 		title='<span class="fa fa-plus-square disabledLi focus1" data-toggle="tooltip" data-placement="top" title="已关注"></span>'+
-			'<span class="fa fa-list-alt cover" data-toggle="tooltip" data-placement="top" title="设封面" hidden="hidden"></span>'			
-	}else if(selectedId.indexOf(data[i].data_id)==-1 && selectedData.indexOf(data[i].data_id)!=-1){
+			'<span class="fa fa-list-alt cover" data-toggle="tooltip" data-placement="top" title="设封面"></span>'			
 	//没关注，已设封面
-		title='<span class="fa fa-plus-square focus1" data-toggle="tooltip" data-placement="top" title="关注" hidden="hidden"></span>'+
+	}else if(selectedId.indexOf(data[i].data_id)==-1 && selectedData.indexOf(data[i].data_id)!=-1){
+		title='<span class="fa fa-plus-square focus1" data-toggle="tooltip" data-placement="top" title="关注"></span>'+
 			'<span class="fa fa-list-alt disabledLi cover" data-toggle="tooltip" data-placement="top" title="已设封面"></span>'			
-	}else{
 	//没关注，没设封面
-		title='<span class="fa fa-plus-square focus1" data-toggle="tooltip" data-placement="top" title="关注" hidden="hidden"></span>'+
-			'<span class="fa fa-list-alt cover" data-toggle="tooltip" data-placement="top" title="设封面" hidden="hidden"></span>'		
+	}else{
+		title='<span class="fa fa-plus-square focus1" data-toggle="tooltip" data-placement="top" title="关注"></span>'+
+			'<span class="fa fa-list-alt cover" data-toggle="tooltip" data-placement="top" title="设封面"></span>'
+			
 	}
-	if(data[i].port_type=="AI"||data[i].port_type=="DI"||data[i].port_type=="CD"){
-		str='<div class="dataList greenBg" id="'+data[i].data_id+'" >'+
-			'<div class="listTop normal" >'+
-				'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+title+
-				'</div>'+
-			'<div class="listHr"></div>'+
-			'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
-				'<div class="contentTop">'+
-					'<div class="Itext">'+	
-						'<span class="dataValue">'+data[i].data_value+'</span>'+
-						'<span>'+(data[i].data_unit=='-'?'':data[i].data_unit)+'</span>'+
-					'</div>'+						
-				'</div>'+
-				'<div class="contentBottom">'+
-					'<span class="fa fa-clock-o dataTime">'+data[i].data_time+'</span>'+
-				'</div>'+
-			'</div>'+			
-		'</div>'
+	if(data[i].port_type=="CD"||data[i].port_type=="AI"||data[i].port_type=="DI"){
+		//数值显示
+		contentShow='<span class="dataValue">'+data[i].data_value+'</span>'+
+					'<span>'+(data[i].data_unit=='-'?'':data[i].data_unit)+'</span>'
+		
+	}else if(data[i].port_type=="AO"){
+		//仪表盘
+		contentShow='<div class="water">'+
+						'<div class="board-ring board-ring'+i+'">'+
+							'<canvas></canvas>'+
+							'<input type="text" value="'+data[i].data_value+'" class="dial'+data[i].data_id+'"/>'+
+						'</div>'+
+						'<button type="button"id="give" onclick="give(&apos;'+data[i].data_id+'&apos;)">下发</button>'+
+					'</div>'
+		
+	
+	}else if(data[i].port_type=="DO"){
+		//开关控件图
+		contentShow='<div class="on-off">'+
+						'<button type="button" class="Iopen Iopen'+i+' Iactive" onclick="Iopen('+i+','+data[i].data_id+',event)">'+data[i].high_battery+'</button>'+
+						'<div class="off">'+
+							'<div class="circle circle'+i+'">'+				
+							'</div>'+
+						'</div>'+
+						'<button type="button" class="Iclose Iclose'+i+'" onclick="Iclose('+i+','+data[i].data_id+',event)">'+data[i].low_battery+'</button>'+
+					'</div>'
+	}else if(data[i].port_type=="MO"){
+		//可变的值
+		contentShow=""
 	}
-		$(".dataContent").append(str);
+	str='<div class="dataList" id="'+data[i].data_id+'" >'+
+		'<div class="listTop normal" >'+
+			'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+title+			
+		'</div>'+
+		'<div class="listHr"></div>'+
+		'<div class="listContent" style="cursor:pointer;" onclick="look(&apos;'+data[i].data_id+'&apos;)">'+
+			'<div class="contentTop">'+
+				'<div class="Itext">'+contentShow+'</div>'+						
+			'</div>'+
+			'<div class="contentBottom">'+
+				'<span class="fa fa-clock-o dataTime">'+data[i].data_time+'</span>'+
+			'</div>'+
+		'</div>'+			
+	'</div>'
+	$(".dataContent").append(str);
 		showDisplay()
+	if(data[i].port_type=="AO"){
+		console.log(i)
+		var ring = new Finfosoft.Ring({
+			el: '.board-ring'+i,
+			startDeg: 150,
+			endDeg: 30,
+			lineWidth: 20,
+	//		bgColor: '#0055ff',
+			mainColor: '#1ab394'
+	//		initVal: this.input.value
+		});
+	}
 }
-
 //获取已关注的数据
 var selectedId=[];
 function selectData(){
@@ -152,8 +191,8 @@ $('.dataContent').delegate('.cover','click',function(){
 				layer.msg('封面设置成功',{icon:1,time:1000})
 			}
 		})
-		$('.dataContent .cover').removeClass('disabledLi');
-		$(this).addClass('disabledLi');
+		$('.dataContent .cover').removeClass('disabledLi')
+		$(this).addClass('disabledLi')
 	}
 })
 //设关注
@@ -192,6 +231,7 @@ function topColor(obj,color){
 }
 //查看数据
 function look(dataId){
+	return false;
 	self.location.href="/runData/getCharts/"+dataId+"-"+thingId
 }
 //查询
@@ -290,7 +330,7 @@ function showDisplay(){
 	},function(){
 		$(this).find(".focus1").css("display","none");
 		$(this).find(".cover").css("display","none");
-		$(this).find(".disabledLi").css("display","block");
 	})
 }
+
 

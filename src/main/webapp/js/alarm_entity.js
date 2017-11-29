@@ -1,478 +1,378 @@
-var thingId=$("#thingId").val();
-var dataLike;
-var dataId=[];
-$(function(){
-	getToken();
-	toolTips();
-	alarmList();
-	
-	
-})
-var searchBox=new Vue({
-	el:'.search',
-	data:{
-		searchId:''
-	} 
-})
-//获取警告列表
-function alarmList(){
-		Omission($(".alarmEntity .alarmTop .thingName"));
-		var data={access_token:window.accesstoken};	
-		doajax(data)
-};
-function doajax(data){
-	$(".IContent").html("");
-	$.ajax({
-		url:globalurl+"/v1/things/"+thingId+"/alarms",
-		dataType: 'JSON',
-		type: 'get',
-		data:data,
-		async:false,
-		crossDomain: true == !(document.all),
-		success: function(data) {
-			if(data.code==400005){
-				window.getNewToken();
-				alarmList();
-				toolTips();				  
-			}else{
-				var str=""	;	
-				for(var i=0;i<data.length;i++){
-					data[i].title=data[i].device_name+"-"+data[i].data_name					
-					Dom(data[i],i);//创建动态Dom						
-					dataId.push(data[i].data_id)
-			}
-			dataLike=data;
-			if($("#searchId").val()!=""){
-				searchThing($("#searchId"))
-			}
-			toolTips();
-			MQTTconnect(dataId);
-			
-			}	
-		},
-		error:function(data){
-		}
-	});
+var initData={
+	//令牌
+	access_token: "",
+	thingId:$("#thingId").val(),
+	alarmData:[],
+	tags:[],
+	companyId:$("#companyId").val(),
+	resultBox:"",
+	Index:"",
+	likeSearchData:"",
+	thingDataId:"",
+	alarmRangeBox:"",
+	dataMin:"",
+	dataMax:"",
+	dataId:"",
+	childIndex:"",
+	off:"",
+	deviceId:"",
+	MqttDataId:[],
+	//Mqtt
+	client:"",
+	topic:"",
+	//模糊查询需要的数据
+	likeAllData:{},
+	likeData:""
 }
-//模糊查询
-function searchThing(obj){
-	$(".IContent").html("");
-	var q=0;
-	for(var i=0;i<dataLike.length;i++){
-		if(dataLike[i].title.search(obj.val())!=-1){
-			Dom(dataLike[i],q);	
-			q++;					
-		}
-		dataId.push(dataLike[i].data_id);		
-	}
-	if($("#searchId").val()==""){
-		alarmList();
-	}
-	MQTTconnect(dataId);
-}
-//动态创建DOM拼接
-function Dom(data,i){
-	if(data.data_value==undefined){
-		data.data_value="暂无数据";
-	}
-	if(data.data_time==undefined){
-		data.data_time="";
-	}
-	if(data.data_unit==undefined||data.data_unit=="-"){
-		data.data_unit="";
-	}
-	var oLi="";
-	str='<div class="alarmList" id="'+data.data_id+'">'+
-		'<div class="alarmTop">'+data.device_name+"-"+data.data_name+'</div>'+
-		'<div class="alarmContent">'+
-			'<span class="dataValue">'+data.data_value+'</span>'+
-			'<span>'+data.data_unit+'</span>'+
-			'<span class="dataTime">'+data.data_time+'</span>'+
-		'</div>'+
-		'<div class="alarmFooter">'+
-			'<ul>'+						
-			'</ul>'+
-		'</div>'+
-	'</div>'
-$(".IContent").append(str);	
-colorBg(data.status,i);
-	var oLi="";
-	for(var j=0;j<2;j++){
-		if(data.threshold==undefined||data.threshold[j]==undefined||(data.threshold[j].upper_value=="+∞"&&data.threshold[j].lower_value=="-∞")||(data.threshold[j].upper_value==""&&data.threshold[j].lower_value=="")){
-			
-			oLi='<li>'+
-					'<div class="dataLeft">未配置'+								
-					'</div>'+
-					'<div class="dataRight">'+
-						'<i class="fa fa-plus-square-o " data-toggle="tooltip" data-placement="top" title="添加" onclick="addData('+data.data_id+','+j+","+i+')"></i>'+
-					'</div>'+							
-				'</li>'
-				
-		}else{	
-			if(data.threshold[j].lower_value=="-∞"){
-				data.threshold[j].lower_value="'-∞'";
-				
-			}
-			if(data.threshold[j].upper_value=="+∞"){
-				data.threshold[j].upper_value="'+∞'";
-			}
-					oLi='<li>'+
-					'<div class="dataLeft">'+
-						'<span>'+(data.threshold[j].lower_value)+'</span>  ~  '+
-						'<span>'+(data.threshold[j].upper_value)+'</span>'+
-					'</div>'+
-					'<div class="dataRight">'+
-						'<i class="fa fa-cog " data-toggle="tooltip" data-placement="top" title="修改" onclick="modify('+data.data_id+","+data.threshold[j].lower_value+","+data.threshold[j].upper_value+","+j+","+i+')"></i>'+
-						'<i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="清空" onclick="alarmDel('+data.data_id+","+data.threshold[j].lower_value+","+data.threshold[j].upper_value+","+j+","+i+')"></i>'+
-					'</div>'+							
-				'</li>'
-		}
-		$(".alarmFooter ul").eq(i).append(oLi);		
+var $extend=$.fn.extend({
+	//空格限制输入
+	limitSpacing: function() {
+		$(this).keyup(function() {
+			$(this).val($(this).val().replace(/\s/g, ''));
+			eval('initData.'+$(this).attr('datasrc')+'=$(this).val()');
+		});
+	},
+	//layer提示
+	tooltips:function(){
+		$(".tooltip-inner").css({"background-color":"#effaf6","color":"#1ab394"});
+		$(".tooltip .top .tooltip-arrow").css("border-top-color","#effaf6");
+		$('[data-toggle="tooltip"]').tooltip();
+	},
+	//获取告警列表的数据
+	getAlarmListData:function(){
 		
-	}
-}
-//告警颜色设置
-function colorBg(data,index){
-	if(data==1){
-		$(".IContent .alarmList").eq(index).addClass("greenBg");
-	}else if(data==0){
-		$(".IContent .alarmList").eq(index).addClass("grayBg");
-	}else{
-		$(".IContent .alarmList").eq(index).addClass("redBg");
-	}
-}
-//初始化提示框
-function toolTips(){
-	$('[data-toggle="tooltip"]').tooltip();
-	topColor($(".alarmFooter ul li .fa"),"#effaf6","#1ab394");
-}
-function topColor(obj,color,fontcolor){
-	obj.on("mouseover",function(){
-		$(".tooltip-inner").css({"background-color":color,"color":fontcolor});
-		$(".tooltip.top .tooltip-arrow").css("border-top-color",color);
-	})
-}
-//添加数据
-function addData(_id,Iindex,dataIndex){
-	var Iindex=Iindex;
-	var dataIndex=dataIndex;
-	layer.alert('<input type="text" id="dataMin" placeholder="请输入最小值" onkeyup="if(event.keyCode==32){space($(this))}"/>  ~ '+
-	'<input type="text" id="dataMax" placeholder="请输入最大值" onkeyup="if(event.keyCode==32){space($(this))}"/>',{title: '添加警告',btn:"保存",area: ['400px'],skin:'demo-class'}, function(index){
-		var text=/^[-+]?[0-9]+(\.[0-9]+)?$/;
-		var sign=$("#dataMin").val().split("-")[1];
-		 if($("#dataMin").val()==""&&$("#dataMax").val()==""){
+		$.ajax({
+			url:globalurl+"/v1/things/"+initData.thingId+"/alarms",
+			dataType: 'JSON',
+			type: 'get',
+			data:{
+			access_token:initData.access_token	
+			},
+			async:false,
+			crossDomain: true == !(document.all),
+			success: function(data) {
+				
+				for(var i=0;i<data.length;i++){
+					data[i].title=data[i].device_name+"-"+data[i].data_name	;					
+					if(data[i].title.length>15){						
+						 data[i].title=data[i].title.substring(0,15)+"...";//超出一行显示省略
+					}
+					initData.MqttDataId.push(data[i].data_id)
+				}
+				initData.alarmData=data;
+				initData.likeAllData=data;
+				$.MQTTconnect(initData.MqttDataId);
+				
+			}
+		})
+	},
+	//点击出现弹窗
+	showLayer:function(index){
+		initData.likeSearchData=""
+		initData.Index=index;
+		initData.thingDataId=initData.alarmData[index].thing_data_id;
+	
+		initData.resultBox = layer.open({
+			type: 1,
+			title: "选择数据标签",
+			skin: 'layui-layer-molv',
+			shadeClose: true,
+			shade: 0.5,
+			area: ['300px', '336px'],
+			content: $('.confirmInfo')
+		})
+		$(window).selectLable();
+	},
+	//获取分组标签
+	selectLable:function(index){
+		
+		$.ajax({
+			type:"get",
+			url:globalurl+"/v1/tags",
+			async:true,
+			data:{
+					access_token:initData.access_token,
+					like:'{"tag_name":"'+initData.likeSearchData+'"}',
+					filter:'{"company_id":"'+initData.companyId+'"}'
+			},
+			success:function(data){
+				initData.tags=data.rows			
+			}
+		});
+	},
+	//新增分组标签
+	addTag:function(){
+		layer.prompt({
+			title: '输入新的分组标签',
+			formType: 0
+		}, function(pass, index) {	
+			$.ajax({
+				type:"post",
+				url:globalurl+"/v1/tags",
+				async:true,
+				data:{
+					access_token:accesstoken,
+					data:'{"company_id":"'+initData.companyId+'","tag_name":"'+pass+'"}'
+				},
+				success:function(data){
+					if(data.code==200){
+						layer.close(index);
+						layer.msg('添加成功',{icon:1,zIndex:99999999});
+						delete data.code;
+						initData.tags.unshift(data)
+					}else{
+						layer.msg(data.error,{icon:2,zIndex:99999999});
+					}
+				}
+			});
+		});
+	},
+	//删除分组标签
+	removeTag:function(index,event){
+		event.stopPropagation();
+		$.ajax({
+			type:'delete',
+			url:globalurl+'/v1/tags/'+initData.tags[index]._id+'?access_token='+initData.access_token,
+			async:true,
+			success:function(data){
+				if(data.code==200){
+					initData.tags.splice(index,1)
+					layer.msg(data.success,{icon:1,zIndex:99999999})
+				}else{
+					layer.msg(data.error,{icon:2,zIndex:99999999})
+				}
+			}
+		});
+	},
+	//选择数据标签==》确定提交数据标签
+	chioseTag:function(index,event){
+		initData.alarmData[initData.Index].tag_name=this.tags[index].tag_name
+		var data={
+			"tag_id":initData.tags[index]._id,
+			"tag_name":initData.tags[index].tag_name
+		}
+		$.ajax({
+				url:globalurl+"/v1/alarms/"+initData.thingDataId,
+				data:{
+					"access_token":initData.access_token,
+					data:JSON.stringify(data)
+				},
+				dataType: 'JSON',
+				type: 'put',
+				crossDomain: true == !(document.all),
+				success: function(data) {
+					if(data.code==200){
+						layer.msg(data.success,{icon:1})
+					}					
+				}
+		})
+		layer.close(initData.resultBox);
+	},
+	//添加告警范围
+	alarmRangeLayer:function(index,event,oindex,title){
+		initData.Index=index;
+		initData.thingDataId=initData.alarmData[index].thing_data_id;
+		initData.dataId=initData.alarmData[index].data_id;
+		initData.deviceId=initData.alarmData[index].device_id;
+		initData.childIndex=oindex;
+		initData.off=title;
+		if(initData.off=="修改"){
+			
+			initData.dataMin=initData.alarmData[initData.Index].threshold[initData.childIndex].lower_value;
+			initData.dataMax=initData.alarmData[initData.Index].threshold[initData.childIndex].upper_value;
+		}else{
+			initData.dataMin="";
+			initData.dataMax="";
+		}
+		initData.alarmRangeBox=layer.open({
+			type: 1,
+			title: "添加警告",
+			skin: 'demo-class',
+			shadeClose: false,
+			shade: 0.5,
+			area: ['411px', '166px'],
+			content: $('.alarmRange')
+		})
+	},
+	//添加提交告警范围判断，修改提交告警
+	alarmRangeSave:function(){
+		console.log(initData.dataMin+","+initData.dataMax)
+		var text=/^[0-9]*$/;
+		 if(initData.dataMin==""&&initData.dataMax==""){
 			layer.tips('最大值或者最小值不能同时为空', $("#dataMax"), {
 				  tips: [1, '#ff787c'],
 				  time: 2000
 			});
-		}else if(text.test($("#dataMin").val())||text.test($("#dataMax").val())){ 
-			if(($("#dataMin").val().indexOf("-")==-1&&$("#dataMax").val().indexOf("-")==-1&&Number($("#dataMin").val())>=Number($("#dataMax").val())&&$("#dataMax").val()!="")||($("#dataMin").val().indexOf("-")==0&&$("#dataMax").val().indexOf("-")==0&&Number($("#dataMin").val().split("-")[1])<=Number($("#dataMax").val().split("-")[1])&&$("#dataMax").val()!="")||($("#dataMin").val().indexOf("-")==-1&&$("#dataMax").val().indexOf("-")==0&&$("#dataMax").val()!=""&&$("#dataMin").val()!="")){
+		}else if(text.test(initData.dataMin)&&text.test(initData.dataMax)){
+			
+			if((Number(initData.dataMin)>=Number(initData.dataMax)&&initData.dataMax!="")){
 				layer.tips('最大值不能比最小值小', $("#dataMax"), {
 				  tips: [1, '#ff787c'],
 				  time: 2000
 				});
 			}else{
-				var data="{'threshold':"+indexData(Iindex,dataIndex)+",'data_id':"+_id+"}"
-				var data={"data":data,"access_token":window.accesstoken};
-				ajax(data);
-				varLike(_id,$("#dataMin").val(),$("#dataMax").val(),Iindex,dataIndex)
-			}
-			
+				if(initData.dataMin==""||initData.dataMin=="-∞"){
+					initData.alarmData[initData.Index].threshold[initData.childIndex].lower_value="-∞";
+				}else{
+					initData.alarmData[initData.Index].threshold[initData.childIndex].lower_value=Number(initData.dataMin);
+				}
+				if(initData.dataMax==""||initData.dataMax=="+∞"){
+					initData.alarmData[initData.Index].threshold[initData.childIndex].upper_value="+∞";
+				}else{
+					initData.alarmData[initData.Index].threshold[initData.childIndex].upper_value=Number(initData.dataMax);
+				}
+				
+				var data={
+						"threshold":initData.alarmData[initData.Index].threshold,				
+						"data_id":initData.dataId,
+						"device_id":initData.deviceId
+					}
+				$.alarmDataAjax(data);	
+			}		
 		}else{
 			layer.tips('最大值或者最小值格式不正确', $("#dataMax"), {
 				  tips: [1, '#ff787c'],
 				  time: 2000
 			});							
 		}
-	})
-}
-//点击添加或者修改设置Dom节点
-function varLike(_id,min,max,Iindex,dataIndex){
-	var dataLine=$(
-				'<div class="dataLeft">'+
-					'<span>'+min+'</span>  ~  '+
-					'<span>'+max+'</span>'+
-				'</div>'+
-				'<div class="dataRight">'+
-					'<i class="fa fa-cog " data-toggle="tooltip" data-placement="top" title="修改" onclick="modify('+_id+","+min+","+max+","+Iindex+","+dataIndex+')"></i>'+
-					'<i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="清空" onclick="alarmDel('+_id+","+min+","+max+","+Iindex+","+dataIndex+')"></i>'+
-				'</div>'					
-			)
-	$('#'+_id).find('li').eq(Iindex).empty();
-	$('#'+_id).find('li').eq(Iindex).append(dataLine)
-}
-//判定最大值最小值是否为空
-function  spaceData(){
-	if($("#dataMax").val()==""){
-		var dataMax=JSON.stringify("");
-	}else{		
-		dataMax=$("#dataMax").val();
-	}
-	if($("#dataMin").val()==""){
-		var dataMin=JSON.stringify("");
-	}else{
-		dataMin=$("#dataMin").val()		
-	}
-	if(dataMax=="+∞"){
-		dataMax="'+∞'";
-	}
-	if(dataMin=="-∞"){
-		dataMin="'-∞'"
-	}
-	return [dataMin,dataMax]
-}
-//判定最大值最小值是否为未配置
-function setData(Iindex,dataIndex){
-	if($(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft").html()!="未配置"){
-		var IdataMin=$(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft span").eq(0).html();
-		var IdataMax=$(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft span").eq(1).html();
 		
-	}else{
-		IdataMin=JSON.stringify("");
-		IdataMax=JSON.stringify("");
-	}
-	return [IdataMin,IdataMax]
-}
-//当前数据的第几个下标
-function indexData(Iindex,dataIndex){
-	if(Iindex==1){
-				var othreshold = "["+
-				"{"+
-					"lower_value: "+setData(Iindex,dataIndex)[0]+","+
-					"upper_value: "+setData(Iindex,dataIndex)[1]+
-				"},"+
-				"{"+
-					"lower_value: "+spaceData()[0]+","+
-					"upper_value: "+spaceData()[1]+
-				"}"+
-				"]";
-			}else{
-				var othreshold = "["+
-				"{"+
-					"lower_value: "+spaceData()[0]+","+
-					"upper_value: "+spaceData()[1]+
-					
-				"},"+
-				"{"+
-					"lower_value:"+setData(Iindex,dataIndex)[0]+","+
-					"upper_value:"+setData(Iindex,dataIndex)[1]+
-				"}"+
-				"]";
+	},
+	//删除告警范围
+	deleteAlarmData:function(index,ev,oindex){		
+		layer.confirm("<font size='2'>确定清除该数据？</font>", {icon:7,skin:'del-class'}, function(){
+			initData.alarmData[index].threshold[oindex].lower_value="-";
+			initData.alarmData[index].threshold[oindex].upper_value="-";
+			initData.dataId=initData.alarmData[index].data_id;
+			initData.deviceId=initData.alarmData[index].device_id;
+			var data={
+				"threshold":initData.alarmData[index].threshold,				
+				"data_id":initData.dataId,
+				"device_id":initData.deviceId
 			}
-		return othreshold;
-}
-//修改数据
-
-function modify(_id,min,max,Iindex,dataIndex){
-	var Iindex=Iindex;
-	var dataIndex=dataIndex;
+			$.alarmDataAjax(data);	
+		})		
+	},
+	//模糊查询
+	likeSearch:function(){
+		initData.alarmData=[];
+		for(var i=0;i<initData.likeAllData.length;i++){
+			if(initData.likeAllData[i].title.search(initData.likeData)!=-1){				
+				initData.alarmData.push(initData.likeAllData[i]);			
+			}
+			initData.MqttDataId.push(initData.likeAllData[i].data_id);		
+		}
+		if(initData.likeData==""){
+			initData.alarmData=initData.likeAllData;
+		}
+	},
 	
-layer.alert('<input type="text" id="dataMin" value="'+min+'" onkeyup="if(event.keyCode==32){space($(this))}"/>  ~ '+ 
-	'<input type="text" id="dataMax" value="'+max+'"  onkeyup="if(event.keyCode==32){space($(this))}"/>',{title: '修改警告',btn:"保存",area: ['400px'],btnAlign: 'c',skin:'demo-class'}, function(index){
-	var text=/^[-+]?[0-9]+(\.[0-9]+)?$/;
-		if($("#dataMin").val()==""&&$("#dataMax").val()==""){
-			layer.tips('最大值或者最小值不能同时为空', $("#dataMax"), {
-				  tips: [1, '#ff787c'],
-				  time: 2000
-			});
-		}else if(text.test($("#dataMin").val())||text.test($("#dataMax").val())){
-			if(($("#dataMin").val().indexOf("-")==-1&&$("#dataMax").val().indexOf("-")==-1&&Number($("#dataMin").val())>=Number($("#dataMax").val())&&$("#dataMax").val()!="")||($("#dataMin").val().indexOf("-")==0&&$("#dataMax").val().indexOf("-")==0&&Number($("#dataMin").val().split("-")[1])<=Number($("#dataMax").val().split("-")[1])&&$("#dataMax").val()!="")||($("#dataMin").val().indexOf("-")==-1&&$("#dataMax").val().indexOf("-")==0&&$("#dataMax").val()!=""&&$("#dataMin").val()!="")){
-				layer.tips('最大值不能比最小值小', $("#dataMax"), {
-				  tips: [1, '#ff787c'],
-				  time: 2000
-				});
-			}else{
-				var data="{'threshold':"+indexData(Iindex,dataIndex)+",'data_id':"+_id+"}"
-				var data={"data":data,"access_token":window.accesstoken};
-				ajax(data);
-				varLike(_id,$("#dataMin").val(),$("#dataMax").val(),Iindex,dataIndex)
-			}
-		}else{						
-			layer.tips('最大值或者最小值格式不正确', $("#dataMax"), {
-				  tips: [1, '#ff787c'],
-				  time: 2000
-			});
-		}	
+	
 })
-}
-//清除数据
-function alarmDel(_id,min,max,Iindex,dataIndex){
-	var Iindex=Iindex;
-	var dataIndex=dataIndex;
-	layer.confirm("<font size='2'>确定清除该数据？</font>", {icon:7,skin:'del-class'}, function(index){
-			if($(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft").html()=="未配置"){
-				var IdataMin=JSON.stringify("");
-				var IdataMax=JSON.stringify("");
-				
-			}else{
-				var IdataMin=$(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft span").eq(0).html();
-				var IdataMax=$(".alarmFooter").eq(dataIndex).find("li").eq(!Iindex).find(".dataLeft span").eq(1).html();
-			}		
-			if(Iindex==1){
-				var othreshold = "["+
-				"{"+
-					"lower_value: "+IdataMin+","+
-					"upper_value: "+IdataMax+
-				"},"+
-				"{"+
-					"lower_value: '',"+
-					"upper_value: ''"+
-				"}"+
-				"]";
-			}else{
-				var othreshold = "["+
-				"{"+
-					"lower_value: '',"+
-					"upper_value: ''"+
-					
-				"},"+
-				"{"+
-					"lower_value:"+IdataMin+","+
-					"upper_value:"+IdataMax+
-				"}"+
-				"]";
-			}				
-			var data="{'threshold':"+othreshold+",'data_id':"+_id+"}"
-			var data={"data":data,"access_token":window.accesstoken};
-			ajax(data);
-			var dataLine=$(
-							'<div class="dataLeft">未配置'+								
-							'</div>'+
-							'<div class="dataRight">'+
-								'<i class="fa fa-plus-square-o " data-toggle="tooltip" data-placement="top" title="添加" onclick="addData('+_id+','+Iindex+","+dataIndex+')"></i>'+
-							'</div>'					
-							)
-				$('#'+_id).find('li').eq(Iindex).empty();
-				$('#'+_id).find('li').eq(Iindex).append(dataLine)
+$.extend({
+	init:function(){
+		var alarmConfig = new Vue({
+			el: '.oVue',
+			data: initData,
+			methods: $extend
 		});
-	
-}
-//ajax函数的调用
-function ajax(data){
-	$.ajax({
-				url:globalurl+"/v1/alarms",
-				data:data,
+		getToken();		
+		initData.access_token = accesstoken;
+		$('input').limitSpacing();
+		
+		$(window).getAlarmListData();
+		$(window).selectLable();
+		
+	},
+	//删除，添加，修改告警范围
+	alarmDataAjax:function(data){
+		$.ajax({
+				url:globalurl+"/v1/alarms/"+initData.thingDataId,
+				data:{
+					"access_token":initData.access_token,
+					data:JSON.stringify(data)
+				},
 				dataType: 'JSON',
 				type: 'put',
 				crossDomain: true == !(document.all),
 				success: function(data) {
-					if(data.code==400005){
-						  window.getNewToken()
-						  addEntity();
-					 }else if(data.code==200){
-						layer.msg(data.success, {
-							icon : 1,
-							time:1000
-						},function(){
-							alarmList();
-						
-						});						
+					
+					layer.close(initData.alarmRangeBox);
+					initData.dataMin="";
+					initData.dataMax="";
+					if(data.code==200){
+						layer.msg(data.success,{icon:1})
 					}else{
-						layer.msg(data.success, {
-							icon : 2,
-							time:1000
-						},function(){
-							alarmList();
-							
-						});
+						initData.alarmData[initData.Index].threshold[initData.childIndex].lower_value="-";
+						initData.alarmData[initData.Index].threshold[initData.childIndex].upper_value="-";
+						layer.msg("设置告警失败",{icon:1})
 					}
-				},
-				error: function(data) {
-					layer.msg("添加失败", {
-						icon : 2,
-						time:1000
-					},function(){
-							alarmList();
-							
-						});
-			    }
-			});
-}
-//input禁止输入字母空格
-function space(obj){
-	obj.val(obj.val().replace(/\s/g, ''))
-}
-//订阅
-var client; 
-var topic;
-var data;
-function MQTTconnect(dataIds) {
-	var mqttHost = mqttHostIP;
-	var username = mqttName;
-	var password = mqttWord;
-	client = new Paho.MQTT.Client(mqttHost, Number(portNum), "server" + parseInt(Math.random() * 100, 10));
-	data = dataIds;  
-	  var options = {
-			  timeout: 1000,
-			  onSuccess: onConnect,
-			  onFailure: function (message) {
-				  setTimeout(MQTTconnect, 10000000);
-			  }
-	  };	  
-	  // set callback handlers
-	  client.onConnectionLost = onConnectionLost;
-	  client.onMessageArrived = onMessageArrived;
-	  
-	  if (username != null) {
-		  options.userName = username;
-		  options.password = password;
-	  }
-	  client.connect(options);  
-	  // connect the clien		  
-}
-// called when the client connects
-function onConnect() {
-  for(var i=0;i<data.length;i++){
-	  topic=data[i]+"";
-	  client.subscribe(topic);
-  }
-}
-// called when the client loses its connection
-function onConnectionLost(responseObject) {
-  if (responseObject.errorCode !== 0) {
-  }
-}
-// called when a message arrives
-function onMessageArrived(message) {
-  var topic = message.destinationName;
-  var payload = message.payloadString;
-  var dataConfig=JSON.parse(payload)
-  var dataId=dataConfig.data_id
-  var dataValue;
-  if(dataConfig.port_type=="DO"||dataConfig.port_type=="DI"){
-  	dataValue=dataConfig.battery.split('$')[dataConfig.data_value]
-  }else{
-  	dataValue=dataConfig.data_value
-  }
-	$('#'+dataId).find('.dataValue').text(dataValue);
-	$('#'+dataId).find('.dataTime').text(dataConfig.data_time);
-	if(dataConfig.status==1){
-		$('#'+dataId).addClass("greenBg");
-	}else if(data==0){
-		$('#'+dataId).addClass("grayBg");
-	}else{
-		$('#'+dataId).addClass("redBg");
-	}
-}
-//超出一行省略
-function Omission(obj){
-	if(obj.html().length>40){
-		obj.css({
-			"width":"140px",
-			"overflow": "hidden",
-			"white-space": "nowrap",
-			"text-overflow": "ellipsis"
+				}
 		})
+	},
+	//mqtt链接
+	MQTTconnect:function(dataIds){
+		var data;
+		var mqttHost = mqttHostIP;
+		var username = mqttName;
+		var password = mqttWord;
+		var client = new Paho.MQTT.Client(mqttHost, Number(portNum), "server" + parseInt(Math.random() * 100, 10));		
+		  var options = {
+				  timeout: 1000,
+				  onSuccess:function() {
+					  for(var i=0;i<dataIds.length;i++){
+						  initData.topic=dataIds[i]+"";
+						  client.subscribe(initData.topic);
+					  }
+					},
+				  onFailure: function (message) {
+					  setTimeout(MQTTconnect, 10000000);
+				  }
+		  };	  
+		  // set callback handlers
+		 client.onConnectionLost = $.onConnectionLost;
+		 client.onMessageArrived = $.onMessageArrived;
+		  
+		  if (username != null) {
+			  options.userName = username;
+			  options.password = password;
+		  }
+		  client.connect(options);  
+		  // connect the clien	
+	},
+	// called when the client loses its connection
+	onConnectionLost:function (responseObject) {
+		console.log(responseObject)
+		if (responseObject.errorCode !== 0) {
+		}
+	},
+	// called when a message arrives
+	onMessageArrived:function (message) {
+		
+	  var topic = message.destinationName;
+	  var payload = message.payloadString;	  
+	  var dataConfig=JSON.parse(payload)
+	  var dataId=dataConfig.data_id
+	  var dataValue;
+	  if(dataConfig.port_type=="DO"||dataConfig.port_type=="DI"){
+	  	dataValue=dataConfig.battery.split('$')[dataConfig.data_value]
+	  }else{
+	  	dataValue=dataConfig.data_value
+	  }
+	  	for(var i=0;i<initData.alarmData.length;i++){
+	  		if(initData.alarmData[i].data_id==dataId){
+	  			initData.alarmData[i].data_value=dataValue;
+	  			initData.alarmData[i].data_time=dataConfig.data_time;
+	  			initData.alarmData[i].status=dataConfig.status;
+	  		}
+	  	}
+		if(dataConfig.status==1){
+			$('#'+dataId).removeClass("redBg grayBg").addClass("greenBg");
+		}else if(dataConfig.status==0){
+			$('#'+dataId).removeClass("greenBg redBg").addClass("grayBg");
+		}else{
+			$('#'+dataId).removeClass("greenBg grayBg").addClass("redBg");
+		}
 	}
 	
-}
-
-
-
-
-
-
-
-
-
-
+})
+$.init();

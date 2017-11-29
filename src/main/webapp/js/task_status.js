@@ -1,6 +1,7 @@
 var allData={
 	access_token:'',
-	processList:[]
+	processList:[],
+	companyId:$("#companyId").val()
 }
 var $extend=$.fn.extend({
 	stopRunProcess:function(index){		//启停工艺
@@ -29,6 +30,9 @@ $.extend({
 			type:"get",
 			url:globalurl+"/v1/processes?access_token="+allData.access_token,
 			async:false,
+			data:{
+				filter:"{'company_id':'"+allData.companyId+"'}"
+			},
 			success:function(data){
 				allData.processList=data.rows
 			}
