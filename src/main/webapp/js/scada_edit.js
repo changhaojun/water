@@ -6,6 +6,7 @@ var allData = {
 	ajaxComplated: {},
 	//新增
 	parentData: {
+		type: 2,
 		scada_id: $('#scadaModelsId').val(),
 		scada_config: {
 			data_list: [],

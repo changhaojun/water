@@ -190,17 +190,18 @@ function searchThing(val) {
 
 
 function reviewScada(){
-//	var index = $(this).parents('tr').index();
-//	var id = tableData[index]._id;
-//	var scada_models_id = tableData[index].scada_models_id;
-//	var thing_id = tableData[index].thing_id;
-//	self.location.href = '/scadas/put?id='+ id +'&scada_models_id='+ scada_models_id +'&thing_id='+ thing_id;
+	var index = $(this).parents('tr').index();
+	var id = tableData[index]._id;
+	var scada_models_id = tableData[index].scada_models_id;
+	var thing_id = tableData[index].thing_id;
+	self.location.href = '/scadas/get?id='+ scada_models_id + '&thing_id='+ thing_id;
 	
 	
-	var id = $(this).parents('tr').attr('id');
-	var name = $(this).parents('tr').find('td').eq(0).html();
-	var description = $(this).parents('tr').find('td').eq(1).html();
-	self.location.href = '/scadas/get/'+id+'-'+name+'-'+description;
+//	var id = $(this).parents('tr').attr('id');
+//	var name = $(this).parents('tr').find('td').eq(0).html();
+//	var description = $(this).parents('tr').find('td').eq(1).html();
+//	self.location.href = '/scadas/get/'+id+'-'+name+'-'+description;
+	
 }
 
 function editScada(data){

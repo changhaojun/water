@@ -2,9 +2,11 @@
 //var globalurl="http://192.168.1.104:9090";
 var globalurl="http://192.168.1.104:9090";
 //var globalurl="http://121.42.253.149:18808";
-var manage_globalurl="http://192.168.1.104:9090";//获取数据标签
+var manage_globalurl="http://121.42.253.149:18825";
+//var manage_globalurl="http://192.168.1.104:9090";//获取数据标签
 var auth_globalurl="http://121.42.253.149:18826";//获取资源列表
 //var manage_globalurl="http://192.168.1.111:8088";
+var gatewayUrl = "http://192.168.1.104:9091";
 var accesstoken;
 var refreshToken;
 

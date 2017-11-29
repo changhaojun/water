@@ -26,14 +26,16 @@ public class ScadaController extends Controller{
 	
 	public void get() throws UnsupportedEncodingException {
 		Record company=getSessionAttr(Constants.SESSION_COMPANY);
-		String companyId=company.get("companyId");
-		String scadaId = getPara(0);
-		String scadaName = URLDecoder.decode(getPara(1), "UTF-8");
-		String scadaDescription = URLDecoder.decode(getPara(2), "UTF-8");
+		String companyId = company.get("companyId");
+		String scadaId = getPara("id");
+		String thingId = getPara("thing_id");
+		//String scadaName = URLDecoder.decode(getPara(1), "UTF-8");
+		//String scadaDescription = URLDecoder.decode(getPara(2), "UTF-8");
 		setAttr("scadaId", scadaId);
+		setAttr("thingId", thingId);
 		setAttr("companyId", companyId);
-		setAttr("scadaName", scadaName);
-		setAttr("scadaDescription", scadaDescription);
+		//setAttr("scadaName", scadaName);
+		//setAttr("scadaDescription", scadaDescription);
 		render("scada_review.html");
 	}
 	
@@ -43,7 +45,7 @@ public class ScadaController extends Controller{
 		String thingId = getPara("thing_id");
 		setAttr("scadaId", scadaId);
 		setAttr("scadaModelsId", scadaModelsId);
-		setAttr("thingId", thingId);
+		setAttr("thingId", thingId);		
 		render("scada_edit.html");
 	}
 	

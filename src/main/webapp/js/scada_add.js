@@ -7,6 +7,7 @@ var allData = {
 	ajaxComplated: {},
 	//新增
 	parentData: {
+		type: 1,
 		system: 1,
 		scada_config: {
 			data_list: [],
@@ -172,6 +173,7 @@ $.extend({
 						data: JSON.stringify(sentData)
 					},
 					success: function(data) {
+						console.log(data);
 						if (data.code == 200) {
 							self.location.href = '/scadas'
 						}
