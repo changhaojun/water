@@ -326,7 +326,7 @@ $.extend({
 				var son = $('.AI');
 				son.siblings().toggleWin(true);
 				son.toggleWin().stayCenter($('.operation'));
-				son.find('.name').html(label.labelName);
+				son.find('.name').html(label.label_name);
 				var chart = echarts.init(son.find('.chart').get(0));
 				$.getRealTimeData(label.label_id, time, chart, 'AI');
 				$.initDatePacker(son.find('.date'), time, function(changedTime) {
@@ -337,11 +337,11 @@ $.extend({
 				var son = $('.DI');
 				son.toggleWin().stayCenter($('.operation'));
 				son.siblings().toggleWin(true);
-				son.find('.name').html(label.labelName);
+				son.find('.name').html(label.label_name);
 				var chart = echarts.init(son.find('.chart').get(0));
-				$.getRealTimeData(label.labelId, time, chart, 'DI');
+				$.getRealTimeData(label.label_id, time, chart, 'DI');
 				$.initDatePacker(son.find('.date'), time, function(changedTime) {
-					$.getRealTimeData(label.labelId, changedTime, chart, 'DI');
+					$.getRealTimeData(label.label_id, changedTime, chart, 'DI');
 				});
 			},
 			AO: function() {
@@ -404,19 +404,19 @@ $.extend({
 			},
 			DO: function() {
 				var son = $('.DO');
-				var high_battery = label.HighBattery;
-				var low_battery = label.LowBattery;
+				var high_battery = label.high_battery;
+				var low_battery = label.low_battery;
 				$('.finfosoft-onOff').find('.left').html(high_battery);
 				$('.finfosoft-onOff').find('.right').html(low_battery);
 				son.siblings().toggleWin(true);
 				son.toggleWin().stayCenter($('.operation'));
-				son.find('.name').html(label.labelName);
+				son.find('.name').html(label.label_name);
 				son.find('.realtime').html(time.endDate);
 				var onOff = new Finfosoft.OnOff({
 					el: '.finfosoft-onOff',
-					status: !label.labelValue ? 0 : label.labelValue,
+					status: !label.label_value ? 0 : label.label_value,
 					onChanged: function(status) {
-						$.getConditions(label.labelId, status, function(data) {
+						$.getConditions(label.label_id, status, function(data) {
 							var tbodyHtml = '';
 							var suggest = false; //是否不建议下发
 
@@ -447,8 +447,8 @@ $.extend({
 									//确定下发
 
 									var data_value = status;
-									var data_id = label.labelId;
-									var port_type = label.labelType;
+									var data_id = label.label_id;
+									var port_type = label.port_type;
 									if(suggest) {
 										layer.confirm('<span style="color: red;">警告：当前端口存在已知异常前置端口！是否确认下发？</span>', {
 											title: false,
@@ -468,11 +468,12 @@ $.extend({
 													$.newIssueSuccessed({
 														data_value: data_value,
 														data_id: data_id,
-														port_type: port_type,
-														high_battery: high_battery,
-														low_battery: low_battery
+//														port_type: port_type,
+//														high_battery: high_battery,
+//														low_battery: low_battery
 													});
 													$('.operation').toggleWin(true);
+													layer.closeAll();
 //													$.three.capturer.intersected = null;
 												}, function() {
 													onOff.reset();
@@ -490,11 +491,12 @@ $.extend({
 												$.newIssueSuccessed({
 													data_value: data_value,
 													data_id: data_id,
-													port_type: port_type,
-													high_battery: high_battery,
-													low_battery: low_battery
+//													port_type: port_type,
+//													high_battery: high_battery,
+//													low_battery: low_battery
 												});
 												$('.operation').toggleWin(true);
+												layer.closeAll();
 //												$.three.capturer.intersected = null;
 											}, function() {
 												onOff.reset();
@@ -529,9 +531,9 @@ $.extend({
 									//确定下发
 
 									var data_value = status;
-									var data_id = label.labelId;
-									var port_type = label.labelType;
-									var guid = Date.now().toString();
+									var data_id = label.label_id;
+									var port_type = label.port_type;
+//									var guid = Date.now().toString();
 									$.verifyIssuePassword(passwordDom, function() {
 										$.newIssueAjax({
 											data_id: data_id,
@@ -540,9 +542,9 @@ $.extend({
 											$.newIssueSuccessed({
 												data_value: data_value,
 												data_id: data_id,
-												port_type: port_type,
-												high_battery: high_battery,
-												low_battery: low_battery
+//												port_type: port_type,
+//												high_battery: high_battery,
+//												low_battery: low_battery
 											});
 											layer.close(index1);
 											$('.conditions-layer').css('display', 'none');
@@ -568,9 +570,9 @@ $.extend({
 				var son = $('.MO');
 				son.toggleWin().stayCenter($('.operation'));
 				son.siblings().toggleWin(true);
-				son.find('.name').html(label.labelName);
+				son.find('.name').html(label.label_name);
 				son.find('.realtime').html(time.endDate);
-				son.find('.oldVal').val(label.labelValue);
+				son.find('.oldVal').val(label.label_value);
 				son.find('.confirm').off('click').click(function() {
 					if(son.find('.newVal').val() == '') {
 						son.find('.newVal').focus();
@@ -606,8 +608,8 @@ $.extend({
 							//确定下发
 
 							var data_value = parseFloat($('.MO').find('.newVal').val());
-							var data_id = label.labelId;
-							var port_type = label.labelType;
+							var data_id = label.label_id;
+							var port_type = label.port_type;
 							$.verifyIssuePassword(passwordDom, function() {
 								$.moAjax({
 									data_value: data_value,
@@ -615,12 +617,16 @@ $.extend({
 								}, function() {
 									layer.close(index1);
 									$('.conditions-layer').css('display', 'none');
-									$.onLabelValueChange({
-										destinationName: data_id,
-										payloadString: {
-											data_value: data_value,
-											status: label.labelStatus
-										}
+//									$.onLabelValueChange({
+//										destinationName: data_id,
+//										payloadString: {
+//											data_value: data_value,
+//											status: label.status
+//										}
+//									});
+									$.newIssueSuccessed({
+										data_value: data_value,
+										data_id: data_id
 									});
 									$('.operation').toggleWin(true);
 									$('.MO').find('.confirm').unbind();
@@ -740,7 +746,6 @@ $.extend({
 				data: JSON.stringify(dataSent)
 			},
 			success: function(data) {
-				console.log(2);
 				console.log(data);
 				$.initChart(chart, data, chartType);
 			}
@@ -1018,7 +1023,7 @@ $.extend({
 		$.ajax({
 			type: "put",
 			dataType: "json",
-			url: $.initData.globalurl + "/v1/manualEnters",
+			url: globalurl + "/v1/manualEnters",
 			async: true,
 			crossDomain: true == !(document.all),
 			data: {
@@ -1026,6 +1031,7 @@ $.extend({
 				data: JSON.stringify(newData)
 			},
 			success: function(data) {
+				console.log(data);
 				if(data.code == 200) {
 					layer.msg('已下发！', {
 						icon: 1
@@ -1047,6 +1053,8 @@ $.extend({
 				})
 			},
 			success: function(data) {
+				console.log("conditions");
+				console.log(data);
 				if(data.total === 1) {
 					callback && callback(data);
 				} else if(data.total === 0) {
