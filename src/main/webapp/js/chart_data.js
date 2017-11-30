@@ -64,7 +64,7 @@ function dataList(){
 			}else{
 				var screenList="";			
 				for(var i=0;i<data.length;i++){
-					screenList='<div class="disabledLi" onclick="getChart(&apos;'+data[i].data_id+'&apos;)" >'+
+					screenList='<div  portType="'+data[i].port_type+'" class="disabledLi '+data[i].data_id+'" onclick="getChart(&apos;'+data[i].data_id+'&apos;)" >'+
 									'<div class="disabledFont">'+data[i].device_name+'-'+data[i].data_name+'</div>'+
 									'<div class="disabledIcon" id="'+data[i].data_id+'">+</div>'+
 									'<div hidden="hidden">'+data[i].data_unit+'</div>'+
@@ -195,11 +195,21 @@ function initChart(){
 		yAxis=[];
 		for(var j=0;j<chartArr.length;j++){
 			//将请求到的数据添加到y轴的数据中	 
+			var charDataId=chartArr[j].data_id
+			var type = $('.'+charDataId).attr('portType')
+			var chartType,maxValue;
+			if(type == 'AI' || type == 'AO'){
+				chartType = 'line';
+				maxValue = Math.ceil(chartArr[j].max_value);
+			}else if(type == 'DI' || type == 'DO'){
+				chartType = 'bar';
+				maxValue = 2;
+			}
 			 yAxis.push({
 				type:'value',
 				splitLine: { show: false }, //去除网格中的坐标线
 				min:0,
-				max:Math.ceil(chartArr[j].max_value),
+				max:maxValue,
 				offset:45*j,
 				position:'left',
 				axisLabel: {
@@ -209,11 +219,13 @@ function initChart(){
 			//遍历每一个标签看是否被选中，如果选中绘制折线，没有选中不绘制折线
 			series.push({
 	            name: legendData[j],
-	            type: 'line',
+	            type: chartType,
 	//          smooth:true,//使折线平滑
 	            yAxisIndex:j,
 	//          areaStyle:{ normal: {} },//是否显示阴影面积
 	            data: objData[j],
+	            barMaxWidth:40,
+	            barGap:'10%',
 	            markPoint : {
 	                data : [
 	                    {type : 'max', name: '最大值'},
@@ -258,7 +270,11 @@ function initChart(){
 				},
 				xAxis: {
 			        type: 'category',
-			        boundaryGap: false,
+			        boundaryGap: true,
+			        interval:5,
+			        axisTick:{
+			        	alignWithLabel:true
+			        },
 			        data:chartArr[0].dataTimes
 			    },
 			    yAxis:yAxis,
@@ -267,15 +283,17 @@ function initChart(){
 		            {
 		                type:'slider',
 		                xAxisIndex:0,
-		                start:20,
-		                end:80,
+		                start:80,
+		                end:100,
 		                height:30,
+		                maxValueSpan:30
 		            },
 		            {
 		                type:'inside',
 		                xAxisIndex:0,
-		                start:20,
-		                end:80
+		                start:80,
+		                end:100,
+		                maxValueSpan:30
 		            }
 		        ],
 				series:series		

@@ -40,7 +40,7 @@ function lssuedList(){
 	$.ajax({
 		type:'get',
 		dataType:'JSON',
-		url:globalurl+'/v1/logs',
+		url:manage_globalurl+'/v1/logs',
 		data:{
 			access_token:accesstoken,
 			filter:JSON.stringify({"log_type":1}),	

@@ -24,10 +24,11 @@ function getNavData(){
 	$.ajax({
 		type:'get',
 		crossDomain: true == !(document.all),
-		url:auth_globalurl+"/v1/userResources?access_token="+accesstoken,
+		url:globalurl+"/v1/resources?access_token="+accesstoken,
 		datatype:'json',
 		success:function(data){
 			console.log(data)
+//			data=data.rows
 			if(data.code==400005){
 				getNewToken()
 				getNavData()
