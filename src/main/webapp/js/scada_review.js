@@ -285,9 +285,8 @@ $.extend({
 							$.labelOperation(originData).MO();
 							break;
 						case "CD":
-							console.log("CD");
-//							$.labelOperation(originData).CD();
-
+//							console.log("CD");
+							$.labelOperation(originData).CD();
 							break;
 					}
 				} else if ( group === "process_list" ) {
@@ -638,11 +637,19 @@ $.extend({
 				});
 			},
 			CD: function() {
-				return;
+				var son = $('.CD');
+				son.siblings().toggleWin(true);
+				son.toggleWin().stayCenter($('.operation'));
+				son.find('.name').html(label.label_name);
+				var chart = echarts.init(son.find('.chart').get(0));
+				$.getRealTimeData(label.label_id, time, chart, 'AI');
+				$.initDatePacker(son.find('.date'), time, function(changedTime) {
+					$.getRealTimeData(label.label_id, changedTime, chart, 'AI');
+				});
 			},
 			process: function(){
-				var processId = label.processId;
-				var processName = label.processName;
+				var processId = label.label_id;
+				var processName = label.label_name;
 				$('.conditions-layer').css('display', 'block');
 				$('.conditions-layer').find('table').css('display', 'none');
 				$('.conditions-layer').find('p').css('display', 'block').html('是否确定执行<span style="color: red;">' + processName + '</span>？');
@@ -661,13 +668,19 @@ $.extend({
 							$.issueAjax({
 								process_id: processId
 							}, function() {
-								var position = label.position;
-								$.three.labelGroup.remove(label);
-								$.initThree.initLabel({
-									_id: processId,
-									process_name: processName,
-									status: 1
-								}, position);
+								$('.conditions-layer').css('display', 'none');
+								$('.operation').toggleWin(true);
+//								var position = label.position;
+//								$.three.labelGroup.remove(label);
+//								$.initThree.initLabel({
+//									_id: processId,
+//									process_name: processName,
+//									status: 1
+//								}, position);
+//								$.newIssueSuccessed({
+//									data_value: data_value,
+//									data_id: data_id
+//								});
 //								$.three.capturer.intersected = null;
 							});
 						});
@@ -947,7 +960,7 @@ $.extend({
 		$.ajax({
 			type: "post",
 			dataType: "json",
-			url: $.initData.globalurl + "/v1/homes/",
+			url: globalurl + "/v1/homes/",
 			async: true,
 			crossDomain: true == !(document.all),
 			data: {
@@ -955,6 +968,7 @@ $.extend({
 				data: JSON.stringify(newData)
 			},
 			success: function(data) {
+				console.log(data);
 				if(data.result == 1) {
 					callBack && callBack();
 				} else {
@@ -963,6 +977,8 @@ $.extend({
 						time: 2000,
 						end: function() {
 							layer.closeAll();
+							$('.conditions-layer').css('display', 'none');
+							$('.operation').toggleWin(true);
 						}
 					});
 				}
