@@ -219,7 +219,6 @@ $.fn.extend({
 	}
 	//点击编辑数据同步到弹窗
 	function editClick(i){
-		console.info(info[i])
 		$('.pop').filter('.step1').removeClass('hidden');
 		$('.pop-mask').removeClass('hidden');
 		$(".addData_label").hide();
@@ -349,11 +348,20 @@ $.fn.extend({
 		var tagId=$('.tagInput').attr('tagid')
 		$('.pop').addClass('hidden');
 		$('.pop-mask').addClass('hidden');
-		if(info[j].dataType==0){
+//		if(info[j].dataType==0){
+//			dataTypeStr="电流"; 
+//		}else if(info[j].dataType==1){
+//			dataTypeStr="电压"; 
+//		}else if(info[j].dataType==2){
+//			dataTypeStr="输入IO"; 
+//		}else{
+//			dataTypeStr="输出IO"; 
+//		}
+		if(dataType==0){
 			dataTypeStr="电流"; 
-		}else if(info[j].dataType==1){
+		}else if(dataType==1){
 			dataTypeStr="电压"; 
-		}else if(info[j].dataType==2){
+		}else if(dataType==2){
 			dataTypeStr="输入IO"; 
 		}else{
 			dataTypeStr="输出IO"; 
@@ -578,6 +586,21 @@ $.fn.extend({
 
 		for (var i = 0; i < dataInfo.length; i++) {
 			status=$("#dataTable").find(" tr").eq(i).find("input").attr('checked')==="checked" ? 1 : 0;
+			dataTypeText=$("#dataTable").find(" tr").eq(i).find("td").eq(3).text();
+			switch (dataTypeText) {
+				case '电流':
+					dataType = 0;
+					break;
+				case '电压':
+					dataType = 1;
+					break;
+				case '输入IO':
+					dataType = 2;
+					break;
+				case '输出IO':
+					dataType = 3;
+					break;
+			}
 			rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
 			//console.log(rangeLow)
 			rangeHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[1];
@@ -601,7 +624,7 @@ $.fn.extend({
 			if(realLow=="-"){
 				realLow="-"
 			}
-			dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
+			dataConfigJson='{"data_type":'+dataType+','+
 			'"port_num":'+dataInfo[i].port_num+','+
 			'"oper_type":'+dataInfo[i].oper_type+','+
 			'"port_name":"'+dataInfo[i].port_name+'",'+

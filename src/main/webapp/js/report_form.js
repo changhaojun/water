@@ -487,9 +487,10 @@ $.extend({
 			async:false,
 			crossDomain: true == !(document.all),
 			data:{
-				"company_id":allData.companyId,
+//				"company_id":allData.companyId,
 				access_token:accesstoken,
-				like:'{"thing_name":"'+callBack+'"}'
+				like:'{"thing_name":"'+callBack+'"}',
+				filter:'{"company_id":"'+allData.companyId+'"}'
 			},
 			success:function(data){
 				$(".compareThingList").show();

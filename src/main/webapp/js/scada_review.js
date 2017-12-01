@@ -305,6 +305,22 @@ $.extend({
 			}
 		});
 	},
+	newIssueSuccesse: function(data) {
+		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(data.data_id, $.initThree.judgeLabelType(data))];
+		var newData = {
+			data_id: originLabel.labelId,
+			data_name: originLabel.labelName,
+			data_value: data.data_value,
+			data_unit: originLabel.labelUnit,
+			port_type: originLabel.labelType,
+			status: originLabel.labelStatus
+		};
+		data.high_battery && (newData.high_battery = data.high_battery);
+		data.low_battery && (newData.low_battery = data.low_battery);
+		var position = originLabel.position;
+		$.three.labelGroup.remove(originLabel);
+		$.initThree.initLabel(newData, position);
+	},
 	labelOperation: function(label) {
 		console.log(label);
 		var time = $.initTime();
@@ -1019,21 +1035,6 @@ $.extend({
 		allData.changedData.group = [];
 		allData.changedData.group.push(target);
 		$('#scada').get(0).contentWindow.postMessage(allData.changedData, '*');
-//		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(data.data_id, $.initThree.judgeLabelType(data))];
-//		var newData = {
-//			data_id: originLabel.labelId,
-//			data_name: originLabel.labelName,
-//			data_value: data.data_value,
-//			data_unit: originLabel.labelUnit,
-//			port_type: originLabel.labelType,
-//			status: originLabel.labelStatus
-//		};
-//		data.high_battery && (newData.high_battery = data.high_battery);
-//		data.low_battery && (newData.low_battery = data.low_battery);
-//		var position = originLabel.position;
-//		$.three.labelGroup.remove(originLabel);
-//		$.initThree.initLabel(newData, position);
-		
 	},
 	moAjax: function(newData, callBack) {
 		$.ajax({

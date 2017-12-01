@@ -100,24 +100,6 @@ function chartInfo(data,i){
 	                        {type : 'max', name: '最大值'},
 	                        {type : 'min', name: '最小值'}
 	                    ],
-	                    /*symbolSize: (function (values){
-	                    	var maxValue = 0;
-	                    	var maxIndex = 0;
-	                    	var mixValue = 0;
-	                    	var mixIndex = 0;
-	                    	for (var i=0; i<values.length; i++) {
-	                    		if (values[i] > maxValue) {
-	                    			maxValue = values[i];
-	                    			maxIndex = i;
-	                    		}
-	                    		if (values[i] < mixValue) {
-	                    			mixValue = values[i];
-	                    			mixIndex = i;
-	                    		}
-	                    	}
-	                    	var maxRadius = values[maxIndex].toString().length >= values[mixIndex].toString().length ? values[maxIndex].toString().length * 12.5 : values[mixIndex].toString().length * 12.5;
-	                    	return maxRadius;
-	                    })(data.rows[i].run_data.data_values)*/
 	        		},
 	        		markLine:{
 	                    data:[

@@ -1,5 +1,4 @@
 //Finfosoft前端框架 js库 
-
 var Finfosoft = {
 	
 	/*
@@ -26,54 +25,98 @@ var Finfosoft = {
 			initVal: 20
 		});
 	*/
-	Ring: function (init){
-		this.parent = document.querySelector(init.el);
+	Ring: function(opts) {
+		this.parent = document.querySelector(opts.el);
 		this.canvas = this.parent.querySelector('canvas');
 		this.gc = this.canvas.getContext('2d');
 		this.input = this.parent.querySelector('input');
 		this.width = this.height = this.parent.clientWidth;
-		this.startDeg = init.startDeg;
-		this.endDeg = init.endDeg;
-		this.lineWidth = init.lineWidth ? init.lineWidth : 0.2*this.width;
-		this.bgColor = init.bgColor ? init.bgColor : '#eeeeee';
-		this.mainColor = init.mainColor ? init.mainColor : '#66ee66';
-		this.initVal = init.initVal ? init.initVal : this.input.value;
+		this.startDeg = opts.startDeg;
+		this.endDeg = opts.endDeg;
+		this.lineWidth = opts.lineWidth ? opts.lineWidth : 0.2*this.width;
+		this.bgColor = opts.bgColor ? opts.bgColor : '#eeeeee';
+		this.mainColor = opts.mainColor ? opts.mainColor : '#66ee66';
+		this.initVal = opts.initVal ? opts.initVal : (this.input.value ? this.input.value : 0);
 		this.radius = (this.width-this.lineWidth)/2;
+		this.init();
+	},
+	
+	/*
+	@ 插件名： 条形开关
+	@ 插件作者：dongmo / Michael.Lu
+	@ 插件版本：1.0
+	@ 插件兼容性：IE9.0及以上浏览器
+	@ API
+	 * el: 元素选择器
+	 ** lineWidth：滚动条宽度
+	 ** bgColor: 滚动条背景色
+	 ** mainColor： 主情景色
+	 ** initVal：input接口
+	@ 插件实例：
+		new Finfosoft.Ring({
+			el: '.finfosoft-ring',
+			startDeg: 150,
+			endDeg: 30,
+			lineWidth: 18,
+			bgColor: '#eeeeee',
+			mainColor: '#66ee66',
+			initVal: 20
+		});
+	*/
+	OnOff: function(opts) {
+		this.parent = document.querySelector(opts.el);
+		this.leftBtn = this.parent.querySelector('.left');
+		this.rightBtn = this.parent.querySelector('.right');
+		this.slideBar = this.parent.querySelector('.slideBar');
+		this.slider = this.parent.querySelector('.slider');
+		this.width = this.parent.clientWidth;
+		this.height = this.parent.clientHeight;
+		this.status = opts.status;
+		this.oldStatus = opts.status;
+		this.onChanged = opts.onChanged;
 		this.init();
 	}
 	
 }
 
+//工具库
+Finfosoft.prototype = {
+	
+	//构造函数指针修正
+	constructor: this
+	
+}
+
+//Ring插件方法
 Finfosoft.Ring.prototype = {
 	
 	//构造函数指针修正
 	constructor: this,
 	
 	//插件初始化
-	init: function (ev) {
-		var This = this;
+	init(ev) {
 		this.canvas.width = this.width;
 		this.canvas.height = this.height;
-		this.canvas.onmousedown = function (ev){
+		this.canvas.onmousedown = ev => {
 			var ev = ev || window.event;
-			This.mousedown(ev);
+			this.mousedown(ev);
 		};
 		this.drawLine(this.endDeg+360,this.bgColor);
 		this.drawLine(this.startDeg,this.mainColor);
 		this.input.onfocus = this.focus;
-		this.input.onblur = function (){
-			This.blur();
+		this.input.onblur = () => {
+			this.blur();
 		};
-		this.input.onkeyup = function (ev){
+		this.input.onkeyup = ev => {
 			var ev = ev || window.event;
-			This.keyup(ev);
+			this.keyup(ev);
 		}
 		this.initValue(this.initVal);
 		this.reDraw(this.startDeg+this.input.value*(this.endDeg+360-this.startDeg)/100);
 	},
 	
 	//input初始化
-	initValue: function (val){
+	initValue(val) {
 		if (val<0) {
 			this.input.value = 0;
 		} else if (val>100) {
@@ -90,7 +133,7 @@ Finfosoft.Ring.prototype = {
 	},
 	
 	//基础线条绘制
-	drawLine: function (endDeg,color){
+	drawLine(endDeg,color) {
 		this.gc.beginPath();
 		this.gc.arc(this.width/2,this.height/2,this.radius,this.startDeg*Math.PI/180,endDeg*Math.PI/180,false);
 		this.gc.lineWidth = this.lineWidth;
@@ -99,25 +142,24 @@ Finfosoft.Ring.prototype = {
 	},
 	
 	//重绘
-	reDraw: function (iDeg){
+	reDraw(iDeg) {
 		this.gc.clearRect(0,0,this.width,this.height);
 		this.drawLine(this.endDeg+360,this.bgColor);
 		this.drawLine(iDeg,this.mainColor);
 	},
 	
 	//获取到document的距离
-	getPosToDoc: function (obj,dir){
+	getPosToDoc(obj) {
 		var dis = {
-			x: 0,
-			y: 0
+			left: 0,
+			top: 0
 		};
 		while (obj) {
-			dis.x += obj.offsetLeft;
-			dis.y += obj.offsetTop;
+			dis.left += obj.offsetLeft;
+			dis.top += obj.offsetTop;
 			obj = obj.offsetParent;
 		}
-//		console.log(dis.x,dis.y);
-		return dir==='left' ? dis.x : dis.y;
+		return dis;
 	},
 	
 	//获取滚动距离
@@ -130,7 +172,7 @@ Finfosoft.Ring.prototype = {
 	},
 	
 	//鼠标交互逻辑
-	mouseCtrl: function (x,y){
+	mouseCtrl(x,y) {
 		if (y<=this.height/2) {
 			var iDeg = 270 + Math.atan((x-this.width/2)/(this.height/2-y))*180/Math.PI;
 		} else {
@@ -153,21 +195,23 @@ Finfosoft.Ring.prototype = {
 	},
 	
 	//鼠标按下时进度条响应
+
 	mousedown: function (ev){
 		var This = this;
 		var x = ev.clientX - this.getPosToDoc(this.canvas,'left') + this.getScrollDis().x;
 		var y = ev.clientY - this.getPosToDoc(this.canvas,'top') + this.getScrollDis().y;
 		this.mouseCtrl(x,y);
-		document.onmousemove = function (ev){
+		document.onmousemove = ev => {
 			var ev = ev || window.event;
-			This.mousemove(ev);
+			this.mousemove(ev);
 		};
-		document.onmouseup = function (){
-			this.onmousemove = this.monmouseup = null;
+		document.onmouseup = () => {
+			document.onmousemove = document.monmouseup = null;
 		};
 	},
 	
 	//鼠标移动时进度条响应
+
 	mousemove: function (ev){
 		var x = ev.clientX - this.getPosToDoc(this.canvas,'left') + this.getScrollDis().x;
 		var y = ev.clientY - this.getPosToDoc(this.canvas,'top') + this.getScrollDis().y;
@@ -175,18 +219,18 @@ Finfosoft.Ring.prototype = {
 	},
 	
 	//数值按比例响应
-	rangeText: function (scale){
+	rangeText(scale) {
 		this.input.value = Math.round(scale*100);
 	},
 	
 	//输入框获取焦点
-	focus: function (){
+	focus() {
 		this.origVal = this.value;
 		this.value = '';
 	},
 	
 	//输入框失去焦点时进度条响应
-	blur: function (){
+	blur() {
 		if (!this.input.value) {
 			this.input.value = this.input.origVal;
 			return;
@@ -196,7 +240,7 @@ Finfosoft.Ring.prototype = {
 	},
 	
 	//回车确定
-	keyup: function (ev){
+	keyup(ev) {
 		this.regularVal();
 		if (ev.keyCode===13) {
 			this.input.blur();
@@ -204,11 +248,120 @@ Finfosoft.Ring.prototype = {
 	},
 	
 	//禁用除数字外的其他输入
-	regularVal: function (){
+	regularVal() {
 		this.input.value = this.input.value.replace(/\D/g,'');
 		if (this.input.value.length>2) {
 			this.input.value = 100;
 		}
+	},
+	
+	reset() {
+		var iDeg = this.startDeg + this.initVal*(this.endDeg+360-this.startDeg)/100;
+		var iScale = (iDeg-this.startDeg)/(this.endDeg+360-this.startDeg);
+		this.rangeText(iScale);
+		this.reDraw(iDeg);
 	}
 	
-}
+};
+
+//Ring插件方法
+Finfosoft.OnOff.prototype = {
+	
+	//构造函数指针修正
+	constructor: this,
+	
+	//插件初始化
+	init() {
+		this.setStyle();
+		this.dragSlider();
+		this.judgeStatus(this.status);
+	},
+	
+	//初始化组件大小
+	setStyle() {
+		this.leftBtn.style.lineHeight = this.rightBtn.style.lineHeight = this.height + 'px';
+		this.slideBar.style.width = this.width / 4 + 'px';
+		this.slideBar.style.height = this.height / 3 + 'px';
+		this.slideBar.style.left = (this.width - this.width / 4) / 2 + 'px';
+		this.slideBar.style.top = this.height / 3 + 'px';
+		this.slideBar.style.borderRadius = this.height / 3 / 2 + 'px';
+		this.slider.style.width = this.slider.style.height = this.height + 'px';
+		this.slider.style.left = (this.width - this.width / 4) / 2 + (this.width / 4) / 2 + 'px';
+		this.slider.style.top = 0;
+		this.slider.startPos = (this.width - this.width / 4) / 2 - this.height/2;
+		this.slider.endPos = (this.width - this.width / 4) / 2 - this.height/2 + this.width / 4;
+	},
+	
+	//状态判断
+	judgeStatus() {
+		switch (this.status) {
+			case 1:
+				this.slider.style.left = this.slider.startPos + 'px';
+				this.leftBtn.style.color = '#1ab394';
+				this.rightBtn.style.color = '#aeaeae';
+				break;
+			case 0:
+				this.slider.style.left = this.slider.endPos + 'px';
+				this.leftBtn.style.color = '#aeaeae';
+				this.rightBtn.style.color = '#1ab394';
+				break;
+		}
+	},
+	
+	//拖拽
+	dragSlider() {
+		this.parent.onmousedown = ev => {
+			var ev = ev || window.event;
+			var startX = ev.clientX - this.getPosToDoc(this.parent).left;
+			var disX = ev.clientX;
+			var isMoved = false;
+			document.onmousemove = ev => {
+				var ev = ev || window.event;
+				var curX = ev.clientX - disX + startX;
+				if (curX>this.width/2) {
+					this.status = 0;
+				} else {
+					this.status = 1;
+				}
+				this.judgeStatus();
+				isMoved = true;
+				return false;
+			};
+			document.onmouseup = () => {
+				document.onmousemove = document.onmouseup = null;
+				if (!isMoved) {
+					if (startX>this.width/2) {
+						this.status = 0;
+					} else {
+						this.status = 1;
+					}
+					this.judgeStatus();
+				}
+				if (this.oldStatus!=this.status) {
+					this.onChanged && this.onChanged(this.status);
+				}
+			};
+		};
+	},
+	
+	//回到原位置
+	reset() {
+		this.status = this.oldStatus;
+		this.judgeStatus();
+	},
+	
+	//获取到document的距离
+	getPosToDoc(obj) {
+		var dis = {
+			left: 0,
+			top: 0
+		};
+		while (obj) {
+			dis.left += obj.offsetLeft;
+			dis.top += obj.offsetTop;
+			obj = obj.offsetParent;
+		}
+		return dis;
+	}
+
+};

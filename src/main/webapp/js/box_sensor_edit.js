@@ -370,11 +370,10 @@ $.fn.extend({
 		//点击编辑的时候同时获取里面的内容和弹窗的内容同步
 		//数据类型
 		$(".dataNode ").remove();
-		
 		if(info[i].dataType==0){
 			$(".datanodeType ").append("<div class='dataNode' ><select><option selected='selected' value='0'>电流</option><option value='1'>电压</option></select></div>");
 		}else if(info[i].dataType==1){
-			$(".datanodeType ").append("<div class='dataNode' ><select><option  value='0'>电流</option><option value='1'>电压</option></select></div>");
+			$(".datanodeType ").append("<div class='dataNode' ><select><option value='0'>电流</option><option elected='selected' value='1'>电压</option></select></div>");
 		}else if(info[i].dataType==2){
 			$(".datanodeType ").append("<div class='dataNode bettery' ><select  disabled='disabled'><option  value='2'>输入IO</option></select></div>");
 		}else if(info[i].dataType==3){
@@ -488,11 +487,11 @@ $.fn.extend({
 		var tagId=$('.tagInput').attr('tagid')
 		$('.pop').addClass('hidden');
 		$('.pop-mask').addClass('hidden');
-		if(info[j].dataType==0){
+		if(dataType==0){
 			dataTypeStr="电流"; 
-		}else if(info[j].dataType==1){
+		}else if(dataType==1){
 			dataTypeStr="电压"; 
-		}else if(info[j].dataType==2){
+		}else if(dataType==2){
 			dataTypeStr="输入IO"; 
 		}else{
 			dataTypeStr="输出IO"; 
@@ -517,6 +516,7 @@ $.fn.extend({
 			dataUnit="-";
 			dataName:$(".dataName input").val();
 		};
+//		console.log(dataInfo[j]);
 		if(flag==0){
 			var dataTr='<td><input type="checkbox" checked="checked" /></td><td>'+portName+'</td><td>'+operTypeStr+'</td><td>'+dataTypeStr+'</td><td>'+collectRange
 			+'</td><td>'+realRang+'</td><td>'+highBattery+'</td><td>'+lowBattery+'</td><td>'+dataUnit+'</td><td>'+dataName+'</td><td tagid="'+tagId+'">'+dataTag+'</td><td ><i class="fa fa-edit" onclick="editClick('+j+')"></i></td>'	
@@ -666,8 +666,6 @@ $.fn.extend({
 							data:device
 						},
 						success:function(data){
-							//console.log(data)
-							//dataId=data._id;
 								if (data.code===200) {
 									layer.msg('保存成功！', {
 										icon: 1,
@@ -683,7 +681,6 @@ $.fn.extend({
 								}
 							}
 							if(idOnOff==1){
-								//console.log(idOnOff)
 								save();
 							}else{
 								layer.tips('请重新选择采集器ID！',$(".list input"),{
@@ -704,6 +701,21 @@ $.fn.extend({
 		var status = "";
 		for (var i = 0; i < info.length; i++) {
 			status=$("#dataTable").find(" tr").eq(i).find("input").attr('checked')==="checked" ? 1 : 0;
+			dataTypeText=$("#dataTable").find(" tr").eq(i).find("td").eq(3).text();
+			switch (dataTypeText) {
+				case '电流':
+					dataType = 0;
+					break;
+				case '电压':
+					dataType = 1;
+					break;
+				case '输入IO':
+					dataType = 2;
+					break;
+				case '输出IO':
+					dataType = 3;
+					break;
+			}
 			rangeLow=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[0];
 			rangeHigh=$("#dataTable").find(" tr").eq(i).find("td").eq(4).text().split("-")[1];
 			realLow=$("#dataTable").find(" tr").eq(i).find("td").eq(5).text().split("-")[0];
@@ -729,7 +741,8 @@ $.fn.extend({
 			//判断采集器id是否发生更改
 			if($(".collector input").val()!=collector_id){
 				//发生更改
-				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
+//				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
+				dataConfigJson='{"data_type":'+dataType+','+
 				'"port_num":'+dataInfo[i].port_num+','+
 				'"oper_type":'+dataInfo[i].oper_type+','+
 				'"port_name":"'+dataInfo[i].port_name+'",'+
@@ -750,7 +763,8 @@ $.fn.extend({
 				collectorChange=true
 			}else{
 				//未发生更改
-				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
+//				dataConfigJson='{"data_type":'+dataInfo[i].data_type+','+
+				dataConfigJson='{"data_type":'+dataType+','+
 				'"port_num":'+dataInfo[i].port_num+','+
 				'"oper_type":'+dataInfo[i].oper_type+','+
 				'"port_name":"'+dataInfo[i].port_name+'",'+
@@ -772,7 +786,6 @@ $.fn.extend({
 				data=JSON.stringify(dataConfig);
 			}
 		}
-		
 			$.ajax({
 				type:"put",
 				datatype:"json",
