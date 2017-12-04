@@ -54,7 +54,7 @@ function dataList(){
 		dataType:"JSON",
 		data:{
 			access_token: accesstoken,
-			filter:JSON.stringify({"oper_type":1})	 
+			filter:JSON.stringify({"port_type":['AI','DI']})	 
 		},
 		async:false,
 		crossDomain: true == !(document.all),
@@ -198,12 +198,12 @@ function initChart(){
 			var charDataId=chartArr[j].data_id
 			var type = $('.'+charDataId).attr('portType')
 			var chartType,maxValue;
-			if(type == 'AI' || type == 'AO'){
-				chartType = 'line';
-				maxValue = Math.ceil(chartArr[j].max_value);
-			}else if(type == 'DI' || type == 'DO'){
+			if(type == 'DI' || type == 'DO'){
 				chartType = 'bar';
 				maxValue = 2;
+			}else{
+				chartType = 'line';
+				maxValue = Math.ceil(chartArr[j].max_value);
 			}
 			 yAxis.push({
 				type:'value',
@@ -286,14 +286,14 @@ function initChart(){
 		                start:80,
 		                end:100,
 		                height:30,
-		                maxValueSpan:30
+		                maxValueSpan:40
 		            },
 		            {
 		                type:'inside',
 		                xAxisIndex:0,
 		                start:80,
 		                end:100,
-		                maxValueSpan:30
+		                maxValueSpan:40
 		            }
 		        ],
 				series:series		

@@ -260,7 +260,7 @@ $.fn.extend({
 			  type: 1,
 			  title: titleMsg,
 			  shadeClose: false,
-			  shade: 0.8,
+			  shade: [0.7,'#ffffff'],
 			  area: ['680px'],
 			  content: $('.addRuleBox') //iframe的url
 		})
@@ -453,15 +453,16 @@ $.fn.extend({
 		var thingId,operType;
 		if(tagSelect.attr("class")=="controls conditionTag"){
 			thingId=$(this).attr('thing_id');
-			operType=1;
-			sendFilter='{"oper_type":'+operType+'}'
+			operType="['AI','DI','CD','MO']";
+			sendFilter='{"port_type":'+operType+'}'
 		}else if(tagSelect.attr("id")=="controlTag"){
 			thingId=$.taskData.selectControlThing;
-			operType=2;
-			sendFilter='{"oper_type":'+operType+'}'
+			operType="['AO','DO']";
+			sendFilter='{"port_type":'+operType+'}'
 		}else if(tagSelect.hasClass('compareTag')){
 			thingId=$(this).attr('thing_id');
-			sendFilter='{"port_type":"CD","port_type_1":"MO"}'
+			operType="['CD','MO']"
+			sendFilter='{"port_type":"'+operType+'"}'
 		}
 		$.ajax({
 			type:"get",
@@ -920,7 +921,7 @@ $.extend({
 			type: 1,
 			title: titleMsg,
 			shadeClose: false,
-			shade: 0.8,
+			shade: [0.7,'#ffffff'],
 			area: ['680px'],
 			content: $('.addProcess') //iframe的url
 		})

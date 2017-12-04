@@ -27,7 +27,7 @@ function dataList(){
 		crossDomain: true == !(document.all),
 		data:{
 			access_token: accesstoken,
-			filter:JSON.stringify({"oper_type":1})
+			filter:JSON.stringify({"port_type":["AI","DI"]})
 		},
 		success:function(data){
 
