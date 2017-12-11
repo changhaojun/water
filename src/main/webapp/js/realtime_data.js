@@ -56,7 +56,7 @@ function currentChart(dataId){
 		type: "post",
 		url:  globalurl+"/v1/realtimeDatas",
 		dataType: "JSON",
-		async: false,
+		async: true,
 		crossDomain: true == !(document.all),
 		data: {
 			access_token: accesstoken,
@@ -101,7 +101,7 @@ function contrastData(){
 		type: "get",
 		url:  globalurl+"/v1/devices/"+deviceId+"/dataConfigs",
 		dataType: "JSON",
-		async: false,
+		async: true,
 		crossDomain: true == !(document.all),
 		data: {
 			access_token: accesstoken,

@@ -8,5 +8,4 @@ public class Constants {
 	public static final String SESSION_CUSTOM_ID="session_custom_id";
 	public static final int MAX_PAG_SIZE=10000;
 	public static final int COMPANY_CODE_LENGTH=6;
-	//public static final String SESSION_CUSTOM_ID = null;
 }

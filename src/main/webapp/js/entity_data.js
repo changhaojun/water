@@ -19,18 +19,24 @@ var searchBox=new Vue({
 })
 
 function dataList(){
+	var loading = new Finfosoft.Loading({
+			shade:['0.7','#ffffff'],
+	        color:'#000000',
+	        msg:'正在加载数据，请稍后。。。',
+		})
+	
 	$.ajax({
 		type: "get",
 		url: globalurl+"/v1/things/"+thingId+"/alarms",
 		dataType: "JSON",
-		async: false,
+		async: true,
 		crossDomain: true == !(document.all),
 		data:{
 			access_token: accesstoken,
-			filter:JSON.stringify({"port_type":["AI","DI"]})
+			filter:JSON.stringify({"port_type":["AI","DI","CD"]})
 		},
 		success:function(data){
-
+			loading.closeLoading();
 			$(".dataContent").html("");
 			if(data.length==0){
 				$(".dataContent").html("<p style='padding-left:20px;'>暂无数据</p>");
@@ -41,7 +47,8 @@ function dataList(){
 				dataId.push(data[i].data_id)
 				colorBg(data[i].status,i);
 			}
-			dataLike=data
+			dataLike=data;
+			parent.runDataList = dataLike; //chart_data页面需要用到相同的数据，因此保存至父页面优化请求效率
 			if($("#searchId").val()!=""){
 				searchThing($("#searchId"))
 			}
@@ -50,6 +57,7 @@ function dataList(){
 		}
 	})
 }
+
 //数据列表
 function listData(data,i){
 	var str='';
@@ -72,6 +80,10 @@ function listData(data,i){
 			'<span class="fa fa-list-alt cover" data-toggle="tooltip" data-placement="top" title="设封面" hidden="hidden"></span>'		
 	}
 	if(data[i].port_type=="AI"||data[i].port_type=="DI"||data[i].port_type=="CD"){
+		var dataUnit='';
+		if(data[i].data_unit!='-' && data[i].data_unit!=undefined){
+			dataUnit=data[i].data_unit
+		}
 		str='<div class="dataList greenBg" id="'+data[i].data_id+'" >'+
 			'<div class="listTop normal" >'+
 				'<span>'+data[i].device_name+"-"+data[i].data_name+'</span>'+title+
@@ -81,7 +93,7 @@ function listData(data,i){
 				'<div class="contentTop">'+
 					'<div class="Itext">'+	
 						'<span class="dataValue">'+data[i].data_value+'</span>'+
-						'<span>'+(data[i].data_unit=='-'?'':data[i].data_unit)+'</span>'+
+						'<span>'+dataUnit+'</span>'+
 					'</div>'+						
 				'</div>'+
 				'<div class="contentBottom">'+

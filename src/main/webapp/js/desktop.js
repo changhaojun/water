@@ -22,7 +22,7 @@ function getCharts(){
 		type:'get',
 		url: globalurl+"/v1/desktops",
 		dataType:'JSON',
-		async: false,
+		async: true,
 		crossDomain: true == !(document.all),
 		data:{
 			access_token: accesstoken
@@ -179,7 +179,7 @@ $('.desktopContent').delegate('.cancel','click',function(){
 		type:'delete',
 		url:globalurl+'/v1/desktops/'+id+'?access_token='+window.accesstoken,
 		dataType:'JSON',
-		async: false,
+		async: true,
 		crossDomain: true == !(document.all),
 		success:function(data){
 			if(data.code==200){
@@ -241,7 +241,6 @@ function onMessageArrived(message) {
     var topic = message.destinationName;
     var payload = message.payloadString;
 	var dataConfig=JSON.parse(payload)
-	console.log(dataConfig)
     var dataId=dataConfig.data_id
     //数据标签推送
     var dataValue;

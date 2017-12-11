@@ -50,7 +50,7 @@ var $extend=$.fn.extend({
 		$.ajax({
 			type:"get",
 			url:globalurl+"/v1/things?access_token="+$.allData.access_token,
-			async:false,
+			async:true,
 			data:{
 				like:'{"thing_name":"'+$(this).val()+'"}'
 			},
@@ -90,7 +90,7 @@ var $extend=$.fn.extend({
 		$.ajax({
 			type:"get",
 			url:globalurl+"/v1/missionDataTags?access_token="+$.allData.access_token+"&thing_id="+thingId,
-			async:false,
+			async:true,
 			data:{
 //				filter:'{"port_type":"AI","port_type_1":"MO"}'
 //				filter:''

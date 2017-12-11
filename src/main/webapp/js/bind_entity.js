@@ -6,15 +6,11 @@ var selectedId=[];
 var allData=[];
 $(function(){
 	getToken();
-	DevList();
-	deviceKind();
-	
-	screenDev();
-	addClass();
+	DevList(); //获取已选设备的列表
+	deviceKind(); //设备类型
 	omission($(".bindEntity .bindTop span:nth-child(2)"));
-	
-
 })
+
 function deviceKind(){
 	for(var i=0;i<$(".infoList").length;i++){
 		if($(".infoList").eq(i).find("i").attr("class")=="fa fa-check-circle"){			
@@ -22,15 +18,17 @@ function deviceKind(){
 		}	
 	}
 }
+
 //获取已选设备的列表
 function DevList(){
 	$.ajax({
 		url:globalurl+"/v1/things/"+thingId+"/thingDatas",
 		dataType: 'JSON',
 		type: 'get',
-		async:false,
+		async:true,
 		data:{
-			access_token:window.accesstoken
+			access_token:window.accesstoken,
+			getDataConfig:'false'
 		},
 		crossDomain: true == !(document.all),
 		success: function(data) {		
@@ -47,10 +45,11 @@ function DevList(){
 					selectedId.push(data.rows[i]._id)
 				}
 			}
-			
+			screenDev();
 		}
 	});
 }
+
 //删除selectedId数组中的制定元素
 Array.prototype.indexOf = function(val) {
 	for (var i = 0; i < this.length; i++) {
@@ -75,7 +74,7 @@ function colseDev(id){
 	$(".optionalList #"+id+"").html("+");
 	
 }
-//选择设备角色
+//修改已选设备样式
 function addClass(){
 		$(".infoList .fa").click(function(){
 			$(".optionalList").html("")
@@ -91,7 +90,6 @@ function addClass(){
 					}
 				}			
 			}
-//			screenDev();
 		})
 	
 }
@@ -114,23 +112,30 @@ function selectDev(id){
 }
 //绑定设备
 function saveDevice(){
+	var loading=new Finfosoft.Loading({
+			shade:['0.7','#ffffff'],
+	        color:'#000000',
+	        msg:'正在保存数据，请稍后。。。',
+		})
+	
 	var data=[];
 	for(var i=0;i<$(".selectedUl li").length;i++){
 		decviceId=$(".selectedUl li").eq(i).attr("id")
 		Idata={"device_id":decviceId};
 		data.push(Idata);
-	}	
+	}
 	$.ajax({
 		url:globalurl+"/v1/things/"+thingId+"/thingDatas",
 		dataType: 'JSON',
 		type: 'post',
-		async:false,
+		async:true,
 		data:{
 			"access_token":window.accesstoken,
-			 data:JSON.stringify(data)
+			 data:JSON.stringify(data),
 		},
 		crossDomain: true == !(document.all),
 		success: function(data) {
+			loading.closeLoading();
 			if(data.code==400005){
 				window.getNewToken()
 				saveDevice();
@@ -160,58 +165,42 @@ function saveDevice(){
 //人工 device_kind==3
 //计算数值 device_kind==4
 //外部数据 device_kkind==5
-//设备筛选
+//获取所有所有设备列表
 function screenDev(){
 	$(".optionalList").html("")
-	var DevKind="";
-	
-//	if($(".infoList").find(".fa-circle-o").length==7){		
-//		DevKind=0+",";	
-//	}
-	if($("#searchDevice").val()==""){	
-		data={
-			"access_token":window.accesstoken,
-			filter:'{"customer_id":"'+customerId+'"}'
-		}
-		setTimeout(function(){
-			doAjax(data);
-		},200);
-	}else{		
-		data={
-			'like':'{"device_name":"'+$("#searchDevice").val()+'"}',
-			"access_token":window.accesstoken,
-			filter:'{"customer_id":"'+customerId+'"}'
-		}	
-		doAjax(data);
+	var DevKind="";	
+	data={
+		'like':'{"device_name":"'+$("#searchDevice").val()+'"}',
+		"access_token":window.accesstoken,
+		filter:'{"customer_id":"'+customerId+'"}'
 	}	
-}
-function doAjax(data){
 	$.ajax({
-				url:manage_globalurl+"/v1/devices",
-				type:"get",
-				dataType:"JSON",
-				data:data,
-				async:false,
-				crossDomain: true == !(document.all),
-				success:function(data){
-					if(data.code==400005){
-						window.getNewToken()
-						screenDev();
-					}else if(data.rows.length==0){
-						$(".optionalList").html("<span class='nonedata'>暂无数据</span>");
-					}else{
-						for(var i=0;i<data.rows.length;i++){
-							domHtml(data.rows[i]);
-						}					
-						allData=data.rows;
-					}
-				}
-			})
+		url:manage_globalurl+"/v1/devices",
+		type:"get",
+		dataType:"JSON",
+		data:data,
+		async:true,
+		crossDomain: true == !(document.all),
+		success:function(data){
+			if(data.code==400005){
+				window.getNewToken()
+				screenDev();
+			}else if(data.rows.length==0){
+				$(".optionalList").html("<span class='nonedata'>暂无数据</span>");
+			}else{
+				for(var i=0;i<data.rows.length;i++){
+					domHtml(data.rows[i]);
+				}					
+				allData=data.rows;
+				addClass
+			}
+		}
+	})
 }
+
 //设备列表的布局
 function domHtml(data){
 	var screenList="";	
-	console.log(selectedId)
 	if(selectedId.indexOf(data._id)!=-1){	
 		screenList='<div class="selectdLi" onclick="selectDev(&apos;'+data._id+'&apos;)">'+
 		'<div class="selectdFont">'+data.device_name+'</div>'+

@@ -1,25 +1,26 @@
-	getToken();
-	getNavData();
-	var companyId=$('#companyId').val();
-	getMsgNum();
+var runDataList;
+getToken();
+getNavData();
+var companyId=$('#companyId').val();
+getMsgNum();
 //	var guid=guidGenerator();
 //	saveGuid();
-	MQTTconnect();
-	$(".userName").append("欢迎你，"+user.fullname)
+MQTTconnect();
+$(".userName").append("欢迎你，"+user.fullname)
 var flag=-1;
 	//个人信息的修改
-	$("#personInfo").on({
-		"mouseenter":function(){
-			$(".personMsg").stop().slideDown(500);
-		},
-		"mouseleave":function(){
-			$(".personMsg").finish().slideUp(500);
-		}
-	})
-		
+$("#personInfo").on({
+	"mouseenter":function(){
+		$(".personMsg").stop().slideDown(500);
+	},
+	"mouseleave":function(){
+		$(".personMsg").finish().slideUp(500);
+	}
+})
 	
-	var dataNav=[],childData=[];	
-	//导航的数据交互
+
+var dataNav=[],childData=[];	
+//导航的数据交互
 function getNavData(){
 	$.ajax({
 		type:'get',
@@ -27,8 +28,6 @@ function getNavData(){
 		url:globalurl+"/v1/resources?access_token="+accesstoken,
 		datatype:'json',
 		success:function(data){
-			console.log(data)
-//			data=data.rows
 			if(data.code==400005){
 				getNewToken()
 				getNavData()

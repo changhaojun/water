@@ -7,6 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="/plugins/font-awesome/css/font-awesome.css"/>
 		<link rel="stylesheet" type="text/css" href="/plugins/bootstarp/css/bootstrap.css"/>
 		<link rel="stylesheet" type="text/css" href="/plugins/layer/skin/layer.css"/>
+		<link rel="stylesheet" type="text/css" href="/plugins/finfosoft/finfosoft.css" />
 		<link rel="stylesheet" type="text/css" href="/css/alarm_entity.css"/>
 	</head>
 	<body>
@@ -28,21 +29,20 @@
 				<div class="IContent">
 					<div class="configurAble">
 						<p class="title">可配置告警范围</p>
-						<div class="alarmList" v-for="(alarmDatas,index) in alarmData" v-if="alarmDatas.port_type=='AI'||alarmDatas.port_type=='DI'||alarmDatas.port_type=='CD'" :id="alarmDatas.data_id"  v-bind:class="alarmDatas.status == 1 ? 'greenBg' : alarmDatas.status == 0 ? 'grayBg':'redBg' ">
-							<div class="alarmTop" v-text="alarmDatas.title"></div>
+						<div class="alarmList" v-for="(alarmData,index) in alarmDatas" v-if="alarmData.port_type=='AI'||alarmData.port_type=='DI'||alarmData.port_type=='CD'" :id="alarmData.data_id"  v-bind:class="alarmData.status == 1 ? 'greenBg' : alarmData.status == 0 ? 'grayBg':'redBg' ">
+							<div class="alarmTop" v-text="alarmData.title"></div>
 								<div class="alarmContent">
-									
 									<p>
-										<span class="dataValue" style="margin-right:10px;" v-if="alarmDatas.data_value=alarmDatas.data_value=='-' ? '':alarmDatas.data_value" v-text="alarmDatas.data_value"></span>
-										<span class="dataUnit" v-if="alarmDatas.data_unit=alarmDatas.data_unit=='-' ? '':alarmDatas.data_unit" v-text="alarmDatas.data_unit"></span>
+										<span class="dataValue" style="margin-right:10px;" v-text="(alarmData.data_value=='-' ? '':alarmData.data_value)"></span>
+										<span class="dataUnit"  v-text="(alarmData.data_unit == '-' ? '' :alarmData.data_unit)"></span>
 										<span class="fa fa-tags"  data-toggle='tooltip' data-placement='top' data-title='标签' @click="showLayer(index)"  @mouseenter="tooltips($event)"></span>
 									</p>				
-									<span class="dataTime" v-if="alarmDatas.data_time=alarmDatas.data_time==''? '-':alarmDatas.data_time" v-text="alarmDatas.data_time"></span>
-									<input class="dataLable" v-if="alarmDatas.tag_name=alarmDatas.tag_name==undefined ? '未配置': alarmDatas.tag_name" v-model="alarmDatas.tag_name" readonly="readonly"></input>
+									<span class="dataTime" v-text="(alarmData.data_time==''? '-':alarmData.data_time)"></span>
+								<label class="dataLable" v-text="(alarmData.tag_name==undefined? '未配置':alarmData.tag_name)"></label>
 								</div>
-								<div class="alarmFooter"  >
+								<div class="alarmFooter">
 									<ul>
-										<li v-for="(alarmData,oindex) in alarmDatas.threshold" v-if="alarmData.lower_value=='-'||alarmData.upper_value=='-'">
+										<li v-for="(alarmData,oindex) in alarmData.threshold" v-if="alarmData.lower_value=='-'||alarmData.upper_value=='-'">
 											<div class="dataLeft" >
 												未配置
 											</div>
@@ -69,19 +69,19 @@
 					</div>
 					<div class="unconfigurAble">
 						<p class="title">不可配置告警范围</p>
-						<div class="alarmList" v-for="(alarmDatas,index) in alarmData" v-if="alarmDatas.port_type=='AO'||alarmDatas.port_type=='DO'||alarmDatas.port_type=='MO'" v-bind:class="alarmDatas.status == 1 ? 'greenBg' : alarmDatas.status == 0 ? 'grayBg':'redBg' ">
-							<div class="alarmTop" v-text="alarmDatas.title"></div>
-								<div class="alarmContent">
-									<p>
-										<span class="dataValue" style="margin-right:10px;" v-if="alarmDatas.data_value==0" v-text="alarmDatas.low_battery"></span>
-										<span class="dataValue" style="margin-right:10px;" v-if="alarmDatas.data_value==1" v-text="alarmDatas.high_battery"></span>
-										<span class="dataValue" style="margin-right:10px;" v-if="alarmDatas.data_value!=0&&alarmDatas.data_value!=1" v-if="alarmDatas.data_value=alarmDatas.data_value=='-' ? '':alarmDatas.data_value" v-text="alarmDatas.data_value"></span>
-										<span class="dataUnit" v-if="alarmDatas.data_unit=alarmDatas.data_unit=='-' ? '':alarmDatas.data_unit" v-text="alarmDatas.data_unit"></span>
-										<span class="fa fa-tags" data-toggle="tooltip" data-placement="top" thingDataId="initData.thingDataId" title="标签" @click="showLayer(index)"  @mouseenter="tooltips($event)"></span>
-									</p>
-									<span class="dataTime" v-if="alarmDatas.data_time=alarmDatas.data_time==''? '-':alarmDatas.data_time" v-text="alarmDatas.data_time"></span>
-									<input class="dataLable" v-if="alarmDatas.tag_name=alarmDatas.tag_name==undefined ? '未配置': alarmDatas.tag_name" v-model="alarmDatas.tag_name" readonly="readonly"></input>
-								</div>
+						<div class="alarmList" v-for="(alarmData,index) in alarmDatas" v-if="alarmData.port_type=='AO'||alarmData.port_type=='DO'||alarmData.port_type=='MO'" v-bind:class="alarmData.status == 1 ? 'greenBg' : alarmData.status == 0 ? 'grayBg':'redBg' ">
+							<div class="alarmTop" v-text="alarmData.title"></div>
+							<div class="alarmContent">
+								<p>
+									<span class="dataValue" style="margin-right:10px;" v-if="alarmData.data_value==0" v-text="alarmData.low_battery"></span>
+									<span class="dataValue" style="margin-right:10px;" v-if="alarmData.data_value==1" v-text="alarmData.high_battery"></span>
+									<span class="dataValue" style="margin-right:10px;" v-if="alarmData.data_value!=0&&alarmData.data_value!=1" v-text="(alarmData.data_value=='-' ? '':alarmData.data_value)"></span>
+									<span class="dataUnit" v-text="(alarmData.data_unit=='-' ? '':alarmData.data_unit)"></span>
+									<span class="fa fa-tags" data-toggle="tooltip" data-placement="top" thingDataId="initData.thingDataId" title="标签" @click="showLayer(index)"  @mouseenter="tooltips($event)"></span>
+								</p>
+								<span class="dataTime" v-text="(alarmData.data_time==''? '-':alarmData.data_time)"></span>
+								<label class="dataLable" v-text="(alarmData.tag_name==undefined? '未配置':alarmData.tag_name)"></label>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -89,12 +89,12 @@
 			</div>
 			<div class="confirmInfo" hidden="hidden">
 				<div class="fix">
-					<input type="text" placeholder="请输入关键字查找" id="searchData" v-model="likeSearchData" @keyup.enter="selectLable()"/>
-					<i class="fa fa-search" onclick=""></i>
+					<input type="text" placeholder="请输入关键字查找" id="searchData" v-model="likeSearchData" @keyup.enter="searchLable()"/>
+					<i class="fa fa-search" onclick="searchLable()"></i>
 					<p><span @click="addTag">添加新分组标签</span></p>	
 				</div>
 				<ul class="selectedUl">
-					<li @click="chioseTag(index,$event)" v-for="(tag,index) in tags" :tagId="tag._id">{{tag.tag_name}} <span @click="removeTag(index,$event)" class="fa fa-trash  removeTag"></span></dd>
+					<li @click="chioseTag(index,$event)" v-for="(tag,index) in selsetTags" :tagId="tag._id">{{tag.tag_name}} <span @click="removeTag(index,$event)" class="fa fa-trash  removeTag"></span></dd>
 				</ul>	
 			</div>
 			<div class="alarmRange" hidden="hidden">
@@ -114,5 +114,6 @@
 	<script src="/js/public_resources.js" type="text/javascript" charset="utf-8"></script>
 	<script src="/plugins/layer/layer.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
-	<script src="/js/alarm_entity.js?1.06" type="text/javascript" charset="utf-8"></script>
+	<script src="/plugins/finfosoft/finfosoft.js"></script>
+	<script src="/js/alarm_entity.js?1.08" type="text/javascript" charset="utf-8"></script>
 </html>

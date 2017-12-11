@@ -67,7 +67,13 @@ $.fn.extend({
 		$.showAddProcessBox($.taskData.processBox,titleMsg)
 		
 	},
-	showStepLine:function(){	//模拟点击工艺
+	showStepLine:function(){	//点击工艺
+		var loading=new Finfosoft.Loading({
+			shade:['0.7','#ffffff'],
+	        color:'#000000',
+	        msg:'正在获取任务列表，请稍后。。。',
+		})
+		
 		$.taskData.processDom=$(this);
 		$.taskData.process_name=$(this).text();
 		$(".technologyName").children("div.technologyName-line").css("display","none");
@@ -79,7 +85,7 @@ $.fn.extend({
 		$('.taskContent').animate({scrollTop:(marginTop+taskScrollTop-145)},1000);
 		$.taskData.selectTaskId=$(this).attr('id');
 		$(this).getTriger()
-		$(".ruleMain").getRuleList();
+		$(".ruleMain").getRuleList(loading);
 		return $(this);
 	},
 	getTriger:function(){
@@ -88,7 +94,7 @@ $.fn.extend({
 		$.ajax({
 				type:"get",
 				url:globalurl+"/v1/processes?access_token="+$.taskData.access_token+"&process_id="+processId,
-				async:false,
+				async:true,
 				data:{
 					filter:'{"company_id":"'+$("#companyId").val()+'"}'
 				},
@@ -139,18 +145,19 @@ $.fn.extend({
 		}
 		$(this).find('.content2').append('执行：'+times+'次')
 	},
-	getRuleList:function(){	//获取任务集合
+	getRuleList:function(loading){	//获取任务集合
 		var This=$(this)
 		This.empty();
 		$.ajax({
 			type:"GET",
 			url:globalurl+"/v1/missions?access_token="+$.taskData.access_token,
-			async:false,
+			async:true,
 			data:{
 				filter:'{"process_id":"'+$.taskData.selectTaskId+'"}',
 				sorts:'{"index":"asc"}'
 			},
 			success:function(data){
+				loading.closeLoading();
 				if(data.rows.length>0){
 					$.taskData.ruleIndexBox=data.rows;
 					for(var i=0;i<data.rows.length;i++){
@@ -190,6 +197,7 @@ $.fn.extend({
 		missionBox.append('<div class="content2">'+thisMIssion.target_thing_name+'：'+thisMIssion.target_data_name+'  '+action_str+'</div>');
 		missionBox.append('<div class="content3">等待'+thisMIssion.wait_time+'秒</div>');
 		missionBox.append($($.taskData.domString.missionTools));
+		$.dragMission();
 	},
 	saveTechnologyName:function(isEdit,name,technologyId){		//保存工艺名称
 		$('input').limitSpacing();		//输入框去除空格
@@ -211,7 +219,7 @@ $.fn.extend({
 			$.ajax({
 				type:sendType,
 				url:globalurl+"/v1/processes?access_token="+$.taskData.access_token,
-				async:false,
+				async:true,
 				data:sendData,
 				success:function(data){
 					if(!isEdit){
@@ -234,7 +242,7 @@ $.fn.extend({
 			$.ajax({
 				type:"get",
 				url:globalurl+"/v1/processes?access_token="+$.taskData.access_token+"&process_id="+technologyId,
-				async:false,
+				async:true,
 				success:function(data){
 					var titleMsg='修改工艺';
 					$('.addConditionBox').empty();
@@ -461,8 +469,8 @@ $.fn.extend({
 			sendFilter='{"port_type":'+operType+'}'
 		}else if(tagSelect.hasClass('compareTag')){
 			thingId=$(this).attr('thing_id');
-			operType="['CD','MO']"
-			sendFilter='{"port_type":"'+operType+'"}'
+			operType="['AI','DI','CD','MO']"
+			sendFilter='{"port_type":'+operType+'}'
 		}
 		$.ajax({
 			type:"get",
@@ -816,7 +824,6 @@ $.extend({
 	        pickerPosition: "bottom-left"
  		});
  		$.conditionBox();	//控制条件BOX
-   		$.dragMission();
 	},
 	addNode:function(){
 		$(".taskTree-add").click(function(){

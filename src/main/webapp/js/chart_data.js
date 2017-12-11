@@ -46,38 +46,27 @@ initstartTime=GetDateStr1(4)
 initendTime=year+'-'+p(month)+"-"+p(date)+" "+flag+" "+p(h)+':'+p(m);
 $("#reservationtime").val(initstartTime+" "+" - "+" "+initendTime);
 
-//获取数据标签
-function dataList(){
-	$.ajax({
-		url: globalurl+"/v1/things/"+thingId+"/alarms",
-		type:"get",
-		dataType:"JSON",
-		data:{
-			access_token: accesstoken,
-			filter:JSON.stringify({"port_type":['AI','DI']})	 
-		},
-		async:false,
-		crossDomain: true == !(document.all),
-		success:function(data){
-			if(data.length==0){
-				$(".list").html("<span class='nonedata'>暂无数据</span>");
-			}else{
-				var screenList="";			
-				for(var i=0;i<data.length;i++){
-					screenList='<div  portType="'+data[i].port_type+'" class="disabledLi '+data[i].data_id+'" onclick="getChart(&apos;'+data[i].data_id+'&apos;)" >'+
-									'<div class="disabledFont">'+data[i].device_name+'-'+data[i].data_name+'</div>'+
-									'<div class="disabledIcon" id="'+data[i].data_id+'">+</div>'+
-									'<div hidden="hidden">'+data[i].data_unit+'</div>'+
-									'<div hidden="hidden">'+data[i].data_id+'</div>'+
-								'</div>';
-					$(".list").append(screenList);	
-				}
-				getChart(dataId)
-			}
-		}
-	})
-}
 
+
+//获取数据标签，entity_data做过同样请求，数据已保存在父页面
+function dataList(){
+	var data = parent.runDataList;
+	if(data.length==0){
+		$(".list").html("<span class='nonedata'>暂无数据</span>");
+	}else{
+		var screenList="";			
+		for(var i=0;i<data.length;i++){
+			screenList='<div  portType="'+data[i].port_type+'" class="disabledLi '+data[i].data_id+'" onclick="getChart(&apos;'+data[i].data_id+'&apos;)" >'+
+							'<div class="disabledFont">'+data[i].device_name+'-'+data[i].data_name+'</div>'+
+							'<div class="disabledIcon" id="'+data[i].data_id+'">+</div>'+
+							'<div hidden="hidden">'+data[i].data_unit+'</div>'+
+							'<div hidden="hidden">'+data[i].data_id+'</div>'+
+						'</div>';
+			$(".list").append(screenList);	
+		}
+		getChart(dataId)
+	}
+}
 //当前图表以及点击添加生成图表
 function getChart(i){
 	if($("#"+i+"").html()=="+"){
@@ -102,7 +91,7 @@ function getChart(i){
 				access_token: accesstoken,
 				data:data
 			},
-			async:false,
+			async:true,
 			crossDomain: true == !(document.all),
 			success:function(data){
 				if(data.length==0){
@@ -144,7 +133,7 @@ function getChart(i){
 				access_token: accesstoken,
 				data:JSON.stringify(data)
 			},
-			async:false,
+			async:true,
 			crossDomain: true == !(document.all),
 			success:function(data){
 				echarts.init(document.getElementById('chartsContent')).clear();
@@ -322,7 +311,7 @@ $('.chartContent').delegate('.focusr','click',function(){
 			type:'post',
 			url: globalurl+"/v1/desktops",
 			dataType: "JSON",
-			async: false,
+			async: true,
 			crossDomain: true == !(document.all),
 			data:{
 				access_token: accesstoken,
@@ -346,7 +335,7 @@ function selectData(){
 		type:'get',
 		url: globalurl+"/v1/desktops",
 		dataType:'JSON',
-		async: false,
+		async: true,
 		crossDomain: true == !(document.all),
 		data:{
 			access_token: accesstoken,
@@ -395,7 +384,7 @@ $(document).ready(function() {
 				access_token: accesstoken,
 				data:JSON.stringify(data)
 			},
-			async:false,
+			async:true,
 			crossDomain: true == !(document.all),
 			success:function(data){
 				echarts.init(document.getElementById('chartsContent')).clear();
@@ -471,7 +460,7 @@ function changeData(i){
 			access_token: accesstoken,
 			data:JSON.stringify(data)
 		},
-		async:false,
+		async:true,
 		crossDomain: true == !(document.all),
 		success:function(data){
 			echarts.init(document.getElementById('chartsContent')).clear();

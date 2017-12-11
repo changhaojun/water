@@ -108,7 +108,7 @@ $.extend({
 		$.ajax({
 			type:"get",
 			url:globalurl+"/v1/forms/"+reportId,
-			async:false,
+			async:true,
 			data:{
 				reportDate:startDate,
 				access_token:accesstoken,			
@@ -484,7 +484,7 @@ $.extend({
 		$.ajax({
 			type:"get",
 			url:globalurl+"/v1/things",
-			async:false,
+			async:true,
 			crossDomain: true == !(document.all),
 			data:{
 //				"company_id":allData.companyId,

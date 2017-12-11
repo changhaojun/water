@@ -19,7 +19,7 @@ function allList(){
 		type: "get",
 		url: manage_globalurl + "/v1/users",
 		dataType: "JSON",
-		async: false,
+		async: true,
 		crossDomain: true == !(document.all),
 		data: {	
 			access_token: accesstoken,
@@ -76,7 +76,7 @@ function roleList(){
 		type: "get",
 		url: manage_globalurl + "/v1/roles",
 		dataType: "JSON",
-		async: false,
+		async: true,
 		crossDomain: true == !(document.all),
 		data: {
 			access_token: accesstoken,

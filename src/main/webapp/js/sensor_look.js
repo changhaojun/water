@@ -36,7 +36,7 @@ function listBox(){
 		type: "get",
 		url: globalurl+"/v1/devices/"+boxId+"/datas",
 		dataType: "JSON",
-		async: false,
+		async: true,
 		crossDomain: true == !(document.all),
 		data: {
 			access_token: accesstoken

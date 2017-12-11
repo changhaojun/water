@@ -2,13 +2,13 @@ var initData={
 	//令牌
 	access_token: "",
 	thingId:$("#thingId").val(),
-	alarmData:[],
-	tags:[],
+	alarmDatas:[],
+	allTags:[],
+	selsetTags:[],
 	companyId:$("#companyId").val(),
 	resultBox:"",
 	Index:"",
 	likeSearchData:"",
-	thingDataId:"",
 	alarmRangeBox:"",
 	dataMin:"",
 	dataMax:"",
@@ -17,7 +17,6 @@ var initData={
 	off:"",
 	deviceId:"",
 	MqttDataId:[],
-	//Mqtt
 	client:"",
 	topic:"",
 	//模糊查询需要的数据
@@ -38,40 +37,10 @@ var $extend=$.fn.extend({
 		$(".tooltip .top .tooltip-arrow").css("border-top-color","#effaf6");
 		$('[data-toggle="tooltip"]').tooltip();
 	},
-	//获取告警列表的数据
-	getAlarmListData:function(){
-		
-		$.ajax({
-			url:globalurl+"/v1/things/"+initData.thingId+"/alarms",
-			dataType: 'JSON',
-			type: 'get',
-			data:{
-			access_token:initData.access_token	
-			},
-			async:false,
-			crossDomain: true == !(document.all),
-			success: function(data) {
-				
-				for(var i=0;i<data.length;i++){
-					data[i].title=data[i].device_name+"-"+data[i].data_name	;					
-					if(data[i].title.length>15){						
-						 data[i].title=data[i].title.substring(0,15)+"...";//超出一行显示省略
-					}
-					initData.MqttDataId.push(data[i].data_id)
-				}
-				initData.alarmData=data;
-				initData.likeAllData=data;
-				$.MQTTconnect(initData.MqttDataId);
-				
-			}
-		})
-	},
 	//点击出现弹窗
 	showLayer:function(index){
 		initData.likeSearchData=""
 		initData.Index=index;
-		initData.thingDataId=initData.alarmData[index].thing_data_id;
-	
 		initData.resultBox = layer.open({
 			type: 1,
 			title: "选择数据标签",
@@ -81,25 +50,8 @@ var $extend=$.fn.extend({
 			area: ['300px', '336px'],
 			content: $('.confirmInfo')
 		})
-		$(window).selectLable();
 	},
-	//获取分组标签
-	selectLable:function(index){
-		
-		$.ajax({
-			type:"get",
-			url:globalurl+"/v1/tags",
-			async:true,
-			data:{
-					access_token:initData.access_token,
-					like:'{"tag_name":"'+initData.likeSearchData+'"}',
-					filter:'{"company_id":"'+initData.companyId+'"}'
-			},
-			success:function(data){
-				initData.tags=data.rows			
-			}
-		});
-	},
+	
 	//新增分组标签
 	addTag:function(){
 		layer.prompt({
@@ -146,13 +98,14 @@ var $extend=$.fn.extend({
 	},
 	//选择数据标签==》确定提交数据标签
 	chioseTag:function(index,event){
-		initData.alarmData[initData.Index].tag_name=this.tags[index].tag_name
 		var data={
-			"tag_id":initData.tags[index]._id,
-			"tag_name":initData.tags[index].tag_name
+			"tag_id":initData.selsetTags[index]._id,
+			"tag_name":initData.selsetTags[index].tag_name,
+			"data_id":initData.alarmDatas[initData.Index].data_id,
+			"device_id":initData.alarmDatas[initData.Index].device_id
 		}
 		$.ajax({
-				url:globalurl+"/v1/alarms/"+initData.thingDataId,
+				url:globalurl+"/v1/alarms",
 				data:{
 					"access_token":initData.access_token,
 					data:JSON.stringify(data)
@@ -162,24 +115,25 @@ var $extend=$.fn.extend({
 				crossDomain: true == !(document.all),
 				success: function(data) {
 					if(data.code==200){
+						initData.alarmDatas[initData.Index].tag_name=initData.selsetTags[index].tag_name
 						layer.msg(data.success,{icon:1})
 					}					
 				}
 		})
+		console.log(initData.alarmDatas[initData.Index])
 		layer.close(initData.resultBox);
 	},
 	//添加告警范围
 	alarmRangeLayer:function(index,event,oindex,title){
 		initData.Index=index;
-		initData.thingDataId=initData.alarmData[index].thing_data_id;
-		initData.dataId=initData.alarmData[index].data_id;
-		initData.deviceId=initData.alarmData[index].device_id;
+//		initData.thingDataId=initData.alarmDatas[index].thing_data_id;
+		initData.dataId=initData.alarmDatas[index].data_id;
+		initData.deviceId=initData.alarmDatas[index].device_id;
 		initData.childIndex=oindex;
 		initData.off=title;
 		if(initData.off=="修改"){
-			
-			initData.dataMin=initData.alarmData[initData.Index].threshold[initData.childIndex].lower_value;
-			initData.dataMax=initData.alarmData[initData.Index].threshold[initData.childIndex].upper_value;
+			initData.dataMin=initData.alarmDatas[initData.Index].threshold[initData.childIndex].lower_value;
+			initData.dataMax=initData.alarmDatas[initData.Index].threshold[initData.childIndex].upper_value;
 		}else{
 			initData.dataMin="";
 			initData.dataMax="";
@@ -196,7 +150,6 @@ var $extend=$.fn.extend({
 	},
 	//添加提交告警范围判断，修改提交告警
 	alarmRangeSave:function(){
-		console.log(initData.dataMin+","+initData.dataMax)
 		var text=/^[0-9]*$/;
 		 if(initData.dataMin==""&&initData.dataMax==""){
 			layer.tips('最大值或者最小值不能同时为空', $("#dataMax"), {
@@ -212,22 +165,22 @@ var $extend=$.fn.extend({
 				});
 			}else{
 				if(initData.dataMin==""||initData.dataMin=="-∞"){
-					initData.alarmData[initData.Index].threshold[initData.childIndex].lower_value="-∞";
+					initData.alarmDatas[initData.Index].threshold[initData.childIndex].lower_value="-∞";
 				}else{
-					initData.alarmData[initData.Index].threshold[initData.childIndex].lower_value=Number(initData.dataMin);
+					initData.alarmDatas[initData.Index].threshold[initData.childIndex].lower_value=Number(initData.dataMin);
 				}
 				if(initData.dataMax==""||initData.dataMax=="+∞"){
-					initData.alarmData[initData.Index].threshold[initData.childIndex].upper_value="+∞";
+					initData.alarmDatas[initData.Index].threshold[initData.childIndex].upper_value="+∞";
 				}else{
-					initData.alarmData[initData.Index].threshold[initData.childIndex].upper_value=Number(initData.dataMax);
+					initData.alarmDatas[initData.Index].threshold[initData.childIndex].upper_value=Number(initData.dataMax);
 				}
 				
 				var data={
-						"threshold":initData.alarmData[initData.Index].threshold,				
+						"threshold":initData.alarmDatas[initData.Index].threshold,				
 						"data_id":initData.dataId,
 						"device_id":initData.deviceId
 					}
-				$.alarmDataAjax(data);	
+				$.alarmDatasAjax(data);	
 			}		
 		}else{
 			layer.tips('最大值或者最小值格式不正确', $("#dataMax"), {
@@ -240,33 +193,42 @@ var $extend=$.fn.extend({
 	//删除告警范围
 	deleteAlarmData:function(index,ev,oindex){		
 		layer.confirm("<font size='2'>确定清除该数据？</font>", {icon:7,skin:'del-class'}, function(){
-			initData.alarmData[index].threshold[oindex].lower_value="-";
-			initData.alarmData[index].threshold[oindex].upper_value="-";
-			initData.dataId=initData.alarmData[index].data_id;
-			initData.deviceId=initData.alarmData[index].device_id;
+			initData.alarmDatas[index].threshold[oindex].lower_value="-";
+			initData.alarmDatas[index].threshold[oindex].upper_value="-";
+			initData.dataId=initData.alarmDatas[index].data_id;
+			initData.deviceId=initData.alarmDatas[index].device_id;
 			var data={
-				"threshold":initData.alarmData[index].threshold,				
+				"threshold":initData.alarmDatas[index].threshold,				
 				"data_id":initData.dataId,
 				"device_id":initData.deviceId
 			}
-			$.alarmDataAjax(data);	
+			$.alarmDatasAjax(data);	
 		})		
 	},
 	//模糊查询
 	likeSearch:function(){
-		initData.alarmData=[];
+		initData.alarmDatas=[];
 		for(var i=0;i<initData.likeAllData.length;i++){
 			if(initData.likeAllData[i].title.search(initData.likeData)!=-1){				
-				initData.alarmData.push(initData.likeAllData[i]);			
+				initData.alarmDatas.push(initData.likeAllData[i]);			
 			}
 			initData.MqttDataId.push(initData.likeAllData[i].data_id);		
 		}
 		if(initData.likeData==""){
-			initData.alarmData=initData.likeAllData;
+			initData.alarmDatas=initData.likeAllData;
 		}
 	},
 	
-	
+	searchLable:function(){
+		initData.selsetTags.splice(0,initData.selsetTags.length);
+		var tagLike = initData.likeSearchData;
+		var thisTags = initData.allTags
+		for(var i = 0; i < thisTags.length; i++){
+			if(thisTags[i].tag_name.indexOf(tagLike)!=-1){
+				initData.selsetTags.push(thisTags[i])
+			}
+		}
+	},
 })
 $.extend({
 	init:function(){
@@ -278,15 +240,61 @@ $.extend({
 		getToken();		
 		initData.access_token = accesstoken;
 		$('input').limitSpacing();
-		
-		$(window).getAlarmListData();
-		$(window).selectLable();
-		
+		$.getAlarmListData();  //获取告警列表的数据
+		$.selectLable();   //获取分组标签
+	},
+	//获取告警列表的数据
+	getAlarmListData:function(){
+		var loading=new Finfosoft.Loading({
+			shade:['0.7','#ffffff'],
+	        color:'#000000',
+	        msg:'正在加载数据，请稍后。。。',
+		})
+		$.ajax({
+			url:globalurl+"/v1/things/"+initData.thingId+"/alarms",
+			dataType: 'JSON',
+			type: 'get',
+			data:{
+				access_token:initData.access_token	
+			},
+			async:true,
+			crossDomain: true == !(document.all),
+			success: function(data) {
+				loading.closeLoading();
+				for(var i=0;i<data.length;i++){
+					data[i].title=data[i].device_name+"-"+data[i].data_name	;					
+					if(data[i].title.length>15){						
+						 data[i].title=data[i].title.substring(0,15)+"...";//超出一行显示省略
+					}
+					initData.MqttDataId.push(data[i].data_id)
+				}
+				initData.alarmDatas=data;
+				initData.likeAllData=data;
+				$.MQTTconnect(initData.MqttDataId);
+				
+			}
+		})
+	},
+	//获取分组标签
+	selectLable:function(index){
+		$.ajax({
+			type:"get",
+			url:globalurl+"/v1/tags",
+			async:true,
+			data:{
+					access_token:initData.access_token,
+					filter:'{"company_id":"'+initData.companyId+'"}'
+			},
+			success:function(data){
+				initData.allTags=JSON.parse(JSON.stringify(data.rows))
+				initData.selsetTags =JSON.parse(JSON.stringify(data.rows))
+			}
+		});
 	},
 	//删除，添加，修改告警范围
-	alarmDataAjax:function(data){
+	alarmDatasAjax:function(data){
 		$.ajax({
-				url:globalurl+"/v1/alarms/"+initData.thingDataId,
+				url:globalurl+"/v1/alarms",
 				data:{
 					"access_token":initData.access_token,
 					data:JSON.stringify(data)
@@ -302,8 +310,8 @@ $.extend({
 					if(data.code==200){
 						layer.msg(data.success,{icon:1})
 					}else{
-						initData.alarmData[initData.Index].threshold[initData.childIndex].lower_value="-";
-						initData.alarmData[initData.Index].threshold[initData.childIndex].upper_value="-";
+						initData.alarmDatas[initData.Index].threshold[initData.childIndex].lower_value="-";
+						initData.alarmDatas[initData.Index].threshold[initData.childIndex].upper_value="-";
 						layer.msg("设置告警失败",{icon:1})
 					}
 				}
@@ -358,11 +366,11 @@ $.extend({
 	  }else{
 	  	dataValue=dataConfig.data_value
 	  }
-	  	for(var i=0;i<initData.alarmData.length;i++){
-	  		if(initData.alarmData[i].data_id==dataId){
-	  			initData.alarmData[i].data_value=dataValue;
-	  			initData.alarmData[i].data_time=dataConfig.data_time;
-	  			initData.alarmData[i].status=dataConfig.status;
+	  	for(var i=0;i<initData.alarmDatas.length;i++){
+	  		if(initData.alarmDatas[i].data_id==dataId){
+	  			initData.alarmDatas[i].data_value=dataValue;
+	  			initData.alarmDatas[i].data_time=dataConfig.data_time;
+	  			initData.alarmDatas[i].status=dataConfig.status;
 	  		}
 	  	}
 		if(dataConfig.status==1){

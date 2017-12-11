@@ -11,7 +11,7 @@ function entityList(){
 		type: "get",
 		url: globalurl+"/v1/runDatas?company_id="+$('#companyId').val(),
 		dataType: "JSON",
-		async: false,
+		async: true,
 		crossDomain: true == !(document.all),
 		data: {
 			access_token: accesstoken

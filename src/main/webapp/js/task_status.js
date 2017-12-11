@@ -29,7 +29,7 @@ $.extend({
 		$.ajax({
 			type:"get",
 			url:globalurl+"/v1/processes?access_token="+allData.access_token,
-			async:false,
+			async:true,
 			data:{
 				filter:"{'company_id':'"+allData.companyId+"'}"
 			},

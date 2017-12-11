@@ -348,7 +348,7 @@ $.extend({
 		$.ajax({
 			type:"get",
 			url:globalurl+"/v1/things?access_token="+accesstoken,
-			async:false,
+			async:true,
 			data:{
 				filter:"{'company_id':'"+$.initData.companyId+"'}",
 				like:'{"thing_name":"'+searchValue+'"}'
@@ -363,7 +363,7 @@ $.extend({
 		$.ajax({
 			type:"get",
 			url:globalurl+"/v1/missionDataTags?access_token="+accesstoken+"&thing_id="+opts.id,
-			async:false,
+			async:true,
 			data:{
 				filter:JSON.stringify({ port_type: 'DO' })
 			},success:function(data){
@@ -376,7 +376,7 @@ $.extend({
 		$.ajax({
 			type: sentData.type,
 			url: url,
-			async: false,
+			async: true,
 			data: sentData.mainData ? 'data='+ JSON.stringify(sentData.mainData) +'' : '',
 			success:function(data){
 				if (data.code == 200) {

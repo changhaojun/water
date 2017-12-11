@@ -46,7 +46,7 @@ function lssuedList(){
 			filter:JSON.stringify({"log_type":1}),	
 			data:data
 		},
-		async:false,
+		async:true,
 		success:function(data){
 			for(var i=0;i<data.rows.length;i++){
 				var lssuedData={
