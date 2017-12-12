@@ -29,20 +29,23 @@ public class ScadaController extends Controller{
 		String companyId = company.get("companyId");
 		String scadaId = getPara("id");
 		String thingId = getPara("thing_id");
-		//String scadaName = URLDecoder.decode(getPara(1), "UTF-8");
-		//String scadaDescription = URLDecoder.decode(getPara(2), "UTF-8");
+		String scadaName = getPara("name");
+		String scadaDescription = getPara("description");
 		setAttr("scadaId", scadaId);
 		setAttr("thingId", thingId);
 		setAttr("companyId", companyId);
-		//setAttr("scadaName", scadaName);
-		//setAttr("scadaDescription", scadaDescription);
+		setAttr("scadaName", scadaName);
+		setAttr("scadaDescription", scadaDescription);
 		render("scada_review.html");
 	}
 	
 	public void put() {
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String companyId = company.get("companyId");
 		String scadaId = getPara("id");
 		String scadaModelsId = getPara("scada_models_id");
 		String thingId = getPara("thing_id");
+		setAttr("companyId", companyId);
 		setAttr("scadaId", scadaId);
 		setAttr("scadaModelsId", scadaModelsId);
 		setAttr("thingId", thingId);

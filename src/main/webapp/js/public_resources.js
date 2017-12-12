@@ -4,6 +4,7 @@ var globalurl="http://121.42.253.149:18808";		//访问水务API测试服务器�
 var manage_globalurl="http://121.42.253.149:18825";	//获取数据标签
 //var auth_globalurl="http://121.42.253.149:18826";	//获取资源列表
 var gatewayUrl="http://121.42.253.149:18840";		//下发API 测试服
+var auth_globalurl="http://121.42.253.149:18826";//获取资源列表
 var accesstoken;
 var refreshToken;
 

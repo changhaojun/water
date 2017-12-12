@@ -82,7 +82,7 @@ $.extend({
 	toolTip: function() {
 		$('[data-toggle="tooltip"]').tooltip();
 		$(".fa-laptop").topColor("#1ab394");
-		$(".fa-cog").topColor("##fcc433");
+		$(".fa-cog").topColor("#fcc433");
 		$(".fa-trash-o").topColor("#f98c91");
 	},
 	getList: function() {
@@ -102,6 +102,7 @@ $.extend({
 		    striped: true,//条纹
 		    onLoadSuccess:function(value){
 		    	$.initData.tableData = value;
+		    	console.log(value);
 		    	if(value.code==400005){
 		    		$.token();
 		    		$.getList();		    	
@@ -365,8 +366,9 @@ $.extend({
 			url:globalurl+"/v1/missionDataTags?access_token="+accesstoken+"&thing_id="+opts.id,
 			async:true,
 			data:{
-				filter:JSON.stringify({ port_type: 'DO' })
+				filter:JSON.stringify({ port_type: ['DO'] })
 			},success:function(data){
+				console.log(data);
 				opts.callback && opts.callback(data);
 			}
 		});

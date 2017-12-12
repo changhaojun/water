@@ -2,8 +2,8 @@ var allData = {
 	thingId: $('#thingId').val(),
 	createUser: $('#createUser').val(),
 	companyId: $('#companyId').val(),
-//	lanyueSrc: 'http://121.42.253.149:18822/scada',
-	lanyueSrc: 'http://localhost:80/scada',
+	lanyueSrc: 'http://121.42.253.149:18822/scada',
+//	lanyueSrc: 'http://localhost:80/scada',
 	ajaxComplated: {},
 	//新增
 	parentData: {
@@ -124,10 +124,10 @@ $.extend({
 		});
 	},
 	createParentAnchor:function(data){
-		if (data && data.length > 0) {			
+		if (data && data.length > 0) {
 			for(var i=0;i<data.length;i++){
 				var datas={};
-				datas.label_id = data[i]._id;
+				datas.label_id = data[i].scada_models_id;
 				datas.label_name = data[i].scada_name;
 				allData.parentData.scada_config.anchor_list.push(datas);
 			}

@@ -17,10 +17,17 @@
 		<input type="text" id="scadaId" hidden="hidden" value=${scadaId} />
 		<input type="text" id="thingId" hidden="hidden" value=${thingId} />
 		<input type="text" id="companyId" hidden="hidden" value=${companyId} />
-		<div class="mainTitle">
-			<span>查看情景</span>
-			<span>/ 当前位置:</span>
-			<span>查看情景</span>
+		<div class="mainTitle clearfix">
+			<ul class="clearfix backSide"></ul>
+			<div class="frontSide">
+				<span>组态名称：${scadaName}</span>
+				<span>&nbsp;/&nbsp;</span>
+				<span>绑定实体：${scadaDescription}</span>
+				<button>
+					<span class="fa fa-bars"></span>
+					<span>情景列表</span>
+				</button>
+			</div>
 		</div>
 		<div class="operation">
 			<div class="AI">
