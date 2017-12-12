@@ -121,10 +121,10 @@ $.extend({
 		});
 	},
 	createParentAnchor:function(data){
-		if (data && data.length > 0) {			
+		if (data && data.length > 0) {
 			for(var i=0;i<data.length;i++){
 				var datas={};
-				datas.label_id = data[i]._id;
+				datas.label_id = data[i].scada_models_id;
 				datas.label_name = data[i].scada_name;
 				allData.parentData.scada_config.anchor_list.push(datas);
 			}

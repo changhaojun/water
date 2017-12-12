@@ -31,10 +31,9 @@ var allData = {
 $.fn.extend({
 	//窗口显示&&隐藏(运动)
 
-
 	toggleWin: function(hide) {
 		var This = $(this);
-		if (hide) {
+		if(hide) {
 			$(this).animate({
 				opacity: 0
 			}, 'normal', 'swing', function() {
@@ -50,7 +49,6 @@ $.fn.extend({
 	},
 	//居中位置计算
 
-
 	setCenterPos: function(parent) {
 		$(this).css({
 			'left': (parent.width() - $(this).width()) / 2,
@@ -58,7 +56,6 @@ $.fn.extend({
 		});
 	},
 	//窗口改变时保持元素位置居中
-
 
 	stayCenter: function(parent) {
 		var This = $(this);
@@ -72,10 +69,55 @@ $.fn.extend({
 $.extend({
 	init: function() {
 		getToken(function() {
-			//			$.initSystem();
+			$.initTitle();
 			$.getData();
 			$.searchProcess();
 			$.searchAnchor();
+		});
+	},
+	initTitle: function() {
+		$.ajax({
+			type: "get",
+			dataType: "json",
+			url: globalurl + "/v1/scadas",
+			async: true,
+			crossDomain: true == !(document.all),
+			data: {
+				access_token: accesstoken
+			},
+			success: function(data) {
+				//页头背面渲染
+				var listDom = '';
+				$.each(data.rows, function(i) {
+					if(data.rows[i].scada_models_id == $('#scadaId').val()) {
+						listDom += "<li class='active' scadaId='" + data.rows[i].scada_models_id + "' thingId='" + data.rows[i].thing_id + "' thingName='" + data.rows[i].thing_name + "' scadaName='" + data.rows[i].scada_name + "'>" + data.rows[i].scada_name + "</li>";
+					} else {
+						listDom += "<li scadaId='" + data.rows[i].scada_models_id + "' thingId='" + data.rows[i].thing_id + "' thingName='" + data.rows[i].thing_name + "' scadaName='" + data.rows[i].scada_name + "'>" + data.rows[i].scada_name + "</li>";
+					}
+				});
+				$('.mainTitle').find('.backSide').html(listDom);;
+				if($('.mainTitle').find('.backSide').children('[scadaName=全厂工艺]')) {
+					$('.mainTitle').find('.backSide').children('[scadaName=全厂工艺]').prependTo($('.mainTitle').find('.backSide'));
+				}
+				//页头背面标签点击交互
+				$('.mainTitle').find('.backSide').children().click(function() {
+					var scadaId = $(this).attr('scadaId');
+					var thingId = $(this).attr('thingId');
+					var scadaName = $(this).attr('scadaName');
+					var thingName = $(this).attr('thingName');
+					if(scadaId == $('#scadaId').val()) {
+						$('.mainTitle').addClass('active');
+					} else {
+						//						self.location.href = '/scada/review/'+id+'-'+name+'-'+description;
+						self.location.href = '/scadas/get?id=' + scadaId + '&thing_id=' + thingId + '&name=' + scadaName + '&description=' + thingName;
+					}
+				});
+			}
+		});
+		//页头正面列表点击交互
+
+		$('.mainTitle').find('.frontSide').find('button').click(function() {
+			$('.mainTitle').removeClass('active');
 		});
 	},
 	getData: function() {
@@ -89,7 +131,6 @@ $.extend({
 				access_token: accesstoken
 			},
 			success: function(data) {
-				console.log(data);
 				$.createParentMessage(data.dataConfigList);
 				$.getMessageFromChild();
 			}
@@ -128,7 +169,8 @@ $.extend({
 			data: {
 				access_token: accesstoken,
 				filter: JSON.stringify({
-					trigger_type: "58f0431743929a10a8fb49fa"
+					trigger_type: "58f0431743929a10a8fb49fa",
+					company_id: allData.companyId
 				})
 			},
 			success: function(data) {
@@ -173,7 +215,7 @@ $.extend({
 		if(data && data.length > 0) {
 			for(var i = 0; i < data.length; i++) {
 				var datas = {};
-				datas.label_id = data[i]._id;
+				datas.label_id = data[i].scada_models_id;
 				datas.label_name = data[i].scada_name;
 				allData.parentData.scada_config.anchor_list.push(datas);
 			}
@@ -190,18 +232,68 @@ $.extend({
 		}
 		return res;
 	},
-	makeMqttGroup: function(data) {
-		var origin = allData.parentData.scada_config.data_list;
-		origin.forEach(function(a) {
+	makeMqttGroup: function(originDatas, callback) {
+		var localDatas = allData.parentData.scada_config.data_list;
+		localDatas.forEach(function(a) {
 			var type = a.port_type;
 			if(/[A-Z]I/g.test(type)) {
-				data.forEach(function(b) {
+				originDatas.forEach(function(b) {
 					if(a.label_id === b.label_id) {
 						allData.mqttGroup.push(a);
 					}
 				});
 			}
 		});
+		console.log(allData.mqttGroup);
+		MQTTconnect();
+
+		function MQTTconnect() {
+			var mqttHost = allData.mqtt.host;
+			var port = allData.mqtt.port;
+			var username = allData.mqtt.username;
+			var password = allData.mqtt.password;
+			var style = {
+				successed: "background: #1ab394; color: #fff; font-weight: bold; padding: 0 4px;",
+				warning: "background: rgb(255, 134, 54); color: #fff; font-weight: bold; padding: 0 4px;",
+				fail: "background: rgb(232, 16, 16); color: #fff; font-weight: bold; padding: 0 4px;"
+			};
+			var client = new Paho.MQTT.Client(mqttHost, port, "server" + parseInt(Math.random() * 100, 10));
+			var options = {
+				timeout: 1000,
+				onSuccess: function() {
+					console.log("%cMQTT connect successfully.", style.successed);
+					allData.mqttGroup.forEach(function(item) {
+						console.log(item.label_id)
+						client.subscribe( item.label_id.toString() );
+					});
+				},
+				onFailure: function(message) {
+					console.log("%cMQTT connect fail, trying connection again.", style.fail);
+					setTimeout(function() {
+						MQTTconnect();
+					}, 10000000);
+				}
+			};
+			// set callback handlers
+			client.onConnectionLost = function(responseObject) {
+				console.log("%cMQTT connect lost, trying connection again.", style.fail);
+				setTimeout(function() {
+					MQTTconnect();
+				}, 0);
+			};
+			client.onMessageArrived = function(message) {
+				console.log("MQTT messageArrived.", style.successed)
+				var topic = message.destinationName;
+				var payload = JSON.parse(message.payloadString);
+				callback && callback(payload);
+			};
+
+			if(username != null) {
+				options.userName = username;
+				options.password = password;
+			}
+			client.connect(options);
+		}
 	},
 	postMessageToChild: function() {
 		if(!$.canPostMessageToChild()) return;
@@ -212,18 +304,19 @@ $.extend({
 	updateMessageToChild: function(data) {
 //		setInterval(function() {
 //			var index = Math.round(Math.random() * (allData.mqttGroup.length - 1));
-			//			console.log( index, allData.mqttGroup.length )
-			//			console.log( allData.mqttGroup[index] );
+//			console.log(index, allData.mqttGroup.length)
 //			var type = allData.mqttGroup[index].port_type;
 //			if(type === "AI") {
 //				allData.mqttGroup[index].label_value = Math.round(Math.random() * 100);
 //			} else {
 //				allData.mqttGroup[index].label_value = Math.round(Math.random());
 //			}
+//			console.log(allData.mqttGroup[index].label_value);
+//
 			
-			allData.changedData.group = [];
-			allData.changedData.group.push(allData.mqttGroup[index]);
-			$('#scada').get(0).contentWindow.postMessage(allData.changedData, '*');
+//			allData.changedData.group = [];
+//			allData.changedData.group.push(allData.mqttGroup[index]);
+//			$('#scada').get(0).contentWindow.postMessage(allData.changedData, '*');
 //		}, 2000);
 	},
 	getMessageFromChild: function() {
@@ -258,55 +351,49 @@ $.extend({
 						}
 					}
 				})
-			} else if (code == 300) {
+			} else if(code == 300) {
+				layer.closeAll();
 				var group = data.group;
 				var originData = data.originData;
 				var dataType = originData.port_type;
-				if ( group === "data_list" ) {					
-					switch (dataType) {
+				if(group === "data_list") {
+					switch(dataType) {
 						case "AI":
-//							console.log("AI");
 							$.labelOperation(originData).AI();
 							break;
 						case "DI":
-//							console.log("DI");
 							$.labelOperation(originData).DI();
 							break;
 						case "AO":
-//							console.log("AO");
 							$.labelOperation(originData).AO();
 							break;
 						case "DO":
-//							console.log("DO");
 							$.labelOperation(originData).DO();
 							break;
 						case "MO":
-//							console.log("MO");
 							$.labelOperation(originData).MO();
 							break;
 						case "CD":
-//							console.log("CD");
 							$.labelOperation(originData).CD();
 							break;
 					}
-				} else if ( group === "process_list" ) {
-//					console.log('process_list')
+				} else if(group === "process_list") {
 					$.labelOperation(originData).process();
-				} else if ( group === "anchor_list" ) {
+				} else if(group === "anchor_list") {
 					$.labelOperation(originData).anchor();
-//					console.log('anchor_list')
 				}
 			} else if(code == 500) {
 				self.location.href = '/scadas'
 			} else if(code == 501) {
-				$.makeMqttGroup(data);
-				//				$.updateMessageToChild();
-				//				console.log( data )
+				$.makeMqttGroup(data, function(dataNeedUpdate) {
+					console.log(dataNeedUpdate);
+//					console.log(allData.mqttGroup);
+					$.updateMessageToChild(dataNeedUpdate);
+				});
 			}
 		});
 	},
 	labelOperation: function(label) {
-		console.log(label);
 		var time = $.initTime();
 		var parent = $('.operation');
 		parent.stop(true, true);
@@ -317,8 +404,6 @@ $.extend({
 			parent.children().stop(true, true);
 			parent.toggleWin(true);
 			parent.children().toggleWin(true);
-//			$.three.capturer.intersected = null;
-//			$('.AO').find('.confirm').unbind();
 		});
 		return {
 			AI: function() {
@@ -372,8 +457,6 @@ $.extend({
 						area: ['430px'],
 						btn: ['下发', '取消'],
 						yes: function(index1) {
-							//确定下发
-
 							var data_value = son.find('.confirmVal').val();
 							var data_id = label.label_id;
 							var port_type = label.port_type;
@@ -389,12 +472,11 @@ $.extend({
 									});
 									layer.close(index1);
 									$('.conditions-layer').css('display', 'none');
-									$('.operation').toggleWin(true);
+									parent.find('.close').click();
 									son.find('.confirm').unbind();
-//									$.three.capturer.intersected = null;
+									//									$.three.capturer.intersected = null;
 								}, function() {
 									ring.reset();
-//									console.log("下发失败");
 								});
 							});
 						}
@@ -443,8 +525,6 @@ $.extend({
 								area: ['430px'],
 								btn: ['下发', '取消'],
 								yes: function(index1) {
-									//确定下发
-
 									var data_value = status;
 									var data_id = label.label_id;
 									var port_type = label.port_type;
@@ -456,24 +536,19 @@ $.extend({
 											btn: ['下发', '取消'] //按钮
 
 										}, function(index2) {
-											layer.close(index2);
-											$('.conditions-layer').css('display', 'none');
 											$.verifyIssuePassword(passwordDom, function() {
-												$('.conditions-layer').find('tbody').html('');
 												$.newIssueAjax({
 													data_id: data_id,
 													data_value: data_value
 												}, function() {
 													$.newIssueSuccessed({
 														data_value: data_value,
-														data_id: data_id,
-//														port_type: port_type,
-//														high_battery: high_battery,
-//														low_battery: low_battery
+														data_id: data_id
 													});
-													$('.operation').toggleWin(true);
+													parent.find('.close').click();
 													layer.closeAll();
-//													$.three.capturer.intersected = null;
+													$('.conditions-layer').css('display', 'none');
+													$('.conditions-layer').find('tbody').html('');
 												}, function() {
 													onOff.reset();
 												});
@@ -481,22 +556,18 @@ $.extend({
 										});
 									} else {
 										$.verifyIssuePassword(passwordDom, function() {
-											$('.conditions-layer').find('tbody').html('');
-											$('.conditions-layer').css('display', 'none');
 											$.newIssueAjax({
 												data_id: data_id,
 												data_value: data_value
 											}, function() {
 												$.newIssueSuccessed({
 													data_value: data_value,
-													data_id: data_id,
-//													port_type: port_type,
-//													high_battery: high_battery,
-//													low_battery: low_battery
+													data_id: data_id
 												});
-												$('.operation').toggleWin(true);
+												$('.conditions-layer').find('tbody').html('');
+												$('.conditions-layer').css('display', 'none');
+												parent.find('.close').click();
 												layer.closeAll();
-//												$.three.capturer.intersected = null;
 											}, function() {
 												onOff.reset();
 											});
@@ -504,12 +575,9 @@ $.extend({
 									}
 								},
 								btn2: function(index) {
-									//do something
-
 									$('.conditions-layer').find('tbody').html('');
 									onOff.reset();
-									layer.close(index); //如果设定了yes回调，需进行手工关闭
-
+									layer.close(index);
 									$('.conditions-layer').css('display', 'none');
 								}
 							});
@@ -527,12 +595,9 @@ $.extend({
 								area: ['430px'],
 								btn: ['下发', '取消'],
 								yes: function(index1) {
-									//确定下发
-
 									var data_value = status;
 									var data_id = label.label_id;
 									var port_type = label.port_type;
-//									var guid = Date.now().toString();
 									$.verifyIssuePassword(passwordDom, function() {
 										$.newIssueAjax({
 											data_id: data_id,
@@ -540,23 +605,17 @@ $.extend({
 										}, function() {
 											$.newIssueSuccessed({
 												data_value: data_value,
-												data_id: data_id,
-//												port_type: port_type,
-//												high_battery: high_battery,
-//												low_battery: low_battery
+												data_id: data_id
 											});
 											layer.close(index1);
 											$('.conditions-layer').css('display', 'none');
-											$('.operation').toggleWin(true);
-//											$.three.capturer.intersected = null;
+											parent.find('.close').click();
 										}, function() {
 											onOff.reset();
 										});
 									});
 								},
 								btn2: function(index) {
-									//do something
-
 									onOff.reset();
 									layer.close(index);
 								}
@@ -572,6 +631,7 @@ $.extend({
 				son.find('.name').html(label.label_name);
 				son.find('.realtime').html(time.endDate);
 				son.find('.oldVal').val(label.label_value);
+				son.find('.newVal').val("");
 				son.find('.confirm').off('click').click(function() {
 					if(son.find('.newVal').val() == '') {
 						son.find('.newVal').focus();
@@ -603,9 +663,7 @@ $.extend({
 						content: $('.conditions-layer'),
 						area: ['430px'],
 						btn: ['下发', '取消'],
-						yes: function(index1) {
-							//确定下发
-
+						yes: function() {
 							var data_value = parseFloat($('.MO').find('.newVal').val());
 							var data_id = label.label_id;
 							var port_type = label.port_type;
@@ -614,22 +672,13 @@ $.extend({
 									data_value: data_value,
 									data_id: data_id
 								}, function() {
-									layer.close(index1);
-									$('.conditions-layer').css('display', 'none');
-//									$.onLabelValueChange({
-//										destinationName: data_id,
-//										payloadString: {
-//											data_value: data_value,
-//											status: label.status
-//										}
-//									});
 									$.newIssueSuccessed({
 										data_value: data_value,
 										data_id: data_id
 									});
-									$('.operation').toggleWin(true);
-									$('.MO').find('.confirm').unbind();
-//									$.three.capturer.intersected = null;
+									$('.conditions-layer').css('display', 'none');
+									parent.find('.close').click();
+									layer.closeAll();
 								});
 							});
 						}
@@ -647,7 +696,7 @@ $.extend({
 					$.getRealTimeData(label.label_id, changedTime, chart, 'AI');
 				});
 			},
-			process: function(){
+			process: function() {
 				var processId = label.label_id;
 				var processName = label.label_name;
 				$('.conditions-layer').css('display', 'block');
@@ -669,44 +718,33 @@ $.extend({
 								process_id: processId
 							}, function() {
 								$('.conditions-layer').css('display', 'none');
-								$('.operation').toggleWin(true);
-//								var position = label.position;
-//								$.three.labelGroup.remove(label);
-//								$.initThree.initLabel({
-//									_id: processId,
-//									process_name: processName,
-//									status: 1
-//								}, position);
-//								$.newIssueSuccessed({
-//									data_value: data_value,
-//									data_id: data_id
-//								});
-//								$.three.capturer.intersected = null;
+								parent.find('.close').click();
+								layer.closeAll();
 							});
 						});
 					},
 					btn2: function() {
 						$('.conditions-layer').css('display', 'none');
-						$('.operation').toggleWin(true);
-//						$.three.capturer.intersected = null;
+						parent.find('.close').click();
 					}
 				});
 			},
 			anchor: function() {
-				var scadaId = label.scadaId;
-				var scadaName = label.scadaName;
+				var scadaId = label.label_id;
+				var scadaName = label.label_name;
 				layer.confirm('是否跳转至<span style="color: red;">' + scadaName + '</span>组态界面？', {
 					btn: ['确定', '取消'],
 					btn1: function() {
-						$('.mainTitle').find('.backSide').children('[scadaid=' + scadaId + ']').click();
+						console.log(scadaId)
+						$('.mainTitle').find('.backSide').children('[scadaId=' + scadaId + ']').click();
 					},
 					btn2: function() {
 						$('.operation').toggleWin(true);
-//						$.three.capturer.intersected = null;
+						layer.closeAll();
 					},
 					cancel: function() {
+						layer.closeAll();
 						$('.operation').toggleWin(true);
-//						$.three.capturer.intersected = null;
 					}
 				});
 			}
@@ -759,7 +797,6 @@ $.extend({
 				data: JSON.stringify(dataSent)
 			},
 			success: function(data) {
-				console.log(data);
 				$.initChart(chart, data, chartType);
 			}
 		})
@@ -968,9 +1005,12 @@ $.extend({
 				data: JSON.stringify(newData)
 			},
 			success: function(data) {
-				console.log(data);
+				console.log(data)
 				if(data.result == 1) {
 					callBack && callBack();
+					layer.msg("下发成功", {
+						icon: 1
+					});
 				} else {
 					layer.msg('下发失败！', {
 						icon: 2,
@@ -996,9 +1036,11 @@ $.extend({
 			type: 'GET',
 			crossDomain: true == !(document.all),
 			success: function(data) {
-				console.log(data);
 				if(data.result == 1) {
-					callback && callback()
+					callback && callback();
+					layer.msg("下发成功", {
+						icon: 1
+					});
 				} else {
 					fail && fail();
 					layer.closeAll();
@@ -1014,26 +1056,10 @@ $.extend({
 		var id = data.data_id;
 		var value = data.data_value;
 		var target = $.searchDataById(id, allData.parentData.scada_config.data_list);
-		console.log(id, value, target);
 		target.label_value = value;
 		allData.changedData.group = [];
 		allData.changedData.group.push(target);
 		$('#scada').get(0).contentWindow.postMessage(allData.changedData, '*');
-//		var originLabel = $.three.labelGroup.children[$.initThree.searchLabelFromId(data.data_id, $.initThree.judgeLabelType(data))];
-//		var newData = {
-//			data_id: originLabel.labelId,
-//			data_name: originLabel.labelName,
-//			data_value: data.data_value,
-//			data_unit: originLabel.labelUnit,
-//			port_type: originLabel.labelType,
-//			status: originLabel.labelStatus
-//		};
-//		data.high_battery && (newData.high_battery = data.high_battery);
-//		data.low_battery && (newData.low_battery = data.low_battery);
-//		var position = originLabel.position;
-//		$.three.labelGroup.remove(originLabel);
-//		$.initThree.initLabel(newData, position);
-		
 	},
 	moAjax: function(newData, callBack) {
 		$.ajax({
@@ -1047,12 +1073,11 @@ $.extend({
 				data: JSON.stringify(newData)
 			},
 			success: function(data) {
-				console.log(data);
 				if(data.code == 200) {
-					layer.msg('已下发！', {
+					callBack && callBack();
+					layer.msg('下发成功！', {
 						icon: 1
 					});
-					callBack && callBack();
 				}
 			}
 		});
@@ -1069,8 +1094,6 @@ $.extend({
 				})
 			},
 			success: function(data) {
-				console.log("conditions");
-				console.log(data);
 				if(data.total === 1) {
 					callback && callback(data);
 				} else if(data.total === 0) {
@@ -1115,12 +1138,9 @@ $.extend({
 		});
 	},
 	searchDataById: function(id, group) {
-		console.log(group);
 		var target;
 		group.forEach(function(data) {
-			console.log(data);
-			console.log(data.label_id);
-			if (data.label_id === id) {
+			if(data.label_id === id) {
 				target = data;
 			}
 		});

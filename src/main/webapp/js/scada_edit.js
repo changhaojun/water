@@ -1,6 +1,7 @@
 var allData = {
 	thingId: $('#thingId').val(),
 	scadaId: $('#scadaId').val(),
+	companyId: $('#companyId').val(),
 //	lanyueSrc: 'http://121.42.253.149:18822/scada',
 	lanyueSrc: 'http://localhost:80/scada',
 	ajaxComplated: {},
@@ -73,7 +74,8 @@ $.extend({
 			data: {
 				access_token: accesstoken,
 				filter: JSON.stringify({
-					trigger_type: "58f0431743929a10a8fb49fa"
+					trigger_type: "58f0431743929a10a8fb49fa",
+					company_id: allData.companyId
 				})
 			},
 			success: function(data) {
@@ -118,7 +120,7 @@ $.extend({
 		if (data && data.length > 0) {			
 			for(var i=0;i<data.length;i++){
 				var datas={};
-				datas.label_id = data[i]._id;
+				datas.label_id = data[i].scada_models_id;
 				datas.label_name = data[i].scada_name;
 				allData.parentData.scada_config.anchor_list.push(datas);
 			}
