@@ -368,7 +368,6 @@ $.extend({
 			data:{
 				filter:JSON.stringify({ port_type: ['DO'] })
 			},success:function(data){
-				console.log(data);
 				opts.callback && opts.callback(data);
 			}
 		});
@@ -436,7 +435,7 @@ $.extend({
 			target_status: targetData.status,
 			conditions: []
 		};
-		for (var i=0; i<targetData.list.length; i++) {
+		for (let i=0; i<targetData.list.length; i++) {
 			$.initData.vueData.config.conditions.push({
 				type: targetData.list[i].type,
 				entity: {
