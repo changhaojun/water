@@ -2,8 +2,8 @@ var allData = {
 	thingId: $('#thingId').val(),
 	scadaId: $('#scadaId').val(),
 	companyId: $('#companyId').val(),
-//	lanyueSrc: 'http://121.42.253.149:18822/scada',
-	lanyueSrc: 'http://localhost:80/scada',
+	lanyueSrc: 'http://121.42.253.149:18822/scada',
+//	lanyueSrc: 'http://localhost:80/scada',
 	ajaxComplated: {},
 	//新增
 	parentData: {
