@@ -762,7 +762,7 @@ $.extend({
 		var dataSent = {
 			data_id: dataId,
 			start_time: time.startDateSent,
-			end_time: time.endDateSent
+			end_time: time.endDateSent 
 		};
 		$.ajax({
 			type: "post",

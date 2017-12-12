@@ -20,7 +20,10 @@ var allData = {
 console.log( allData.createUser )
 
 $.extend({
-	init: function() {
+	init: function() {	
+		if($("#scadaId").val()){
+			allData.parentData.scada_id=$("#scadaId").val();
+		}
 		getToken(function() {
 			$.getData();
 			$.searchProcess();
