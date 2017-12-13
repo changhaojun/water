@@ -176,9 +176,9 @@ html{
 .layui-layer-dialog .layui-layer-content font{
 		color:#FFAE5B !important;
 }
-.layui-layer{
+/*.layui-layer{
 	box-shadow: 8px 8px rgba(0,0,0,.5) !important;
-}
+}*/
 .layui-layer-tips {
 	box-shadow: none !important;
 }

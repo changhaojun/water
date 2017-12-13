@@ -285,9 +285,9 @@ $.extend({
 		
 	},
 	editConfig: function() {
-		$('.config-title-name').html('修改配置');
-		$('.config').removeClass('hidden');
-		$('.config-mask').removeClass('hidden');
+//		$('.config-title-name').html('修改配置');
+//		$('.config').removeClass('hidden');
+//		$('.config-mask').removeClass('hidden');
 		var index = $(this).parents('tr').index();
 		$.initData.conditionId = $(this).attr('_id');
 		$.initData.tableIndex = index;
@@ -422,7 +422,11 @@ $.extend({
 		return data;
 	},
 	applyEditData: function(index) {
+		layer.load(3);
 		var targetData = $.initData.tableData.rows[index];
+		var number = targetData.list.filter(function(item) {
+			return item.type === 1;
+		}).length + 1;
 		$.initData.vueData.config = {
 			target_entity: {
 				name: targetData.thing_name,
@@ -454,6 +458,15 @@ $.extend({
 				var opts = {
 					id: $.initData.vueData.config.conditions[i].entity.id,
 					callback: function(data) {
+						if (data) {
+							number --;
+							if (number === 0) {
+								$('.config-title-name').html('修改配置');
+								$('.config').removeClass('hidden');
+								$('.config-mask').removeClass('hidden');
+								layer.closeAll();
+							}
+						}
 						$.initData.vueData.config.conditions[i].port.group = data;
 					}
 				};
@@ -463,6 +476,15 @@ $.extend({
 		var opts = {
 			id: $.initData.vueData.config.target_entity.id, 
 			callback: function(data) {
+				if (data) {
+					number --;
+					if (number === 0) {
+						$('.config-title-name').html('修改配置');
+						$('.config').removeClass('hidden');
+						$('.config-mask').removeClass('hidden');
+						layer.closeAll();
+					}
+				}
 				$.initData.vueData.config.target_port.group = data;
 			}
 		};
