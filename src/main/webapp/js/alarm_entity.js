@@ -355,7 +355,8 @@ $.extend({
 	},
 	// called when a message arrives
 	onMessageArrived:function (message) {
-		
+		console.log("MessageArrived!")
+		console.log(message)
 	  var topic = message.destinationName;
 	  var payload = message.payloadString;	  
 	  var dataConfig=JSON.parse(payload)

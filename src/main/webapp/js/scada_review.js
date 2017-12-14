@@ -244,7 +244,6 @@ $.extend({
 				});
 			}
 		});
-		console.log(allData.mqttGroup);
 		MQTTconnect();
 
 		function MQTTconnect() {
@@ -257,14 +256,13 @@ $.extend({
 				warning: "background: rgb(255, 134, 54); color: #fff; font-weight: bold; padding: 0 4px;",
 				fail: "background: rgb(232, 16, 16); color: #fff; font-weight: bold; padding: 0 4px;"
 			};
-			var client = new Paho.MQTT.Client(mqttHost, port, "server" + parseInt(Math.random() * 100, 10));
+			var client = new Paho.MQTT.Client(mqttHost, port, "server" + Date.now());
 			var options = {
 				timeout: 1000,
 				onSuccess: function() {
-					console.log("%cMQTT connect successfully.", style.successed);
+					console.log("%cMQTT connect successfully.", style.warning);
 					allData.mqttGroup.forEach(function(item) {
-						console.log(item.label_id)
-						client.subscribe( item.label_id.toString() );
+						client.subscribe( item.label_id + "" );
 					});
 				},
 				onFailure: function(message) {
@@ -277,12 +275,11 @@ $.extend({
 			// set callback handlers
 			client.onConnectionLost = function(responseObject) {
 				console.log("%cMQTT connect lost, trying connection again.", style.fail);
-				setTimeout(function() {
-					MQTTconnect();
-				}, 0);
+				console.log(responseObject)
+//				MQTTconnect();
 			};
 			client.onMessageArrived = function(message) {
-				console.log("MQTT messageArrived.", style.successed)
+				console.log("%cMQTT messageArrived.", style.successed);
 				var topic = message.destinationName;
 				var payload = JSON.parse(message.payloadString);
 				callback && callback(payload);
@@ -301,6 +298,23 @@ $.extend({
 			$(this).get(0).contentWindow.postMessage(allData.parentData, '*');
 		});
 	},
+	
+//data_id
+//:
+//1044756
+//data_time
+//:
+//"2017-12-13 19:04:38"
+//data_value
+//:
+//40.19
+//port_type
+//:
+//"AI"
+//status
+//:
+//1	
+	
 	updateMessageToChild: function(data) {
 //		setInterval(function() {
 //			var index = Math.round(Math.random() * (allData.mqttGroup.length - 1));
@@ -386,9 +400,12 @@ $.extend({
 				self.location.href = '/scadas'
 			} else if(code == 501) {
 				$.makeMqttGroup(data, function(dataNeedUpdate) {
-					console.log(dataNeedUpdate);
-//					console.log(allData.mqttGroup);
-					$.updateMessageToChild(dataNeedUpdate);
+					var newData = $.searchDataById(dataNeedUpdate.data_id, allData.mqttGroup);
+					$.newIssueSuccessed({
+						data_id: newData.label_id,
+						data_value: newData.label_value,
+						status: newData.status
+					});
 				});
 			}
 		});
@@ -751,7 +768,6 @@ $.extend({
 				layer.confirm('是否跳转至<span style="color: red;">' + scadaName + '</span>组态界面？', {
 					btn: ['确定', '取消'],
 					btn1: function() {
-						console.log(scadaId)
 						$('.mainTitle').find('.backSide').children('[scadaId=' + scadaId + ']').click();
 					},
 					btn2: function() {
@@ -1021,7 +1037,6 @@ $.extend({
 				data: JSON.stringify(newData)
 			},
 			success: function(data) {
-				console.log(data)
 				if(data.result == 1) {
 					callBack && callBack();
 					layer.msg("下发成功", {
@@ -1073,6 +1088,7 @@ $.extend({
 		var value = data.data_value;
 		var target = $.searchDataById(id, allData.parentData.scada_config.data_list);
 		target.label_value = value;
+		(typeof data.status === "number") && (target.status = data.status);
 		allData.changedData.group = [];
 		allData.changedData.group.push(target);
 		$('#scada').get(0).contentWindow.postMessage(allData.changedData, '*');

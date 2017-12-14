@@ -8,7 +8,13 @@ var auth_globalurl="http://121.42.253.149:18826";//获取资源列表
 var accesstoken;
 var refreshToken;
 
-var mqttHostIP="139.129.235.9"
+//var mqttHostIP="139.129.235.9"
+//var mqttName="admin"
+//var mqttWord="finfosoft123"
+//var portNum='61623'
+
+//测试环境
+var mqttHostIP="121.42.253.149"
 var mqttName="admin"
 var mqttWord="finfosoft123"
 var portNum='61623'

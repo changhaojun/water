@@ -34,7 +34,8 @@ $.initData = {
 		status: '',
 		port_define: '',
 		status_define: ''
-	}
+	},
+	localStorage: []
 };
 
 var extend = $.fn.extend({
@@ -361,6 +362,11 @@ $.extend({
 		});
 	},
 	getPort: function(opts) {
+//		var localData = $.getDataFromLocal(opts.id);
+//		if ( localData ) {
+//			opts.callback && opts.callback(localData);
+//			return;
+//		}
 		$.ajax({
 			type:"get",
 			url:globalurl+"/v1/missionDataTags?access_token="+accesstoken+"&thing_id="+opts.id,
@@ -368,6 +374,12 @@ $.extend({
 			data:{
 				filter:JSON.stringify({ port_type: ['DO'] })
 			},success:function(data){
+//				$.initData.localStorage.push({
+//					id: opts.id,
+//					data: data
+//				});
+//				console.log($.initData.localStorage);
+//				console.log(data);
 				opts.callback && opts.callback(data);
 			}
 		});
@@ -510,6 +522,14 @@ $.extend({
 			left: left,
 			top: top
 		});
+	},
+	getDataFromLocal: function(id) {
+		var res;
+		console.log($.initData.localStorage)
+		$.initData.localStorage.forEach(function(item) {
+			(item.id === id) && (res = item.data);
+		});
+		return res;
 	}
 });
 
