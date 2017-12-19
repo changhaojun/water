@@ -232,16 +232,17 @@ $.extend({
 		}
 		return res;
 	},
-	makeMqttGroup: function(originDatas, callback) {
+	makeMqttGroup: function(callback) {
 		var localDatas = allData.parentData.scada_config.data_list;
 		localDatas.forEach(function(a) {
 			var type = a.port_type;
 			if(/[A-Z]I/g.test(type)) {
-				originDatas.forEach(function(b) {
-					if(a.label_id === b.label_id) {
-						allData.mqttGroup.push(a);
-					}
-				});
+				allData.mqttGroup.push(a);
+//				originDatas.forEach(function(b) {
+//					if(a.label_id === b.label_id) {
+//						allData.mqttGroup.push(a);
+//					}
+//				});
 			}
 		});
 		MQTTconnect();
@@ -297,6 +298,14 @@ $.extend({
 		$('#scada').attr('src', allData.lanyueSrc).on('load', function() {
 			$(this).get(0).contentWindow.postMessage(allData.parentData, '*');
 		});
+		$.makeMqttGroup(function(dataNeedUpdate) {
+			var newData = $.searchDataById(dataNeedUpdate.data_id, allData.mqttGroup);
+			$.newIssueSuccessed({
+				data_id: newData.label_id,
+				data_value: newData.label_value,
+				status: newData.status
+			});
+		});
 	},
 	
 //data_id
@@ -340,7 +349,7 @@ $.extend({
 			//code = 200, 新增成功 //返回组态id,  //code = 201, 修改成功  ,  //code = 500, 直接返回  // code = 501 返回已经绑定的数据 //code = 300, 鼠标点击数据标签后的事件
 			var code = ev.originalEvent.data.code;
 			var data = ev.originalEvent.data.data;
-			if(code == 201) {
+			if (code == 201) {
 				//				var scadaId = ev.originalEvent.data.data._id;
 				var sentData = {
 					//					scada_models_id: ev.originalEvent.data.data._id,
@@ -399,14 +408,14 @@ $.extend({
 			} else if(code == 500) {
 				self.location.href = '/scadas'
 			} else if(code == 501) {
-				$.makeMqttGroup(data, function(dataNeedUpdate) {
-					var newData = $.searchDataById(dataNeedUpdate.data_id, allData.mqttGroup);
-					$.newIssueSuccessed({
-						data_id: newData.label_id,
-						data_value: newData.label_value,
-						status: newData.status
-					});
-				});
+//				$.makeMqttGroup(data, function(dataNeedUpdate) {
+//					var newData = $.searchDataById(dataNeedUpdate.data_id, allData.mqttGroup);
+//					$.newIssueSuccessed({
+//						data_id: newData.label_id,
+//						data_value: newData.label_value,
+//						status: newData.status
+//					});
+//				});
 			}
 		});
 	},
