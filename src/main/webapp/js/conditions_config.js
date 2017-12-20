@@ -374,6 +374,12 @@ $.extend({
 			data:{
 				filter:JSON.stringify({ port_type: ['DO'] })
 			},success:function(data){
+				if (data.length === 0) {
+					layer.msg("该实体下无数据，将无法保存", {
+						icon: 2,
+						time: 2000
+					});
+				}
 //				$.initData.localStorage.push({
 //					id: opts.id,
 //					data: data
