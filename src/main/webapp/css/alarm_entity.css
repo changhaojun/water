@@ -249,7 +249,7 @@ body .del-class .layui-layer-content{
 }
 /*弹窗*/
 #searchData{
-	width: 265px;
+	width: 260px;
     height: 35px;
     padding-left: 20px;
     color: #1ab394;	
@@ -280,7 +280,7 @@ body .del-class .layui-layer-content{
 	background: #eee;
 }
 .confirmInfo .fix{
-	width: 17%;
+	width: 26%;
     position: fixed;
     background: #fff;
 }
