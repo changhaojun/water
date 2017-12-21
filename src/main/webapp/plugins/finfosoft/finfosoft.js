@@ -45,8 +45,21 @@ const Finfosoft = {
         this.message = opts.msg ? opts.msg : "loading...";
         this.time = opts.time ? opts.time : 0;
         this.init();
-    }
-
+	},
+	Selecter: function (opts) {
+		
+		this.initVal = opts.initVal;
+		this.layoutCount = opts.layoutCount ? opts.layoutCount : 5;
+		this.textIndent = opts.textIndent ? opts.textIndent : 30;
+		this.unfload = opts.unfload !== undefined ? opts.unfload : false;
+		this.barBg = opts.barBg ? opts.barBg : "rgba(0, 0, 0, .38)";
+		this.optionBg = opts.optionBg ? opts.optionBg : "#ffe1b6";
+		this.dragBg = opts.dragBg ? opts.dragBg : "#000";
+		this.itemHeight = opts.itemHeight ? opts.itemHeight : 30;
+		this.buildBasicEnvironment(opts.el);
+		this.onChanged = opts.onChanged;
+		this.init();
+	}
 }
 
 //工具库
@@ -86,7 +99,7 @@ Finfosoft.Ring.prototype = {
 	//创建基本dom环境
 	buildBasicEnvironment(parentDom) {
 		const parent = document.querySelector(parentDom);
-		parent.classList.add("finfosoft-ring");
+		parent.classList.add("finfosoft-ring", "finfosoft");
 		this.parent = parent;
 		this.width = this.parent.clientWidth;
 		this.height = this.parent.clientHeight;
@@ -246,7 +259,7 @@ Finfosoft.OnOff.prototype = {
 
 		// this.buildBasicEnvironment(parentDom);
 		const parent = document.querySelector(parentDom);
-		parent.classList.add('finfosoft-onOff');
+		parent.classList.add('finfosoft-onOff', "finfosoft");
 		this.parent = parent;
 
 		const leftBtn = document.createElement('span');
@@ -369,10 +382,10 @@ Finfosoft.Clock.prototype = {
 	//创建基本dom环境
 	buildBasicEnvironment(parentDom) {
 		const parent = document.querySelector(parentDom);
-		parent.classList.add("finfosoft-clock");
+		parent.classList.add("finfosoft-clock", "finfosoft");
 		this.parent = parent;
 		this.width = this.parent.clientWidth;
-		this.height = this.parent.clientHeight;
+		this.height = this.width;
 
 		const canvas = document.createElement('canvas');
 		const gc = canvas.getContext('2d');
@@ -506,6 +519,7 @@ Finfosoft.Clock.prototype = {
 				(ev.keyCode === 13) && this.plugNum.blur();
 			};
 		}
+		_.canvasAutoResize(this.parent, this.canvas);
 	},
 
 	//基础背景绘制
@@ -523,8 +537,7 @@ Finfosoft.Clock.prototype = {
 		this.drawPoint(circleR, 0, 360, "gray", 1);
 		this.drawFont(fontR);
 		if (range) {
-			(range[0] !== range[1]) && this.drawPoint(circleR, range[0], range[1], this.mainColor, 2);
-			(range[0] === range[1]) && this.drawPoint(circleR, 0, 360, this.mainColor, 2);
+			this.drawPoint(circleR, range[0], range[1], this.mainColor, 2);
 		}
 	},
 
@@ -557,13 +570,20 @@ Finfosoft.Clock.prototype = {
 	drawPoint(len, beginDeg, endDeg, color, r) {
 		const [cx, cy] = [this.width/2, this.height/2];
 		const s = 5; //两点间的角度
+		const t = 0.04;
+		let tr = 0;
 		beginDeg = Math.round(beginDeg / s) * s; //规范起始点角度
 		const n = endDeg >= beginDeg ? Math.round( (endDeg - beginDeg) / 5 ) : Math.round( (endDeg - beginDeg + 360) / 5 ); //点数
 		for (let i = 0; i <= n; i ++) {
-			let deg = (beginDeg + s * i - 90) * Math.PI / 180;
-			let [px, py] = [cx + len * Math.cos( deg ), cy + len * Math.sin( deg )];
+			const deg = (beginDeg + s * i - 90) * Math.PI / 180;
+			const [px, py] = [cx + len * Math.cos( deg ), cy + len * Math.sin( deg )];
+			if (r > 1) {
+				tr = r + i * t;
+			} else {
+				tr = r;
+			}
 			this.gc.beginPath();
-			this.gc.arc(px, py, r, 0, Math.PI * 2, false);
+			this.gc.arc(px, py, tr, 0, Math.PI * 2, false);
 			this.gc.fillStyle = color;
 			this.gc.fill();
 		}
@@ -617,6 +637,7 @@ Finfosoft.Clock.prototype = {
 
 };
 
+
 Finfosoft.Loading.prototype = {
     //构造函数指针修正
     constructor: this,
@@ -636,7 +657,7 @@ Finfosoft.Loading.prototype = {
     buildBasicEnvironment() {
 		const bodyDom = document.getElementsByTagName('body')[0];
 		const parent = document.createElement('div');
-        parent.classList.add('finfosft-loading');
+        parent.classList.add('finfosft-loading', "finfosoft");
 
         const loadBox = document.createElement('div');
         loadBox.classList.add('loading');
@@ -665,6 +686,266 @@ Finfosoft.Loading.prototype = {
 	closeLoading(){
         this.bodyDom.style.overflow = '';
         this.parent.style.display = 'none';
+	}
+}
+
+//Selceter插件方法
+
+Finfosoft.Selecter.prototype = {
+	
+	//构造函数指针修正
+	constructor: this,
+	
+	//插件初始化
+	init() {
+		this.selectedVal = "";
+		this.setunfload(this.unfload);
+		this.optionClick();
+		if (this.isBottomPull) this.bottomClick();
+		//this.documentClick();
+		this.wraperOnMouseWheel();
+		this.onkeyCtrl();
+		this.onDrag();
+	},
+	
+	//创建基本dom环境
+	buildBasicEnvironment (parentDom) {
+		this.renderVal = this.initVal[0];
+		const parent = document.querySelector(parentDom);
+		parent.classList.add("finfosoft-selecter", "finfosoft");
+		this.width = parent.clientWidth;
+
+		this.height = this.renderVal.length > this.layoutCount ? this.layoutCount * this.itemHeight : this.renderVal.length * this.itemHeight;
+		parent.style.height = this.height + "px";
+		this.parent = parent;
+		this.optionsList = [];
+		this.barHeight = this.height - 10;
+		this.dragHeight = this.height * this.barHeight / (this.renderVal.length * this.itemHeight);
+		this.optionHeight = this.height;
+
+		this.optionBox = this.buildOptionBox();
+		this.options = this.buildOption();
+		//this.optionContent = this.buildOptionContent();
+		this.scrollBar = this.buildScrollbar();
+		this.scrollBarDrag = this.buildBarDrag();
+		//this.optionContent.appendChild(this.options);
+		
+		if (this.itemHeight * this.renderVal.length > this.height) {
+			this.scrollBar.appendChild(this.scrollBarDrag);
+			this.optionBox.appendChild(this.scrollBar);
+			
+		}
+		this.optionBox.appendChild(this.options);
+
+		this.parent.appendChild(this.optionBox);	
+	},
+	
+	//创建选项最外层容器,用于列表整体向上移动
+	buildOptionBox () {
+		
+		const optionBox = document.createElement("div");
+		optionBox.style.width = this.width + "px";
+		optionBox.style.height = this.height +"px";
+		optionBox.style.overflow = "hidden";
+		optionBox.setAttribute("tabindex","-1");
+		optionBox.style.outline = "none";
+		optionBox.style.position = "relative";
+		optionBox.style.background = this.optionBg;
+		return optionBox;
+	},
+	
+	//创建opations及其父容器
+	buildOption () {
+		const optionWraper = document.createElement("ul");
+		optionWraper.style.width = this.width + "px";
+		optionWraper.style.position = "absolute";
+		optionWraper.style.top = "0px";
+		const initVal = this.initVal;
+		const itemHeight = this.itemHeight;
+		let optionItem = null;
+		//先设定传入的data为array
+		if (Object.prototype.toString.call(initVal) === '[object Array]') {
+			
+			for (let i = 0;i < initVal[0].length;i ++) {
+				optionItem = document.createElement("li");
+				optionItem.style.height = itemHeight + "px";
+				optionItem.style.lineHeight = itemHeight + "px";
+				optionItem.style.textIndent = this.textIndent + "px";
+				optionItem.style.cursor = "pointer";
+				optionItem.classList.add("optionsItem");
+				if(initVal.length === 1 && initVal[0][i].name) {
+					optionItem.innerText = initVal[0][i].name;
+				} else if(initVal.length === 2) {
+					const key = initVal[1];
+					optionItem.innerText = initVal[0][i][key];
+				}
+				this.optionsList.push(optionItem);
+				optionWraper.appendChild(optionItem);
+			}
+		}
+		return optionWraper;
+	},
+	
+	//buildscrollbar  创建滚动条
+	buildScrollbar () {
+		const bar = document.createElement("div");
+		bar.classList.add("selecter-bar");
+		bar.style.height = this.barHeight + "px";
+		bar.style.background = this.barBg;
+		return bar;
+	},
+	
+	//创建滚动条的滑块
+	buildBarDrag () {
+		const drag = document.createElement("div");
+		drag.style.height = this.dragHeight + "px";
+		drag.style.background = this.dragBg;
+		return drag;
+	},
+	
+	//选项鼠标点击事件
+	optionClick () {
+		const optionList = this.optionsList;
+		let i = 0;
+		let selectedVal = this.selectedVal;
+		const onChanged = this.onChanged;
+		for (; i < optionList.length;i ++) {
+			optionList[i].index = i;
+			optionList[i].onclick = () => {
+				this.unfload = false;
+				let unfload = this.unfload;
+				this.setunfload(false);
+			}
+			optionList[i].addEventListener("click",function() {
+				const str = this.innerHTML;		
+				if (selectedVal != str) {
+					onChanged && onChanged(this.index)
+					selectedVal = this.innerHTML;
+				}
+			},false)
+			
+			optionList[i].onmouseenter = function () {
+				this.classList.add("activeOption");
+			}
+			
+			optionList[i].onmouseleave = function () {
+				this.classList.remove("activeOption");
+			}
+		}
+	},
+	
+	//设置展开收起
+	setunfload (unfload) {
+		//const unfload = this.unfload;
+		this.optionBox.style.height = unfload ? this.height + 'px' : 0;
+		this.parent.style.height = unfload ? this.height + 'px' : 0;
+		unfload ? this.optionBox.focus() : this.optionBox.blur();
+	},
+	
+/*	//网页别处点击收起
+	documentClick () {
+		document.onclick = (e) => {
+			this.unfload = false;
+			this.setunfload(false);
+		}
+	},*/
+
+	
+	//下方鼠标滚轮事件
+	wraperOnMouseWheel () {
+		
+		this.optionBox.onmousewheel = e => {
+			e.preventDefault ? e.preventDefault() : e.returnValue = false;
+			e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+			if (e.wheelDelta > 0) {
+				this.optionsMoveDown();
+			};
+			
+			if (e.wheelDelta < 0) {
+				this.optionsMoveUp();
+			}
+		}
+	},
+	
+	//键盘控制列表上下移动
+	onkeyCtrl () {
+		this.optionBox.onkeydown = (ev) => {
+			ev = ev || window.event;
+			ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+			if (ev.keyCode == 40) {
+				ev.stopPropagation ? ev.stopPropagation() : ev.cancelBubble = true;
+				this.optionsMoveUp();
+			} else if (ev.keyCode == 38) {
+				ev.stopPropagation ? ev.stopPropagation() : ev.cancelBubble = true;
+				this.optionsMoveDown();
+			} else {
+				this.optionBox.blur();
+				return false;
+			}
+		}
+	},
+	
+	//滑块拖拽
+	onDrag () {
+		const drag = this.scrollBarDrag;
+		const bar = this.scrollBar;
+		const content = this.options;
+		const wraper = this.optionBox;
+		drag.onmousedown = (ev) => {
+			ev = ev || window.event;
+			ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+			ev.stopPropagation ? ev.stopPropagation() : ev.cancelBubble = true;
+			let d_bkt = ev.clientY - drag.offsetTop;
+			document.onmousemove = (ev) => {
+				ev = ev || window.event;
+				var top = ev.clientY - d_bkt;
+				if (top <= 0) {
+					top = 0;
+				};
+				if (top >= bar.clientHeight - drag.clientHeight) {
+					top = bar.clientHeight - drag.clientHeight;
+				};
+				var scale = top / (bar.clientHeight - drag.clientHeight);
+				var cony = scale * (content.clientHeight - wraper.clientHeight);
+				drag.style.top = top + 'px';
+				content.style.top = -cony + 'px';
+			}
+		}
+		document.onmouseup = (e) => {
+			e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+			document.onmousemove = null;
+		}
+	},
+	
+	optionsMoveDown () {
+		let t = this.options.offsetTop + this.dragHeight;
+		
+		if (t >= 0) {
+			t = 0;
+		}
+		if (t < -(this.options.clientHeight - this.optionBox.clientHeight)) {
+			t = -(this.options.clientHeight - this.optionBox.clientHeight);
+		};
+		let scale = t / (this.options.clientHeight - this.optionBox.clientHeight);
+		let top = scale * (this.scrollBar.clientHeight - this.scrollBarDrag.clientHeight);
+		this.options.style.top = t + "px";
+		this.scrollBarDrag.style.top = -top + "px"
+		
+	},
+	
+	optionsMoveUp () {
+		let t = this.options.offsetTop - this.scrollBarDrag.offsetHeight;
+			
+		if (t >= 0) {
+			t = 0;
+		}
+		if (t < -(this.options.clientHeight - this.optionBox.clientHeight)) {
+			t = -(this.options.clientHeight - this.optionBox.clientHeight);
+		};
+		let scale = t / (this.options.clientHeight - this.optionBox.clientHeight);
+		let top = scale * (this.scrollBar.clientHeight - this.scrollBarDrag.clientHeight);
+		this.options.style.top = t + "px";
+		this.scrollBarDrag.style.top = -top + "px";
 	}
 }
 
@@ -709,6 +990,14 @@ const _ = {
 		}
 		select.value = index;
 		return select;
+	},
+
+	canvasAutoResize(container, canvas) {
+		window.onresize = () => {
+			const size = container.clientWidth;
+			canvas.style.width = size + 'px';
+			canvas.style.height = size + 'px';
+		}
 	}
 
 }
