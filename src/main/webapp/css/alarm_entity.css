@@ -350,4 +350,6 @@ body .del-class .layui-layer-content{
 .unconfigurAble .alarmContent .dataLable{
 	margin-top:20px;
 }
-
+input{
+	display: inline-block !important;
+}

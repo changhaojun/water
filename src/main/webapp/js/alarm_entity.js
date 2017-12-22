@@ -327,6 +327,7 @@ $.extend({
 		  var options = {
 				  timeout: 1000,
 				  onSuccess:function() {
+				  	console.log("MQTT connection successful")
 					  for(var i=0;i<dataIds.length;i++){
 						  initData.topic=dataIds[i]+"";
 						  client.subscribe(initData.topic);
@@ -360,6 +361,7 @@ $.extend({
 	  var topic = message.destinationName;
 	  var payload = message.payloadString;	  
 	  var dataConfig=JSON.parse(payload)
+	  console.log(dataConfig)
 	  var dataId=dataConfig.data_id
 	  var dataValue;
 	  if(dataConfig.port_type=="DO"||dataConfig.port_type=="DI"){
