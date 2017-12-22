@@ -5,249 +5,263 @@
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="/plugins/font-awesome/css/font-awesome.min.css"/>
 		<link rel="stylesheet" href="/plugins/bootstarp/css/bootstrap.min.css" />
-		<link rel="stylesheet" href="/plugins/bootstrap-datetimepicker/css/datetimepicker.css" />
 		<link rel="stylesheet" type="text/css" href="/plugins/finfosoft/finfosoft.css" />
-		<link rel="stylesheet" href="/css/task.css?1.46" />
+		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+		<link rel="stylesheet" type="text/css" href="/css/task.css" />
 	</head>
 	<body>
 		<input type="text" id="companyId" value="${companyId}" hidden="hidden"/>
-		<div class="taskBox">
-			<!--账户top-->
+		<div id="task">
 			<div class="taskTop">
 				<span>任务管理</span>
 				<span>/</span>
-				<span>Task</span>	
+				<span>当前位置：</span>	
+				<span>工艺列表</span>
+				<el-tooltip class="item" effect="dark" content="新增工艺" placement="bottom-start">
+					<button class="addTask" @click="addProcess">新增工艺</button>
+				</el-tooltip>
 			</div>
 			<hr>
-			<!--账户内容-->
-			<div class="taskContent row">
-				<div class="taskTree">
-					<div class="taskTree-cir"></div>
-					<div class="taskTree-line">
-						<div class="taskTree-add"  data-toggle="tooltip" data-placement="right" title="添加工艺">+</div>
+			
+			<!-----------------------------工艺列表----------------------------------->
+			<div class="taskContent">
+				<div v-for = "(process,index) in processList" class="processBox" >
+					<div @click="getMission(index,$event)">
+						<div class="processName" v-text="process.process_name">
+						</div>
+						<div v-if="process.trigger_name=='人工触发'" class="processtTigger">
+							{{process.trigger_name}}
+						</div>
+						<div v-if="process.trigger_name=='事件触发' || process.trigger_name=='异常处理'" class="processtTigger noPadding" >
+							<dl>
+								<span class="shrinkConditions fa fa-caret-down"></span>
+								<dd v-for = "conditions in process.trigger_conditions">
+									<span class="conditions" @click="shrinkConditions(index,$event)" style="height: 100%;">{{conditions.thing_name}}:{{conditions.data_name}} {{conditions.compare_oper_str}} {{conditions.compare_data_name}}</span>
+								</dd>
+							</dl>
+						</div>
+						<div v-if="process.trigger_name=='时间周期触发'" class="processtTigger">
+							{{process.trigger_name}}：开始时间  {{process.trigger_conditions[0].begin_time}} 时间间隔  {{process.trigger_conditions[0].cycle_time}}分钟
+						</div>
+						<div v-if="process.trigger_name=='定时触发'" class="processtTigger">
+							{{process.trigger_name}}：开始时间  {{process.trigger_conditions[0].start_time}} 触发周期  {{process.trigger_conditions[0].cycle_str}}
+						</div>
+						<div class="processTimes">
+							执行：{{process.action_times}}次
+						</div>
+						<div class="processTools">
+							<el-tooltip class="item" effect="dark" content="添加任务" placement="top">
+								<span class="fa fa-plus-square-o" @click="addMission(index,$event)"></span>
+							</el-tooltip>
+							<el-tooltip class="item" effect="dark" content="修改工艺" placement="top">
+								<span class="fa fa-edit" @click="editProcess(index,$event)"></span>
+							</el-tooltip>
+							<el-tooltip class="item" effect="dark" content="删除工艺" placement="top">
+								<span class="fa fa-trash-o" @click="deleteProcess(index,$event)"></span>
+							</el-tooltip>
+							<el-tooltip class="item" effect="dark" content="调整任务顺序" placement="top">
+								<span class="fa fa-exchange" @click="updateIndex(index,$event)"></span>
+							</el-tooltip>
+						</div>
 					</div>
-					<div class="taskTree-cir"></div>
-				</div>
-				<div class="taskRule">
-					<div class="ruleTitle">
-						<div class="content1"></div>
-						<div class="content2"></div>
-					</div>
-					<div class="ruleMain">
-						
-					</div>
-					<div class="addRule" data-toggle="tooltip" data-placement="top" title="添加新任务">
-						添加新任务
+					
+					<!--------------------------任务列表--------------------------------->
+					<div class="missionBox">
+						<div class="mission" v-for="(mission,index) in missionList" @mousedown="dragStart(index,$event)">
+							<div class="missionName" v-text="mission.mission_name">
+							</div>
+							<div class="missionAction" v-if="mission.action_str">
+								{{mission.target_thing_name}}:{{mission.target_data_name}}--{{mission.action_str}}
+							</div>
+							<div v-else class="missionAction">
+								{{mission.target_thing_name}}:{{mission.target_data_name}}--{{mission.action}}
+							</div>
+							<div class="waitingTime">
+								等待{{mission.wait_time}}秒
+							</div>
+							<div class="missionTools">
+								<el-tooltip class="item" effect="dark" content="修改任务" placement="top">
+									<span class="fa fa-edit" @click="editMission(index)"></span>
+								</el-tooltip>
+								<el-tooltip class="item" effect="dark" content="删除任务" placement="top">
+									<span class="fa fa-trash-o" @click="deleteMission(index)"></span>
+								</el-tooltip>
+							</div>
+							<div style="clear:both"></div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		
-		<div class="addProcess" hidden="hidden">
-			<div class="addProcessContent">
-				<div class="row">
-					<div class="col-xs-6">
-						工艺名称：
-						<input type="text" id="addTechnologyName" class="controls" placeholder="请输入工艺名称" />
+			
+			
+			<!--------------------描述：工艺配置弹窗------------------->
+            <div class="addProcess" hidden="hidden">
+            	<div id="thingList" class="analogUl"></div>
+            	<!--<div id="targetThingList" class="analogUl"></div>-->
+            	<div class="dataCircle">
+            		<label>工艺名称</label>
+            		<input v-model="process.process_name" placeholder="请输入工艺名称" tipMsg="请输入工艺名称" class="must"/>
+            	</div>
+            	<div class="dataCircle">
+            		<label>触发类型</label>
+            		<select v-model="process.trigger_type" @change="getTriggerName">
+            			<option v-for="(triggerType,index) in triggerTypeList" :value = "triggerType._id">{{triggerType.trigger_name}}</option>
+            		</select>
+            	</div>
+            	<div class="dataCircle">
+            		<label>异常短信</label>
+            		<span class="controlBtn" @click="remindBtn($event)">
+						<span  value="1">开启</span>
+						<span class="greenBtn"  value="0">关闭</span>
+					</span>
+            	</div>
+            	<div class="dataCircle" v-if ="selectTriggerName == '事件触发'">
+            		<label>条件关系</label>
+            		<select v-model="process.is_or">
+            			<option value="0">与</option>
+						<option value="1">或</option>
+            		</select>
+            	</div>
+            	<div class="dataCircle" v-if ="selectTriggerName == '异常处理'">
+            		<label>关联工艺</label>
+            		<input placeholder="请输入关联工艺名称" tipMsg="请输入工艺名称" v-model="targetProcessName" @keyup="getTargetProcess($event)" class="must"/>
+            	</div>
+            	<hr>
+            	<span v-if = "selectTriggerName != '人工触发' || selectTriggerName != '异常处理'" class="triggerText">触发条件</span>
+				<button v-if ="selectTriggerName == '事件触发'" class="addConditionBtn" @click="addCondition">添加触发条件</button>
+				<!-----------------------事件触发的触发条件 start----------------------------->
+				<div v-for="(conditions,index) in trigger_conditions" v-if ="selectTriggerName == '事件触发'">
+					<div v-if="index!=0">
+						<hr>
+						<span class="closeBox" data-toggle="tooltip" data-placement="top" title="删除" @click="deleteCondition(index)">x</span>
 					</div>
-					<div class="col-xs-6">
-						触发类型：
-						<select id="triggerType" class="selectControls">
+					<div class="dataCircle">
+						<label>实体名称</label>
+						<input keyName="thing_name" placeholder="请输入实体名称" @keyup="searchThing(index,$event)" v-model="conditions.thing_name" class="must" tipMsg="请输入实体名称"/>
+					</div>
+					<div class="dataCircle">
+						<label>采集端口</label>
+						<select keyName="dataList" v-model.number="conditions.data_id" class="must" placeholder="请选择采集器端口" tipMsg="请选择采集器端口">
+							<option v-for="(data,index) in conditions.dataList" :value="data.data_id"> {{data.data_name}}</option>
 						</select>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-6">
-						异常短信：
-						<span class="controlBtn remindBtn">
-							<span  value="1">开启</span>
-							<span class="activeBtn" value="0">关闭</span>
-						</span>
-					</div>
-					<div class="col-xs-6 andOr">
-						条件关系：
-						<select id="isOr" class="selectControls">
-							<option  value="0">与</option>
-							<option selected="selected" value="1">或</option>
+					<div class="dataCircle">
+						<label>比较符</label>
+						<select v-model="conditions.compare_oper">
+							<option v-for="(oper,key) in comparison" :value = "key">{{oper}}</option>
 						</select>
 					</div>
-					<div class="col-xs-6 targetProcess">
-						关联工艺：<input type="text" placeholder="请输入关联工艺名称" class="targetProcessName controls" />
-						<ul class="targetProcessList" hidden="hidden">
-						</ul>
+					<div class="dataCircle"></div>
+					<div class="dataCircle">
+						<label>实体名称</label>
+						<input keyName="compare_thing_name" placeholder="请输入实体名称" v-model="conditions.compare_thing_name" @keyup="searchThing(index,$event)" class="must" tipMsg="请输入实体名称"/>
+					</div>
+					<div class="dataCircle">
+							<label>采集端口</label>
+							<select keyName="compareDataList" v-model.number="conditions.compare_data_id" class="must" tipMsg="请选择采集器端口">
+								<option v-for="(data,index) in conditions.compareDataList" :value="data.data_id"> {{data.data_name}}</option>
+							</select>
 					</div>
 				</div>
-				<hr>
-				<span class="triggerText">触发条件</span>
-				<button class="addConditionBtn" isBtn="true">添加触发条件</button>
-				<div class="row addRuleMain">
-					<div class="eventBox">
-						<div class="row">
-							<div class="col-xs-6">
-								实体名称：<input class="controls conditionThing" placeholder="请输入触发条件的实体名" />
-								<ul class="conditionThingList" hidden="hidden">
-								</ul>
-							</div>
-							<div class="col-xs-6">
-								采集端口：
-								<select class="controls conditionTag" >	
-								</select>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-6">
-								比较符：&nbsp;&nbsp;
-								<select class="controls compareOper">
-									<option value='gt'>></option>
-									<option value='lt'><</option>
-									<option value='eq'>=</option>
-								</select>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-6">
-								实体名称：<input class="controls compareThing" placeholder="请输入触发条件的实体名" />
-								<ul class="compareThingList" hidden="hidden">
-								</ul>
-							</div>
-							<div class="col-xs-6">
-								采集端口：
-								<select class="controls compareTag" >	
-								</select>
-							</div>
-						</div>
-						<hr />
+				<!-----------------------事件触发的触发条件 end----------------------------->
+				
+				<!-----------------------定时触发的触发条件 start----------------------------->
+				<div v-if ="selectTriggerName == '定时触发'">
+					<div class="dataCircle">
+						<label>触发周期</label>
+						<select v-model="timing.cycle">
+							<option v-for="(cycle,key) in cycles" :value="key">{{cycle}}</option>
+						</select>
 					</div>
-					<div class="timingBox" hidden="hidden">
-						<div class="row">
-							<div class="col-xs-6">
-								开始时间：
-								<input class="controls" placeholder="请输入开始时间" id="datetimepicker" type="text" value="" readonly class="form_datetime" isCheck="false">
-							</div>
-							<div class="col-xs-6">
-								时间间隔：
-								<div class="control-group">
-									<input id="timeInterval" num-limit="limit" placeholder="请输入时间间隔" type="text" class="control-group-input" isCheck="false">
-									<div class="control-group-addon">分</div>
-								</div>
-							</div>
-						</div>
-						<hr />
+					<div class="dataCircle" v-if="timing.cycle == 'everyWeek'">
+						<label>选择星期</label>
+						<select v-model="timing.cycle_week">
+							<option v-for="(week,index) in weekList" :value="index">{{week}}</option>
+						</select>
 					</div>
-					<div class="timing" hidden="hidden">
-						<div class="row">
-							<div class="col-xs-6">
-								触发周期：<select class="controls chioceCycle">
-									<option value="everyDay">每日</option>
-									<option value="everyWeek">每周</option>
-								</select>
-							</div>
-							<div class="col-xs-6 weekBox">
-								选择星期:<select class="controls weekList">
-									<option value="0">周日</option>
-									<option value="1">周一</option>
-									<option value="2">周二</option>
-									<option value="3">周三</option>
-									<option value="4">周四</option>
-									<option value="5">周五</option>
-									<option value="6">周六</option>
-								</select>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-6">
-								开始时间：<input class="controls startTime" placeholder="请输入开始时间" isCheck="false" readonly/>
-								<div class="timeBox">
-									<div class="timeArrow"></div>
-									<div class="timeContent">
-										时间：&nbsp;<input isCheck="false" placeholder="时/24小时制"/>：<input isCheck="false" placeholder="分"/>
-										<button class="saveTime">确定</button>
-									</div>
-								</div>
-							</div>
-							
-						</div>
-					</div>
-					<div class="addConditionBox">
-						
-					</div>
-					<div class="row">
-						<div class="col-xs-12 actionTimesBox">
-							执行次数：
-							<input type="text" num-limit="limit" placeholder="请输入执行次数" class="actionTimes"  value=1 />
-						</div>
-						<hr />
-					</div>
-					<div class="row">
-						<div class="col-xs-offset-3 col-xs-6 saveBtnRow">
-							<button class="saveProcessBtn btn btn-block">保存工艺</button>
-						</div>
+					<div class="dataCircle timeBox">
+						<label>开始时间</label>
+						<el-input-number controls-position="right" v-model="timing.start_time.hour" :min="0" :max="23" label="时/24小时制" ></el-input-number>
+						<span>:</span>
+						<el-input-number controls-position="right" v-model="timing.start_time.minute" :min="0" :max="59" label="分钟"></el-input-number>
 					</div>
 				</div>
-			</div>
+				<!-----------------------定时触发的触发条件 end----------------------------->
+				
+				<!--------------------时间周期触发的触发条件 start--------------------------->
+				<div v-if ="selectTriggerName == '时间周期触发'">
+					<div class="dataCircle">
+						<label>开始时间</label>
+						<el-date-picker 
+							v-model="cycle.start_time" 
+							type="datetime" 
+							value-format="yyyy-MM-dd HH:mm"
+							tipMsg="请选择开始时间" class="must">
+					    </el-date-picker>
+					</div>
+					<div class="dataCircle">
+						<label>时间间隔</label>
+						<el-input-number controls-position="right" v-model.number="cycle.cycle_time" :min="0" label="分钟">
+						</el-input-number>
+					</div>
+				</div>
+				<!---------------------时间周期触发的触发条件 end-------------------------->
+				<div class="dataRow">
+					<label>执行次数</label>
+					<input v-model.number="process.action_times" class="must" tipMsg="请输入执行次数"  placeholder="请输入执行次数"/>
+				</div>
+				<div class="dataRow">
+					<button class="saveProcessBtn btn btn-block" @click="correctProcessData">保存工艺</button>
+				</div>
+            </div>
+            
+            <!------------------------------任务配置窗口--------------------------------->
+            <div class="addMission" hidden="hidden">
+            	<div id="controlThingList" class="analogUl"></div>
+            	<div class="dataRow">
+            		<label>任务名称</label>
+            		<input placeholder="输入任务名称" v-model="mission.mission_name"  class="must" tipMsg="请输入任务名称"/>
+            	</div>
+            	<hr>
+            	<div class="dataCircle">
+        			<label>实体名称</label>
+        			<input placeholder="输入实体名称" keyName="target_thing_name" v-model="missionThingName" @keyup="searchThing(null,$event)" class="must" tipMsg="请输入实体名称"/>
+            	</div>
+            	<div class="dataCircle">
+            		<label>控制端口</label>
+            		<select keyName="targetDataList" v-model="mission.target_data_id" @change="chioceTargetData" class="must" tipMsg="请选择控制端口">
+            			<option v-for="(data,index) in controlDataList" :value="data.data_id">{{data.data_name}}</option>
+            		</select>
+            	</div>
+            	<div class="dataCircle">
+            		<label>执行动作</label>
+            		<select v-if="controlData.port_type == 'DO'" v-model.number="mission.action">
+            			<option value=0>{{controlData.low_battery}}</option>
+            			<option value=1>{{controlData.high_battery}}</option>
+            		</select>
+            		<el-input-number v-if="controlData.port_type != 'DO'" controls-position="right" v-model.number="mission.action" :min="0" :max="100"></el-input-number>
+            	</div>
+            	<div class="dataCircle">
+            		<label>等待时间</label>
+            		<el-input type="number" :min="0" v-model.number="mission.wait_time">
+            			<template slot="append">秒</template>
+            		</el-input>
+            	</div>
+            	<hr />
+            	<div class="dataRow">
+					<button class="saveMissionBtn btn btn-block" @click="correctMissionData">保存任务</button>
+				</div>
+            </div>
 		</div>
 		
-		
-		<div class="addRuleBox" hidden="hidden">
-			<div class="addRuleContent">
-				<div class="row">
-					<div class="col-xs-12">
-						任务名称：
-						<input type="text" id="ruleName" class="fullcontrols " placeholder="请输入任务名称" />
-					</div>
-				</div>
-				<hr>
-				<div class="row addRuleMain">
-					<div class="controlBox">
-						<div class="row">
-							<div class="col-xs-6">
-								实体名称：<input class="controls" id="controlThing" placeholder="请输入下发控制的实体名" />
-								<ul id="controlThingList" hidden="hidden">
-								</ul>
-							</div>
-							<div class="col-xs-6">
-								控制端口：
-								<select class="controls" id="controlTag">	
-									<option value=0>请选择控制端口</option>
-								</select>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-6">
-								执行动作：
-								<div class="control-group ioAction">
-									<input id="inputAction" num-limit="limit" placeholder="请输入执行动作" type="text" class="control-group-input">
-									<div class="control-group-addon">%</div>
-								</div>
-								<div class="selectAction">
-									<select class="controls portAction">	
-									</select>
-								</div>
-							</div>
-							<div class="col-xs-6">
-								等待时间：
-								<div class="control-group">
-									<input id="waitTime" num-limit="limit" placeholder="请输入等待时间" type="text" class="control-group-input">
-									<div class="control-group-addon">秒</div>
-								</div>
-							</div>
-						</div>
-						<hr />
-						<div class="row saveBtnRow">
-							<button class="saveRuleBtn btn btn-block">保存动作</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<script src="https://cdn.bootcss.com/vue/2.5.9/vue.js"></script>
+		<script src="https://cdn.bootcss.com/axios/0.17.1/axios.min.js"></script>
+		<script src="https://unpkg.com/element-ui/lib/index.js"></script>
 		<script type="text/javascript" src="/plugins/jQuery/jquery-1.11.3.min.js"></script>
 		<script type="text/javascript" src="/plugins/bootstarp/js/bootstrap.min.js" ></script>
 		<script type="text/javascript" src="/plugins/layer/layer.min.js"></script>
 		<script type="text/javascript" src="/js/public_resources.js" ></script>
-		<script type="text/javascript" src="/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-		<script type="text/javascript" src="/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
-		<script type="text/javascript" src="/plugins/jquery.gridly/jquery.gridly.js?1.3"></script>
 		<script src="/plugins/finfosoft/finfosoft.js"></script>
-		<script type="text/javascript" src="/js/task.js?1.69" ></script>
+		<script src="/js/task.js"></script>
 	</body>
 </html>

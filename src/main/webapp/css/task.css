@@ -3,18 +3,221 @@ html{
 	height: 100% !important;
 }
 body{
+	background:#f3f3f4 !important;
 	height: 100% !important;
 	font-family: microsoft yahei !important;
 }
-.weekBox{
-	display: none;
+input{
+	cursor: auto !important; 
 }
-.timing{
-	padding: 0 20px;
+.layui-layer-page .layui-layer-content {
+	overflow-x: hidden !important; 
+}
+.layui-layer-title{
+	background-color: #1AB394 !important;
+	color: #ffffff !important;
+}
+#task >.taskTop{
+	width:100%;
+	height:55px;
+}
+#task >.taskTop> span{
+	font-size:16px;
+	padding-top:15px;
+	display: inline-block;
+}
+#task >.taskTop> span:nth-child(1){	
+	font-size:22px;
+	margin-left:20px;
+	color:#5d5d5d;	
+}
+#task >.taskTop> span:nth-child(2){
+	margin-left:5px;
+	margin-right:5px;
+}
+#task >.taskTop> span:nth-child(3){
+	color:#1ab394;	
+}
+#task > .taskTop > .addTask{
+	width: 155px;
+	height: 35px;
+	margin: 20px 40px 0 0;
+	float: right;
+	border: none;
+	background: #1AB394;
+	color: #ffffff;
+}
+#task > .taskTop > .addTask:hover{
+	opacity: 0.7;
+}
+#task > hr{
+	margin:0 20px;
+	width:calc(100% - 40px);
+	height:4px;
+	background:#e0e0e0;
+	border:0;
+	display: inline-block;
+}
+#task >.taskContent{
+	width: 100%;
+	height: calc(100% - 55px);
+}
+#task >.taskContent > .processBox{
+	width:calc(100% - 40px);
+	height: 55px;
+	margin: 20px 20px;
+	background: #1AB394;
+	color: #ffffff;
+	overflow: hidden;
+}
+#task >.taskContent > .processBox>div{
+	overflow: hidden;
+}
+/*#task >.taskContent > .processBox:first-child{
+	height: auto !important;
+}*/
+#task >.taskContent > .processBox .processName,
+#task >.taskContent > .processBox .processTimes,
+#task >.taskContent > .processBox .processtTigger,
+#task >.taskContent > .processBox .processTools{
+	height: 55px;
+	float: left;
+	color: #ffffff;
+	font-size: 16px;
+	text-align: left;
+	padding-left: 20px;
+	padding-top: 15px;
+}
+#task >.taskContent > .processBox .processName{
+	width: 15%;
+	font-weight: 700;
+}
+#task >.taskContent > .processBox .processtTigger,
+.missionBox .missionAction{
+	width: calc(85% - 320px);
+}
+#task >.taskContent > .processBox .processtTigger>dl{
+	overflow: hidden;
+    height: 55px;
+    background: #1AB394;
+    position: relative;
+    padding-left: 20px;
+    position: absolute;
+}
+.noPadding{
+	padding:0 !important;
+}
+.shrinkConditions{
+	float: left;
+	padding: 15px 15px 5px 0;
+}
+.showDlPlane{
+	height: auto !important;
+    background: #2e957d !important;
+    border: #167965 1px solid !important;
+}
+#task >.taskContent > .processBox .processtTigger>dl>dd{
+	height: 55px;
+	margin-right: 20px;
+	border-bottom: #167965 1px solid;
+}
+#task >.taskContent > .processBox .processtTigger>dl >dd:last-child{
+	border-bottom: none;
+}
+#task >.taskContent > .processBox .processtTigger> dl > dd >span{
+	cursor: pointer;
+    height: 55px;
+    padding: 15px 0;
+    line-height: 50px;
+}
+#task >.taskContent > .processBox .processtTigger>dl>dd :nth-last-child{
+	border-bottom: none;
+}
+#task >.taskContent > .processBox .processTimes,
+.missionBox .waitingTime{
+	width: 170px;
+}
+#task >.taskContent > .processBox .processTools,
+.missionBox .missionTools{
+	width: 150px;
+}
+#task >.taskContent > .processBox .processTools>span{
+	margin: 5px;
+	cursor: pointer;
+}
+#task >.taskContent > .processBox .processTools>span:nth-child(4){
+	transform:rotate(90deg)
+}
+.dataCircle{
+	width: 50%;
+	min-height: 65px;
+	float: left;
+	padding-top: 25px;
+	/*position: relative;*/
+}
+.dataCircle>label{
+	float: left;
+	color: #9f9f9f;
+	width: 90px;
+	height: 35px;
+	text-align: right;
+	line-height: 35px;
+	font-size: 14px;
+	padding: 0 10px 0 8px ;
+	font-weight: 500;
+}
+.dataCircle > input,
+.dataCircle > select,
+.dataCircle > .el-input-number,
+.dataCircle > .el-date-editor{
+	display: block;
+	float: left;
+    width: 70%;
+    height: 40px;
+    line-height: 32px;
+    font-size: 14px;
+    color: #a7a7a7;
+    text-align: left;
+}
+.dataCircle > input,
+.dataCircle > select{
+	 border: 1px solid #e5e6e7;
+}
+.dataCircle>.el-input-group--append{
+	max-width: calc(100% - 102px) ;
+}
+.dataRow{
+	width: 100%;
+	float: left;
+	padding-top: 25px;
+	position: relative;
+}
+.dataRow>label{
+	float: left;
+	color: #9f9f9f;
+	width: 90px;
+	height: 35px;
+	text-align: right;
+	line-height: 35px;
+	font-size: 14px;
+	padding: 0 10px 0 8px ;
+	font-weight: 500;
+}
+.dataRow > input,
+.dataRow > select{
+	display: block;
+	float: left;
+    border: 1px solid #e5e6e7;
+    border-radius: 1px;
+    width: calc(100% - 100px);
+    height: 34px;
+    line-height: 32px;
+    font-size: 14px;
+    color: #a7a7a7;
+    text-align: left;
 }
 .controlBtn{
 	height: 33px;
-	margin-left: 16px;
     padding: 6px 0;
 	color: #1ab394;
 	border: 1px solid #1ab394;
@@ -39,439 +242,34 @@ body{
 }
 .greenBtn{
 	background-color: #1ab394;
-	
 	color: #fff;
 }
-
-.timeBox{
-	display: none;
-    border: 1px solid #ABABAC;
-    width: 250px;
-    padding: 15px;
-    background: #fff;
-    z-index: 999;
-    border-radius: 5px;
-    left: 93px;
-    top: 27px;
-    position: absolute;
-    font-size: 12px;
-    box-shadow: 6px 7px 4px rgba(90,90,90,0.8);
+.layui-layer-content{
+	max-height: 590px;
 }
-.timeArrow{
-    width: 0;
-    height: 0;
-    left: 14px;
-    top: -12px;
-    border-left: 12px solid transparent;
-    border-right: 12px solid transparent;
-    border-bottom: 12px solid rgba(71, 194, 169,0.8);
-    position: absolute;
-}
-.timeBox input{
-	width:80px;
-}
-.taskBox{	
-	width:100%;
-	height: 100%;
-	background:#f3f3f4;
-	float:left;
-	position: relative;	
-	/*min-width:1366px;*/
-	overflow-y: hidden;
-	overflow-x: hidden;
-}
-.saveTime{
-	border: 1px solid #1AB394;
-    color: #ffffff;
-    background: rgb(26, 179, 148);
-    outline: none;
-    margin-top: 5px;
-    float: right;
-}
-.saveTime:hover{
-	color: #ffffff;
-    filter: alpha(opacity=80);
-    -moz-opacity: 0.8;
-    opacity: 0.8;
-}
-/*账户top区域*/
-.taskBox .taskTop{
-	width:100%;
-	height:65px;
-	
-}
-.taskBox .taskTop span{
-	font-size:22px;
-	padding-top:25px;
-	display: inline-block;
-}
-.taskBox .taskTop span:nth-child(1){	
-	margin-left:20px;
-	color:#5d5d5d;	
-}
-.taskBox .taskTop span:nth-child(2){
-	margin-left:5px;
-	margin-right:5px;
-}
-.taskBox .taskTop span:nth-child(3){
-	color:#1ab394;	
-}
-.taskBox hr{
+.addProcess hr,
+.addMission hr{
 	margin:0 20px;
 	width:calc(100% - 40px);
-	height:4px;
+	height:1px;
 	background:#e0e0e0;
 	border:0;
 	display: inline-block;
 }
-.taskContent{
-	background: #ffffff;
-	height: calc(100% - 110px);
-	margin:10px 20px 20px 20px;
-	overflow: auto;
-	position: relative;
-}
-.taskTree{
-	min-width: 383px;
-	padding-left: 50px;
-	padding-top: 20px;
-	float: left;
-	height: calc(100% - 110px);
-}
-.taskTree-cir{
-	height: 30px;
-	width: 30px;
-	border-radius: 45px;
-	background: #758499;
-}
-.taskTree-cir:last-child{
-	margin-bottom: 20px;
-}
- .taskTree-line{
-	width:6px;
-	margin-left: 12px;
-	padding:55px 0 55px 0;
-	background: #758499;
-}
-.taskTree-add{
-	height: 30px;
-	width: 30px;
-	text-align: center;
-	line-height: 22px;
-	font-size: 22px;
-	font-weight: bold;
-	margin-left: -13px;
-	border-radius: 45px;
-	border: 3px #FFFFFF solid;
-	background: #F1F1F1;
-	cursor: pointer;
-	color: #758499;
-}
-.stepBox{
-	width: 321px;
-	height: 110px;
-	
-}
- .stepText{
-	height: 53px;
-    margin-left: 60px;
-    margin-top: -53px;
-    font-size: 22px;
-    color: #D3D3D3;
-}
-.technologyName{
-	width: 250px;
-	height: 54px;
-	border-radius: 20px;
-	background: #F1F1F1;
-	margin-top: -18px;
-	margin-left: 45px;
-	border:#E7E7E7 1px solid;
-	/*position: absolute;*/
-}
-.technologyName:hover{
-	cursor: pointer;
-	filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
-	-moz-opacity:0.7; /*Firefox私有，透明度50%*/
-	opacity:0.7;/*其他，透明度50%*/
-}
-.technologyName-greenBorder{
-	width: 250px;
-	height: 54px;
-	left: -14px;
-    top: -1px;
-    color:#767676;
-	padding-left: 50px;
-	line-height: 50px;
-	background: url(/img/shuiwu_renwu_img_02.png) no-repeat;
-	position: relative;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-.technologyName-line{
-	width: 33px;
-	height:4px;
-	background: #758499;
-	position: absolute;
-	margin-left:250px;
-	margin-top: -30px;
-	display: none;
-}
-.technologyTools{
-	width:85px;
-	height:54px;
-    margin-right: -25px;
-    margin-top: -55px;
-	line-height: 50px;
-	float: right;
-	display: none;
-	position: relative;
-}
-.tooltip.right .tooltip-arrow{
-    border-right-color: #1AB394 !important;
-}
-.tooltip.top .tooltip-arrow{
-	bottom: 0;
-    margin-left: -5px;
-    border-width: 5px 5px 0;
-    border-top-color: #1AB394 !important;
-}
-.tooltip-inner{
-	max-width: 200px;
-    padding: 3px 8px;
-    color: #fff;
-    text-align: center;
-    background-color: #1AB394 !important;
-    border-radius: 4px;
-}
-.missionToolsEdit,.missionToolsDelete{
-	cursor: pointer;
-}
-.fa{
-	padding:7px;
-}
-.taskTree-greenNode{
-	height: 25px;
-	width: 25px;
-	margin-left: -9px;
-	margin-bottom: 85px;
-	border-radius: 50%;
-	border: 3px #FFFFFF solid;
-	background: #1AB394;
-	/*position: relative;*/
-}
-.layui-layer-btn0{
-	width: 100%;
-	margin:0 !important;
-	height: 35px !important;
-	font-size: 18px;
-	line-height: 30px !important;
-	text-align: center;
-	border-radius: 20px !important;
-}
-
-.taskRule{
-	width: calc(100% - 423px);
-	min-height: 150px;
-	margin-top: 30px;
-	float: left;
-	padding: 20px 10px;
-	border-radius:35px;
-	background: #F1F1F1;
-	border:#E7E7E7 1px solid;
-	display: none;
-}
-.addRule{
-	width:99%;
-	margin:auto;
-	height:50px;
-	text-align: center;
-	line-height: 50px;
-	font-size: 22px;
-	border:#657284 1px solid ;
-	color: #748398;
-	background-color: #FFFFFF;
-	border-radius: 45px;
-	cursor: pointer;
-}
-.ruleTitle{
-	width:99%;
-	margin:auto;
-	height:50px;
-	text-align: center;
-	padding: 0 20px;
-	margin-bottom: 20px;
-	line-height: 50px;
-	font-size: 22px;
-	border:#1AB394 1px solid ;
-	color: #748398;
-	background-color: #FFFFFF;
-	border-radius: 45px;
-}
-.missionBox{
-	/*display: flex;
-	display: -webkit-flex;*/
-	width:99%;
-	margin:auto;
-	margin-bottom: 20px;
-	height:50px;
-	text-align: left;
-	padding: 0 20px;
-	line-height: 50px;
-	font-size: 14px;
-	border:#657284 1px solid ;
-	color: #FFFFFF;
-	background-color: #758499;
-	border-radius: 45px;
-	cursor: move;
-}
-.missionBox > .content1,
-.missionBox > .content2,
-.missionBox > .content3,
-.missionBox > .content4,
-.missionBox > .content5,
-.ruleTitle > .content1,
-.ruleTitle > .content2
-{
-	height: 50px;
-	float: left;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-.missionBox > .content1{
-	text-align: left;
-	width: 28%;
-}
-.missionBox > .content2{
-	text-align: left;
-	width: 55%;
-}
-.missionBox > .content3{
-	text-align: left;
-	width: 15%;
-}
-/*.missionBox > .content4{
-	text-align: left;
-	width: 30%;
-}
-.missionBox > .content5{
-	text-align: left;
-	width: 10%;
-}*/
-.ruleTitle > .content1{
-	color: #1AB394;
-	text-align: left;
-	font-size: 14px;
-	width: 85%;
-}
-.ruleTitle > .content2{
-	color: #1AB394;
-	text-align: left;
-	font-size: 14px;
-	width: 15%;
-}
-.ruleMain{
-	position: relative;
-}
-.taskContent > .taskRule >.ruleMain>.missionBox:hover{
-	filter:alpha(opacity=80); /*IE滤镜，透明度50%*/
-	-moz-opacity:0.8; /*Firefox私有，透明度50%*/
-	opacity:0.8;/*其他，透明度50%*/
-}
-.taskContent > .taskRule> .addRule:hover{
-		filter:alpha(opacity=70); /*IE滤镜，透明度50%*/
-	-moz-opacity:0.7; /*Firefox私有，透明度50%*/
-	opacity:0.7;/*其他，透明度50%*/
-}
-.addRuleContent ,.addProcessContent{
-	padding:20px;
-	background: #ffffff;
-	overflow-x: hidden;
-}
-.eventBox ,.controlBox,.timingBox,.addEventBox{
-	padding: 0 20px;
-}
-.controls{
-	width:215px;
-	height: 30px;
-	margin-bottom: 25px;
-	margin-top: -5px;
-	float:right;
-}
-.selectControls{
-	width:215px;
-	height: 30px;
-	margin-bottom: 25px;
-	margin-top: -5px;
-	margin-right: 5px;
-	float:right;
-}
-ul{
-	width:215px;
-	margin-left: 85px;
-	max-height: 150px;
-	overflow: auto;
-	padding: 0;
-	z-index: 999;
-	position: absolute;
-	background: #fff;
-	top:25px;
-	border:#E7E7E7 1px solid;
-}
-li{
-	list-style: none;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-li:hover{
-	background: #F1F1F1;
-}
-.control-group{
-	width: calc(100% - 84px);
-	float: right;
-	margin-top: -5px;
-}
-.ioAction{
-		display: none;
-}
-.control-group-input{
-	width: calc(100% - 30px);
-    height: 30px;
-}
-.control-group-addon{
-	width:30px;
-	height: 30px;
-	float: right;
-	padding: 3px 8px;
-	background: #f1f1f1;
-	border: #A9A9A9 1px solid;
-	border-left: hidden;
-}
-.portAction{
-	margin-top: -24px;
-}
-.saveBtnRow,.addCondition{
-	padding: 0 34px;
-}
-.saveRuleBtn,.saveProcessBtn{
-    border: 1px solid #1AB394;
-    color: #ffffff;
-    background: rgb(26, 179, 148);
-    outline: none;
-}
-.saveRuleBtn:hover,.saveProcessBtn:hover{
-	color: #ffffff;
-   	filter:alpha(opacity=80); /*IE滤镜，透明度50%*/
-	-moz-opacity:0.8; /*Firefox私有，透明度50%*/
-	opacity:0.8;/*其他，透明度50%*/
-}
-.addConditionBtn{
+.addProcess >.triggerText{
 	position: absolute;
     z-index: 9;
-    margin-top: -36px;
+    margin-top: -20px;
+    left: 33px;
+    padding: 5px;
+    font-size: 12px;
+    color:#1AB394;
+    background: #ffffff;
+}
+.addProcess > .addConditionBtn{
+	position: absolute;
+    z-index: 9;
+    margin-top: -20px;
     right: 24px;
     font-size: 12px;
     padding: 2px 10px;
@@ -482,97 +280,125 @@ li:hover{
     border-radius: 4px;
     outline: none;
 }
-.addConditionBtn:hover{
+.addProcess > .addConditionBtn:hover{
 	color: #1AB394;
 	filter:alpha(opacity=60); /*IE滤镜，透明度50%*/
 	-moz-opacity:0.6; /*Firefox私有，透明度50%*/
 	opacity:0.6;/*其他，透明度50%*/
 }
-.triggerText{
-	position: absolute;
-    z-index: 9;
-    margin-top: -35px;
-    left: 33px;
-    padding: 5px;
-    font-size: 12px;
-    color:#1AB394;
-    background: #ffffff;
-}
-.actionTimesBox{
-	padding: 0px 35px;
-}
-.actionTimes{
-	width: 545px;
-	height: 30px;
-    margin-top: -4px;
-	float: right;
-}
-.fullcontrols{
-	width: 545px;
-	height: 30px;
-    margin-top: -4px;
-    margin-right: 5px;
-	float: right;
+.addProcess .saveProcessBtn,
+.addMission .saveMissionBtn{
+	width: 320px;
+	margin: auto;
+	margin-bottom: 20px;
+    border: 1px solid #1AB394;
+    color: #ffffff;
+    background: rgb(26, 179, 148);
+    outline: none;
 }
 .closeBox{
     position: absolute;
     z-index: 9;
-    margin-top: -37px;
-    right: 20px;
+    margin-top: -22px;
+    right: 30px;
     padding: 5px;
     background: #ffffff;
     cursor: pointer;
 }
-.layui-layer-content{
-	max-height: 590px;
+.analogUl{
+	width: 238px;
+	position: absolute;
+	z-index: 9;
 }
-.missionTools{
-	width: 77px;
-	height: 50px;
-	display: none;
+.timeBox > div{
+	width: 33% !important;
+	float: left !important;
+	/*height: 34px;*/
+}
+.timeBox > div input{
+	border-radius: 0;
+}
+.timeBox > span{
 	float: left;
+	line-height: 35px;
+    padding: 0 6px;
+}
+.el-picker-panel{
+	z-index: 99999999 !important;
+}
+.control-group{
+	width: calc(100% - 104px);
+    float: left;
+}
+.control-group-input{
+	width: calc(100% - 30px);
+    height: 34px;
+    display: block;
+    float: left;
+    border: 1px solid #e5e6e7;
+    border-radius: 1px;
+    line-height: 32px;
     font-size: 14px;
-    position: absolute;
-    right:0px;
-    padding-left: 10px;
-    /*padding-left: 10px;
-    margin-left: 474px;*/
-    z-index: 99;
+    color: #a7a7a7;
+    text-align: left;
 }
-.layui-layer{
-    box-shadow: 8px 8px rgba(0,0,0,.5) !important;
+.control-group-addon{
+	width:30px;
+	height: 34px;
+	float: right;
+	padding: 3px 8px;
+	background: #f1f1f1;
+	border: #A9A9A9 1px solid;
+	border-left: hidden;
 }
-::-webkit-scrollbar {
-	width: 5px;
+.saveRuleBtn:hover,.saveProcessBtn:hover{
+	color: #ffffff;
+   	filter:alpha(opacity=80); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.8; /*Firefox私有，透明度50%*/
+	opacity:0.8;/*其他，透明度50%*/
 }
-::-webkit-scrollbar-track {
-	width: 2px;
-	background-color: #f1f1f1;
-} /* 滚动条的滑轨背景颜色 */
-::-webkit-scrollbar-thumb {
-	width:5px;
-	background-color: #1AB394; 
-} /* 滑块颜色 */
-
-/*::-webkit-scrollbar-button {
-	background-color: #f1f1f1;
-}  滑轨两头的监听按钮颜色 */
-
-
-@media screen and (max-width: 1475px) {
-    .missionBox{
-        font-size: 12px !important;
-    }
-    .timeTitle{
-    	display: none;
-    }
-    .missionTools{
-    	color: #FFFFFF;
-	    border-radius: 0 40px 40px 0;
-	    background: #13202F;
-	    position: absolute;
-	    /*margin-top: -1px;
-	    margin-left: 558px;*/
-	    opacity: 0.7;
-    }
+.missionBox{
+	width: 100%;
+	/*height: auto;*/
+	padding: 0;
+    overflow: hidden;
+    background: #ffffff;
+    color: #000000;
+    
+}
+.missionBox > .mission{
+	width: calc(100% -40px);
+	overflow: hidden;
+	border-bottom: #EDEDED 1px solid;
+	
+}
+.missionBox > .mission.active{
+	background: #ffffff;
+	z-index: 99999;
+}
+.missionBox > .mission:last-child{
+	border-bottom: none;
+}
+.missionBox .missionName,
+.missionBox .missionAction,
+.missionBox .waitingTime,
+.missionBox .missionTools{
+	height: 55px;
+    float: left;
+    font-size: 16px;
+    text-align: left;
+    padding-left: 20px;
+    padding-top: 15px;
+}
+.missionBox .missionName{
+    width: 15%;
+    font-weight: 700;
+}
+.missionBox .missionTools{
+	color: #1AB394 !important;
+}
+.missionBox .missionTools >span{
+	margin: 5px;
+	cursor: pointer;
+	padding: 6px 9px 10px 0;
 }

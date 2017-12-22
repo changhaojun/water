@@ -23,4 +23,13 @@ public class TaskController extends Controller{
 		setAttr("companyId", companyId);
 		render("task_status.html");
 	}
+	
+	
+/*	@Clear
+	public void task2(){
+		Record company=getSessionAttr(Constants.SESSION_COMPANY);
+		String companyId=company.get("companyId");
+		setAttr("companyId", companyId);
+		render("task2.0.html");
+	}*/
 }
