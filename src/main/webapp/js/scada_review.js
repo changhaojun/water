@@ -299,48 +299,12 @@ $.extend({
 			$(this).get(0).contentWindow.postMessage(allData.parentData, '*');
 		});
 		$.makeMqttGroup(function(dataNeedUpdate) {
-			var newData = $.searchDataById(dataNeedUpdate.data_id, allData.mqttGroup);
 			$.newIssueSuccessed({
-				data_id: newData.label_id,
-				data_value: newData.label_value,
-				status: newData.status
+				data_id: dataNeedUpdate.data_id,
+				data_value: dataNeedUpdate.data_value,
+				status: dataNeedUpdate.status
 			});
 		});
-	},
-	
-//data_id
-//:
-//1044756
-//data_time
-//:
-//"2017-12-13 19:04:38"
-//data_value
-//:
-//40.19
-//port_type
-//:
-//"AI"
-//status
-//:
-//1	
-	
-	updateMessageToChild: function(data) {
-//		setInterval(function() {
-//			var index = Math.round(Math.random() * (allData.mqttGroup.length - 1));
-//			console.log(index, allData.mqttGroup.length)
-//			var type = allData.mqttGroup[index].port_type;
-//			if(type === "AI") {
-//				allData.mqttGroup[index].label_value = Math.round(Math.random() * 100);
-//			} else {
-//				allData.mqttGroup[index].label_value = Math.round(Math.random());
-//			}
-//			console.log(allData.mqttGroup[index].label_value);
-//
-			
-//			allData.changedData.group = [];
-//			allData.changedData.group.push(allData.mqttGroup[index]);
-//			$('#scada').get(0).contentWindow.postMessage(allData.changedData, '*');
-//		}, 2000);
 	},
 	getMessageFromChild: function() {
 		//父层接收子层信息
