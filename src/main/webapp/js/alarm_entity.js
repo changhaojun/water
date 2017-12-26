@@ -54,6 +54,7 @@ var $extend=$.fn.extend({
 	
 	//新增分组标签
 	addTag:function(){
+		var vue = this;
 		layer.prompt({
 			title: '输入新的分组标签',
 			formType: 0
@@ -71,7 +72,9 @@ var $extend=$.fn.extend({
 						layer.close(index);
 						layer.msg('添加成功',{icon:1,zIndex:99999999});
 						delete data.code;
-						initData.tags.unshift(data)
+						data.company_id = initData.companyId;
+						initData.allTags.unshift(data);
+						initData.selsetTags.unshift(data);
 					}else{
 						layer.msg(data.error,{icon:2,zIndex:99999999});
 					}
@@ -84,11 +87,12 @@ var $extend=$.fn.extend({
 		event.stopPropagation();
 		$.ajax({
 			type:'delete',
-			url:globalurl+'/v1/tags/'+initData.tags[index]._id+'?access_token='+initData.access_token,
+			url:globalurl+'/v1/tags/'+initData.allTags[index]._id+'?access_token='+initData.access_token,
 			async:true,
 			success:function(data){
 				if(data.code==200){
-					initData.tags.splice(index,1)
+					initData.allTags.splice(index,1)
+					initData.selsetTags.splice(index,1)
 					layer.msg(data.success,{icon:1,zIndex:99999999})
 				}else{
 					layer.msg(data.error,{icon:2,zIndex:99999999})

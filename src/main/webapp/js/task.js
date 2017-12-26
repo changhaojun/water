@@ -190,7 +190,6 @@ var vue = new Vue({
 			}
 			this.processEdit = false;
 			this.showProcessBox('新增工艺');
-			console.log(this.process)
 		},
 		editProcess:function(index,event){					//修改工艺
 			var divList = event.path;
@@ -211,7 +210,12 @@ var vue = new Vue({
 			var conditions = this.process.trigger_conditions;
 			if(conditions.length>0){
 				this.trigger_conditions = conditions;
+			}
+			if(this.process.trigger_name=='事件触发'){
 				this.getDataList(null,'dataList',0,conditions);
+			}else if(this.process.trigger_name=='时间周期触发'){
+				this.cycle.start_time = conditions[0].begin_time;
+				this.cycle.cycle_time = conditions[0].cycle_time;
 			}
 			this.processEdit = true;
 			this.showProcessBox('修改工艺');
@@ -511,7 +515,6 @@ var vue = new Vue({
 		saveProcess:function(process){			//保存工艺，发送请求
 			var params = new URLSearchParams();
 			params.append("data",JSON.stringify(process))
-
 			var httpType;
 			if(this.processEdit !=true){
 				httpType = 'post'
@@ -519,7 +522,7 @@ var vue = new Vue({
 				var processId = process._id;
 				httpType = 'put';
 				params.append("process_id",processId)
-				delete process._id
+//				delete process._id
 			}
 			var loading=new Finfosoft.Loading({
 				shade:['0.7','#ffffff'],
@@ -678,7 +681,6 @@ var vue = new Vue({
 				}
 				
 				if(provings[i].tagName =='INPUT'){
-					console.log(provings[i].value)
 					if(provings[i].value == '' || provings[i].value == undefined){
 						this.isAdopt = false;
 						provings[i].focus();
@@ -900,8 +902,6 @@ var vue = new Vue({
 			}
 		},
 		sendMissionsIndex:function(missions){
-			console.log(missions);
-			
 			var newMissionIndex = [];
 			var newIndex = 1;
 			for(mission of missions){
