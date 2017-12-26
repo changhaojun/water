@@ -2,8 +2,8 @@ var allData = {
 	thingId: $('#thingId').val(),
 	companyId: $('#companyId').val(),
 	accessToken: "",
-	lanyueSrc: 'http://121.42.253.149:18822/scada',
-//	lanyueSrc: 'http://localhost:80/scada',
+//	lanyueSrc: 'http://121.42.253.149:18822/scada',
+	lanyueSrc: 'http://localhost:80/scada',
 	ajaxComplated: {},
 	mqtt: { //MQTT订阅数据
 		host: mqttHostIP,
@@ -69,6 +69,9 @@ $.fn.extend({
 $.extend({
 	init: function() {
 		getToken(function() {
+			layer.load(3, {
+				shade: [0.4,'#fff']
+			});
 			$.initTitle();
 			$.getData();
 			$.searchProcess();
@@ -372,14 +375,7 @@ $.extend({
 			} else if(code == 500) {
 				self.location.href = '/scadas'
 			} else if(code == 501) {
-//				$.makeMqttGroup(data, function(dataNeedUpdate) {
-//					var newData = $.searchDataById(dataNeedUpdate.data_id, allData.mqttGroup);
-//					$.newIssueSuccessed({
-//						data_id: newData.label_id,
-//						data_value: newData.label_value,
-//						status: newData.status
-//					});
-//				});
+				layer.closeAll();
 			}
 		});
 	},
