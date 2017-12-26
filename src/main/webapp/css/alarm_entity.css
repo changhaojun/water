@@ -280,7 +280,7 @@ body .del-class .layui-layer-content{
 	background: #eee;
 }
 .confirmInfo .fix{
-	width: 26%;
+	/*width: 26%;*/
     position: fixed;
     background: #fff;
 }
@@ -350,6 +350,6 @@ body .del-class .layui-layer-content{
 .unconfigurAble .alarmContent .dataLable{
 	margin-top:20px;
 }
-input{
+/*input{
 	display: inline-block !important;
-}
+}*/

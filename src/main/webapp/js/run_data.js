@@ -7,6 +7,11 @@ $(function(){
 })
 
 function entityList(){
+	var loading=new Finfosoft.Loading({
+				shade:['0.7','#ffffff'],
+		        color:'#000000',
+		        msg:'正在获取数据，请稍后。。。',
+			})
 	$.ajax({
 		type: "get",
 		url: globalurl+"/v1/runDatas?company_id="+$('#companyId').val(),
@@ -17,13 +22,13 @@ function entityList(){
 			access_token: accesstoken
 		},
 		success:function(data){
+			loading.closeLoading();
 			$(".dataContent").html("");
 			if(data.rows.length==0){
 		    	$(".dataContent").html("<p style='padding-left:20px;'>暂无数据</p>");
-		   }
-			var str='';
+		  }
 			for(var i=0;i<data.rows.length;i++){
-				entityData(data,i)
+				entityData(data,i)					
 			}	
 		}
 	})
@@ -31,42 +36,64 @@ function entityList(){
 //获取实体数据
 function entityData(data,i){
 	var str='';
+	var content,name;
+	if(data.rows[i].device_name){
+		name = data.rows[i].device_name+'-'+data.rows[i].dataName
+	}else{
+		name ='该实体未绑定设备'
+	}
 	if(data.rows[i].run_data){
-		str='<div class="dataList" style="cursor:pointer;" onclick="look(&apos;'+data.rows[i]._id+'&apos;)">'+
+		content = '<div style="width:478px;margin:0 auto;" class="contentTop" id="'+data.rows[i]._id+'"></div><div class="contentBottom"><span class="fa fa-clock-o"> '+data.rows[i].run_data.data_times[0].substring(0,7)+'&nbsp; &nbsp;&nbsp;&nbsp;'+'72h</span><span >'+name+'</span></div>'
+	}else{
+		content = '<div style="width:478px;margin:0 auto; text-align:center; padding-top:80px;" class="contentTop" id="'+data.rows[i]._id+'">暂无数据</div><div class="contentBottom"><span>'+name+'</span></div>'
+	}
+	str='<div class="dataList" style="cursor:pointer;" onclick="look(&apos;'+data.rows[i]._id+'&apos;)">'+
 				'<div class="listTop">'+
 					'<span>'+data.rows[i].thing_name+'</span>'+							
 				'</div>'+
 				'<div class="listHr"></div>'+
-				'<div class="listContent">'+
-					'<div style="width:478px;margin:0 auto;" class="contentTop" id="'+data.rows[i]._id+'">'+
-					
-					'</div>'+
-					'<div class="contentBottom">'+
-							'<span class="fa fa-clock-o">'+' '+data.rows[i].run_data.data_times[0].substring(0,7)+'&nbsp; &nbsp;&nbsp;&nbsp;'+'72h'+'</span>'+
-							'<span >'+data.rows[i].device_name+'-'+data.rows[i].dataName+'</span>'+
-					'</div>'+
-				'</div>'+			
+				'<div class="listContent">'+content+'</div>'+			
 			'</div>';
 			$(".dataContent").append(str);
 		chartInfo(data,i)
-	}else{
-		str='<div class="dataList" style="cursor:pointer;" onclick="look(&apos;'+data.rows[i]._id+'&apos;)">'+
-				'<div class="listTop">'+
-					'<span>'+data.rows[i].thing_name+'</span>'+							
-				'</div>'+
-				'<div class="listHr"></div>'+
-				'<div class="listContent">'+
-					'<div style="width:478px;margin:0 auto; text-align:center; padding-top:80px;" class="contentTop" id="'+data.rows[i]._id+'">'+
-						'暂无数据'+
-					'</div>'+
-					'<div class="contentBottom">'+
-						'<span>'+data.rows[i].device_name+'-'+data.rows[i].dataName+'</span>'+
-					'</div>'+
-				'</div>'+			
-			'</div>';
-			$(".dataContent").append(str);
-		chartInfo(data,i)	
-	}
+	
+	
+//	if(data.rows[i].run_data){
+//		str='<div class="dataList" style="cursor:pointer;" onclick="look(&apos;'+data.rows[i]._id+'&apos;)">'+
+//				'<div class="listTop">'+
+//					'<span>'+data.rows[i].thing_name+'</span>'+							
+//				'</div>'+
+//				'<div class="listHr"></div>'+
+//				'<div class="listContent">'+
+//					'<div style="width:478px;margin:0 auto;" class="contentTop" id="'+data.rows[i]._id+'">'+
+//					
+//					'</div>'+
+//					'<div class="contentBottom">'+
+//							'<span class="fa fa-clock-o">'+' '+data.rows[i].run_data.data_times[0].substring(0,7)+'&nbsp; &nbsp;&nbsp;&nbsp;'+'72h'+'</span>'+
+//							'<span >'+data.rows[i].device_name+'-'+data.rows[i].dataName+'</span>'+
+//					'</div>'+
+//				'</div>'+			
+//			'</div>';
+//			$(".dataContent").append(str);
+//		chartInfo(data,i)
+//	}else{
+//		str='<div class="dataList" style="cursor:pointer;" onclick="look(&apos;'+data.rows[i]._id+'&apos;)">'+
+//				'<div class="listTop">'+
+//					'<span>'+data.rows[i].thing_name+'</span>'+							
+//				'</div>'+
+//				'<div class="listHr"></div>'+
+//				'<div class="listContent">'+
+//					'<div style="width:478px;margin:0 auto; text-align:center; padding-top:80px;" class="contentTop" id="'+data.rows[i]._id+'">'+
+//						'暂无数据'+
+//					'</div>'+
+//					'<div class="contentBottom">'+
+//						'<span>'+data.rows[i].device_name+'-'+data.rows[i].dataName+'</span>'+
+//					'</div>'+
+//				'</div>'+			
+//			'</div>';
+//			$(".dataContent").append(str);
+//		chartInfo(data,i)	
+//	}
 }
 //图表配置项
 function chartInfo(data,i){

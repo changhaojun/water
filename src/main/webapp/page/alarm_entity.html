@@ -6,14 +6,18 @@
 		<link rel="stylesheet" type="text/css" href="/css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="/plugins/font-awesome/css/font-awesome.css"/>
 		<link rel="stylesheet" type="text/css" href="/plugins/bootstarp/css/bootstrap.css"/>
-		<link rel="stylesheet" type="text/css" href="/plugins/layer/skin/layer.css"/>
 		<link rel="stylesheet" type="text/css" href="/plugins/finfosoft/finfosoft.css" />
 		<link rel="stylesheet" type="text/css" href="/css/alarm_entity.css"/>
+		<style>
+			[v-cloak] {
+			  	display: none;
+			}
+		</style>
 	</head>
 	<body>
 		<input type="text" id="thingId" hidden="hidden" value=${thingId} />
-		<input type="text" id="companyId"  hidden="hidden" value=${companyId} />
-		<div class="oVue">
+		<input type="text" id="companyId" hidden="hidden" value=${companyId} />
+		<div class="oVue" v-cloak>
 			<div class="alarmEntity">
 				<div class="alarmTop">
 						<span>实体列表</span>

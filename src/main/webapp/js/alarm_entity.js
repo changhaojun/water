@@ -98,6 +98,7 @@ var $extend=$.fn.extend({
 	},
 	//选择数据标签==》确定提交数据标签
 	chioseTag:function(index,event){
+		var vue = this
 		var data={
 			"tag_id":initData.selsetTags[index]._id,
 			"tag_name":initData.selsetTags[index].tag_name,
@@ -115,12 +116,11 @@ var $extend=$.fn.extend({
 				crossDomain: true == !(document.all),
 				success: function(data) {
 					if(data.code==200){
-						initData.alarmDatas[initData.Index].tag_name=initData.selsetTags[index].tag_name
+						vue.$set(vue.alarmDatas[initData.Index],'tag_name',initData.selsetTags[index].tag_name)
 						layer.msg(data.success,{icon:1})
 					}					
 				}
 		})
-		console.log(initData.alarmDatas[initData.Index])
 		layer.close(initData.resultBox);
 	},
 	//添加告警范围
@@ -357,11 +357,9 @@ $.extend({
 	// called when a message arrives
 	onMessageArrived:function (message) {
 		console.log("MessageArrived!")
-		console.log(message)
 	  var topic = message.destinationName;
 	  var payload = message.payloadString;	  
 	  var dataConfig=JSON.parse(payload)
-	  console.log(dataConfig)
 	  var dataId=dataConfig.data_id
 	  var dataValue;
 	  if(dataConfig.port_type=="DO"||dataConfig.port_type=="DI"){

@@ -8,10 +8,15 @@
 		<link rel="stylesheet" type="text/css" href="/plugins/finfosoft/finfosoft.css" />
 		<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 		<link rel="stylesheet" type="text/css" href="/css/task.css" />
+		<style>
+			[v-cloak] {
+			  	display: none;
+			}
+		</style>
 	</head>
 	<body>
 		<input type="text" id="companyId" value="${companyId}" hidden="hidden"/>
-		<div id="task">
+		<div id="task" v-cloak>
 			<div class="taskTop">
 				<span>任务管理</span>
 				<span>/</span>
