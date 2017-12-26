@@ -819,6 +819,9 @@ body *{
 	width: 330px;
 	border: 1px solid #ccc;
 }
+.layui-layer-loading .layui-layer-content{
+	margin: 0 auto;
+}
 
 @-webkit-keyframes -webkit-rotate-top {
 	from {
