@@ -216,6 +216,13 @@ var vue = new Vue({
 			}else if(this.process.trigger_name=='时间周期触发'){
 				this.cycle.start_time = conditions[0].begin_time;
 				this.cycle.cycle_time = conditions[0].cycle_time;
+			}else if(this.process.trigger_name=='定时触发'){
+				this.timing.cycle = conditions[0].cycle;
+				if(this.timing.cycle=='everyWeek'){
+					this.timing.cycle_week = conditions[0].cycle_week;
+				}
+				this.timing.start_time.hour = conditions[0].start_time.split(':')[0];
+				this.timing.start_time.minute = conditions[0].start_time.split(':')[1];
 			}
 			this.processEdit = true;
 			this.showProcessBox('修改工艺');
@@ -501,7 +508,7 @@ var vue = new Vue({
 						var timing = {}
 						timing.cycle = this.timing.cycle;
 						if(timing.cycle == 'everyWeek'){
-							timing.cycle_week = his.timing.cycle_week;
+							timing.cycle_week = this.timing.cycle_week;
 						}
 						var start_time = this.timing.start_time.hour+':'+this.timing.start_time.minute
 						timing.start_time = start_time

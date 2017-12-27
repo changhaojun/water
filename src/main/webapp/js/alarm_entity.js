@@ -154,7 +154,7 @@ var $extend=$.fn.extend({
 	},
 	//添加提交告警范围判断，修改提交告警
 	alarmRangeSave:function(){
-		var text=/^[0-9]*$/;
+		var text=/^[0-9]+([.]{1}[0-9]{1,2})?$/;
 		 if(initData.dataMin==""&&initData.dataMax==""){
 			layer.tips('最大值或者最小值不能同时为空', $("#dataMax"), {
 				  tips: [1, '#ff787c'],
