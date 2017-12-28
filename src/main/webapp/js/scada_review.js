@@ -2,8 +2,8 @@ var allData = {
 	thingId: $('#thingId').val(),
 	companyId: $('#companyId').val(),
 	accessToken: "",
-//	lanyueSrc: 'http://121.42.253.149:18822/scada',
-	lanyueSrc: 'http://localhost:80/scada',
+	lanyueSrc: 'http://121.42.253.149:18822/scada',
+//	lanyueSrc: 'http://localhost:80/scada',
 	ajaxComplated: {},
 	mqtt: { //MQTT订阅数据
 		host: mqttHostIP,
