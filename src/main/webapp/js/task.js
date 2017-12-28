@@ -423,6 +423,7 @@ var vue = new Vue({
 						}
 					}else{					//任务配置时
 						vue.controlDataList = response.data
+						this.chioceTargetData();
 					}
 				})
 				.catch(error =>{
