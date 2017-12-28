@@ -714,7 +714,6 @@ $.extend({
 					area: ['430px'],
 					btn: ['下发', '取消'],
 					yes: function(index1) {
-						$('.conditions-layer').css('display', 'none');
 						$.verifyIssuePassword(passwordDom, function() {
 							$.issueAjax({
 								process_id: processId
