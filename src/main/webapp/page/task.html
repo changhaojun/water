@@ -46,7 +46,7 @@
 							</dl>
 						</div>
 						<div v-if="process.trigger_name=='时间周期触发'" class="processtTigger">
-							{{process.trigger_name}}：开始时间  {{process.trigger_conditions[0].begin_time}} 时间间隔  {{process.trigger_conditions[0].cycle_time}}分钟
+							{{process.trigger_name}}：开始时间  {{process.trigger_conditions[0].begin_time}}
 						</div>
 						<div v-if="process.trigger_name=='定时触发'" class="processtTigger">
 							{{process.trigger_name}}：开始时间  {{process.trigger_conditions[0].start_time}} 触发周期  {{process.trigger_conditions[0].cycle_str}}
