@@ -43,7 +43,7 @@ var vue = new Vue({
 		},
 		cycle:{		//时间周期触发
 			start_time:'',
-			cycle_time:''
+//			cycle_time:''
 		},
 		trigger_conditions:[    			//触发条件,前端页面渲染
 			{		
@@ -186,7 +186,7 @@ var vue = new Vue({
 			}
 			this.cycle={		//时间周期触发
 					start_time:'',
-					cycle_time:''
+//					cycle_time:''
 			}
 			this.processEdit = false;
 			this.showProcessBox('新增工艺');
@@ -215,7 +215,7 @@ var vue = new Vue({
 				this.getDataList(null,'dataList',0,conditions);
 			}else if(this.process.trigger_name=='时间周期触发'){
 				this.cycle.start_time = conditions[0].begin_time;
-				this.cycle.cycle_time = conditions[0].cycle_time;
+//				this.cycle.cycle_time = conditions[0].cycle_time;
 			}else if(this.process.trigger_name=='定时触发'){
 				this.timing.cycle = conditions[0].cycle;
 				if(this.timing.cycle=='everyWeek'){
@@ -487,7 +487,7 @@ var vue = new Vue({
 						}
 						var cycle = {};
 						cycle.begin_time = this.cycle.start_time;
-						cycle.cycle_time = this.cycle.cycle_time;
+//						cycle.cycle_time = this.cycle.cycle_time;
 						process.trigger_conditions = [];
 						process.trigger_conditions.push(cycle);
 						break;
@@ -557,7 +557,6 @@ var vue = new Vue({
 						process.trigger_name = this.selectTriggerName;
 						this.processList.push(process);
 						var index = this.processList.length - 1;
-						this.getMission(index);
 					}
 				}
 			})
@@ -610,7 +609,7 @@ var vue = new Vue({
 				if(response.data.rows.length>0){
 					this.missionList = response.data.rows;
 				}else{
-					
+					layer.msg('该工艺未添加执行任务。',{icon:2})
 				}
 				var processListDom = document.querySelectorAll('.processBox');
 				for(var i = 0; i< processListDom.length;i++){
