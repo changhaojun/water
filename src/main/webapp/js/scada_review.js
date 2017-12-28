@@ -238,15 +238,15 @@ $.extend({
 	makeMqttGroup: function(callback) {
 		var localDatas = allData.parentData.scada_config.data_list;
 		localDatas.forEach(function(a) {
-			var type = a.port_type;
-			if(/[A-Z]I/g.test(type)) {
+//			var type = a.port_type;
+//			if(/[A-Z]I/g.test(type)) {
 				allData.mqttGroup.push(a);
 //				originDatas.forEach(function(b) {
 //					if(a.label_id === b.label_id) {
 //						allData.mqttGroup.push(a);
 //					}
 //				});
-			}
+//			}
 		});
 		MQTTconnect();
 
