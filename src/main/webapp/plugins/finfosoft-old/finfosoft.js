@@ -36,7 +36,7 @@ var Finfosoft = {
 		this.lineWidth = opts.lineWidth ? opts.lineWidth : 0.2*this.width;
 		this.bgColor = opts.bgColor ? opts.bgColor : '#eeeeee';
 		this.mainColor = opts.mainColor ? opts.mainColor : '#66ee66';
-		this.initVal = opts.initVal ? opts.initVal : (this.input.value ? this.input.value : 0);
+		this.initVal = opts.initVal;
 		this.radius = (this.width-this.lineWidth)/2;
 		this.init();
 	},
