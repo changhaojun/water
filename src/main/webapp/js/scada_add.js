@@ -80,7 +80,8 @@ $.extend({
 			data: {
 				access_token: accesstoken,
 				filter: JSON.stringify({
-					trigger_type: "58f0431743929a10a8fb49fa"
+					trigger_type: "58f0431743929a10a8fb49fa",
+					company_id: allData.companyId
 				})
 			},
 			success: function(data) {
