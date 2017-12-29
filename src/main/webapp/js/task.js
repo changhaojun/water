@@ -131,10 +131,14 @@ var vue = new Vue({
 					}
 			}).then(response => {
 				loading.closeLoading();
-					this.formatProcessData(response.data.rows)
-				}).catch(function (error) {
+				if(response.data.rows.length>0){
+					this.formatProcessData(response.data.rows)					
+				}else{
+					layer.msg('未配置工艺',{icon:2})
+				}
+			}).catch(function (error) {
 					console.log(error);
-				});
+			});
 			},
 		formatProcessData:function(processList){		//针对定期触发的工艺做时间周期的汉字映射，用于页面渲染
 			for(var i = 0; i < processList.length; i++){
