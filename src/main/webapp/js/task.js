@@ -742,7 +742,7 @@ var vue = new Vue({
 				.then(response => {
 					loading.closeLoading();
 					if(response.data.code == 200){
-						layer.msg(response.data.message,{
+						layer.msg(response.data.success,{
 							icon:1,
 							time:2000,
 							end:function(){
